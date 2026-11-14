@@ -342,57 +342,7 @@
       "id": "dota2",
       "name": "Dota 2",
       "emoji": "🐉",
-      "picks": [
-        {
-          "match": "Team Liquid — LGD Gaming",
-          "tournament": "1win Essence, группа C (BO3)",
-          "start": "14.11, 16:00 МСК",
-          "bet": "П1 (победа Liquid)",
-          "odds": "",
-          "confidence": 3,
-          "reason": "На Polymarket Liquid — фаворит с вероятностью около 74%. Но перед матчем линия резко сдвигалась (с 85% до 62,5% за час) из-за новостей — осторожно.",
-          "sources": [
-            {
-              "title": "Polymarket — Liquid vs LGD",
-              "url": "https://polymarket.com/esports/dota-2/1win-essence/dota2-liquid-lgd-2026-11-14"
-            },
-            {
-              "title": "KuCoin News — движение линии Liquid vs LGD",
-              "url": "https://kucoin.com/ru/news/flash/team-liquid-s-win-odds-drop-22-5-in-dota-2-match-prediction-market"
-            }
-          ]
-        },
-        {
-          "match": "IC x Insanity — Nemiga Gaming",
-          "tournament": "BO3",
-          "start": "14.11, 13:00 МСК",
-          "bet": "П1 (победа IC x Insanity)",
-          "odds": "",
-          "confidence": 2,
-          "reason": "Dota2ProTips за IC x Insanity (63%): рискованный стиль Nemiga вряд ли сработает против этого соперника.",
-          "sources": [
-            {
-              "title": "Dota2ProTips — прогнозы",
-              "url": "https://www.dota2protips.com/"
-            }
-          ]
-        },
-        {
-          "match": "Team Spirit — Froglings",
-          "tournament": "BO3",
-          "start": "",
-          "bet": "П1 (победа Team Spirit)",
-          "odds": "",
-          "confidence": 2,
-          "reason": "Dota2ProTips прогнозирует победу Team Spirit — действующих чемпионов The International.",
-          "sources": [
-            {
-              "title": "Dota2ProTips — прогнозы",
-              "url": "https://www.dota2protips.com/"
-            }
-          ]
-        }
-      ],
+      "picks": [],
       "updated_at": "2026-11-14T06:01+03:00"
     }
   ],
@@ -491,33 +441,6 @@
         {
           "title": "GosuGamers — Spirit выиграли BLAST Open Porto",
           "url": "https://www.gosugamers.net/counterstrike/news/79114-team-spirit-defeat-mouz-to-win-blast-open-fall-porto-2026"
-        }
-      ]
-    },
-    {
-      "sport": "🐉 Dota 2",
-      "match": "Team Liquid — LGD Gaming",
-      "tournament": "1win Essence, группа C",
-      "start": "14.11, 16:00 МСК",
-      "text": "На рынке прогнозов Polymarket Liquid — уверенный фаворит (около 74%).\nНастораживает другое: незадолго до матча вероятность победы Liquid упала с 85% до 62,5% всего за час — по сообщениям, из-за неожиданных новостей. Такие скачки часто связаны с заменами в составе.\nВ личных встречах 2026 года счёт равный: LGD выиграли 2:0 на BLAST Slam в июне, Liquid побеждали в мае.",
-      "key_factors": [
-        "Liquid — фаворит рынка (~74%)",
-        "Резкое движение линии перед матчем",
-        "Личные встречи 2026 — по одной победе"
-      ],
-      "verdict": "Liquid фаворит, но перед ставкой проверьте составы — линия нестабильна.",
-      "sources": [
-        {
-          "title": "Polymarket — Liquid vs LGD",
-          "url": "https://polymarket.com/esports/dota-2/1win-essence/dota2-liquid-lgd-2026-11-14"
-        },
-        {
-          "title": "KuCoin News — движение линии Liquid vs LGD",
-          "url": "https://kucoin.com/ru/news/flash/team-liquid-s-win-odds-drop-22-5-in-dota-2-match-prediction-market"
-        },
-        {
-          "title": "Game-Tournaments — история Liquid vs LGD",
-          "url": "https://game-tournaments.com/en/dota-2/history/liquid-vs-lgd-gaming"
         }
       ]
     }
