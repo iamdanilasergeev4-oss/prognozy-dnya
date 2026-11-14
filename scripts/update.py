@@ -4,7 +4,7 @@
 
 1. Для каждого вида спорта ищет свежие прогнозы через Tavily (бесплатно 1000 запросов/мес).
 2. Отдаёт найденные страницы нейросети (любой OpenAI-совместимый API: Gemini, Groq и т.д.),
-   которая выбирает топ-5 ставок, опираясь только на найденные источники.
+   которая выбирает топ-10 ставок, опираясь только на найденные источники.
 3. Сохраняет результат в data/predictions.json.
 
 Без сторонних библиотек — только стандартный Python 3.9+.
@@ -144,12 +144,12 @@ def collect_sources(sport, now):
 PROMPT = """Ты — аналитик ставок. Сегодня {today} (время московское).
 Ниже — тексты страниц с прогнозами на {sport}, найденные в интернете. Каждая страница пронумерована.
 
-Задача: выбрать до 5 лучших ставок на матчи, которые пройдут сегодня или завтра ({today} – {tomorrow}).
+Задача: выбрать до 10 лучших ставок на матчи, которые пройдут сегодня или завтра ({today} – {tomorrow}).
 Правила:
 - Используй ТОЛЬКО информацию из страниц ниже. Ничего не выдумывай: ни матчей, ни коэффициентов.
 - Выше ставь прогнозы, которые совпадают в нескольких источниках (консенсус).
 - Пропускай матчи, которые уже прошли, и прогнозы без понятной ставки.
-- Если подходящих ставок меньше 5 — верни меньше. Если нет ни одной — пустой список.
+- Если подходящих ставок меньше 10 — верни меньше. Если нет ни одной — пустой список.
 - Пиши по-русски, кратко.
 
 Верни ТОЛЬКО JSON без пояснений, в формате:
@@ -175,10 +175,11 @@ def ask_llm(prompt):
         "model": LLM_MODEL,
         "messages": [{"role": "user", "content": prompt}],
         "temperature": 0.2,
+        "reasoning_effort": "low",
     }
     res = with_retries(lambda: http_post_json(
         f"{LLM_BASE_URL}/chat/completions", payload,
-        {"Authorization": f"Bearer {LLM_KEY}"}, timeout=180))
+        {"Authorization": f"Bearer {LLM_KEY}"}, timeout=120), attempts=2)
     return res["choices"][0]["message"]["content"]
 
 
@@ -232,21 +233,26 @@ def build_sport(sport, now):
     data = parse_json(ask_llm(prompt))
     picks = [p for p in (clean_pick(x, sources) for x in data.get("picks", [])) if p]
     picks.sort(key=lambda p: -p["confidence"])
-    return picks[:5]
+    return picks[:10]
 
 
 def main():
     if not TAVILY_KEY or not LLM_KEY:
         sys.exit("Нужны переменные окружения TAVILY_API_KEY и LLM_API_KEY")
 
+    now = dt.datetime.now(MSK)
     try:
         with open(DATA_FILE, encoding="utf-8") as f:
-            old = {s["id"]: s for s in json.load(f).get("sports", [])}
+            old_data = json.load(f)
     except Exception:  # noqa: BLE001
-        old = {}
+        old_data = {}
+    # Основной источник — ежедневное обновление от Claude. Если оно уже было сегодня, ничего не трогаем.
+    if old_data.get("source") == "claude" and str(old_data.get("updated_at", "")).startswith(now.strftime("%Y-%m-%d")):
+        log("Сегодня прогнозы уже обновил Claude — запасной сбор не нужен.")
+        return
+    old = {s["id"]: s for s in old_data.get("sports", [])}
 
-    now = dt.datetime.now(MSK)
-    out = {"updated_at": now.isoformat(timespec="minutes"), "sports": []}
+    out = {"updated_at": now.isoformat(timespec="minutes"), "source": "gemini", "sports": []}
     ok = 0
     for sport in SPORTS:
         log(f"== {sport['name']}")
