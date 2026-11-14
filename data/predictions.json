@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-14T06:01+03:00",
+  "updated_at": "2026-11-14T06:25+03:00",
   "source": "claude",
   "sports": [
     {
@@ -77,6 +77,52 @@
           ]
         },
         {
+          "match": "Франция — Турция",
+          "tournament": "Лига наций, лига A (группа 1)",
+          "start": "15.11, 22:45 МСК",
+          "bet": "П1 (победа Франции)",
+          "odds": "1.14",
+          "confidence": 4,
+          "reason": "Сходятся три модели: Foresportia даёт Франции 66.9%, Wincomparator — 58% (лучший кэф 1.14 в 1xBet), Kickoff ждёт от Франции около 2 голов. Турция пропускала 2+ в трёх матчах ЛН подряд, первую встречу Франция выиграла 1:0.",
+          "sources": [
+            {
+              "title": "Foresportia — France vs Turkey",
+              "url": "https://www.foresportia.com/en/prediction/uefa-nations-league/france-turkey-2026-11-15/"
+            },
+            {
+              "title": "Wincomparator — France vs Turkiye",
+              "url": "https://www.wincomparator.com/predictions/france-turkey-8318318/"
+            },
+            {
+              "title": "Kickoff — France v Turkey",
+              "url": "https://www.kickoff.co.uk/uefa-nations-league-predictions-stats-odds/france-vs-turkey/"
+            }
+          ]
+        },
+        {
+          "match": "Хорватия — Чехия",
+          "tournament": "Лига наций, лига A (группа 3)",
+          "start": "15.11, 22:45 МСК",
+          "bet": "П1 (победа Хорватии)",
+          "odds": "",
+          "confidence": 4,
+          "reason": "Победу хозяев дают Wincomparator (65.5%) и Foresportia (57.9%). Kickoff ждёт 1.7 гола Хорватии против 1.0 у Чехии; Wincomparator также видит ТБ 2.5 (75%) и «обе забьют» (68%).",
+          "sources": [
+            {
+              "title": "Wincomparator — Croatia vs Czechia",
+              "url": "https://www.wincomparator.com/predictions/croatia-czech-republic-8318341/"
+            },
+            {
+              "title": "Foresportia — Croatia vs Czech Republic",
+              "url": "https://www.foresportia.com/en/prediction/uefa-nations-league/croatia-czech-republic-2026-11-15/"
+            },
+            {
+              "title": "Kickoff — Croatia v Czech Republic",
+              "url": "https://www.kickoff.co.uk/uefa-nations-league-predictions-stats-odds/croatia-vs-czech-rep/"
+            }
+          ]
+        },
+        {
           "match": "Косово — Израиль",
           "tournament": "Лига наций, лига B",
           "start": "14.11, 17:00 МСК",
@@ -126,51 +172,6 @@
           ]
         },
         {
-          "match": "Австрия — Ирландия",
-          "tournament": "Лига наций, лига B",
-          "start": "14.11, 22:45 МСК",
-          "bet": "П1 (победа Австрии)",
-          "odds": "1.60",
-          "confidence": 3,
-          "reason": "Модель Forza: Австрия 60%, ничья 24%, Ирландия 16%.",
-          "sources": [
-            {
-              "title": "Forza Football — Nations League, тур 5",
-              "url": "https://forzafootball.com/sv/spela/speltips/odds-nations-league-omgang-5"
-            }
-          ]
-        },
-        {
-          "match": "Северная Ирландия — Украина",
-          "tournament": "Лига наций, лига B",
-          "start": "14.11, 22:45 МСК",
-          "bet": "ТМ 2.5",
-          "odds": "1.53",
-          "confidence": 3,
-          "reason": "Равный матч (39/31/30) — Forza ждёт мало голов, вероятный счёт 1:1.",
-          "sources": [
-            {
-              "title": "Forza Football — Nations League, тур 5",
-              "url": "https://forzafootball.com/sv/spela/speltips/odds-nations-league-omgang-5"
-            }
-          ]
-        },
-        {
-          "match": "Грузия — Венгрия",
-          "tournament": "Лига наций, лига B",
-          "start": "14.11, 20:00 МСК",
-          "bet": "ТМ 2.5",
-          "odds": "1.67",
-          "confidence": 3,
-          "reason": "Шансы почти равны (38/29/33), основная ставка Forza — тотал меньше, вероятный счёт 1:1.",
-          "sources": [
-            {
-              "title": "Forza Football — Nations League, тур 5",
-              "url": "https://forzafootball.com/sv/spela/speltips/odds-nations-league-omgang-5"
-            }
-          ]
-        },
-        {
           "match": "Япония — Бразилия",
           "tournament": "Товарищеский матч (Сингапур)",
           "start": "14.11, 13:15 МСК",
@@ -188,30 +189,132 @@
               "url": "https://www.fifaworldcupnews.com/?p=46272"
             }
           ]
+        },
+        {
+          "match": "Испания — Англия",
+          "tournament": "Лига наций, лига A (группа 3)",
+          "start": "15.11, 22:45 МСК",
+          "bet": "П1 (победа Испании)",
+          "odds": "",
+          "confidence": 3,
+          "reason": "Foresportia — Испания 51.6%, Kickoff ставит её первой (забивает 10 матчей ЛН подряд). У Англии выбыли Райс, Палмер, Рэшфорд, Майну и Ливраменто; в сентябре Испания выиграла на «Уэмбли» 3:2.",
+          "sources": [
+            {
+              "title": "Foresportia — Spain vs England",
+              "url": "https://www.foresportia.com/en/prediction/uefa-nations-league/spain-england-2026-11-15/"
+            },
+            {
+              "title": "Kickoff — Spain v England",
+              "url": "https://www.kickoff.co.uk/uefa-nations-league-predictions-stats-odds/spain-vs-england/"
+            },
+            {
+              "title": "Спорт Mail — Испания — Англия",
+              "url": "https://sportmail.ru/football-nations/409/match/452834/"
+            },
+            {
+              "title": "Statz — Spain vs England",
+              "url": "https://statz.ai/h2h/spain-vs-england/19676652"
+            }
+          ]
         }
       ],
-      "updated_at": "2026-11-14T06:01+03:00"
+      "updated_at": "2026-11-14T06:25+03:00"
     },
     {
       "id": "basketball",
       "name": "Баскетбол",
       "emoji": "🏀",
-      "picks": [],
-      "updated_at": "2026-11-14T06:01+03:00"
+      "picks": [
+        {
+          "match": "Детройт — Майами",
+          "tournament": "НБА, регулярный сезон",
+          "start": "15.11, 04:00 МСК",
+          "bet": "П2 (победа Майами)",
+          "odds": "2.55",
+          "confidence": 2,
+          "reason": "Эксперт Covers Джон Метлер ставит на «Хит» (+155): рынок даёт ~37%, он оценивает шансы в ~46% — у «Пистонс» проблемы во фронткорте без Джейлена Дюрена. Против: «Детройт» 5-1 ATS в роли фаворита.",
+          "sources": [
+            {
+              "title": "Covers — NBA Picks (Nov 14)",
+              "url": "https://www.covers.com/picks/nba"
+            },
+            {
+              "title": "Covers — Pistons vs Heat matchup",
+              "url": "https://www.covers.com/sport/basketball/nba/matchup/388719/picks"
+            }
+          ]
+        }
+      ],
+      "updated_at": "2026-11-14T06:25+03:00"
     },
     {
       "id": "tennis",
       "name": "Теннис",
       "emoji": "🎾",
-      "picks": [],
-      "updated_at": "2026-11-14T06:01+03:00"
+      "picks": [
+        {
+          "match": "Александр Зверев — Рафаэль Ходар",
+          "tournament": "Итоговый турнир ATP, Турин (группа Макинроя)",
+          "start": "15.11, не ранее 16:00 МСК",
+          "bet": "П1 (победа Зверева)",
+          "odds": "1.44",
+          "confidence": 4,
+          "reason": "Модель Dimers даёт Звереву 65% (линия −227), Tennisnerd прогнозирует Ходару 0-3 в группе, Зверев выиграл единственную очную встречу. Минус: Dimers видит ценность в андердоге, а Зверев проиграл стартовый матч в Париже.",
+          "sources": [
+            {
+              "title": "Dimers — Zverev vs Jodar",
+              "url": "https://www.dimers.com/tennis/news/alexander-zverev-vs-rafael-jodar-tennis-prediction-atp-world-tour-finals-2026-ac"
+            },
+            {
+              "title": "Tennisnerd — ATP Finals 2026 Preview",
+              "url": "https://www.tennisnerd.net/news/atp-finals-2026-preview-predictions-odds-my-pick-to-win-in-turin/70638"
+            },
+            {
+              "title": "ATP Tour — Order of play Sunday",
+              "url": "https://www.atptour.com/en/news/nitto-atp-finals-2026-schedule-sunday-monday"
+            },
+            {
+              "title": "LiveScore — ATP Finals predictions",
+              "url": "https://www.livescore.com/en/news/tennis/atp-tour-finals-predictions-zverev/"
+            }
+          ]
+        },
+        {
+          "match": "Бен Шелтон — Артур Фис",
+          "tournament": "Итоговый турнир ATP, Турин (группа Макинроя)",
+          "start": "15.11, не ранее 22:30 МСК",
+          "bet": "П1 (победа Шелтона)",
+          "odds": "",
+          "confidence": 3,
+          "reason": "Tennisnerd ждёт, что Фис проиграет Шелтону в воскресенье вечером; TennGrand называет физическое состояние Фиса вопросом. В котировках на группу Шелтон (3.66) заметно выше Фиса (6.30).",
+          "sources": [
+            {
+              "title": "Tennisnerd — ATP Finals 2026 Preview",
+              "url": "https://www.tennisnerd.net/news/atp-finals-2026-preview-predictions-odds-my-pick-to-win-in-turin/70638"
+            },
+            {
+              "title": "TennGrand — Nitto ATP Finals preview",
+              "url": "https://tenngrand.com/2026-nitto-atp-finals-preview-picks-predictions/"
+            },
+            {
+              "title": "MightyTips — ATP Finals odds",
+              "url": "https://www.mightytips.com/news/tennis/2026-atp-finals-preview-and-predictions/"
+            },
+            {
+              "title": "Tennis Temple — расписание",
+              "url": "https://en.tennistemple.com/actu/atp-finals-zverev-alcaraz-fils-schedule-revealed/WDWm"
+            }
+          ]
+        }
+      ],
+      "updated_at": "2026-11-14T06:25+03:00"
     },
     {
       "id": "volleyball",
       "name": "Волейбол",
       "emoji": "🏐",
       "picks": [],
-      "updated_at": "2026-11-14T06:01+03:00"
+      "updated_at": "2026-11-14T06:25+03:00"
     },
     {
       "id": "cs2",
@@ -336,14 +439,53 @@
           ]
         }
       ],
-      "updated_at": "2026-11-14T06:01+03:00"
+      "updated_at": "2026-11-14T06:25+03:00"
     },
     {
       "id": "dota2",
       "name": "Dota 2",
       "emoji": "🐉",
-      "picks": [],
-      "updated_at": "2026-11-14T06:01+03:00"
+      "picks": [
+        {
+          "match": "Aurora Gaming — CyberHero",
+          "tournament": "1win Essence III, групповой этап (Bo3)",
+          "start": "14.11, 20:00 МСК",
+          "bet": "П1 (победа Aurora)",
+          "odds": "",
+          "confidence": 3,
+          "reason": "Dota2ProTips ставит на Aurora (уверенность 62%, ELO 58/42): тир-2 команды не тянут против неё лейт. Aurora уже обыграла GamerLegion 2:1, а CyberHero этой же GamerLegion уступила 1:2. Дата и время — по Liquipedia.",
+          "sources": [
+            {
+              "title": "Dota2ProTips — 1win Essence III",
+              "url": "https://www.dota2protips.com/tournaments/1win-essence-iii"
+            },
+            {
+              "title": "Liquipedia — 1win Essence III",
+              "url": "https://liquipedia.net/dota2/1win_Essence/3"
+            }
+          ]
+        },
+        {
+          "match": "DO KONCA — Yellow Submarine",
+          "tournament": "1win Essence III, групповой этап (Bo3)",
+          "start": "14.11, 14:30 МСК",
+          "bet": "П2 (победа Yellow Submarine)",
+          "odds": "",
+          "confidence": 1,
+          "reason": "Мнения расходятся: ELO-модель Dota2ProTips даёт YeS 66%, но автор сайта рискованно ставит на DO KONCA (ex-BetBoom). Обе команды проиграли PARIVISION 0:2. Ставка спорная — только для тех, кто любит риск.",
+          "sources": [
+            {
+              "title": "Dota2ProTips — 1win Essence III",
+              "url": "https://www.dota2protips.com/tournaments/1win-essence-iii"
+            },
+            {
+              "title": "Liquipedia — 1win Essence III",
+              "url": "https://liquipedia.net/dota2/1win_Essence/3"
+            }
+          ]
+        }
+      ],
+      "updated_at": "2026-11-14T06:25+03:00"
     }
   ],
   "analysis": [
@@ -410,6 +552,73 @@
         {
           "title": "Oddslot — Portugal vs Denmark",
           "url": "https://oddslot.com/football/match/uefa-nations-league/portugal/denmark/14-nov-2026/"
+        }
+      ]
+    },
+    {
+      "sport": "⚽ Футбол",
+      "match": "Франция — Турция",
+      "tournament": "Лига наций, лига A (группа 1)",
+      "start": "15.11, 22:45 МСК",
+      "text": "Финальный тур группы. Франция под руководством Зидана лидирует: в стартовых турах обыграла Турцию (1:0) и Бельгию (4:1 дома), сыграла вничью с Италией. Турция в группе выглядит хуже всех и пропускала 2+ гола в трёх матчах Лиги наций подряд.\nМодели единодушны: Foresportia даёт Франции 66.9%, Wincomparator — 58% и тотал больше 2.5 (52%), Kickoff прогнозирует около двух голов Франции. Букмекеры почти не верят в Турцию — лучший коэффициент на победу Франции всего 1.14.\nЧистая победа хозяев слишком дешева для одиночной ставки, поэтому её чаще используют в экспрессе; дополнительный вариант — индивидуальный тотал Франции.",
+      "key_factors": [
+        "Франция — лидер группы, победила Турцию в 1-м туре",
+        "Оборона Турции: 2+ пропущенных 3 матча подряд",
+        "Три модели дают Франции 58–67%"
+      ],
+      "verdict": "Победа Франции — самая надёжная ставка дня, но кэф 1.14 годится скорее для экспресса.",
+      "sources": [
+        {
+          "title": "Foresportia — France vs Turkey",
+          "url": "https://www.foresportia.com/en/prediction/uefa-nations-league/france-turkey-2026-11-15/"
+        },
+        {
+          "title": "Wincomparator — France vs Turkiye",
+          "url": "https://www.wincomparator.com/predictions/france-turkey-8318318/"
+        },
+        {
+          "title": "Kickoff — France v Turkey",
+          "url": "https://www.kickoff.co.uk/uefa-nations-league-predictions-stats-odds/france-vs-turkey/"
+        },
+        {
+          "title": "101 Great Goals — Turkey v France",
+          "url": "https://www.101greatgoals.com/match-previews/turkiye-france-preview-stats/"
+        }
+      ]
+    },
+    {
+      "sport": "🎾 Теннис",
+      "match": "Александр Зверев — Рафаэль Ходар",
+      "tournament": "Итоговый турнир ATP, Турин",
+      "start": "15.11, не ранее 16:00 МСК",
+      "text": "Турнир в Турине открывает матч первой ракетки мира и двукратного чемпиона Итогового (2018, 2021) против дебютанта. Зверев в 2026-м выиграл «Ролан Гаррос» и US Open и обеспечил себе первое место года, но осенью сбавил: полуфиналы в Шанхае и Вене и вылет в первом же матче в Париже.\nХодар за один сезон поднялся из-за пределов топ-150 до 11-го места и взял титул в Марракеше, но в Турин попал только после поражения Фрица в Париже. Единственную очную встречу (четвертьфинал «Ролан Гаррос») выиграл Зверев.\nМодель Dimers даёт Звереву 65% и 62% на первый сет, букмекеры — линия −227 (около 1.44). При этом Dimers видит ценность в коэффициенте на Ходара, а Tennisnerd ожидает, что Ходар проиграет все три матча группы. Быстрый хард в Турине помогает подаче Зверева.",
+      "key_factors": [
+        "Опыт: у Зверева два титула в Турине, у Ходара — дебют",
+        "Осенний спад Зверева (вылет в Париже)",
+        "Очные встречи 1-0 в пользу Зверева",
+        "Быстрый закрытый хард под подачу"
+      ],
+      "verdict": "Фаворит — Зверев (около 65%); осторожная ставка — П1, рисковая — Ходар выиграет сет.",
+      "sources": [
+        {
+          "title": "Dimers — Zverev vs Jodar",
+          "url": "https://www.dimers.com/tennis/news/alexander-zverev-vs-rafael-jodar-tennis-prediction-atp-world-tour-finals-2026-ac"
+        },
+        {
+          "title": "Tennisnerd — ATP Finals 2026 Preview",
+          "url": "https://www.tennisnerd.net/news/atp-finals-2026-preview-predictions-odds-my-pick-to-win-in-turin/70638"
+        },
+        {
+          "title": "MightyTips — ATP Finals 2026",
+          "url": "https://www.mightytips.com/news/tennis/2026-atp-finals-preview-and-predictions/"
+        },
+        {
+          "title": "ATP Tour — Order of play",
+          "url": "https://www.atptour.com/en/news/nitto-atp-finals-2026-schedule-sunday-monday"
+        },
+        {
+          "title": "LiveScore — ATP Finals predictions",
+          "url": "https://www.livescore.com/en/news/tennis/atp-tour-finals-predictions-zverev/"
         }
       ]
     },
