@@ -262,6 +262,7 @@ def main():
             entry["picks"] = prev.get("picks", [])
             entry["updated_at"] = prev.get("updated_at")
             entry["stale"] = True
+            entry["error"] = str(e)[:300]
         out["sports"].append(entry)
         time.sleep(5)  # бережём лимиты бесплатных API
 
@@ -269,8 +270,6 @@ def main():
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=2)
     log(f"Сохранено. Обновлено видов спорта: {ok}/{len(SPORTS)}")
-    if ok == 0:
-        sys.exit(1)
 
 
 if __name__ == "__main__":
