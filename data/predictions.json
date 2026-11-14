@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-14T07:20+03:00",
+  "updated_at": "2026-11-14T07:45+03:00",
   "source": "claude",
   "sports": [
     {
@@ -238,7 +238,7 @@
           ]
         }
       ],
-      "updated_at": "2026-11-14T07:20+03:00"
+      "updated_at": "2026-11-14T07:45+03:00"
     },
     {
       "id": "basketball",
@@ -265,7 +265,7 @@
           ]
         }
       ],
-      "updated_at": "2026-11-14T07:20+03:00"
+      "updated_at": "2026-11-14T07:45+03:00"
     },
     {
       "id": "tennis",
@@ -373,14 +373,72 @@
           ]
         }
       ],
-      "updated_at": "2026-11-14T07:20+03:00"
+      "updated_at": "2026-11-14T07:45+03:00"
     },
     {
       "id": "volleyball",
       "name": "Волейбол",
       "emoji": "🏐",
-      "picks": [],
-      "updated_at": "2026-11-14T07:20+03:00"
+      "picks": [
+        {
+          "match": "Горький — Динамо Москва",
+          "tournament": "Суперлига России (мужчины), 7-й тур",
+          "start": "14.11, 18:30 МСК",
+          "bet": "П2 (победа Динамо)",
+          "odds": "1.05",
+          "confidence": 3,
+          "reason": "Букмекеры почти не дают шансов хозяевам (1.03–1.05 на «Динамо», фора −15.5 по очкам). «Динамо» — 4-е место, 5 побед в 6 турах, выиграло 6 последних очных встреч; «Горький» — 8-й, 3-3. Кэф низкий, подходит для экспресса.",
+          "sources": [
+            {
+              "title": "Куш в спорте — Горький — Динамо Москва",
+              "url": "https://kushvsporte.ru/event/7069240-gorkiy-dinamo-moskva"
+            },
+            {
+              "title": "Бизнес Online — календарь Суперлиги 2026/27",
+              "url": "https://sport.business-gazeta.ru/article/318732"
+            }
+          ]
+        },
+        {
+          "match": "Локомотив Новосибирск — Енисей",
+          "tournament": "Суперлига России (мужчины), 7-й тур",
+          "start": "15.11, 15:00 МСК",
+          "bet": "П1 (победа Локомотива)",
+          "odds": "",
+          "confidence": 2,
+          "reason": "«Локомотив» — 2-е место (5 побед в 6 турах), «Енисей» — 13-й (2-4). Готовой экспертной ставки нет — оценка по таблице и форме; коэффициент пока не найден.",
+          "sources": [
+            {
+              "title": "Куш в спорте — Локомотив — Енисей",
+              "url": "https://kushvsporte.ru/event/7072295-lokomotiv-novosibirsk-enisey-krasnoyarsk"
+            },
+            {
+              "title": "RusBiathlon — расписание Суперлиги",
+              "url": "https://rusbiathlon.ru/results/volleyball/superliga/"
+            }
+          ]
+        },
+        {
+          "match": "Нова — Факел",
+          "tournament": "Суперлига России (мужчины), 7-й тур",
+          "start": "14.11, 17:00 МСК",
+          "bet": "П1 (победа Новы)",
+          "odds": "1.54",
+          "confidence": 1,
+          "reason": "Матч равный: у обеих команд 3-3. Букмекеры чуть за хозяев (1.54 против 2.52), но «Нова» проиграла три последних матча, а «Факел» выиграл 2 из 3. Ставка рискованная.",
+          "sources": [
+            {
+              "title": "Куш в спорте — Нова — Факел Ямал",
+              "url": "https://kushvsporte.ru/event/7068758-nova-fakel-yamal"
+            },
+            {
+              "title": "Бизнес Online — календарь Суперлиги 2026/27",
+              "url": "https://sport.business-gazeta.ru/article/318732"
+            }
+          ]
+        }
+      ],
+      "updated_at": "2026-11-14T07:45+03:00"
     },
     {
       "id": "cs2",
@@ -389,7 +447,7 @@
       "picks": [
         {
           "match": "Spirit — MOUZ",
-          "tournament": "BLAST Rivals Fall 2026, плей-офф",
+          "tournament": "BLAST Rivals Fall 2026, плей-офф, тир-1",
           "start": "14.11, 11:00 МСК",
           "bet": "П2 (победа MOUZ)",
           "odds": "1.72",
@@ -412,7 +470,7 @@
         },
         {
           "match": "FURIA — Falcons",
-          "tournament": "BLAST Rivals Fall 2026, плей-офф",
+          "tournament": "BLAST Rivals Fall 2026, плей-офф, тир-1",
           "start": "14.11, 13:30 МСК",
           "bet": "П1 (победа FURIA)",
           "odds": "1.78",
@@ -431,7 +489,7 @@
         },
         {
           "match": "Virtus.pro — BAKS",
-          "tournament": "CCT Europe Series 13",
+          "tournament": "CCT Europe Series 13, тир-2",
           "start": "14.11, 15:00 МСК",
           "bet": "П1 (победа Virtus.pro)",
           "odds": "",
@@ -445,8 +503,23 @@
           ]
         },
         {
+          "match": "Phantom — Hype Tech",
+          "tournament": "NODWIN Clutch Series 14, тир-3",
+          "start": "15.11, 21:00 МСК",
+          "bet": "П1 (победа Phantom)",
+          "odds": "",
+          "confidence": 3,
+          "reason": "Модель CS2 Observer: 81% за Phantom. Hype Tech в эти два дня — андердог во всех своих матчах.",
+          "sources": [
+            {
+              "title": "CS2 Observer — прогнозы модели",
+              "url": "https://www.cs2observer.com/predictions"
+            }
+          ]
+        },
+        {
           "match": "FORZE Reload — NT",
-          "tournament": "NODWIN Clutch Series 14",
+          "tournament": "NODWIN Clutch Series 14, тир-3",
           "start": "14.11, 12:00 МСК",
           "bet": "П1 (победа FORZE Reload)",
           "odds": "",
@@ -461,7 +534,7 @@
         },
         {
           "match": "WW — Hype Tech",
-          "tournament": "CCT Europe Series 13",
+          "tournament": "CCT Europe Series 13, тир-2",
           "start": "14.11, 21:00 МСК",
           "bet": "П1 (победа WW)",
           "odds": "",
@@ -476,7 +549,7 @@
         },
         {
           "match": "BAKS — Illyrians",
-          "tournament": "CCT Europe Series 14",
+          "tournament": "CCT Europe Series 14, тир-2",
           "start": "14.11, 21:00 МСК",
           "bet": "П1 (победа BAKS)",
           "odds": "",
@@ -491,7 +564,7 @@
         },
         {
           "match": "ex-RUSTEC — Honvéd",
-          "tournament": "CCT Europe Series 14",
+          "tournament": "CCT Europe Series 14, тир-2",
           "start": "14.11, 18:00 МСК",
           "bet": "П1 (победа ex-RUSTEC)",
           "odds": "",
@@ -503,15 +576,68 @@
               "url": "https://www.cs2observer.com/predictions"
             }
           ]
+        },
+        {
+          "match": "33 — GenOne",
+          "tournament": "NODWIN Clutch Series 14, тир-3",
+          "start": "14.11, 21:00 МСК",
+          "bet": "П1 (победа 33)",
+          "odds": "",
+          "confidence": 2,
+          "reason": "Модель CS2 Observer: 65% за 33.",
+          "sources": [
+            {
+              "title": "CS2 Observer — прогнозы модели",
+              "url": "https://www.cs2observer.com/predictions"
+            }
+          ]
+        },
+        {
+          "match": "WW — G2 Ares",
+          "tournament": "European Pro League Series 10, тир-2",
+          "start": "15.11, 14:30 МСК",
+          "bet": "П1 (победа WW)",
+          "odds": "",
+          "confidence": 2,
+          "reason": "Модель CS2 Observer: 64% за WW.",
+          "sources": [
+            {
+              "title": "CS2 Observer — прогнозы модели",
+              "url": "https://www.cs2observer.com/predictions"
+            }
+          ]
         }
       ],
-      "updated_at": "2026-11-14T07:20+03:00"
+      "updated_at": "2026-11-14T07:45+03:00"
     },
     {
       "id": "dota2",
       "name": "Dota 2",
       "emoji": "🐉",
       "picks": [
+        {
+          "match": "Team Liquid — LEGION",
+          "tournament": "1win Essence III, групповой этап (Bo3), группа C",
+          "start": "14.11, 17:00 МСК",
+          "bet": "П1 (победа Liquid)",
+          "odds": "",
+          "confidence": 3,
+          "reason": "Hotspawn ставит Liquid 3-м в рейтинге турнира, LEGION — 9-м; на Polymarket Liquid — второй фаворит всего турнира (38%). Liquid уступили LGD 1:2 и должны выигрывать, чтобы пройти группу. Минус: LEGION выиграли 4 из 5 последних серий.",
+          "sources": [
+            {
+              "title": "Hotspawn — Power Rankings 1win Essence III",
+              "url": "https://www.hotspawn.com/dota2/news/1win-essence-iii-power-rankings-back-to-back-tournaments-for-spirit-or-not"
+            },
+            {
+              "title": "Spilled.gg — шансы на победу в турнире",
+              "url": "https://spilled.gg/1win-essence-iii-winner-odds/"
+            },
+            {
+              "title": "Hawk Live — расписание 1win Essence III",
+              "url": "https://hawk.live/posts/1win-essence-iii-schedule-standings-results"
+            }
+          ]
+        },
         {
           "match": "Aurora Gaming — CyberHero",
           "tournament": "1win Essence III, групповой этап (Bo3)",
@@ -528,6 +654,29 @@
             {
               "title": "Liquipedia — 1win Essence III",
               "url": "https://liquipedia.net/dota2/1win_Essence/3"
+            }
+          ]
+        },
+        {
+          "match": "LGD Gaming — LEGION",
+          "tournament": "1win Essence III, групповой этап (Bo3), группа C",
+          "start": "14.11, 12:00 МСК",
+          "bet": "П1 (победа LGD)",
+          "odds": "",
+          "confidence": 2,
+          "reason": "Hotspawn ставит LGD 6-м, LEGION — 9-м; LGD уже обыграли Liquid 2:1. Отдельного прогноза на матч нет, оценка по рейтингу экспертов.",
+          "sources": [
+            {
+              "title": "Hotspawn — Power Rankings 1win Essence III",
+              "url": "https://www.hotspawn.com/dota2/news/1win-essence-iii-power-rankings-back-to-back-tournaments-for-spirit-or-not"
+            },
+            {
+              "title": "Liquipedia — 1win Essence III",
+              "url": "https://liquipedia.net/dota2/1win_Essence/3"
+            },
+            {
+              "title": "Hawk Live — расписание 1win Essence III",
+              "url": "https://hawk.live/posts/1win-essence-iii-schedule-standings-results"
             }
           ]
         },
@@ -551,7 +700,7 @@
           ]
         }
       ],
-      "updated_at": "2026-11-14T07:20+03:00"
+      "updated_at": "2026-11-14T07:45+03:00"
     }
   ],
   "analysis": [
