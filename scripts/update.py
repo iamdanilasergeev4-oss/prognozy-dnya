@@ -2,7 +2,7 @@
 """
 Ежедневное обновление прогнозов.
 
-1. Для каждого вида спорта ищет свежие прогнозы через Tavily (бесплатно 1000 запросов/мес).
+1. Для каждого вида спорта ищет свежие прогнозы через Tavily (4 запроса на вид спорта, ~720 из 1000 бесплатных в месяц).
 2. Отдаёт найденные страницы нейросети (любой OpenAI-совместимый API: Gemini, Groq и т.д.),
    которая выбирает топ-10 ставок, опираясь только на найденные источники.
 3. Сохраняет результат в data/predictions.json.
@@ -48,22 +48,34 @@ MONTHS_RU = ["января", "февраля", "марта", "апреля", "м
 SPORTS = [
     {"id": "football", "name": "Футбол", "emoji": "⚽",
      "queries": ["football predictions betting tips {en}",
-                 "прогнозы на футбол {ru}"]},
+                 "soccer best bets today {en} accumulator tips",
+                 "прогнозы на футбол {ru}",
+                 "ставки на футбол сегодня {ru} экспресс прогноз"]},
     {"id": "basketball", "name": "Баскетбол", "emoji": "🏀",
-     "queries": ["basketball predictions betting tips {en} NBA Euroleague",
-                 "прогнозы на баскетбол {ru}"]},
+     "queries": ["NBA picks predictions {en} best bets",
+                 "Euroleague basketball predictions {en}",
+                 "прогнозы на баскетбол {ru} НБА",
+                 "прогноз Единая лига ВТБ {ru}"]},
     {"id": "tennis", "name": "Теннис", "emoji": "🎾",
-     "queries": ["tennis predictions betting tips {en}",
-                 "прогнозы на теннис {ru}"]},
+     "queries": ["tennis predictions betting tips {en} ATP WTA",
+                 "tennis picks today {en} best bets",
+                 "прогнозы на теннис {ru}",
+                 "ставки на теннис сегодня {ru}"]},
     {"id": "volleyball", "name": "Волейбол", "emoji": "🏐",
      "queries": ["volleyball predictions betting tips {en}",
-                 "прогнозы на волейбол {ru}"]},
+                 "volleyball match prediction {en} SuperLega PlusLiga",
+                 "прогнозы на волейбол {ru}",
+                 "прогноз волейбол Суперлига {ru}"]},
     {"id": "cs2", "name": "CS2", "emoji": "🔫",
      "queries": ["CS2 match predictions betting tips {en}",
-                 "прогнозы на CS2 {ru}"]},
+                 "Counter-Strike 2 prediction {en} HLTV odds",
+                 "прогнозы на CS2 {ru}",
+                 "ставки на КС2 сегодня {ru}"]},
     {"id": "dota2", "name": "Dota 2", "emoji": "🐉",
      "queries": ["Dota 2 match predictions betting tips {en}",
-                 "прогнозы на Dota 2 {ru}"]},
+                 "Dota 2 prediction today {en} odds",
+                 "прогнозы на Dota 2 {ru}",
+                 "ставки на доту сегодня {ru}"]},
 ]
 
 
