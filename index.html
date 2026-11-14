@@ -2,45 +2,87 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Прогнозы дня — топ-10 ставок по видам спорта</title>
-  <meta name="description" content="Каждый день: топ-10 прогнозов на футбол, баскетбол, теннис, волейбол, CS2 и Dota 2, собранных из открытых источников.">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Прогнозы дня — футбол, баскетбол, теннис, волейбол, CS2 и Dota 2</title>
+  <meta name="description" content="Дважды в день: прогнозы на футбол, баскетбол, теннис, волейбол, CS2 и Dota 2, собранные из открытых источников, со ссылками на оригиналы.">
+  <meta name="theme-color" content="#080B10">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23080B10'/%3E%3Cpath d='M4 18h6l3-8 5 14 3-6h7' fill='none' stroke='%2372F5BB' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="top">
+  <svg class="bg" id="bg" aria-hidden="true" focusable="false"></svg>
+  <a class="skip" href="#board">Перейти к прогнозам</a>
+
+  <header class="top" id="top">
     <div class="wrap top-inner">
-      <div class="logo">Прогнозы<span>дня</span></div>
-      <div class="updated" id="updated">Загрузка…</div>
+      <a class="logo" href="#" aria-label="Прогнозы дня — в начало">
+        <svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="8"/><path d="M5 18h5l3-8 5 14 3-6h6"/></svg>
+        <span>Прогнозы дня</span>
+      </a>
+      <nav class="nav" aria-label="Разделы">
+        <a href="#board" data-nav="board">Прогнозы</a>
+        <a href="#analysis" data-nav="analysis" hidden>Разбор дня</a>
+        <a href="#suggest" data-nav="suggest">Предложить идею</a>
+      </nav>
+      <div class="updated" id="updated" aria-live="polite"><i class="dot"></i><span>Загружаем…</span></div>
     </div>
   </header>
 
-  <main class="wrap">
-    <section class="hero">
-      <h1>Топ-10 ставок на сегодня</h1>
-      <p>Каждое утро нейросеть изучает прогнозы со всего интернета и выбирает ставки, в которых сходятся несколько источников. У каждой ставки есть ссылки на оригиналы, а во вкладке «Разбор дня» — подробный анализ главных матчей.</p>
+  <main id="main">
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <h1 id="hero-title"><span class="ln">Прогнозы на сегодня</span><span class="ln">из десятков источников</span></h1>
+        <p class="lede">Дважды в день нейросеть просматривает прогнозы аналитиков со всего интернета и отбирает те, в которых сходятся несколько источников. У каждого прогноза есть ссылки на оригиналы, а в «Разборе дня» — подробный анализ главных матчей.</p>
+      </div>
+      <figure class="pulse" id="pulse" aria-label="Сводка по видам спорта">
+        <div class="pulse-rows" id="pulse-rows">
+          <svg class="loader" viewBox="0 0 120 40" aria-hidden="true"><path d="M2 20h26l8-14 12 28 10-18 6 4h54"/></svg>
+        </div>
+        <figcaption id="pulse-cap">Каждый пик — один прогноз, его высота — насколько сходятся источники.</figcaption>
+      </figure>
     </section>
 
-    <nav class="tabs" id="tabs" role="tablist"></nav>
-    <section id="picks" class="picks" aria-live="polite"></section>
-
-    <section class="suggest" id="suggest">
-      <h2>Есть предложение?</h2>
-      <p>Идея, вид спорта, источник прогнозов или замечание — напишите, сообщение придёт напрямую автору.</p>
-      <form id="suggest-form" novalidate>
-        <textarea name="message" id="message" rows="4" maxlength="2000" placeholder="Ваше предложение…" required></textarea>
-        <div class="row">
-          <input name="contact" id="contact" maxlength="100" placeholder="Контакт для ответа (необязательно): @telegram или email">
-          <input name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-          <button type="submit" id="send">Отправить</button>
+    <section class="board wrap" id="board" aria-label="Прогнозы">
+      <div class="tabs-shell">
+        <div class="tabs" id="tabs" role="tablist" aria-label="Вид спорта">
+          <span class="tab-ind" id="tab-ind" aria-hidden="true"></span>
         </div>
-        <div class="status" id="status" role="status"></div>
+      </div>
+      <div class="panel" id="panel" role="tabpanel" tabindex="-1" aria-live="polite"></div>
+    </section>
+
+    <section class="suggest wrap" id="suggest" aria-labelledby="suggest-title">
+      <div class="suggest-intro">
+        <h2 id="suggest-title">Есть идея для сайта?</h2>
+        <p>Предложите вид спорта, турнир, источник прогнозов или сообщите об ошибке. Сообщение сразу придёт автору в Telegram.</p>
+      </div>
+      <form id="suggest-form" novalidate>
+        <div class="field">
+          <label for="message">Сообщение</label>
+          <textarea name="message" id="message" rows="5" maxlength="2000" required aria-describedby="msg-count"></textarea>
+          <span class="count" id="msg-count" aria-live="off">0 / 2000</span>
+        </div>
+        <div class="field">
+          <label for="contact">Контакт для ответа <span class="opt">необязательно</span></label>
+          <input name="contact" id="contact" maxlength="100" autocomplete="off" placeholder="@telegram или email">
+        </div>
+        <input name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="form-foot">
+          <button type="submit" id="send" class="btn">
+            <span class="btn-label">Отправить</span>
+            <svg class="spin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg>
+          </button>
+          <div class="status" id="status" role="status"></div>
+        </div>
       </form>
     </section>
   </main>
 
-  <footer class="wrap foot">
-    <p><b>18+</b> Прогнозы собираются автоматически из открытых источников и не являются гарантией результата. Ставки связаны с риском потери денег — играйте ответственно.</p>
+  <footer class="foot wrap">
+    <p><b>18+</b> Прогнозы собираются автоматически из открытых источников и отражают мнения их авторов. Это не гарантия результата. Ставки связаны с риском потери денег — играйте ответственно.</p>
   </footer>
 
   <script src="app.js"></script>
