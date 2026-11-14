@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Прогнозы дня — топ-5 ставок по видам спорта</title>
+  <meta name="description" content="Каждый день: топ-5 прогнозов на футбол, баскетбол, теннис, волейбол, CS2 и Dota 2, собранных из открытых источников.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap top-inner">
+      <div class="logo">Прогнозы<span>дня</span></div>
+      <div class="updated" id="updated">Загрузка…</div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <h1>Топ-5 ставок на сегодня</h1>
+      <p>Каждое утро мы собираем прогнозы с открытых сайтов и выбираем те, в которых сходятся несколько источников. У каждой ставки есть ссылки на оригиналы.</p>
+    </section>
+
+    <nav class="tabs" id="tabs" role="tablist"></nav>
+    <section id="picks" class="picks" aria-live="polite"></section>
+
+    <section class="suggest" id="suggest">
+      <h2>Есть предложение?</h2>
+      <p>Идея, вид спорта, источник прогнозов или замечание — напишите, сообщение придёт напрямую автору.</p>
+      <form id="suggest-form" novalidate>
+        <textarea name="message" id="message" rows="4" maxlength="2000" placeholder="Ваше предложение…" required></textarea>
+        <div class="row">
+          <input name="contact" id="contact" maxlength="100" placeholder="Контакт для ответа (необязательно): @telegram или email">
+          <input name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button type="submit" id="send">Отправить</button>
+        </div>
+        <div class="status" id="status" role="status"></div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="wrap foot">
+    <p><b>18+</b> Прогнозы собираются автоматически из открытых источников и не являются гарантией результата. Ставки связаны с риском потери денег — играйте ответственно.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
