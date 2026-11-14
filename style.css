@@ -47,7 +47,8 @@ a { color: var(--accent); }
 .tab .count { font-size: 12px; opacity: .7; }
 
 /* Карточки */
-.picks { display: grid; gap: 12px; min-height: 200px; }
+.picks { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; min-height: 200px; }
+.card { min-width: 0; overflow-wrap: anywhere; }
 .card {
   background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
   padding: 16px 18px; display: grid; grid-template-columns: 44px 1fr auto; gap: 4px 14px; align-items: start;
@@ -68,6 +69,18 @@ a { color: var(--accent); }
 .conf i { width: 8px; height: 8px; border-radius: 2px; background: var(--line); display: inline-block; }
 .conf i.on { background: var(--accent); }
 .srcs a { margin-right: 10px; text-decoration: none; border-bottom: 1px dotted; }
+
+.tab-ai { border-color: #3b3363; }
+.tab-ai[aria-selected="true"] { background: #a78bfa; border-color: #a78bfa; color: #1b1033; }
+.ai-note { color: var(--muted); font-size: 14px; margin: 0 0 4px; }
+.card.analysis { display: block; }
+.card.analysis .match { font-size: 19px; }
+.analysis-body p { margin: 10px 0 0; color: #c4cdd8; }
+.factors { margin: 12px 0 0; padding-left: 20px; color: #c4cdd8; }
+.factors li { margin: 4px 0; }
+.verdict { margin-top: 14px; padding: 12px 14px; border-radius: 10px; background: var(--panel-2); border-left: 3px solid #a78bfa; font-weight: 600; }
+.verdict span { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: #a78bfa; margin-bottom: 2px; }
+.card.analysis .foot-row { margin-top: 12px; }
 
 .empty { background: var(--panel); border: 1px dashed var(--line); border-radius: var(--radius); padding: 28px; text-align: center; color: var(--muted); }
 .stale { color: var(--warn); font-size: 13px; margin: 0 0 4px; }
