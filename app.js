@@ -20,12 +20,21 @@
     try { return new URL(url).hostname.replace(/^www\./, ""); } catch { return "источник"; }
   }
 
+  const hasAnalysis = () => Array.isArray(data.analysis) && data.analysis.length > 0;
+
   function renderTabs() {
     const tabs = $("#tabs");
-    tabs.innerHTML = data.sports.map((s) => `
+    let html = data.sports.map((s) => `
       <button class="tab" role="tab" data-id="${esc(s.id)}" aria-selected="${s.id === current}">
         <span>${esc(s.emoji)}</span>${esc(s.name)}<span class="count">${(s.picks || []).length}</span>
       </button>`).join("");
+    if (hasAnalysis()) {
+      html += `
+      <button class="tab tab-ai" role="tab" data-id="analysis" aria-selected="${current === "analysis"}">
+        <span>🧠</span>Разбор дня<span class="count">${data.analysis.length}</span>
+      </button>`;
+    }
+    tabs.innerHTML = html;
     tabs.querySelectorAll(".tab").forEach((b) => b.addEventListener("click", () => {
       current = b.dataset.id;
       history.replaceState(null, "", "#" + current);
@@ -34,7 +43,33 @@
     }));
   }
 
+  function srcLinks(list) {
+    return (list || []).map((s) =>
+      `<a href="${esc(s.url)}" target="_blank" rel="nofollow noopener" title="${esc(s.title)}">${esc(host(s.url))}</a>`).join("");
+  }
+
+  function renderAnalysis() {
+    const box = $("#picks");
+    box.innerHTML = `<p class="ai-note">Подробный разбор главных матчей дня: форма, составы, личные встречи и что думают аналитики. Это мнение, а не гарантия.</p>` +
+      data.analysis.map((a) => {
+        const meta = [a.sport, a.tournament, a.start].filter(Boolean).map(esc).join(" · ");
+        const paras = String(a.text || "").split(/\n+/).filter(Boolean).map((t) => `<p>${esc(t)}</p>`).join("");
+        const factors = (a.key_factors || []).map((f) => `<li>${esc(f)}</li>`).join("");
+        const srcs = srcLinks(a.sources);
+        return `
+        <article class="card analysis">
+          <div class="match">${esc(a.match)}</div>
+          <div class="meta">${meta || "&nbsp;"}</div>
+          <div class="analysis-body">${paras}</div>
+          ${factors ? `<ul class="factors">${factors}</ul>` : ""}
+          ${a.verdict ? `<div class="verdict"><span>Вывод</span>${esc(a.verdict)}</div>` : ""}
+          ${srcs ? `<div class="foot-row"><span class="srcs">Источники: ${srcs}</span></div>` : ""}
+        </article>`;
+      }).join("");
+  }
+
   function renderPicks() {
+    if (current === "analysis") return renderAnalysis();
     const box = $("#picks");
     const sport = data.sports.find((s) => s.id === current);
     if (!sport) { box.innerHTML = ""; return; }
@@ -88,7 +123,8 @@
     }
     $("#updated").textContent = data.updated_at ? "Обновлено " + fmtDate(data.updated_at) : "";
     const fromHash = location.hash.slice(1);
-    current = data.sports.some((s) => s.id === fromHash) ? fromHash : data.sports[0].id;
+    const valid = data.sports.some((s) => s.id === fromHash) || (fromHash === "analysis" && hasAnalysis());
+    current = valid ? fromHash : data.sports[0].id;
     renderTabs();
     renderPicks();
   }
