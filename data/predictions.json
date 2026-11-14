@@ -1,4 +1,59 @@
 {
-  "updated_at": null,
-  "sports": []
+  "updated_at": "2026-11-14T05:36+03:00",
+  "sports": [
+    {
+      "id": "football",
+      "name": "Футбол",
+      "emoji": "⚽",
+      "picks": [],
+      "updated_at": null,
+      "stale": true,
+      "error": "HTTP 404: [{\n  \"error\": {\n    \"code\": 404,\n    \"message\": \"This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest features and improvements. We recommend you to use the Interactions API (https://aistudio.google.co"
+    },
+    {
+      "id": "basketball",
+      "name": "Баскетбол",
+      "emoji": "🏀",
+      "picks": [],
+      "updated_at": null,
+      "stale": true,
+      "error": "HTTP 404: [{\n  \"error\": {\n    \"code\": 404,\n    \"message\": \"This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest features and improvements. We recommend you to use the Interactions API (https://aistudio.google.co"
+    },
+    {
+      "id": "tennis",
+      "name": "Теннис",
+      "emoji": "🎾",
+      "picks": [],
+      "updated_at": null,
+      "stale": true,
+      "error": "HTTP 404: [{\n  \"error\": {\n    \"code\": 404,\n    \"message\": \"This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest features and improvements. We recommend you to use the Interactions API (https://aistudio.google.co"
+    },
+    {
+      "id": "volleyball",
+      "name": "Волейбол",
+      "emoji": "🏐",
+      "picks": [],
+      "updated_at": null,
+      "stale": true,
+      "error": "HTTP 404: [{\n  \"error\": {\n    \"code\": 404,\n    \"message\": \"This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest features and improvements. We recommend you to use the Interactions API (https://aistudio.google.co"
+    },
+    {
+      "id": "cs2",
+      "name": "CS2",
+      "emoji": "🔫",
+      "picks": [],
+      "updated_at": null,
+      "stale": true,
+      "error": "HTTP 404: [{\n  \"error\": {\n    \"code\": 404,\n    \"message\": \"This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest features and improvements. We recommend you to use the Interactions API (https://aistudio.google.co"
+    },
+    {
+      "id": "dota2",
+      "name": "Dota 2",
+      "emoji": "🐉",
+      "picks": [],
+      "updated_at": null,
+      "stale": true,
+      "error": "HTTP 404: [{\n  \"error\": {\n    \"code\": 404,\n    \"message\": \"This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest features and improvements. We recommend you to use the Interactions API (https://aistudio.google.co"
+    }
+  ]
 }
