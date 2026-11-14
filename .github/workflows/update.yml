@@ -2,7 +2,7 @@ name: Обновление прогнозов
 
 on:
   schedule:
-    - cron: "0 4 * * *"   # каждый день в 07:00 по Москве (04:00 UTC)
+    - cron: "0 7 * * *"   # запасной сбор в 10:00 по Москве (07:00 UTC), если Claude ещё не обновил
   workflow_dispatch:       # кнопка «Run workflow» для ручного запуска
 
 permissions:
