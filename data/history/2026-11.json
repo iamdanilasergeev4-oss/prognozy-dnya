@@ -2462,30 +2462,177 @@
       "start_approx": false,
       "published_at": "2026-11-15T13:01+03:00",
       "model_version": "v1",
-      "tournament": "CCT 2026 South America Series 8, тир-3",
-      "match": "Galorys — AXORFY",
-      "start": "15.11, 18:00 МСК",
-      "bet": "П1 (победа Galorys)",
-      "confidence": 2,
-      "reason": "Модель CS2 Observer: 61% за Galorys.",
-      "sources": [
+      "market_prob": 0.741,
+      "status": "pending",
+      "result": null,
+      "versions": [
         {
-          "title": "CS2 Observer — прогнозы модели",
-          "url": "https://www.cs2observer.com/predictions"
+          "at": "2026-11-15T13:01+03:00",
+          "replaced_at": "2026-11-15T14:15+03:00",
+          "reason": "плановое обновление",
+          "snapshot": {
+            "tournament": "CCT 2026 South America Series 8, тир-3",
+            "match": "Galorys — AXORFY",
+            "start": "15.11, 18:00 МСК",
+            "bet": "П1 (победа Galorys)",
+            "confidence": 2,
+            "reason": "Модель CS2 Observer: 61% за Galorys.",
+            "sources": [
+              {
+                "title": "CS2 Observer — прогнозы модели",
+                "url": "https://www.cs2observer.com/predictions"
+              }
+            ]
+          }
         }
       ],
-      "market_prob": null,
-      "status": "withdrawn",
-      "result": null,
-      "versions": [],
       "status_log": [
         {
           "at": "2026-11-15T13:49+03:00",
           "from": "pending",
           "to": "withdrawn",
           "note": "снят с публикации до начала события"
+        },
+        {
+          "at": "2026-11-15T14:15+03:00",
+          "from": "withdrawn",
+          "to": "pending",
+          "note": "прогноз снова опубликован до начала"
         }
-      ]
+      ],
+      "tournament": "CCT South America 2026 Series 8, плей-офф, полуфинал, тир-3",
+      "match": "Galorys — AXORFY",
+      "start": "15.11, 18:00 МСК",
+      "bet": "П1 (победа Galorys)",
+      "odds": "1.35",
+      "confidence": 3,
+      "reason": "У Galorys большая и стабильная статистика за полгода, а AXORFY — новый состав всего с двумя записанными матчами против слабых соперников.",
+      "facts": [
+        "Galorys выигрывает 61% матчей за последние полгода (bo3.gg)",
+        "Galorys: 78% побед на Ancient на выборке из 46 карт — надёжный собственный пик",
+        "У AXORFY всего 2 записанных матча (2:1 и 2:0), соперники — 112-е и 222-е места мирового рейтинга",
+        "Galorys вчера выиграла дважды подряд: 2:0 и 2:1 (RED Canids Academy)"
+      ],
+      "against": [
+        "AXORFY пока не проигрывала — 100% побед, хотя на крошечной выборке",
+        "Galorys дважды за две недели проиграла Procyon 1:2",
+        "Слабая карта Galorys — Inferno: 25% побед на 16 картах"
+      ],
+      "uncertainty": "Об AXORFY почти нет данных: сила состава против команд уровня Galorys неизвестна.",
+      "data_quality": {
+        "level": "medium",
+        "note": "статистика из одного источника (bo3.gg); HLTV закрыт проверкой на робота"
+      },
+      "sources": [
+        {
+          "title": "bo3.gg — Galorys vs AXORFY",
+          "url": "https://bo3.gg/ru/matches/galorys-cs-vs-axorfy-gaming-15-11-2026"
+        },
+        {
+          "title": "cyber.sports.ru — матчи CS2 15.11",
+          "url": "https://cyber.sports.ru/cs/match/2026-11-15/"
+        }
+      ],
+      "format": "BO3, онлайн",
+      "updated_at": "2026-11-15T14:15+03:00"
+    },
+    {
+      "id": "cs2-20261115-1vs6tqb",
+      "sport": "cs2",
+      "sport_name": "CS2",
+      "home": "Butterfly",
+      "away": "BAKS",
+      "event_date": "2026-11-15",
+      "start_iso": "2026-11-15T18:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-15T14:15+03:00",
+      "model_version": "v2",
+      "tournament": "NODWIN Clutch Series 14, группа, 3-й раунд, тир-3",
+      "match": "Butterfly — BAKS",
+      "start": "15.11, 18:00 МСК",
+      "bet": "П1 (победа Butterfly)",
+      "confidence": 2,
+      "reason": "Butterfly в лучшей текущей форме, а BAKS проиграли четыре из последних пяти серий.",
+      "facts": [
+        "Butterfly: 3 победы в последних 5 сериях, в том числе 2:0 над FORZE Reload (bo3.gg)",
+        "BAKS: 4 поражения в последних 5 сериях — Illyrians, Virtus.pro, ex-Zero Tenacity, Nexus",
+        "Butterfly: 64% побед на Nuke (28 карт), 71% на Mirage и Cache"
+      ],
+      "against": [
+        "У BAKS заметный рост: 58% побед за полгода против 47% за всё время",
+        "BAKS сильны на Cache — 65% на 34 картах, а это одна из карт Butterfly",
+        "В 21:00 у Butterfly ещё один матч (против Hype Tech) — возможна ротация или усталость"
+      ],
+      "uncertainty": "Очных встреч за полгода не было, коэффициентов на матч нет.",
+      "data_quality": {
+        "level": "low",
+        "note": "один источник (bo3.gg), нет линии и очных встреч"
+      },
+      "sources": [
+        {
+          "title": "bo3.gg — Butterfly vs BAKS",
+          "url": "https://bo3.gg/ru/matches/butterfly-vs-baks-esports-15-11-2026"
+        },
+        {
+          "title": "cyber.sports.ru — матчи CS2 15.11",
+          "url": "https://cyber.sports.ru/cs/match/2026-11-15/"
+        }
+      ],
+      "format": "BO3, онлайн",
+      "market_prob": null,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "cs2-20261115-e7j327",
+      "sport": "cs2",
+      "sport_name": "CS2",
+      "home": "Metizport",
+      "away": "Aces",
+      "event_date": "2026-11-15",
+      "start_iso": "2026-11-15T18:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-15T14:15+03:00",
+      "model_version": "v2",
+      "tournament": "CCT Europe 2026 Series 13, плей-офф, 1/4 финала, тир-3",
+      "match": "Metizport — Aces",
+      "start": "15.11, 18:00 МСК",
+      "bet": "П1 (победа Metizport)",
+      "odds": "1.58",
+      "confidence": 3,
+      "reason": "Metizport в лучшей форме и с чёткой системой вето, а Aces проиграли три из последних пяти матчей.",
+      "facts": [
+        "Metizport: 70% побед за последний месяц, 4 победы в последних 5 матчах (Nexus, JiJieHao, BC.Game, SNITKO) — bo3.gg",
+        "Metizport: 79% побед на Ancient (14 карт) и стабильный первый бан Dust2 в 89% случаев",
+        "Aces: 3 поражения в последних 5 матчах, в том числе 0:2 от BAKS и 1:2 от FORZE Reload"
+      ],
+      "against": [
+        "Aces держат ровные 60% побед за месяц, полгода и год",
+        "Aces вчера выиграли две серии подряд 2:0 (INFINITE, GenOne)"
+      ],
+      "uncertainty": "Очных встреч за полгода не было; по Anubis и Cache у Metizport мало карт.",
+      "data_quality": {
+        "level": "medium",
+        "note": "статистика из одного источника (bo3.gg); HLTV закрыт проверкой на робота"
+      },
+      "sources": [
+        {
+          "title": "bo3.gg — Metizport vs Aces",
+          "url": "https://bo3.gg/ru/matches/metizport-vs-team-aces-15-11-2026"
+        },
+        {
+          "title": "cyber.sports.ru — матчи CS2 15.11",
+          "url": "https://cyber.sports.ru/cs/match/2026-11-15/"
+        }
+      ],
+      "format": "BO3, онлайн",
+      "market_prob": 0.633,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
     },
     {
       "id": "tennis-20261115-dync7q",
@@ -3152,6 +3299,106 @@
         }
       ],
       "updated_at": "2026-11-15T07:16+03:00"
+    },
+    {
+      "id": "cs2-20261115-c0k9gj",
+      "sport": "cs2",
+      "sport_name": "CS2",
+      "home": "PRIVATE",
+      "away": "Betclic",
+      "event_date": "2026-11-15",
+      "start_iso": "2026-11-15T21:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-15T14:15+03:00",
+      "model_version": "v2",
+      "tournament": "CCT Europe 2026 Series 13, плей-офф, 1/4 финала, тир-3",
+      "match": "PRIVATE — Betclic",
+      "start": "15.11, 21:00 МСК",
+      "bet": "П2 (победа Betclic)",
+      "odds": "1.82",
+      "confidence": 2,
+      "reason": "Betclic на серии из пяти побед и недавно выиграла CCT Series 12, а PRIVATE нестабильна и днём играет ещё одну серию.",
+      "facts": [
+        "Betclic: 82% побед за последний месяц и 5 побед в последних 5 сериях (bo3.gg)",
+        "Betclic выиграла предыдущий турнир серии — CCT Series 12",
+        "PRIVATE проиграла 3 из последних 5 серий (BBL, Alliance, OG)",
+        "Днём PRIVATE играет с FORZE Reload в другом турнире — вечером это уже вторая серия"
+      ],
+      "against": [
+        "Месяц назад PRIVATE обыграла Betclic 2:0",
+        "PRIVATE держит 67% побед за полгода"
+      ],
+      "uncertainty": "Очная встреча говорит против прогноза — поэтому уверенность низкая.",
+      "data_quality": {
+        "level": "medium",
+        "note": "статистика из одного источника (bo3.gg); HLTV закрыт проверкой на робота"
+      },
+      "sources": [
+        {
+          "title": "bo3.gg — PRIVATE vs Betclic",
+          "url": "https://bo3.gg/ru/matches/betclic-apogee-esports-vs-private-15-11-2026"
+        },
+        {
+          "title": "cyber.sports.ru — матчи CS2 15.11",
+          "url": "https://cyber.sports.ru/cs/match/2026-11-15/"
+        }
+      ],
+      "format": "BO3, онлайн",
+      "market_prob": 0.549,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "cs2-20261115-co5s9o",
+      "sport": "cs2",
+      "sport_name": "CS2",
+      "home": "ex-Yawara",
+      "away": "BARCA",
+      "event_date": "2026-11-15",
+      "start_iso": "2026-11-15T21:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-15T14:15+03:00",
+      "model_version": "v2",
+      "tournament": "CCT South America 2026 Series 8, плей-офф, полуфинал, тир-3",
+      "match": "ex-Yawara — BARCA",
+      "start": "15.11, 21:00 МСК",
+      "bet": "П2 (победа BARCA)",
+      "odds": "1.15",
+      "confidence": 3,
+      "reason": "BARCA — 75-я команда мира и в серии побед, а у ex-Yawara нет рейтинга и всего две записанные серии против слабых соперников.",
+      "facts": [
+        "BARCA — 75-е место мирового рейтинга, у ex-Yawara рейтинга нет (bo3.gg)",
+        "BARCA выиграла 2 последние серии 2:0 и за две недели обыграла Fluxo 2:0",
+        "ex-Yawara сыграла всего 2 серии, крупнейший соперник — Isurus (162-е место)"
+      ],
+      "against": [
+        "BARCA держит лишь 50% побед и недавно проиграла Bestia и Wildcard",
+        "ex-Yawara пока не проигрывала на турнире",
+        "Кэф 1.15 — годится в основном для экспресса"
+      ],
+      "uncertainty": "Об ex-Yawara очень мало данных — реальный уровень состава неясен.",
+      "data_quality": {
+        "level": "medium",
+        "note": "статистика из одного источника (bo3.gg); HLTV закрыт проверкой на робота"
+      },
+      "sources": [
+        {
+          "title": "bo3.gg — ex-Yawara vs BARCA",
+          "url": "https://bo3.gg/ru/matches/ex-yawara-vs-barca-br-15-11-2026"
+        },
+        {
+          "title": "cyber.sports.ru — матчи CS2 15.11",
+          "url": "https://cyber.sports.ru/cs/match/2026-11-15/"
+        }
+      ],
+      "format": "BO3, онлайн",
+      "market_prob": 0.87,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
     },
     {
       "id": "cs2-20261115-v40mlo",
