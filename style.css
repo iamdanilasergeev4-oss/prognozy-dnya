@@ -581,3 +581,10 @@ textarea:focus, input:focus { outline: none; border-color: var(--accent); box-sh
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
   .updated.fresh .dot::after { display: none; }
 }
+
+/* ---------- Флаги сборных ---------- */
+.match .side, .story h3 .side { display: inline-flex; align-items: center; gap: .42em; white-space: nowrap; }
+.match .side > span, .story h3 .side > span { white-space: normal; }
+.match .vs, .story h3 .vs { color: var(--muted); font-weight: 400; }
+.crest.flag { flex: none; width: 1.32em; height: .88em; border-radius: 3px; vertical-align: -.08em; }
+.match:has(.side), .story h3:has(.side) { display: flex; flex-wrap: wrap; align-items: center; column-gap: .45em; row-gap: .15em; }
