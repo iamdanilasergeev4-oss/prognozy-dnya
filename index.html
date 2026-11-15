@@ -35,15 +35,14 @@
   <main id="main">
     <section class="hero wrap" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <h1 id="hero-title"><span class="ln">Прогнозы на сегодня</span><span class="ln">из десятков источников</span></h1>
+        <h1 id="hero-title"><span class="ln"><span>Прогнозы на сегодня</span></span><span class="ln"><span>из десятков источников</span></span></h1>
         <p class="lede">Дважды в день нейросеть собирает статистику по матчам — форму, составы, личные встречи, показатели игроков — и делает вывод только там, где хватает данных. У каждого прогноза есть факты «за» и «против» и ссылки на источники, а все прогнозы вместе с результатами хранятся в истории.</p>
       </div>
-      <figure class="pulse" id="pulse" aria-label="Сводка по видам спорта">
-        <div class="pulse-rows" id="pulse-rows">
-          <svg class="loader" viewBox="0 0 120 40" aria-hidden="true"><path d="M2 20h26l8-14 12 28 10-18 6 4h54"/></svg>
+      <div class="pulse" id="pulse" role="region" aria-label="Сводка прогнозов">
+        <div class="bd-loading" aria-hidden="true">
+          <svg class="loader" viewBox="0 0 120 40"><path d="M2 20h26l8-14 12 28 10-18 6 4h54"/></svg>
         </div>
-        <figcaption id="pulse-cap">Каждый пик — один прогноз, его высота — уверенность прогноза.</figcaption>
-      </figure>
+      </div>
     </section>
 
     <section class="board wrap" id="board" aria-label="Прогнозы">
@@ -55,7 +54,7 @@
       <div class="panel" id="panel" role="tabpanel" tabindex="-1" aria-live="polite"></div>
     </section>
 
-    <section class="history wrap" id="history" aria-labelledby="history-title">
+    <section class="history wrap" id="history" aria-labelledby="history-title" data-reveal>
       <div class="h-head">
         <div>
           <h2 id="history-title">История прогнозов</h2>
@@ -69,12 +68,15 @@
         </div>
       </div>
       <div id="h-body">
-        <div class="kpis" id="h-kpi" aria-live="polite"></div>
+        <div class="h-summary">
+          <div class="acc-card" id="h-acc" aria-live="polite"></div>
+          <div class="kpis" id="h-kpi"></div>
+        </div>
         <p class="kpi-note" id="h-kpi-note"></p>
         <div class="charts">
-          <figure class="chart-box wide"><figcaption>Динамика точности</figcaption><div id="h-timeline"></div></figure>
-          <figure class="chart-box"><figcaption>Точность по видам спорта</figcaption><div id="h-sports"></div></figure>
-          <figure class="chart-box"><figcaption>Уверенность прогноза и фактический результат</figcaption><div id="h-cal"></div></figure>
+          <figure class="chart-box wide"><figcaption>Динамика точности<small>Столбики — проверенные прогнозы по дням матчей, линия — накопленная точность за период</small></figcaption><div id="h-timeline"></div></figure>
+          <figure class="chart-box"><figcaption>Точность по видам спорта<small>Только прогнозы с известным результатом</small></figcaption><div id="h-sports"></div></figure>
+          <figure class="chart-box"><figcaption>Уверенность и фактический результат<small>Как часто сбывались прогнозы с уверенностью от 1 до 5</small></figcaption><div id="h-cal"></div></figure>
         </div>
         <div class="h-filters">
           <label><span>Вид спорта</span><select id="h-sport"><option value="">Все виды спорта</option></select></label>
@@ -93,10 +95,11 @@
       </div>
     </section>
 
-    <section class="suggest wrap" id="suggest" aria-labelledby="suggest-title">
+    <section class="suggest wrap" id="suggest" aria-labelledby="suggest-title" data-reveal>
       <div class="suggest-intro">
         <h2 id="suggest-title">Есть идея для сайта?</h2>
         <p>Предложите вид спорта, турнир, источник прогнозов или сообщите об ошибке. Сообщение сразу придёт автору в Telegram.</p>
+        <svg class="s-art" viewBox="0 0 180 70" aria-hidden="true"><path d="M4 52l34-20 30 14 36-30 30 18 40-22"/><path class="s-hot" d="M68 46l36-30 30 18"/><circle cx="134" cy="34" r="3.2"/></svg>
       </div>
       <form id="suggest-form" novalidate>
         <div class="field">
