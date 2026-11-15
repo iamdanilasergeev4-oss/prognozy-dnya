@@ -19,6 +19,7 @@
     cs2: '<circle cx="12" cy="12" r="7.4"/><circle cx="12" cy="12" r="1.3"/><path d="M12 1.8v5M12 17.2v5M1.8 12h5M17.2 12h5"/>',
     dota2: '<path d="M4.5 3.5h15a1 1 0 011 1v15a1 1 0 01-1 1h-15a1 1 0 01-1-1v-15a1 1 0 011-1z"/><path d="M5.5 18.5L18.5 5.5"/><path d="M6.5 9.5l1.6-1.6M15.9 16.1l1.6-1.6"/><circle cx="7" cy="17" r="1.3"/><circle cx="17" cy="7" r="1.3"/>',
     hockey: '<path d="M3.2 3.6l7.6 12.2c.5.8 1.3 1.2 2.2 1.2h3.6"/><path d="M20.8 3.6l-7.6 12.2c-.5.8-1.3 1.2-2.2 1.2H7.4"/><ellipse cx="12" cy="20.1" rx="3.1" ry="1.3"/>',
+    express: '<path d="M4 6.5h11a1.5 1.5 0 011.5 1.5v2.2a1.8 1.8 0 000 3.6V16a1.5 1.5 0 01-1.5 1.5H4A1.5 1.5 0 012.5 16v-2.2a1.8 1.8 0 000-3.6V8A1.5 1.5 0 014 6.5z"/><path d="M8 4.5h12A1.5 1.5 0 0121.5 6v10"/><path d="M6.5 12h6M6.5 9.5h3"/>',
     analysis: '<path d="M4 5.5h16M4 10h16M4 14.5h10M4 19h7"/><path d="M17 15.5l1.4 1.4 2.6-3"/>',
     generic: '<circle cx="12" cy="12" r="9.2"/><path d="M8 12h8"/>',
   };
@@ -34,7 +35,7 @@
   /* Цвет каждого вида спорта внутри общей системы */
   const COLORS = {
     football: "#72F5BB", basketball: "#FF9F5A", tennis: "#D9F36A", volleyball: "#FFD166",
-    cs2: "#65B9FF", dota2: "#FF6B7A", hockey: "#E3ECF7", analysis: "#B9A2FF",
+    cs2: "#65B9FF", dota2: "#FF6B7A", hockey: "#E3ECF7", express: "#FF8FB8", analysis: "#B9A2FF",
   };
   const colorOf = (id) => COLORS[id] || "#72F5BB";
 
@@ -120,6 +121,7 @@
     try { return new URL(url).hostname.replace(/^www\./, ""); } catch { return "источник"; }
   }
   const hasAnalysis = () => Array.isArray(data?.analysis) && data.analysis.length > 0;
+  const hasExpress = () => Array.isArray(data?.express) && data.express.length > 0;
   const allPicks = () => data.sports.flatMap((s) => (s.picks || []).map((p, i) => ({ p, i, sport: s.id, name: s.name })));
   function splitTeams(match) {
     const parts = String(match || "").split(/\s+[—–-]\s+|\s+vs\.?\s+/i);
@@ -476,6 +478,7 @@
 
   function tabList() {
     const list = data.sports.map((s) => ({ id: s.id, name: s.name, n: (s.picks || []).length }));
+    if (hasExpress()) list.push({ id: "express", name: "Экспрессы", n: data.express.length });
     if (hasAnalysis()) list.push({ id: "analysis", name: "Разбор дня", n: data.analysis.length });
     return list;
   }
@@ -652,6 +655,105 @@
     return html;
   }
 
+
+  /* ---------- Экспрессы дня ---------- */
+  const TIER = { safe: "Надёжный", mid: "Средний", bold: "Смелый" };
+  const fmtOdds = (x) => (Number(x) || 0).toFixed(2).replace(".", ",");
+  const rub = (n) => Math.round(n).toLocaleString("ru-RU").replace(/\u00a0/g, " ") + " ₽";
+  const sportById = (id) => data.sports.find((s) => s.id === id);
+  function legWhen(l) {
+    const t = Date.parse(l.start_iso);
+    if (isNaN(t)) return esc(l.start || "");
+    const now = Date.now();
+    const st = H ? H.displayStatus({ status: "pending", start_iso: l.start_iso, sport: l.sport }, now) : (now < t ? "upcoming" : "live");
+    const d = dayRel(t, now);
+    return `<span class="xl-when st-${st}">${esc(d[0].toUpperCase() + d.slice(1))}, ${hhmm(t)}${st === "live" ? " · идёт" : ""}</span>`;
+  }
+  function legPick(l) {
+    const s = sportById(l.sport);
+    return s && (s.picks || []).find((p) => p.match === l.match && p.bet === l.bet);
+  }
+  function legHTML(l, k) {
+    const s = sportById(l.sport);
+    const p = legPick(l);
+    const conf = p ? Math.max(1, Math.min(5, Number(p.confidence) || 3)) : null;
+    return `
+      <li class="xl" style="--c:${colorOf(l.sport)}">
+        <span class="xl-n">${k + 1}</span>
+        <span class="xl-ico">${icon(l.sport)}</span>
+        <div class="xl-body">
+          <div class="xl-top"><span class="xl-sport">${esc(s ? s.name : l.sport)}</span>${legWhen(l)}</div>
+          <div class="xl-match">${esc(l.match)}</div>
+          <div class="xl-bet"><span>${esc(l.bet)}</span>${conf ? `<span class="xl-conf" title="Уверенность в прогнозе">${gauge(conf)}</span>` : ""}</div>
+        </div>
+        <span class="xl-odds">${fmtOdds(l.odds)}</span>
+      </li>`;
+  }
+  function expressCard(x, i) {
+    const total = Number(x.total_odds) || (x.legs || []).reduce((a, l) => a * (Number(l.odds) || 1), 1);
+    const market = Math.round(100 / total);
+    const tier = x.tier || "mid";
+    return `
+      <article class="xp tier-${esc(tier)}" style="--i:${i}">
+        <header class="xp-head">
+          <div>
+            <span class="xp-tier">${esc(x.title || TIER[tier] || "Экспресс")}</span>
+            <h3>${(x.legs || []).length} ${plural((x.legs || []).length, "событие", "события", "событий")}</h3>
+          </div>
+          <div class="xp-total"><small>Общий коэффициент</small><b>${fmtOdds(total)}</b></div>
+        </header>
+        <ol class="xp-legs">${(x.legs || []).map(legHTML).join("")}</ol>
+        ${x.reason ? `<p class="xp-reason">${esc(x.reason)}</p>` : ""}
+        ${x.weak_link ? `<p class="xp-weak"><b>Слабое звено.</b> ${esc(x.weak_link)}</p>` : ""}
+        <footer class="xp-foot">
+          <span class="xp-mkt" title="Обратная величина общего коэффициента — оценка букмекера с учётом маржи, а не наша вероятность">Шанс по линии ≈ ${market}%</span>
+        </footer>
+      </article>`;
+  }
+  function expressHTML() {
+    const list = data.express || [];
+    return `
+      <div class="sport-head">
+        <span class="sh-ico">${icon("express", "big-ico")}</span>
+        <div><h2>Экспрессы дня</h2><p>Собраны только из прогнозов с сайта. Общий коэффициент — от 2. Если не зайдёт хотя бы одно событие, проигран весь экспресс.</p></div>
+      </div>
+      <div class="xp-list">${list.map(expressCard).join("")}</div>
+      <section class="xp-past" id="xp-past" hidden></section>`;
+  }
+  let expressPast = null;
+  async function loadExpressPast() {
+    const box = $("#xp-past");
+    if (!box) return;
+    if (!expressPast) {
+      try {
+        const r = await fetch("data/history/express.json?v=" + Date.now(), { cache: "no-store" });
+        expressPast = r.ok ? await r.json() : { expresses: [] };
+      } catch { expressPast = { expresses: [] }; }
+    }
+    const all = (expressPast.expresses || []).filter((x) => x.status !== "withdrawn").sort((a, b) => Date.parse(b.published_at) - Date.parse(a.published_at));
+    const settled = all.filter((x) => x.status === "won" || x.status === "lost");
+    if (!all.length || !$("#xp-past")) return;
+    const won = settled.filter((x) => x.status === "won");
+    const profit = settled.reduce((a, x) => a + (x.status === "won" ? 1000 * ((Number(x.settled_odds) || Number(x.total_odds)) - 1) : -1000), 0);
+    const LBL = { won: "Зашёл", lost: "Не зашёл", pending: "Ждёт результата", void: "Возврат" };
+    box.hidden = false;
+    box.innerHTML = `
+      <h3 class="xp-past-h">История экспрессов</h3>
+      <div class="xp-kpis">
+        <div><b>${settled.length}</b><span>${plural(settled.length, "рассчитан", "рассчитано", "рассчитано")}</span></div>
+        <div><b>${won.length}</b><span>${plural(won.length, "зашёл", "зашло", "зашло")}</span></div>
+        <div class="${profit >= 0 ? "pos" : "neg"}"><b>${profit >= 0 ? "+" : "−"}${rub(Math.abs(profit))}</b><span>при ставке 1 000 ₽ на каждый</span></div>
+      </div>
+      <ul class="xp-rows">${all.slice(0, 30).map((x) => `
+        <li class="xr st-${esc(x.status)}">
+          <span class="xr-d">${esc(dayShort(Date.parse(x.published_at)))}</span>
+          <span class="xr-t">${esc(x.title || TIER[x.tier] || "Экспресс")}</span>
+          <span class="xr-l">${(x.legs || []).map((l) => `<i class="lg-${esc(l.status || "pending")}" title="${esc(l.match + " — " + l.bet)}"></i>`).join("")}</span>
+          <span class="xr-o">${fmtOdds(x.settled_odds || x.total_odds)}</span>
+          <span class="xr-s">${LBL[x.status] || x.status}</span>
+        </li>`).join("")}</ul>`;
+  }
+
   /* ---------- Разбор дня ---------- */
   function sportIdByLabel(label) {
     const s = String(label || "").toLowerCase();
@@ -716,11 +818,12 @@
   }
 
   function renderPanel(animated) {
-    const html = current === "analysis" ? analysisHTML() : sportHTML(data.sports.find((s) => s.id === current));
+    const html = current === "analysis" ? analysisHTML() : current === "express" ? expressHTML() : sportHTML(data.sports.find((s) => s.id === current));
     clearTimeout(rendering);
     const paint = () => {
       panel.innerHTML = html;
       bindPanel();
+      if (current === "express") loadExpressPast();
       panel.classList.remove("leaving");
       if (!calm()) {
         panel.classList.add("entering");
