@@ -25,6 +25,7 @@
       <nav class="nav" aria-label="Разделы">
         <a href="#board" data-nav="board">Прогнозы</a>
         <a href="#analysis" data-nav="analysis" hidden>Разбор дня</a>
+        <a href="#history" data-nav="history">История</a>
         <a href="#suggest" data-nav="suggest">Предложить идею</a>
       </nav>
       <div class="updated" id="updated" aria-live="polite"><i class="dot"></i><span>Загружаем…</span></div>
@@ -35,13 +36,13 @@
     <section class="hero wrap" aria-labelledby="hero-title">
       <div class="hero-copy">
         <h1 id="hero-title"><span class="ln">Прогнозы на сегодня</span><span class="ln">из десятков источников</span></h1>
-        <p class="lede">Дважды в день нейросеть просматривает прогнозы аналитиков со всего интернета и отбирает те, в которых сходятся несколько источников. У каждого прогноза есть ссылки на оригиналы, а в «Разборе дня» — подробный анализ главных матчей.</p>
+        <p class="lede">Дважды в день нейросеть собирает статистику по матчам — форму, составы, личные встречи, показатели игроков — и делает вывод только там, где хватает данных. У каждого прогноза есть факты «за» и «против» и ссылки на источники, а все прогнозы вместе с результатами хранятся в истории.</p>
       </div>
       <figure class="pulse" id="pulse" aria-label="Сводка по видам спорта">
         <div class="pulse-rows" id="pulse-rows">
           <svg class="loader" viewBox="0 0 120 40" aria-hidden="true"><path d="M2 20h26l8-14 12 28 10-18 6 4h54"/></svg>
         </div>
-        <figcaption id="pulse-cap">Каждый пик — один прогноз, его высота — насколько сходятся источники.</figcaption>
+        <figcaption id="pulse-cap">Каждый пик — один прогноз, его высота — уверенность прогноза.</figcaption>
       </figure>
     </section>
 
@@ -52,6 +53,44 @@
         </div>
       </div>
       <div class="panel" id="panel" role="tabpanel" tabindex="-1" aria-live="polite"></div>
+    </section>
+
+    <section class="history wrap" id="history" aria-labelledby="history-title">
+      <div class="h-head">
+        <div>
+          <h2 id="history-title">История прогнозов</h2>
+          <p>Каждый прогноз сохраняется в момент публикации, а после начала матча его уже нельзя изменить. Здесь все результаты — и подтвердившиеся, и ошибочные.</p>
+        </div>
+        <div class="seg" role="group" aria-label="Период">
+          <button type="button" data-days="7" aria-pressed="false">7 дней</button>
+          <button type="button" data-days="30" aria-pressed="true">30 дней</button>
+          <button type="button" data-days="90" aria-pressed="false">90 дней</button>
+          <button type="button" data-days="0" aria-pressed="false">Всё время</button>
+        </div>
+      </div>
+      <div id="h-body">
+        <div class="kpis" id="h-kpi" aria-live="polite"></div>
+        <p class="kpi-note" id="h-kpi-note"></p>
+        <div class="charts">
+          <figure class="chart-box wide"><figcaption>Динамика точности</figcaption><div id="h-timeline"></div></figure>
+          <figure class="chart-box"><figcaption>Точность по видам спорта</figcaption><div id="h-sports"></div></figure>
+          <figure class="chart-box"><figcaption>Уверенность прогноза и фактический результат</figcaption><div id="h-cal"></div></figure>
+        </div>
+        <div class="h-filters">
+          <label><span>Вид спорта</span><select id="h-sport"><option value="">Все виды спорта</option></select></label>
+          <label><span>Статус</span><select id="h-status">
+            <option value="">Все</option>
+            <option value="won">Подтвердились</option>
+            <option value="lost">Не подтвердились</option>
+            <option value="open">Ожидают результата</option>
+            <option value="off">Не оцениваются</option>
+          </select></label>
+          <label><span>Дата матча</span><input type="date" id="h-date"></label>
+          <label class="grow"><span>Турнир или команда</span><input type="search" id="h-q" placeholder="Например, Лига наций" autocomplete="off"></label>
+          <span class="h-count" id="h-count" aria-live="polite"></span>
+        </div>
+        <div class="h-list" id="h-list"></div>
+      </div>
     </section>
 
     <section class="suggest wrap" id="suggest" aria-labelledby="suggest-title">
@@ -85,6 +124,8 @@
     <p><b>18+</b> Прогнозы собираются автоматически из открытых источников и отражают мнения их авторов. Это не гарантия результата. Ставки связаны с риском потери денег — играйте ответственно.</p>
   </footer>
 
+  <script src="js/history-core.js"></script>
   <script src="app.js"></script>
+  <script src="js/history-ui.js"></script>
 </body>
 </html>
