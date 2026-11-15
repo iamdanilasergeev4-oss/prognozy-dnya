@@ -35,7 +35,7 @@
   const EXCLUDED = new Set([STATUS.void, STATUS.cancelled, STATUS.postponed, STATUS.withdrawn]);
 
   /** Сколько длится событие (для статуса «идёт» и порога проверки результата), часы */
-  const EVENT_HOURS = { football: 2.25, basketball: 2.75, tennis: 3.5, volleyball: 2.5, cs2: 3.5, dota2: 3.5 };
+  const EVENT_HOURS = { football: 2.25, basketball: 2.75, tennis: 3.5, volleyball: 2.5, cs2: 3.5, dota2: 3.5, hockey: 2.75 };
   const eventHours = (sport) => EVENT_HOURS[sport] || 3;
 
   /* ---------------- Нормализация и идентификаторы ---------------- */
@@ -275,7 +275,7 @@
   /**
    * Возвращает won | lost | void | null (null — тип ставки не разбирается автоматически).
    * score — итоговый счёт «хозяева:гости» в порядке, как в поле match
-   *   (футбол — голы, баскетбол — очки, теннис — сеты, CS2/Dota — карты, волейбол — сеты).
+   *   (футбол — голы, баскетбол — очки, теннис — сеты, CS2/Dota — карты, волейбол — сеты; хоккей — шайбы основного времени).
    */
   function evaluateBet(bet, score) {
     const sc = parseScore(score);
