@@ -360,7 +360,7 @@
       return `
         <article class="pick${conf === top && conf >= 4 ? " lead" : ""}" style="--i:${i}">
           <div class="rank" aria-label="Место ${i + 1}">${i + 1}</div>
-          <h3 class="match">${esc(p.match)}</h3>
+          <h3 class="match">${window.Crest ? Crest.matchHTML(p.match, sport.id, esc) : esc(p.match)}</h3>
           <div class="betbox">
             <span class="bet">${esc(p.bet)}</span>
             ${p.odds ? `<span class="odds">кф<b>${esc(p.odds)}</b></span>` : ""}
@@ -406,7 +406,7 @@
         <article class="story" style="--i:${i}">
           <div class="story-side" style="--c:${colorOf(sid)}">
             <span class="story-sport">${icon(sid)}${esc(sportName || "Матч")}</span>
-            <h3>${esc(a.match)}</h3>
+            <h3>${window.Crest ? Crest.matchHTML(a.match, sid, esc) : esc(a.match)}</h3>
             ${facts(a.tournament, a.start)}
           </div>
           <div class="story-body" style="--c:${colorOf(sid)}">
