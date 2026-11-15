@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-15T07:15+03:00",
+  "updated_at": "2026-11-15T13:01+03:00",
   "source": "claude",
   "sports": [
     {
@@ -242,7 +242,7 @@
           ]
         }
       ],
-      "updated_at": "2026-11-15T07:15+03:00"
+      "updated_at": "2026-11-15T13:01+03:00"
     },
     {
       "id": "basketball",
@@ -391,25 +391,6 @@
           ]
         },
         {
-          "match": "Парма — Зенит",
-          "tournament": "Единая лига ВТБ, регулярный сезон",
-          "start": "15.11, 12:00 МСК",
-          "bet": "П2 (победа Зенита)",
-          "odds": "1.57",
-          "confidence": 3,
-          "reason": "Экспресс stavka.tv берёт фору Зенита −2.5 (1.64): Зенит выиграл 19 из 20 последних очных. Редакция страницы матча при этом ждёт упорной игры (Парма +5.5).",
-          "sources": [
-            {
-              "title": "stavka.tv — Парма — Зенит",
-              "url": "https://stavka.tv/matches/basketball/15-11-2026-parma-perm-zenit-saint-petersburg"
-            },
-            {
-              "title": "stavka.tv — экспресс дня 15.11",
-              "url": "https://stavka.tv/articles/express/express-2026-november-15"
-            }
-          ]
-        },
-        {
           "match": "Торонто — Нью-Йорк",
           "tournament": "НБА, регулярный сезон",
           "start": "16.11, 02:00 МСК",
@@ -440,7 +421,7 @@
           ]
         }
       ],
-      "updated_at": "2026-11-15T07:15+03:00"
+      "updated_at": "2026-11-15T13:01+03:00"
     },
     {
       "id": "tennis",
@@ -602,7 +583,7 @@
           ]
         }
       ],
-      "updated_at": "2026-11-15T07:15+03:00"
+      "updated_at": "2026-11-15T13:01+03:00"
     },
     {
       "id": "volleyball",
@@ -629,25 +610,6 @@
             {
               "title": "tvmag — 7-й тур Суперлиги",
               "url": "https://tvmag.ru/article/sport/2026-11-12-volleyball-superliga-muzhskaya-7-tur-na-voleybol-myach-tv-sport/"
-            }
-          ]
-        },
-        {
-          "match": "Фенербахче — Нилюфер",
-          "tournament": "Турция, Султанлар Лиги (женщины)",
-          "start": "15.11, 13:00 МСК",
-          "bet": "ТБ 131.5 очков",
-          "odds": "1.83",
-          "confidence": 3,
-          "reason": "Выбор редакции Scores24: ТБ 131.5 (≈1.83). 7 из 8 последних гостевых матчей Нилюфер ушли в ТБ 131.5; на победу Фенербахче (7-0) линия около 1.02.",
-          "sources": [
-            {
-              "title": "Scores24 — Fenerbahce vs Nilufer",
-              "url": "https://scores24.live/en/volleyball/m-15-11-2026-fenerbahce-istanbul-nilufer-belediye-bursa-prediction"
-            },
-            {
-              "title": "Scores24 — волейбол 15.11",
-              "url": "https://scores24.live/ru/volleyball/2026-11-15"
             }
           ]
         },
@@ -784,7 +746,7 @@
           ]
         }
       ],
-      "updated_at": "2026-11-15T07:15+03:00"
+      "updated_at": "2026-11-15T13:01+03:00"
     },
     {
       "id": "cs2",
@@ -792,117 +754,17 @@
       "emoji": "🔫",
       "picks": [
         {
-          "match": "Spirit — FURIA",
-          "tournament": "BLAST Rivals Fall 2026, гранд-финал (Bo5), тир-1",
-          "start": "15.11, 11:00 МСК",
-          "bet": "П1 (победа Spirit)",
-          "odds": "1.68",
-          "confidence": 4,
-          "reason": "Skin.club прогнозирует 3:2 Spirit, Hotspawn слегка за Spirit, модель CS2 Observer — 54% (кэф 1.66). Spirit выиграли 3 последние очные встречи, по картам 17:8.",
-          "sources": [
-            {
-              "title": "Skin.club — Spirit vs FURIA",
-              "url": "https://community.skin.club/en/news/prediction-for-spirit-vs-furia-at-blast-rivals-2026-season-2"
-            },
-            {
-              "title": "Hotspawn — Grand Final Preview",
-              "url": "https://www.hotspawn.com/counter-strike/news/blast-rivals-hong-kong-2026-grand-final-preview"
-            },
-            {
-              "title": "CS2 Observer — прогнозы модели",
-              "url": "https://www.cs2observer.com/predictions"
-            },
-            {
-              "title": "esports.ru — Spirit vs FURIA",
-              "url": "https://esports.ru/counter-strike-2/forecasts/ts-vs-furia-15-11-2026-cs2/"
-            }
-          ]
-        },
-        {
-          "match": "Virtus.pro — Hype Tech",
-          "tournament": "CCT 2026 Europe Series #13, четвертьфинал, тир-2",
-          "start": "15.11, 12:00 МСК",
-          "bet": "П1 (победа Virtus.pro)",
-          "odds": "1.42",
-          "confidence": 4,
-          "reason": "Модель CS2 Observer — 83% за VP, stavka.tv ждёт 2:1 VP. У VP 6 побед подряд и 30-е место в VRS против 66-го.",
-          "sources": [
-            {
-              "title": "stavka.tv — Virtus.pro — Hype Tech",
-              "url": "https://stavka.tv/matches/csgo/15-11-2026-virtus-pro-hype-tech"
-            },
-            {
-              "title": "CS2 Observer — прогнозы модели",
-              "url": "https://www.cs2observer.com/predictions"
-            },
-            {
-              "title": "esports.ru — VP vs Hype Tech",
-              "url": "https://esports.ru/counter-strike-2/forecasts/vp-vs-ht-15-11-2026-cs2/"
-            }
-          ]
-        },
-        {
-          "match": "Walczaki — MOUZ NXT",
-          "tournament": "CCT 2026 Europe Series #14, тир-3",
-          "start": "15.11, 12:00 МСК",
-          "bet": "П1 (победа Walczaki)",
-          "odds": "1.48",
-          "confidence": 4,
-          "reason": "stavka.tv ставит на Walczaki за 1.48 (74%), модель CS2 Observer — 62%. У MOUZ NXT 5 поражений подряд на Nuke.",
-          "sources": [
-            {
-              "title": "stavka.tv — Walczaki — MOUZ NXT",
-              "url": "https://stavka.tv/matches/csgo/15-11-2026-walczaki-mouz-nxt"
-            },
-            {
-              "title": "CS2 Observer — прогнозы модели",
-              "url": "https://www.cs2observer.com/predictions"
-            },
-            {
-              "title": "Hotspawn — CCT Europe Series #14",
-              "url": "https://www.hotspawn.com/?p=189098"
-            }
-          ]
-        },
-        {
-          "match": "HEROIC — magic",
-          "tournament": "PGL Cluj-Napoca 2027, закрытая квалификация",
-          "start": "15.11, 12:00 МСК",
-          "bet": "П1 (победа HEROIC)",
-          "odds": "1.63",
-          "confidence": 3,
-          "reason": "Модель CS2 Observer — 67% за HEROIC, stavka.tv считает HEROIC фаворитом и ждёт 2:1 (основной пик — ТБ 2.5 карт).",
-          "sources": [
-            {
-              "title": "stavka.tv — magic — HEROIC",
-              "url": "https://stavka.tv/matches/csgo/15-11-2026-magic-heroic"
-            },
-            {
-              "title": "CS2 Observer — прогнозы модели",
-              "url": "https://www.cs2observer.com/predictions"
-            },
-            {
-              "title": "esports.ru — HEROIC vs magic",
-              "url": "https://esports.ru/counter-strike-2/forecasts/hero-vs-mgc-15-11-2026-cs2/"
-            }
-          ]
-        },
-        {
-          "match": "FaZe — fnatic",
-          "tournament": "PGL Cluj-Napoca 2027, закрытая квалификация",
-          "start": "15.11, 12:00 МСК",
-          "bet": "П2 (победа fnatic)",
+          "match": "The Last Resort — Ryvex",
+          "tournament": "UKIC Masters Winter 2026, тир-3",
+          "start": "16.11, 23:15 МСК",
+          "bet": "П1 (победа The Last Resort)",
           "odds": "",
-          "confidence": 2,
-          "reason": "Оценка по модели: CS2 Observer — 61% за fnatic; по esports.ru у FaZe 3 поражения 1:2 в последних 5 матчах.",
+          "confidence": 3,
+          "reason": "Модель CS2 Observer: 67% за The Last Resort.",
           "sources": [
             {
               "title": "CS2 Observer — прогнозы модели",
               "url": "https://www.cs2observer.com/predictions"
-            },
-            {
-              "title": "esports.ru — fnatic vs FaZe",
-              "url": "https://esports.ru/counter-strike-2/forecasts/faze-vs-fnc-15-11-2026-cs2/"
             }
           ]
         },
@@ -947,7 +809,7 @@
           "bet": "П1 (победа Leo)",
           "odds": "",
           "confidence": 2,
-          "reason": "Оценка по модели: CS2 Observer — 67% за Leo.",
+          "reason": "Модель CS2 Observer: 67% за Leo.",
           "sources": [
             {
               "title": "CS2 Observer — прогнозы модели",
@@ -956,25 +818,6 @@
             {
               "title": "Hotspawn — CCT Europe Series #14",
               "url": "https://www.hotspawn.com/?p=189098"
-            }
-          ]
-        },
-        {
-          "match": "ex-RUSTEC — Drama",
-          "tournament": "NODWIN Clutch Series 14, тир-3",
-          "start": "15.11, 12:00 МСК",
-          "bet": "П1 (победа ex-RUSTEC)",
-          "odds": "",
-          "confidence": 2,
-          "reason": "Оценка по модели: CS2 Observer — 65% за ex-RUSTEC.",
-          "sources": [
-            {
-              "title": "CS2 Observer — прогнозы модели",
-              "url": "https://www.cs2observer.com/predictions"
-            },
-            {
-              "title": "esports.ru — прогнозы CS2",
-              "url": "https://esports.ru/forecasts-cs2/"
             }
           ]
         },
@@ -992,38 +835,30 @@
               "url": "https://www.cs2observer.com/predictions"
             }
           ]
+        },
+        {
+          "match": "Galorys — AXORFY",
+          "tournament": "CCT 2026 South America Series 8, тир-3",
+          "start": "15.11, 18:00 МСК",
+          "bet": "П1 (победа Galorys)",
+          "odds": "",
+          "confidence": 2,
+          "reason": "Модель CS2 Observer: 61% за Galorys.",
+          "sources": [
+            {
+              "title": "CS2 Observer — прогнозы модели",
+              "url": "https://www.cs2observer.com/predictions"
+            }
+          ]
         }
       ],
-      "updated_at": "2026-11-15T07:15+03:00"
+      "updated_at": "2026-11-15T13:01+03:00"
     },
     {
       "id": "dota2",
       "name": "Dota 2",
       "emoji": "🐉",
       "picks": [
-        {
-          "match": "PARIVISION — GamerLegion",
-          "tournament": "1win Essence III, плей-офф, тир-2",
-          "start": "15.11, 13:00 МСК",
-          "bet": "П1 (победа PARIVISION)",
-          "odds": "1.12",
-          "confidence": 3,
-          "reason": "Линия 1.12 против 6.30, stavka.tv тоже ждёт победу PARIVISION (2:0 за 1.46). В группе PARIVISION 2:0 и 2:0, GamerLegion отдавал карты Aurora и CyberHero.",
-          "sources": [
-            {
-              "title": "stavka.tv — PARIVISION — GamerLegion",
-              "url": "https://stavka.tv/matches/dota2/15-11-2026-parivision-gamerlegion"
-            },
-            {
-              "title": "spilled.gg — Essence III odds",
-              "url": "https://spilled.gg/1win-essence-iii-winner-odds/"
-            },
-            {
-              "title": "cybersport.ru — Essence III",
-              "url": "https://www.cybersport.ru/tournaments/dota-2/1w-essence-iii?bracket=10011607"
-            }
-          ]
-        },
         {
           "match": "Aurora — DO KONCA",
           "tournament": "1win Essence III, плей-офф, тир-2",
@@ -1124,6 +959,29 @@
           ]
         },
         {
+          "match": "Froglings — LEGION",
+          "tournament": "1win Essence III, плей-офф, 1/4 финала верхней сетки (Bo3), тир-1",
+          "start": "15.11, 16:00 МСК",
+          "bet": "П1 (победа Froglings)",
+          "odds": "",
+          "confidence": 2,
+          "reason": "Готового экспертного прогноза нет — оценка по статистике: в крупных турнирах с февраля 2025 у Froglings 70% побед (14-6), у LEGION — 52% (25-23) по Dota2ProTracker. В группе Froglings обыграли Spirit 2:0 и заняли 1-е место.",
+          "sources": [
+            {
+              "title": "Dota2ProTracker — Froglings vs LEGION",
+              "url": "https://dota2protracker.com/teams/froglings-10331884/compare/legion-10291652"
+            },
+            {
+              "title": "Field Level Media — Playoffs set for 1win Essence III",
+              "url": "https://fieldlevelmedia.com/esports/playoffs-set-for-1win-essence-iii-event/"
+            },
+            {
+              "title": "RDY.gg — 1win Essence III schedule",
+              "url": "https://rdy.gg/en/dota2/tournaments/117728"
+            }
+          ]
+        },
+        {
           "match": "InterActive Philippines — Nemiga",
           "tournament": "DreamLeague Division 2 Series 5, плей-офф, тир-2",
           "start": "15.11, 17:30 МСК",
@@ -1143,46 +1001,10 @@
           ]
         }
       ],
-      "updated_at": "2026-11-15T07:15+03:00"
+      "updated_at": "2026-11-15T13:01+03:00"
     }
   ],
   "analysis": [
-    {
-      "sport": "🔫 CS2",
-      "match": "Spirit — FURIA",
-      "tournament": "BLAST Rivals Fall 2026 (Гонконг), гранд-финал Bo5",
-      "start": "15.11, 11:00 МСК",
-      "text": "Spirit дошли до финала через FUT (2:1), G2 (2:1) и MOUZ (2:0); в полуфинале лучшим был tN1R (рейтинг 1.47). FURIA прошли Legacy 2:0, Vitality 2:1 и Falcons 2:0, у KSCERATO в полуфинале рейтинг 1.69, у molodoy — 1.59. В рейтинге HLTV FURIA вторые, Spirit четвёртые.\nОчные встречи за Spirit: три последние серии выиграны, по картам за историю 17:8 (HLTV через ESTNN). Вероятные баны — Inferno у Spirit и Anubis у FURIA; тогда Ancient и Nuke скорее за Spirit, а Dust2 и Cache ближе к FURIA.\nSkin.club прогнозирует 3:2 Spirit, Hotspawn слегка за Spirit и не ждёт 3:0, модель CS2 Observer даёт Spirit 54%. Коэффициенты около 1.66–1.69 на Spirit и 2.17–2.33 на FURIA.",
-      "key_factors": [
-        "Spirit выиграли 3 последние очные серии, по картам 17:8",
-        "Пул после банов: Ancient и Nuke за Spirit, Dust2 и Cache ближе к FURIA",
-        "Форма KSCERATO и molodoy против tN1R и donk",
-        "Bo5 — источники ждут 3:1 или 3:2"
-      ],
-      "verdict": "Небольшой перевес у Spirit — П1 за 1.66–1.69; серия, скорее всего, будет длинной.",
-      "sources": [
-        {
-          "title": "ESTNN — Spirit vs FURIA preview",
-          "url": "https://estnn.com/blast-rivals-grand-final-spirit-vs-furia-preview/"
-        },
-        {
-          "title": "Hotspawn — Grand Final Preview",
-          "url": "https://www.hotspawn.com/counter-strike/news/blast-rivals-hong-kong-2026-grand-final-preview"
-        },
-        {
-          "title": "Skin.club — Spirit vs FURIA",
-          "url": "https://community.skin.club/en/news/prediction-for-spirit-vs-furia-at-blast-rivals-2026-season-2"
-        },
-        {
-          "title": "esports.ru — Spirit vs FURIA",
-          "url": "https://esports.ru/counter-strike-2/forecasts/ts-vs-furia-15-11-2026-cs2/"
-        },
-        {
-          "title": "CS2 Observer",
-          "url": "https://www.cs2observer.com/predictions"
-        }
-      ]
-    },
     {
       "sport": "🎾 Теннис",
       "match": "Александр Зверев — Рафаэль Ходар",
@@ -1279,37 +1101,6 @@
         {
           "title": "Foresportia",
           "url": "https://www.foresportia.com/en/prediction/uefa-nations-league/spain-england-2026-11-15/"
-        }
-      ]
-    },
-    {
-      "sport": "🐉 Dota 2",
-      "match": "PARIVISION — GamerLegion",
-      "tournament": "1win Essence III, плей-офф, тир-2",
-      "start": "15.11, 13:00 МСК",
-      "text": "1win Essence III проходит 12–18 ноября: четыре группы по три команды, затем плей-офф на 8 команд с гранд-финалом Bo5. PARIVISION прошёл группу без проигранных карт (2:0 с DO KONCA и Yellow Submarine). GamerLegion уступил Aurora 1:2 и с трудом обыграл CyberHero 2:1.\nЗа три месяца PARIVISION выиграл 68% из 57 карт, GamerLegion — 53% из 85 (stavka.tv). В этом году PARIVISION выиграл две встречи из трёх, но GamerLegion побеждал 2:0 в марте; по spilled.gg для GL это первый турнир в нынешнем составе.\nЛиния: PARIVISION 1.12, GamerLegion 6.30, счёт 2:0 — 1.46. Редакция stavka.tv ставит на 2:0 и ТМ 121.5 убийств.",
-      "key_factors": [
-        "PARIVISION без проигранных карт в группе",
-        "68% против 53% выигранных карт за 3 месяца",
-        "Новый состав GamerLegion"
-      ],
-      "verdict": "Победа PARIVISION (1.12); для кэфа повыше — 2:0 (около 1.46).",
-      "sources": [
-        {
-          "title": "stavka.tv — PARIVISION — GamerLegion",
-          "url": "https://stavka.tv/matches/dota2/15-11-2026-parivision-gamerlegion"
-        },
-        {
-          "title": "spilled.gg — Essence III odds",
-          "url": "https://spilled.gg/1win-essence-iii-winner-odds/"
-        },
-        {
-          "title": "hawk.live — Essence III schedule",
-          "url": "https://hawk.live/posts/1win-essence-iii-schedule-standings-results"
-        },
-        {
-          "title": "cybersport.ru — Essence III",
-          "url": "https://www.cybersport.ru/tournaments/dota-2/1w-essence-iii?bracket=10011607"
         }
       ]
     }
