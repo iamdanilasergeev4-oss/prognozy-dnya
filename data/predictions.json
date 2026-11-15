@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-15T14:15+03:00",
+  "updated_at": "2026-11-15T19:49+03:00",
   "source": "claude",
   "sports": [
     {
@@ -180,40 +180,6 @@
             {
               "title": "Foresportia — Spain vs England",
               "url": "https://www.foresportia.com/en/prediction/uefa-nations-league/spain-england-2026-11-15/"
-            }
-          ]
-        },
-        {
-          "match": "Беларусь — Албания",
-          "tournament": "Лига наций, лига C (группа 1), 6-й тур",
-          "start": "15.11, 20:00 МСК",
-          "start_iso": "2026-11-15T20:00+03:00",
-          "bet": "ТМ 2.5",
-          "odds": "",
-          "confidence": 3,
-          "reason": "Обе команды мало забивают в этом розыгрыше, а модели ждут около двух голов на двоих.",
-          "facts": [
-            "Модель Kickoff: 1.1 гола у Беларуси и 1.2 у Албании; 71% — Беларусь забьёт не больше одного",
-            "Wincomparator оценивает ТМ 2.5 в 63% по последним 6 матчам",
-            "В сентябре Албания выиграла 2:0 — тоже меньше трёх голов"
-          ],
-          "against": [
-            "В последних 6 матчах Беларуси в среднем 2.67 гола за игру (Wincomparator)",
-            "Беларусь разгромила Сан-Марино 4:0"
-          ],
-          "uncertainty": "Матч в Будапеште, нейтральное поле; турнирная мотивация может раскрыть игру.",
-          "data_quality": {
-            "level": "medium",
-            "note": "нет xG по этим сборным"
-          },
-          "sources": [
-            {
-              "title": "Kickoff — Belarus v Albania",
-              "url": "https://www.kickoff.co.uk/uefa-nations-league-predictions-stats-odds/belarus-vs-albania/"
-            },
-            {
-              "title": "Wincomparator — Belarus vs Albania",
-              "url": "https://www.wincomparator.com/predictions/belarus-albania-8318441/"
             }
           ]
         },
@@ -405,25 +371,6 @@
           ]
         },
         {
-          "match": "Локомотив-Кубань — УНИКС",
-          "tournament": "Winline Basket Cup, группа B",
-          "start": "15.11, 14:00 МСК",
-          "bet": "П1 (победа Локомотива)",
-          "odds": "1.66",
-          "confidence": 4,
-          "reason": "П1 берут VPS (1.66 в BetBoom; Локо выиграл 5 из 6 последних) и экспресс stavka.tv (Локо обыграл УНИКС 107:80 в начале ноября и не проигрывает дома).",
-          "sources": [
-            {
-              "title": "VPS — Локомотив-Кубань — УНИКС",
-              "url": "https://www.vseprosport.ru/news/2026/11/14/lokomotiv-kuban-uniks-prognoz-kf-1-39-i-stavki-na-match-vinlajn-basket-kubok-15-noyabrya-2026-goda-ot-vps"
-            },
-            {
-              "title": "stavka.tv — экспресс дня 15.11",
-              "url": "https://stavka.tv/articles/express/express-2026-november-15"
-            }
-          ]
-        },
-        {
           "match": "Сакраменто — Оклахома-Сити",
           "tournament": "НБА, регулярный сезон",
           "start": "16.11, 05:00 МСК",
@@ -564,41 +511,6 @@
       "emoji": "🎾",
       "picks": [
         {
-          "match": "Александр Зверев — Рафаэль Ходар",
-          "tournament": "Итоговый турнир ATP, Турин, группа Макинроя",
-          "start": "15.11, не ранее 16:00 МСК",
-          "start_iso": "2026-11-15T16:00+03:00",
-          "bet": "П1 (победа Зверева)",
-          "odds": "1.42",
-          "confidence": 4,
-          "reason": "Опыт и подача Зверева на быстром закрытом харде против дебютанта, которого он уже обыгрывал.",
-          "facts": [
-            "Elo по харду (stringtension): 64.9% за Зверева",
-            "Зверев — двукратный чемпион Итогового турнира (2018, 2021), Ходар здесь дебютирует",
-            "Единственная очная встреча (четвертьфинал «Ролан Гаррос») — за Зверевым",
-            "Ходар за сезон поднялся из-за пределов топ-150 до 11-го места и попал в Турин в последний момент"
-          ],
-          "against": [
-            "Осенний спад Зверева: вылет в первом же матче в Париже",
-            "Ходар — один из самых прогрессирующих игроков сезона"
-          ],
-          "uncertainty": "Форма Зверева после поражения в Париже и то, как Ходар справится с давлением дебюта.",
-          "data_quality": {
-            "level": "medium",
-            "note": "нет свежей статистики подачи/приёма по осени"
-          },
-          "sources": [
-            {
-              "title": "Stringtension — Zverev vs Jodar",
-              "url": "https://stringtension.com/head-to-head/atp/alexander-zverev/rafael-jodar"
-            },
-            {
-              "title": "Dimers — Zverev vs Jodar",
-              "url": "https://www.dimers.com/tennis/news/alexander-zverev-vs-rafael-jodar-tennis-prediction-atp-world-tour-finals-2026-ac"
-            }
-          ]
-        },
-        {
           "match": "Мирра Андреева — Элина Свитолина",
           "tournament": "Итоговый турнир WTA, финал",
           "start": "15.11, 23:00 МСК",
@@ -708,91 +620,6 @@
       "emoji": "🏐",
       "picks": [
         {
-          "match": "Локомотив Новосибирск — Енисей",
-          "tournament": "Суперлига России (мужчины), 7-й тур",
-          "start": "15.11, 15:00 МСК",
-          "bet": "Фора 1 (−16.5 очков)",
-          "odds": "1.84",
-          "confidence": 4,
-          "reason": "Редакция stavka.tv берёт фору Локомотива −16.5 за 1.84 (60%), kushvsporte называет его явным фаворитом (П1 1.03, фора −16.5 за 1.91). Локомотив выиграл 6 последних очных матчей.",
-          "sources": [
-            {
-              "title": "stavka.tv — Локомотив — Енисей",
-              "url": "https://stavka.tv/matches/volleyball/15-11-2026-lokomotiv-novosibirsk-vc-yenisey-krasnoyarsk"
-            },
-            {
-              "title": "kushvsporte — Локомотив — Енисей",
-              "url": "https://kushvsporte.ru/event/7072295-lokomotiv-novosibirsk-enisey-krasnoyarsk"
-            },
-            {
-              "title": "tvmag — 7-й тур Суперлиги",
-              "url": "https://tvmag.ru/article/sport/2026-11-12-volleyball-superliga-muzhskaya-7-tur-na-voleybol-myach-tv-sport/"
-            }
-          ]
-        },
-        {
-          "match": "Кунео — Нумия Веро Волей Милан",
-          "tournament": "Италия, Serie A1 (женщины), 9-й тур",
-          "start": "15.11, 20:00 МСК",
-          "start_iso": "2026-11-15T20:00+03:00",
-          "bet": "П2 (победа Милана)",
-          "odds": "",
-          "confidence": 3,
-          "reason": "Лидер без поражений против команды из нижней части таблицы.",
-          "facts": [
-            "Милан — 8 побед в 8 турах, делит первое место (Corriere dello Sport)",
-            "Кунео — 1 победа и 6 поражений, 13-е место",
-            "Разница — 7 побед за 8 туров"
-          ],
-          "against": [
-            "Матч в гостях; Кунео дома опаснее"
-          ],
-          "uncertainty": "Возможная ротация Милана перед еврокубками.",
-          "data_quality": {
-            "level": "medium",
-            "note": "только турнирная таблица, без статистики атаки и приёма"
-          },
-          "sources": [
-            {
-              "title": "Corriere dello Sport — Serie A1 femminile",
-              "url": "https://www.corrieredellosport.it/news/volley/volley-femminile/volley-a1-femminile/2026/11/11-152532659/conegiano_e_milano_si_involano_in_testa"
-            },
-            {
-              "title": "BetExplorer — Cuneo fixtures",
-              "url": "https://www.betexplorer.com/volleyball/team/cuneo/48n0mV1M/fixtures/"
-            }
-          ]
-        },
-        {
-          "match": "Кьери — Мачерата",
-          "tournament": "Италия, Serie A1 (женщины), 9-й тур",
-          "start": "15.11, 19:00 МСК",
-          "start_iso": "2026-11-15T19:00+03:00",
-          "bet": "П1 (победа Кьери)",
-          "odds": "",
-          "confidence": 3,
-          "reason": "Третья команда лиги дома против одной из аутсайдеров.",
-          "facts": [
-            "Кьери — 7 побед и 1 поражение, 3-е место (Corriere dello Sport)",
-            "Мачерата — 2 победы и 6 поражений, 11-е место",
-            "Кьери играет дома"
-          ],
-          "against": [
-            "Мачерата способна навязать борьбу в отдельных партиях"
-          ],
-          "uncertainty": "Нет данных о составах.",
-          "data_quality": {
-            "level": "low",
-            "note": "только турнирная таблица"
-          },
-          "sources": [
-            {
-              "title": "Corriere dello Sport — Serie A1 femminile",
-              "url": "https://www.corrieredellosport.it/news/volley/volley-femminile/volley-a1-femminile/2026/11/11-152532659/conegiano_e_milano_si_involano_in_testa"
-            }
-          ]
-        },
-        {
           "match": "Воллей Вроцлав — Будовляни Лодзь",
           "tournament": "Польша, Tauron Liga (женщины)",
           "start": "15.11, 22:30 МСК",
@@ -830,78 +657,6 @@
       "emoji": "🔫",
       "picks": [
         {
-          "match": "Galorys — AXORFY",
-          "tournament": "CCT South America 2026 Series 8, плей-офф, полуфинал, тир-3",
-          "start": "15.11, 18:00 МСК",
-          "start_iso": "2026-11-15T18:00+03:00",
-          "format": "BO3, онлайн",
-          "bet": "П1 (победа Galorys)",
-          "odds": "1.35",
-          "confidence": 3,
-          "reason": "У Galorys большая и стабильная статистика за полгода, а AXORFY — новый состав всего с двумя записанными матчами против слабых соперников.",
-          "facts": [
-            "Galorys выигрывает 61% матчей за последние полгода (bo3.gg)",
-            "Galorys: 78% побед на Ancient на выборке из 46 карт — надёжный собственный пик",
-            "У AXORFY всего 2 записанных матча (2:1 и 2:0), соперники — 112-е и 222-е места мирового рейтинга",
-            "Galorys вчера выиграла дважды подряд: 2:0 и 2:1 (RED Canids Academy)"
-          ],
-          "against": [
-            "AXORFY пока не проигрывала — 100% побед, хотя на крошечной выборке",
-            "Galorys дважды за две недели проиграла Procyon 1:2",
-            "Слабая карта Galorys — Inferno: 25% побед на 16 картах"
-          ],
-          "uncertainty": "Об AXORFY почти нет данных: сила состава против команд уровня Galorys неизвестна.",
-          "data_quality": {
-            "level": "medium",
-            "note": "статистика из одного источника (bo3.gg); HLTV закрыт проверкой на робота"
-          },
-          "sources": [
-            {
-              "title": "bo3.gg — Galorys vs AXORFY",
-              "url": "https://bo3.gg/ru/matches/galorys-cs-vs-axorfy-gaming-15-11-2026"
-            },
-            {
-              "title": "cyber.sports.ru — матчи CS2 15.11",
-              "url": "https://cyber.sports.ru/cs/match/2026-11-15/"
-            }
-          ]
-        },
-        {
-          "match": "Metizport — Aces",
-          "tournament": "CCT Europe 2026 Series 13, плей-офф, 1/4 финала, тир-3",
-          "start": "15.11, 18:00 МСК",
-          "start_iso": "2026-11-15T18:00+03:00",
-          "format": "BO3, онлайн",
-          "bet": "П1 (победа Metizport)",
-          "odds": "1.58",
-          "confidence": 3,
-          "reason": "Metizport в лучшей форме и с чёткой системой вето, а Aces проиграли три из последних пяти матчей.",
-          "facts": [
-            "Metizport: 70% побед за последний месяц, 4 победы в последних 5 матчах (Nexus, JiJieHao, BC.Game, SNITKO) — bo3.gg",
-            "Metizport: 79% побед на Ancient (14 карт) и стабильный первый бан Dust2 в 89% случаев",
-            "Aces: 3 поражения в последних 5 матчах, в том числе 0:2 от BAKS и 1:2 от FORZE Reload"
-          ],
-          "against": [
-            "Aces держат ровные 60% побед за месяц, полгода и год",
-            "Aces вчера выиграли две серии подряд 2:0 (INFINITE, GenOne)"
-          ],
-          "uncertainty": "Очных встреч за полгода не было; по Anubis и Cache у Metizport мало карт.",
-          "data_quality": {
-            "level": "medium",
-            "note": "статистика из одного источника (bo3.gg); HLTV закрыт проверкой на робота"
-          },
-          "sources": [
-            {
-              "title": "bo3.gg — Metizport vs Aces",
-              "url": "https://bo3.gg/ru/matches/metizport-vs-team-aces-15-11-2026"
-            },
-            {
-              "title": "cyber.sports.ru — матчи CS2 15.11",
-              "url": "https://cyber.sports.ru/cs/match/2026-11-15/"
-            }
-          ]
-        },
-        {
           "match": "ex-Yawara — BARCA",
           "tournament": "CCT South America 2026 Series 8, плей-офф, полуфинал, тир-3",
           "start": "15.11, 21:00 МСК",
@@ -930,42 +685,6 @@
             {
               "title": "bo3.gg — ex-Yawara vs BARCA",
               "url": "https://bo3.gg/ru/matches/ex-yawara-vs-barca-br-15-11-2026"
-            },
-            {
-              "title": "cyber.sports.ru — матчи CS2 15.11",
-              "url": "https://cyber.sports.ru/cs/match/2026-11-15/"
-            }
-          ]
-        },
-        {
-          "match": "Butterfly — BAKS",
-          "tournament": "NODWIN Clutch Series 14, группа, 3-й раунд, тир-3",
-          "start": "15.11, 18:00 МСК",
-          "start_iso": "2026-11-15T18:00+03:00",
-          "format": "BO3, онлайн",
-          "bet": "П1 (победа Butterfly)",
-          "odds": "",
-          "confidence": 2,
-          "reason": "Butterfly в лучшей текущей форме, а BAKS проиграли четыре из последних пяти серий.",
-          "facts": [
-            "Butterfly: 3 победы в последних 5 сериях, в том числе 2:0 над FORZE Reload (bo3.gg)",
-            "BAKS: 4 поражения в последних 5 сериях — Illyrians, Virtus.pro, ex-Zero Tenacity, Nexus",
-            "Butterfly: 64% побед на Nuke (28 карт), 71% на Mirage и Cache"
-          ],
-          "against": [
-            "У BAKS заметный рост: 58% побед за полгода против 47% за всё время",
-            "BAKS сильны на Cache — 65% на 34 картах, а это одна из карт Butterfly",
-            "В 21:00 у Butterfly ещё один матч (против Hype Tech) — возможна ротация или усталость"
-          ],
-          "uncertainty": "Очных встреч за полгода не было, коэффициентов на матч нет.",
-          "data_quality": {
-            "level": "low",
-            "note": "один источник (bo3.gg), нет линии и очных встреч"
-          },
-          "sources": [
-            {
-              "title": "bo3.gg — Butterfly vs BAKS",
-              "url": "https://bo3.gg/ru/matches/butterfly-vs-baks-esports-15-11-2026"
             },
             {
               "title": "cyber.sports.ru — матчи CS2 15.11",
@@ -1008,55 +727,6 @@
               "url": "https://cyber.sports.ru/cs/match/2026-11-15/"
             }
           ]
-        },
-        {
-          "match": "PARIVISION — 33",
-          "tournament": "PGL Cluj-Napoca 2027, закрытая квалификация",
-          "start": "15.11, 15:00 МСК",
-          "bet": "П1 (победа PARIVISION)",
-          "odds": "",
-          "confidence": 2,
-          "reason": "Оценка по модели: CS2 Observer — 62% за PARIVISION.",
-          "sources": [
-            {
-              "title": "CS2 Observer — прогнозы модели",
-              "url": "https://www.cs2observer.com/predictions"
-            }
-          ]
-        },
-        {
-          "match": "Leo — The Last Resort",
-          "tournament": "CCT 2026 Europe Series #14, тир-3",
-          "start": "15.11, 15:00 МСК",
-          "bet": "П1 (победа Leo)",
-          "odds": "",
-          "confidence": 2,
-          "reason": "Модель CS2 Observer: 67% за Leo.",
-          "sources": [
-            {
-              "title": "CS2 Observer — прогнозы модели",
-              "url": "https://www.cs2observer.com/predictions"
-            },
-            {
-              "title": "Hotspawn — CCT Europe Series #14",
-              "url": "https://www.hotspawn.com/?p=189098"
-            }
-          ]
-        },
-        {
-          "match": "WW — G2 Ares",
-          "tournament": "European Pro League Series 10, тир-3",
-          "start": "15.11, 14:30 МСК",
-          "bet": "П1 (победа WW)",
-          "odds": "1.55",
-          "confidence": 2,
-          "reason": "Оценка по модели и линии: CS2 Observer — 62% за WW (1.55 против 2.30).",
-          "sources": [
-            {
-              "title": "CS2 Observer — прогнозы модели",
-              "url": "https://www.cs2observer.com/predictions"
-            }
-          ]
         }
       ],
       "updated_at": "2026-11-15T14:15+03:00"
@@ -1066,40 +736,6 @@
       "name": "Dota 2",
       "emoji": "🐉",
       "picks": [
-        {
-          "match": "Aurora — DO KONCA",
-          "tournament": "1win Essence III, плей-офф, 1/4 верхней сетки (Bo3), тир-1",
-          "start": "15.11, 19:00 МСК",
-          "start_iso": "2026-11-15T19:00+03:00",
-          "format": "BO3, онлайн",
-          "bet": "П1 (победа Aurora)",
-          "odds": "1.45",
-          "confidence": 3,
-          "reason": "Aurora выиграла группу без поражений, а у DO KONCA заметно хуже результаты по картам за последние месяцы.",
-          "facts": [
-            "Aurora выиграла группу B: 2:1 GamerLegion и 2:0 CyberHero (Field Level Media, cybersport.ru)",
-            "DO KONCA вышла со второго места группы A, уступив PARIVISION и обыграв Yellow Submarine 2:1",
-            "За 3 месяца Aurora выиграла 55% карт, DO KONCA — 35% (stavka.tv)"
-          ],
-          "against": [
-            "DO KONCA в группе проиграла первую карту Yellow Submarine, но вытащила серию — команда умеет отыгрываться"
-          ],
-          "uncertainty": "Онлайн-формат и текущий патч сглаживают разницу в классе.",
-          "data_quality": {
-            "level": "medium",
-            "note": "нет статистики по героям и патчу"
-          },
-          "sources": [
-            {
-              "title": "Field Level Media — Playoffs set for 1win Essence III",
-              "url": "https://fieldlevelmedia.com/esports/playoffs-set-for-1win-essence-iii-event/"
-            },
-            {
-              "title": "stavka.tv — Aurora — DO KONCA",
-              "url": "https://stavka.tv/matches/dota2/15-11-2026-aurora-do-konca"
-            }
-          ]
-        },
         {
           "match": "HULIGANI — CyberHero",
           "tournament": "DreamLeague Division 2 Series 5, плей-офф, тир-2",
@@ -1161,121 +797,12 @@
               "url": "https://www.dota2protips.com/tournaments/dreamleague-division-2-series-5"
             }
           ]
-        },
-        {
-          "match": "Potn9ki — Xipto Esports",
-          "tournament": "Esports Pro Circuit Season 3, тир-3",
-          "start": "15.11, 15:00 МСК",
-          "bet": "П2 (победа Xipto)",
-          "odds": "",
-          "confidence": 2,
-          "reason": "Оценка по таблице, не готовый прогноз: в группе DreamLeague Div 2 у Xipto 5-2, у Potn9ki 0-6.",
-          "sources": [
-            {
-              "title": "cyber.sports.ru — матчи Dota 2 15.11",
-              "url": "https://cyber.sports.ru/dota2/match/2026-11-15/"
-            },
-            {
-              "title": "dota2protips — DreamLeague Division 2 S5",
-              "url": "https://www.dota2protips.com/tournaments/dreamleague-division-2-series-5"
-            }
-          ]
-        },
-        {
-          "match": "Froglings — LEGION",
-          "tournament": "1win Essence III, плей-офф, 1/4 финала верхней сетки (Bo3), тир-1",
-          "start": "15.11, 16:00 МСК",
-          "bet": "П1 (победа Froglings)",
-          "odds": "",
-          "confidence": 2,
-          "reason": "Готового экспертного прогноза нет — оценка по статистике: в крупных турнирах с февраля 2025 у Froglings 70% побед (14-6), у LEGION — 52% (25-23) по Dota2ProTracker. В группе Froglings обыграли Spirit 2:0 и заняли 1-е место.",
-          "sources": [
-            {
-              "title": "Dota2ProTracker — Froglings vs LEGION",
-              "url": "https://dota2protracker.com/teams/froglings-10331884/compare/legion-10291652"
-            },
-            {
-              "title": "Field Level Media — Playoffs set for 1win Essence III",
-              "url": "https://fieldlevelmedia.com/esports/playoffs-set-for-1win-essence-iii-event/"
-            },
-            {
-              "title": "RDY.gg — 1win Essence III schedule",
-              "url": "https://rdy.gg/en/dota2/tournaments/117728"
-            }
-          ]
         }
       ],
       "updated_at": "2026-11-15T13:49+03:00"
     }
   ],
   "analysis": [
-    {
-      "sport": "🎾 Теннис",
-      "match": "Александр Зверев — Рафаэль Ходар",
-      "tournament": "Итоговый турнир ATP, Турин, группа Макинроя",
-      "start": "15.11, не ранее 16:00 МСК",
-      "text": "Итоговый открывается без Синнера и Джоковича. Зверев — первая ракетка мира: в 2026-м выиграл «Ролан Гаррос» и US Open, но после US Open у него 10–5 и поражение от Музетти в Париже. Ходар дебютирует в Турине после первого полного сезона в туре (титул в Марракеше, финалы в Вашингтоне и Шанхае) и попал сюда в последний момент; в зале этой осенью почти не выигрывал.\nЕдинственная очная встреча — четвертьфинал «Ролан Гаррос»-2026: Зверев 7:6, 6:1, 6:3. Elo stringtension даёт Звереву 64.9%, Dimers — 65%, линия 1.42 / 2.89.\nLWOS ждёт победу Зверева в трёх сетах, TennGrand — в двух, VPS ставит на фору Зверева −2.5 (1.87), livesport.ru — на ТБ 23.5 (2.00). Tennisnerd прогнозирует Ходару 0–3 в группе, но допускает, что он возьмёт сет.",
-      "key_factors": [
-        "Опыт Зверева в Турине (титулы 2018 и 2021) против дебюта Ходара",
-        "Быстрый зал под подачу Зверева",
-        "Очная встреча 1–0 в пользу Зверева",
-        "Осенний спад Зверева"
-      ],
-      "verdict": "П1 Зверев (1.42); с более высоким кэфом — фора Зверева −2.5 (1.87).",
-      "sources": [
-        {
-          "title": "Stringtension — Zverev vs Jodar",
-          "url": "https://stringtension.com/head-to-head/atp/alexander-zverev/rafael-jodar"
-        },
-        {
-          "title": "livesport.ru — Зверев — Ходар",
-          "url": "https://www.livesport.ru/tips/tennis/2026/11/15/alexander-zverev-rafael-jodar/"
-        },
-        {
-          "title": "TennGrand",
-          "url": "https://tenngrand.com/nitto-atp-finals-tennis-preview-pick-prediction-zverev-vs-jodar/"
-        },
-        {
-          "title": "LWOS — ATP Finals Day 1",
-          "url": "https://lastwordonsports.com/tennis/2026/11/14/atp-finals-day-1-predictions-zverev-jodar/"
-        },
-        {
-          "title": "VPS — Зверев — Ходар",
-          "url": "https://www.vseprosport.ru/news/2026/11/14/zverev-hodar-prognoz-kf-1-87-i-stavki-na-match-itogovogo-turnira-atp-15-nojabrja-2026-goda"
-        }
-      ]
-    },
-    {
-      "sport": "🏐 Волейбол",
-      "match": "Локомотив Новосибирск — Енисей",
-      "tournament": "Суперлига России (мужчины), 7-й тур",
-      "start": "15.11, 15:00 МСК",
-      "text": "Это единственный матч мужской Суперлиги 15 ноября — остальные игры 7-го тура прошли 12–14 ноября. Локомотив выиграл 4 матча подряд (в прошлом туре 3:0 с «Новой»), у него 56% позитивного приёма и 62% реализации атаки. Енисей нестабилен: разгром «Горького» 3:0, но перед этим 0:3 от Зенита-Казань, на выезде выиграл только у МГТУ.\nЛокомотив выиграл 6 последних очных матчей, в прошлом сезоне — 3:1 и 3:0; последний раз Енисей побеждал в чемпионате в 2019 году.\nЛиния: П1 1.03, П2 около 12, фора −16.5 — 1.84–1.91, тотал 138.5 — около 1.84. Редакция stavka.tv берёт фору −16.5 и ТМ 138.5, пользователи чаще ставят на 3:0.",
-      "key_factors": [
-        "6 очных побед Локомотива подряд",
-        "4 победы подряд у Локомотива, Енисей слаб на выезде",
-        "П1 1.03 — ценность только в форе или тотале"
-      ],
-      "verdict": "Фора Локомотива −16.5 очков за 1.84; дополнительно — ТМ 138.5.",
-      "sources": [
-        {
-          "title": "stavka.tv — Локомотив — Енисей",
-          "url": "https://stavka.tv/matches/volleyball/15-11-2026-lokomotiv-novosibirsk-vc-yenisey-krasnoyarsk"
-        },
-        {
-          "title": "kushvsporte — Локомотив — Енисей",
-          "url": "https://kushvsporte.ru/event/7072295-lokomotiv-novosibirsk-enisey-krasnoyarsk"
-        },
-        {
-          "title": "tvmag — 7-й тур",
-          "url": "https://tvmag.ru/article/sport/2026-11-12-volleyball-superliga-muzhskaya-7-tur-na-voleybol-myach-tv-sport/"
-        },
-        {
-          "title": "Scores24 — волейбол 15.11",
-          "url": "https://scores24.live/ru/volleyball/2026-11-15"
-        }
-      ]
-    },
     {
       "sport": "⚽ Футбол",
       "match": "Испания — Англия",
