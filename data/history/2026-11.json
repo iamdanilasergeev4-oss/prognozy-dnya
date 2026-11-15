@@ -62,10 +62,32 @@
         }
       ],
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "0:2",
+        "note": "6:2, 6:1 в пользу Свитолиной",
+        "sources": [
+          {
+            "title": "WTA/Sofascore — Svitolina d. Noskova 6-2, 6-1",
+            "url": "https://www.sofascore.com/news/elina-svitolina-beats-noskova-6-2-6-1-in-wta-finals-semifinal"
+          },
+          {
+            "title": "Tennis Temple — Svitolina d. Nosková 6-2, 6-1",
+            "url": "https://en.tennistemple.com/video/elina-svitolina-defeats-linda-noskova-at-fage-wta/nGjJ7"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": "6:2, 6:1 в пользу Свитолиной"
+        }
+      ],
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "cs2-20261114-1c7vnh7",
@@ -79,8 +101,22 @@
       "published_at": "2026-11-14T06:09+03:00",
       "model_version": "v1",
       "market_prob": 0.581,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "2:0",
+        "note": null,
+        "sources": [
+          {
+            "title": "bo3.gg — завершённые матчи",
+            "url": "https://bo3.gg/ru/matches/finished?date=2026-11-14"
+          },
+          {
+            "title": "Cyber.Sports.ru — CS2",
+            "url": "https://cyber.sports.ru/cs/match/2026-11-14/"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [
         {
           "at": "2026-11-14T06:09+03:00",
@@ -111,7 +147,14 @@
           }
         }
       ],
-      "status_log": [],
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": null
+        }
+      ],
       "tournament": "BLAST Rivals Fall 2026, плей-офф, тир-1",
       "match": "Spirit — MOUZ",
       "start": "14.11, 11:00 МСК",
@@ -133,7 +176,8 @@
           "url": "https://www.hltv.org/betting/analytics"
         }
       ],
-      "updated_at": "2026-11-14T06:53+03:00"
+      "updated_at": "2026-11-14T06:53+03:00",
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "cs2-20261114-tyef07",
@@ -147,8 +191,22 @@
       "published_at": "2026-11-14T06:09+03:00",
       "model_version": "v1",
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "2:0",
+        "note": null,
+        "sources": [
+          {
+            "title": "bo3.gg — завершённые матчи",
+            "url": "https://bo3.gg/ru/matches/finished?date=2026-11-14"
+          },
+          {
+            "title": "Cyber.Sports.ru — CS2",
+            "url": "https://cyber.sports.ru/cs/match/2026-11-14/"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [
         {
           "at": "2026-11-14T06:09+03:00",
@@ -170,7 +228,14 @@
           }
         }
       ],
-      "status_log": [],
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
       "tournament": "NODWIN Clutch Series 14, тир-3",
       "match": "FORZE Reload — NT",
       "start": "14.11, 12:00 МСК",
@@ -183,7 +248,8 @@
           "url": "https://www.cs2observer.com/predictions"
         }
       ],
-      "updated_at": "2026-11-14T06:53+03:00"
+      "updated_at": "2026-11-14T06:53+03:00",
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "dota2-20261114-6nwlog",
@@ -217,10 +283,32 @@
         }
       ],
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "2:0",
+        "note": null,
+        "sources": [
+          {
+            "title": "Cyber.Sports.ru — Dota 2",
+            "url": "https://cyber.sports.ru/dota2/match/2026-11-14/"
+          },
+          {
+            "title": "hawk.live — Dota 2",
+            "url": "https://hawk.live/"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "dota2-20261114-mwtivp",
@@ -286,10 +374,32 @@
         }
       ],
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "3:2",
+        "note": null,
+        "sources": [
+          {
+            "title": "Sports.ru — футбол 14.11",
+            "url": "https://www.sports.ru/football/match/2026-11-14/"
+          },
+          {
+            "title": "Sport24 — Япония — Бразилия",
+            "url": "https://sport24.ru/football/leagues/international-friendlies/match/japan-brazil-2026-11-14"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "cs2-20261114-mr3dbt",
@@ -303,8 +413,22 @@
       "published_at": "2026-11-14T06:09+03:00",
       "model_version": "v1",
       "market_prob": 0.562,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "2:0",
+        "note": null,
+        "sources": [
+          {
+            "title": "bo3.gg — завершённые матчи",
+            "url": "https://bo3.gg/ru/matches/finished?date=2026-11-14"
+          },
+          {
+            "title": "Cyber.Sports.ru — CS2",
+            "url": "https://cyber.sports.ru/cs/match/2026-11-14/"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [
         {
           "at": "2026-11-14T06:09+03:00",
@@ -331,7 +455,14 @@
           }
         }
       ],
-      "status_log": [],
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
       "tournament": "BLAST Rivals Fall 2026, плей-офф, тир-1",
       "match": "FURIA — Falcons",
       "start": "14.11, 13:30 МСК",
@@ -349,7 +480,8 @@
           "url": "https://bo3.gg/tournaments/current"
         }
       ],
-      "updated_at": "2026-11-14T06:53+03:00"
+      "updated_at": "2026-11-14T06:53+03:00",
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "dota2-20261114-leqqg6",
@@ -379,10 +511,32 @@
         }
       ],
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "2:1",
+        "note": null,
+        "sources": [
+          {
+            "title": "Cyber.Sports.ru — Dota 2",
+            "url": "https://cyber.sports.ru/dota2/match/2026-11-14/"
+          },
+          {
+            "title": "hawk.live — Dota 2",
+            "url": "https://hawk.live/"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "cs2-20261114-vogh9b",
@@ -396,8 +550,22 @@
       "published_at": "2026-11-14T06:09+03:00",
       "model_version": "v1",
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "2:0",
+        "note": null,
+        "sources": [
+          {
+            "title": "bo3.gg — завершённые матчи",
+            "url": "https://bo3.gg/ru/matches/finished?date=2026-11-14"
+          },
+          {
+            "title": "Cyber.Sports.ru — CS2",
+            "url": "https://cyber.sports.ru/cs/match/2026-11-14/"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [
         {
           "at": "2026-11-14T06:09+03:00",
@@ -419,7 +587,14 @@
           }
         }
       ],
-      "status_log": [],
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
       "tournament": "CCT Europe Series 13, тир-2",
       "match": "Virtus.pro — BAKS",
       "start": "14.11, 15:00 МСК",
@@ -432,7 +607,8 @@
           "url": "https://www.cs2observer.com/predictions"
         }
       ],
-      "updated_at": "2026-11-14T06:53+03:00"
+      "updated_at": "2026-11-14T06:53+03:00",
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "dota2-20261114-19b9bgx",
@@ -506,10 +682,32 @@
         }
       ],
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "1:2",
+        "note": null,
+        "sources": [
+          {
+            "title": "Cyber.Sports.ru — Dota 2",
+            "url": "https://cyber.sports.ru/dota2/match/2026-11-14/"
+          },
+          {
+            "title": "hawk.live — Dota 2",
+            "url": "https://hawk.live/"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "football-20261114-2inmcm",
@@ -577,10 +775,32 @@
         }
       ],
       "market_prob": 0.649,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "3:1",
+        "note": null,
+        "sources": [
+          {
+            "title": "Sportbox — результаты 14.11",
+            "url": "https://news.sportbox.ru/stats/2026-11-14"
+          },
+          {
+            "title": "Stadium.ru — 7-й тур Суперлиги",
+            "url": "https://stadium.ru/news/15-11-2026-voleibolisti-moskovskogo-dinamo-obigrali-gorkii-v-matche-sedmogo-tura-chempionata-rossii"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "cs2-20261114-1ym5c38",
@@ -594,8 +814,22 @@
       "published_at": "2026-11-14T06:09+03:00",
       "model_version": "v1",
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "2:0",
+        "note": null,
+        "sources": [
+          {
+            "title": "bo3.gg — завершённые матчи",
+            "url": "https://bo3.gg/ru/matches/finished?date=2026-11-14"
+          },
+          {
+            "title": "Cyber.Sports.ru — CS2",
+            "url": "https://cyber.sports.ru/cs/match/2026-11-14/"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [
         {
           "at": "2026-11-14T06:09+03:00",
@@ -617,7 +851,14 @@
           }
         }
       ],
-      "status_log": [],
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
       "tournament": "CCT Europe Series 14, тир-2",
       "match": "ex-RUSTEC — Honvéd",
       "start": "14.11, 18:00 МСК",
@@ -630,7 +871,8 @@
           "url": "https://www.cs2observer.com/predictions"
         }
       ],
-      "updated_at": "2026-11-14T06:53+03:00"
+      "updated_at": "2026-11-14T06:53+03:00",
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "football-20261114-4oepwb",
@@ -665,10 +907,32 @@
         }
       ],
       "market_prob": 0.546,
-      "status": "pending",
-      "result": null,
+      "status": "postponed",
+      "result": {
+        "score": null,
+        "note": "матч перенесён (Sports.ru: «Перенесен», Sky Sport DE: «Verlegt»)",
+        "sources": [
+          {
+            "title": "Sports.ru — футбол 14.11",
+            "url": "https://www.sports.ru/football/match/2026-11-14/"
+          },
+          {
+            "title": "Sky Sport — Leicester — Bradford",
+            "url": "https://sport.sky.de/"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "postponed",
+          "note": "матч перенесён (Sports.ru: «Перенесен», Sky Sport DE: «Verlegt»)"
+        }
+      ],
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "football-20261114-o8mmy",
@@ -707,10 +971,32 @@
         }
       ],
       "market_prob": 0.556,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "3:1",
+        "note": null,
+        "sources": [
+          {
+            "title": "Sports.ru — футбол 14.11",
+            "url": "https://www.sports.ru/football/match/2026-11-14/"
+          },
+          {
+            "title": "Sky Sports — Stockport 3-1 Reading",
+            "url": "https://www.skysports.com/football/news/13610273/stockport-3-1-reading"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "football-20261114-weli3i",
@@ -740,10 +1026,36 @@
         }
       ],
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "3:0",
+        "note": null,
+        "sources": [
+          {
+            "title": "Sports.ru — футбол 14.11",
+            "url": "https://www.sports.ru/football/match/2026-11-14/"
+          },
+          {
+            "title": "Sky Sports — Sheffield Wednesday 3-0 Plymouth",
+            "url": "https://www.skysports.com/football/news/13610274/sheffield-wednesday-3-0-plymouth-argyle"
+          },
+          {
+            "title": "SWFC — отчёт о матче",
+            "url": "https://www.swfc.co.uk/news/2026/november/14/report---owls-v-plymouth-argyle"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "volleyball-20261114-ne2tqt",
@@ -774,10 +1086,32 @@
         }
       ],
       "market_prob": 0.952,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "0:3",
+        "note": "23:25, 22:25, 18:25",
+        "sources": [
+          {
+            "title": "Матч ТВ — Горький — Динамо",
+            "url": "https://matchtv.ru/volleyball/matchtvnews_NI2386118_Volejbolisty_moskovskogo_Dinamo_obygrali_Gorkij_v_matche_chempionata_Rossii"
+          },
+          {
+            "title": "ВФВ — Динамо М",
+            "url": "https://volley.ru/clubs/01FW8RH0Z6DWV50QPCZ3Q60YM1"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": "23:25, 22:25, 18:25"
+        }
+      ],
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "dota2-20261114-10qeyem",
@@ -807,10 +1141,32 @@
         }
       ],
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "2:0",
+        "note": null,
+        "sources": [
+          {
+            "title": "Cyber.Sports.ru — Dota 2",
+            "url": "https://cyber.sports.ru/dota2/match/2026-11-14/"
+          },
+          {
+            "title": "hawk.live — Dota 2",
+            "url": "https://hawk.live/"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "football-20261114-1vsbgkx",
@@ -845,10 +1201,32 @@
         }
       ],
       "market_prob": 0.787,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "3:1",
+        "note": null,
+        "sources": [
+          {
+            "title": "Sports.ru — футбол 14.11",
+            "url": "https://www.sports.ru/football/match/2026-11-14/"
+          },
+          {
+            "title": "Sport24 — Норвегия — Уэльс",
+            "url": "https://sport24.ru/football/leagues/uefa-nations-league/match/norway-wales-2026-11-14"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "football-20261114-nbd4hb",
@@ -879,10 +1257,32 @@
         }
       ],
       "market_prob": 0.685,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "3:1",
+        "note": null,
+        "sources": [
+          {
+            "title": "Sports.ru — футбол 14.11",
+            "url": "https://www.sports.ru/football/match/2026-11-14/"
+          },
+          {
+            "title": "Sport24 — Норвегия — Уэльс",
+            "url": "https://sport24.ru/football/leagues/uefa-nations-league/match/norway-wales-2026-11-14"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "football-20261114-norw34",
@@ -933,8 +1333,22 @@
       "published_at": "2026-11-14T06:09+03:00",
       "model_version": "v1",
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "1:2",
+        "note": null,
+        "sources": [
+          {
+            "title": "bo3.gg — завершённые матчи",
+            "url": "https://bo3.gg/ru/matches/finished?date=2026-11-14"
+          },
+          {
+            "title": "Cyber.Sports.ru — CS2",
+            "url": "https://cyber.sports.ru/cs/match/2026-11-14/"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [
         {
           "at": "2026-11-14T06:09+03:00",
@@ -956,7 +1370,14 @@
           }
         }
       ],
-      "status_log": [],
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": null
+        }
+      ],
       "tournament": "CCT Europe Series 14, тир-2",
       "match": "BAKS — Illyrians",
       "start": "14.11, 21:00 МСК",
@@ -969,7 +1390,8 @@
           "url": "https://www.cs2observer.com/predictions"
         }
       ],
-      "updated_at": "2026-11-14T06:53+03:00"
+      "updated_at": "2026-11-14T06:53+03:00",
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "cs2-20261114-lanyra",
@@ -995,10 +1417,32 @@
         }
       ],
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "2:0",
+        "note": null,
+        "sources": [
+          {
+            "title": "bo3.gg — завершённые матчи",
+            "url": "https://bo3.gg/ru/matches/finished?date=2026-11-14"
+          },
+          {
+            "title": "Cyber.Sports.ru — CS2",
+            "url": "https://cyber.sports.ru/cs/match/2026-11-14/"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "cs2-20261114-q5u988",
@@ -1161,10 +1605,32 @@
         }
       ],
       "market_prob": 0.667,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "1:4",
+        "note": null,
+        "sources": [
+          {
+            "title": "Sports.ru — футбол 14.11",
+            "url": "https://www.sports.ru/football/match/2026-11-14/"
+          },
+          {
+            "title": "Sport24 — Португалия — Дания",
+            "url": "https://sport24.ru/football/leagues/uefa-nations-league/match/portugal-denmark-2026-11-14"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "football-20261114-7w1d2g",
@@ -1277,10 +1743,32 @@
         }
       ],
       "market_prob": 0.641,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "2:0",
+        "note": "6:3, 6:4",
+        "sources": [
+          {
+            "title": "WTA — Andreeva d. Pegula 6-3, 6-4",
+            "url": "https://www.wtatennis.com/news/4609124/mirra-andreeva-books-first-fage-wta-finals-championship-ticket-after-semifinal-win-over-jessica-pegula"
+          },
+          {
+            "title": "Sky Sports — Andreeva d. Pegula",
+            "url": "https://www.skysports.com/tennis/news/13612358/wta-finals-mirra-andreeva-eliminates-jessica-pegula-to-reach-final-winning-in-straight-sets-after-diva-criticism"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": "6:3, 6:4"
+        }
+      ],
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "basketball-20261115-1n3fgvw",
@@ -1306,10 +1794,32 @@
         }
       ],
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "108:116",
+        "note": null,
+        "sources": [
+          {
+            "title": "ESPN — NBA 14.11.2026",
+            "url": "https://www.espn.com/nba/scoreboard/_/date/20261114"
+          },
+          {
+            "title": "CBS Sports — NBA scores",
+            "url": "https://www.cbssports.com/nba/scoreboard/"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "basketball-20261115-4lhy8d",
@@ -1335,10 +1845,32 @@
         }
       ],
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "127:117",
+        "note": null,
+        "sources": [
+          {
+            "title": "ESPN — NBA 14.11.2026",
+            "url": "https://www.espn.com/nba/scoreboard/_/date/20261114"
+          },
+          {
+            "title": "CBS Sports — NBA scores",
+            "url": "https://www.cbssports.com/nba/scoreboard/"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "basketball-20261115-1o9ot2m",
@@ -1368,10 +1900,32 @@
         }
       ],
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "106:117",
+        "note": null,
+        "sources": [
+          {
+            "title": "ESPN — NBA 14.11.2026",
+            "url": "https://www.espn.com/nba/scoreboard/_/date/20261114"
+          },
+          {
+            "title": "CBS Sports — NBA scores",
+            "url": "https://www.cbssports.com/nba/scoreboard/"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "basketball-20261115-gj60um",
@@ -1426,8 +1980,22 @@
       "published_at": "2026-11-15T01:35+03:00",
       "model_version": "v1",
       "market_prob": 0.595,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "0:3",
+        "note": null,
+        "sources": [
+          {
+            "title": "bo3.gg — завершённые матчи",
+            "url": "https://bo3.gg/ru/matches/finished?date=2026-11-15"
+          },
+          {
+            "title": "Cyber.Sports.ru — CS2",
+            "url": "https://cyber.sports.ru/cs/match/2026-11-15/"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [
         {
           "at": "2026-11-15T01:35+03:00",
@@ -1453,7 +2021,14 @@
           }
         }
       ],
-      "status_log": [],
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": null
+        }
+      ],
       "tournament": "BLAST Rivals Fall 2026, гранд-финал (Bo5), тир-1",
       "match": "Spirit — FURIA",
       "start": "15.11, 11:00 МСК",
@@ -1479,7 +2054,8 @@
           "url": "https://esports.ru/counter-strike-2/forecasts/ts-vs-furia-15-11-2026-cs2/"
         }
       ],
-      "updated_at": "2026-11-15T07:16+03:00"
+      "updated_at": "2026-11-15T07:16+03:00",
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "basketball-20261115-1jphq53",
@@ -1510,10 +2086,32 @@
         }
       ],
       "market_prob": 0.637,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "71:93",
+        "note": null,
+        "sources": [
+          {
+            "title": "Legalbet — Парма — Зенит 71:93",
+            "url": "https://legalbet.ru/news/62021151-430889-zenit-uverenno-obygral-betsiti-parmu-v-edinoy-lige/"
+          },
+          {
+            "title": "vprognoze — Парма — Зенит",
+            "url": "https://vprognoze.ru/sportnews/basketball/13631283-zenit-razgromil-parmu-v-matche-edinoj-ligi-vtb.html"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "cs2-20261115-1c5bo6k",
@@ -1527,8 +2125,22 @@
       "published_at": "2026-11-15T01:35+03:00",
       "model_version": "v1",
       "market_prob": 0.613,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "1:2",
+        "note": null,
+        "sources": [
+          {
+            "title": "bo3.gg — завершённые матчи",
+            "url": "https://bo3.gg/ru/matches/finished?date=2026-11-15"
+          },
+          {
+            "title": "Cyber.Sports.ru — CS2",
+            "url": "https://cyber.sports.ru/cs/match/2026-11-15/"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [
         {
           "at": "2026-11-15T01:35+03:00",
@@ -1550,7 +2162,14 @@
           }
         }
       ],
-      "status_log": [],
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": null
+        }
+      ],
       "tournament": "PGL Cluj-Napoca 2027, закрытая квалификация",
       "match": "HEROIC — magic",
       "start": "15.11, 12:00 МСК",
@@ -1572,7 +2191,8 @@
           "url": "https://esports.ru/counter-strike-2/forecasts/hero-vs-mgc-15-11-2026-cs2/"
         }
       ],
-      "updated_at": "2026-11-15T07:16+03:00"
+      "updated_at": "2026-11-15T07:16+03:00",
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "cs2-20261115-1knof1c",
@@ -1586,8 +2206,22 @@
       "published_at": "2026-11-15T01:35+03:00",
       "model_version": "v1",
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "2:0",
+        "note": null,
+        "sources": [
+          {
+            "title": "bo3.gg — завершённые матчи",
+            "url": "https://bo3.gg/ru/matches/finished?date=2026-11-15"
+          },
+          {
+            "title": "Cyber.Sports.ru — CS2",
+            "url": "https://cyber.sports.ru/cs/match/2026-11-15/"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [
         {
           "at": "2026-11-15T01:35+03:00",
@@ -1609,7 +2243,14 @@
           }
         }
       ],
-      "status_log": [],
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
       "tournament": "NODWIN Clutch Series 14, тир-3",
       "match": "ex-RUSTEC — Drama",
       "start": "15.11, 12:00 МСК",
@@ -1626,7 +2267,8 @@
           "url": "https://esports.ru/forecasts-cs2/"
         }
       ],
-      "updated_at": "2026-11-15T07:16+03:00"
+      "updated_at": "2026-11-15T07:16+03:00",
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "cs2-20261115-7w5xfh",
@@ -1640,8 +2282,22 @@
       "published_at": "2026-11-15T01:35+03:00",
       "model_version": "v1",
       "market_prob": 0.704,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "2:0",
+        "note": null,
+        "sources": [
+          {
+            "title": "bo3.gg — завершённые матчи",
+            "url": "https://bo3.gg/ru/matches/finished?date=2026-11-15"
+          },
+          {
+            "title": "Cyber.Sports.ru — CS2",
+            "url": "https://cyber.sports.ru/cs/match/2026-11-15/"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [
         {
           "at": "2026-11-15T01:35+03:00",
@@ -1663,7 +2319,14 @@
           }
         }
       ],
-      "status_log": [],
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
       "tournament": "CCT 2026 Europe Series #13, четвертьфинал, тир-2",
       "match": "Virtus.pro — Hype Tech",
       "start": "15.11, 12:00 МСК",
@@ -1685,7 +2348,8 @@
           "url": "https://esports.ru/counter-strike-2/forecasts/vp-vs-ht-15-11-2026-cs2/"
         }
       ],
-      "updated_at": "2026-11-15T07:16+03:00"
+      "updated_at": "2026-11-15T07:16+03:00",
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "cs2-20261115-k4gsbx",
@@ -1699,8 +2363,22 @@
       "published_at": "2026-11-15T01:35+03:00",
       "model_version": "v1",
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "1:2",
+        "note": null,
+        "sources": [
+          {
+            "title": "bo3.gg — завершённые матчи",
+            "url": "https://bo3.gg/ru/matches/finished?date=2026-11-15"
+          },
+          {
+            "title": "Cyber.Sports.ru — CS2",
+            "url": "https://cyber.sports.ru/cs/match/2026-11-15/"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [
         {
           "at": "2026-11-15T01:35+03:00",
@@ -1722,7 +2400,14 @@
           }
         }
       ],
-      "status_log": [],
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
       "tournament": "PGL Cluj-Napoca 2027, закрытая квалификация",
       "match": "FaZe — fnatic",
       "start": "15.11, 12:00 МСК",
@@ -1739,7 +2424,8 @@
           "url": "https://esports.ru/counter-strike-2/forecasts/faze-vs-fnc-15-11-2026-cs2/"
         }
       ],
-      "updated_at": "2026-11-15T07:16+03:00"
+      "updated_at": "2026-11-15T07:16+03:00",
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "cs2-20261115-s7a1jg",
@@ -1753,8 +2439,22 @@
       "published_at": "2026-11-15T01:35+03:00",
       "model_version": "v1",
       "market_prob": 0.676,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "2:1",
+        "note": null,
+        "sources": [
+          {
+            "title": "bo3.gg — завершённые матчи",
+            "url": "https://bo3.gg/ru/matches/finished?date=2026-11-15"
+          },
+          {
+            "title": "Cyber.Sports.ru — CS2",
+            "url": "https://cyber.sports.ru/cs/match/2026-11-15/"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [
         {
           "at": "2026-11-15T01:35+03:00",
@@ -1776,7 +2476,14 @@
           }
         }
       ],
-      "status_log": [],
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
       "tournament": "CCT 2026 Europe Series #14, тир-3",
       "match": "Walczaki — MOUZ NXT",
       "start": "15.11, 12:00 МСК",
@@ -1798,7 +2505,8 @@
           "url": "https://www.hotspawn.com/?p=189098"
         }
       ],
-      "updated_at": "2026-11-15T07:16+03:00"
+      "updated_at": "2026-11-15T07:16+03:00",
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "dota2-20261115-1gl2d51",
@@ -1867,10 +2575,32 @@
         }
       ],
       "market_prob": 0.546,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "75:58",
+        "note": "счёт по очкам (ставка на тотал очков): партии 25:17, 25:19, 25:22, по сетам 3:0",
+        "sources": [
+          {
+            "title": "Фенербахче — официальный сайт",
+            "url": "https://www.fenerbahce.org/haberler/voleybol-kadin/2026/11/fenerbahce-medicana-3-0-nilufer-belediyespor-eker"
+          },
+          {
+            "title": "A Spor — Fenerbahçe Medicana 3-0",
+            "url": "https://www.aspor.com.tr/voleybol/2026/11/15/fenerbahce-medicana-set-vermeden-kazandi"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": "счёт по очкам (ставка на тотал очков): партии 25:17, 25:19, 25:22, по сетам 3:0"
+        }
+      ],
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "basketball-20261115-gkvovs",
@@ -1901,10 +2631,32 @@
         }
       ],
       "market_prob": 0.602,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "106:89",
+        "note": null,
+        "sources": [
+          {
+            "title": "Спорт-Экспресс — Локомотив-Кубань — УНИКС",
+            "url": "https://www.sport-express.net/basketball/vtb-league/news/lokomotiv-kuban-uniks-schet-i-rezultat-matcha-basket-cup-15-noyabrya-2026-2475207/"
+          },
+          {
+            "title": "Татар-информ — УНИКС уступил",
+            "url": "https://www.tatar-inform.ru/news/basketbolisty-uniksa-ustupili-lokomotivu-kubani-6049035"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "cs2-20261115-1qb610v",
@@ -1918,8 +2670,22 @@
       "published_at": "2026-11-14T06:53+03:00",
       "model_version": "v1",
       "market_prob": 0.645,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "1:2",
+        "note": null,
+        "sources": [
+          {
+            "title": "bo3.gg — завершённые матчи",
+            "url": "https://bo3.gg/ru/matches/finished?date=2026-11-15"
+          },
+          {
+            "title": "Cyber.Sports.ru — CS2",
+            "url": "https://cyber.sports.ru/cs/match/2026-11-15/"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [
         {
           "at": "2026-11-14T06:53+03:00",
@@ -1960,7 +2726,14 @@
           }
         }
       ],
-      "status_log": [],
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": null
+        }
+      ],
       "updated_at": "2026-11-15T07:16+03:00",
       "tournament": "European Pro League Series 10, тир-3",
       "match": "WW — G2 Ares",
@@ -1974,7 +2747,8 @@
           "title": "CS2 Observer — прогнозы модели",
           "url": "https://www.cs2observer.com/predictions"
         }
-      ]
+      ],
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "cs2-20261115-1cxfbeh",
@@ -1988,8 +2762,22 @@
       "published_at": "2026-11-15T01:35+03:00",
       "model_version": "v1",
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "0:2",
+        "note": null,
+        "sources": [
+          {
+            "title": "bo3.gg — завершённые матчи",
+            "url": "https://bo3.gg/ru/matches/finished?date=2026-11-15"
+          },
+          {
+            "title": "Cyber.Sports.ru — CS2",
+            "url": "https://cyber.sports.ru/cs/match/2026-11-15/"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [
         {
           "at": "2026-11-15T01:35+03:00",
@@ -2034,7 +2822,14 @@
           }
         }
       ],
-      "status_log": [],
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": null
+        }
+      ],
       "updated_at": "2026-11-15T13:01+03:00",
       "tournament": "CCT 2026 Europe Series #14, тир-3",
       "match": "Leo — The Last Resort",
@@ -2051,7 +2846,8 @@
           "title": "Hotspawn — CCT Europe Series #14",
           "url": "https://www.hotspawn.com/?p=189098"
         }
-      ]
+      ],
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "cs2-20261115-u4rwo7",
@@ -2065,8 +2861,22 @@
       "published_at": "2026-11-15T01:35+03:00",
       "model_version": "v1",
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "2:1",
+        "note": null,
+        "sources": [
+          {
+            "title": "bo3.gg — завершённые матчи",
+            "url": "https://bo3.gg/ru/matches/finished?date=2026-11-15"
+          },
+          {
+            "title": "Cyber.Sports.ru — CS2",
+            "url": "https://cyber.sports.ru/cs/match/2026-11-15/"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [
         {
           "at": "2026-11-15T01:35+03:00",
@@ -2088,7 +2898,14 @@
           }
         }
       ],
-      "status_log": [],
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
       "tournament": "PGL Cluj-Napoca 2027, закрытая квалификация",
       "match": "PARIVISION — 33",
       "start": "15.11, 15:00 МСК",
@@ -2101,7 +2918,8 @@
           "url": "https://www.cs2observer.com/predictions"
         }
       ],
-      "updated_at": "2026-11-15T07:16+03:00"
+      "updated_at": "2026-11-15T07:16+03:00",
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "dota2-20261115-l3bufo",
@@ -2263,8 +3081,22 @@
       "published_at": "2026-11-14T06:25+03:00",
       "model_version": "v1",
       "market_prob": 0.704,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "2:0",
+        "note": "6:4, 6:4",
+        "sources": [
+          {
+            "title": "AP — Zverev d. Jodar 6-4, 6-4",
+            "url": "https://www.wsls.com/sports/2026/11/15/zverev-opens-atp-finals-with-convincing-win-over-jodar-shelton-vs-fils-up-next/"
+          },
+          {
+            "title": "Reuters — Zverev d. Jodar",
+            "url": "https://www.1049thewolf.com/2026/11/15/tennis-zverev-cruises-past-debutant-jodar-for-atp-finals-opening-win/"
+          }
+        ],
+        "checked_at": "2026-11-15T19:49+03:00"
+      },
       "versions": [
         {
           "at": "2026-11-14T06:25+03:00",
@@ -2335,7 +3167,14 @@
           }
         }
       ],
-      "status_log": [],
+      "status_log": [
+        {
+          "at": "2026-11-15T19:49+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": "6:4, 6:4"
+        }
+      ],
       "updated_at": "2026-11-15T13:49+03:00",
       "tournament": "Итоговый турнир ATP, Турин, группа Макинроя",
       "match": "Александр Зверев — Рафаэль Ходар",
@@ -2368,7 +3207,8 @@
           "title": "Dimers — Zverev vs Jodar",
           "url": "https://www.dimers.com/tennis/news/alexander-zverev-vs-rafael-jodar-tennis-prediction-atp-world-tour-finals-2026-ac"
         }
-      ]
+      ],
+      "last_sync": "2026-11-15T19:49+03:00"
     },
     {
       "id": "volleyball-20261115-wtxe7w",
