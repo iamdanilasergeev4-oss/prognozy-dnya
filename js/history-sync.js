@@ -122,6 +122,19 @@
     // 3) результаты
     if (results.length) report.results = H.applyResults(history, results, H.toMskIso(now));
     const out = serialize(index, history, originals);
+    // 4) экспрессы: архив data/history/express.json
+    const exPath = "data/history/express.json";
+    const exBefore = await getText(RAW(sha, exPath));
+    if (exBefore != null || (next && Array.isArray(next.express) && next.express.length)) {
+      const ex = H.syncExpress(exBefore ? JSON.parse(exBefore) : null, history, next, H.toMskIso(now));
+      const exText = JSON.stringify(ex.store, null, 2) + "\n";
+      out.files[exPath] = exText;
+      if (exText !== exBefore) {
+        const k = out.changed.findIndex((c) => c.path === "data/history/index.json");
+        out.changed.splice(k < 0 ? out.changed.length : k, 0, { path: exPath, isNew: exBefore == null });
+      }
+      report.express = { ...ex.report, stats: H.expressStats(ex.store) };
+    }
     stash(out.files);
     return { sha, changed: out.changed, report, stats: H.computeStats(history.predictions, { nowMs: now.getTime() }) };
   }
