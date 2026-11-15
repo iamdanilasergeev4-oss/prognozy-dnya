@@ -41,6 +41,14 @@
   let models = {};
   let loaded = false;
 
+  const fmtDayLong = (d) => {
+    const t = new Date(d + "T12:00+03:00");
+    const today = new Date(Date.now() + 3 * 3600e3).toISOString().slice(0, 10);
+    const tom = new Date(Date.now() + 27 * 3600e3).toISOString().slice(0, 10);
+    const yes = new Date(Date.now() - 21 * 3600e3).toISOString().slice(0, 10);
+    const base = t.toLocaleDateString("ru-RU", { day: "numeric", month: "long", weekday: "short", timeZone: "Europe/Moscow" });
+    return (d === today ? "Сегодня · " : d === tom ? "Завтра · " : d === yes ? "Вчера · " : "") + base;
+  };
   const fmtDay = (d) => new Date(d + "T12:00+03:00").toLocaleDateString("ru-RU", { day: "numeric", month: "short" }).replace(".", "");
   function fmtWhen(e) {
     if (e.start_iso) {
@@ -156,7 +164,29 @@
       : `<p class="chart-note">Brier Score и Log Loss появятся, когда у прогнозов будут вероятности от моделей-источников.</p>`;
     return body + metric;
   }
-  const emptyChart = (t) => `<div class="chart-empty">${esc(t)}</div>`;
+  const emptyChart = (t) => `<div class="chart-empty"><svg viewBox="0 0 96 34" aria-hidden="true"><path d="M2 26h20l8-12 10 16 9-20 9 10h36"/></svg>${esc(t)}</div>`;
+
+  function donutHTML(s) {
+    const R = 46, C = 2 * Math.PI * R, n = s.won + s.lost;
+    const per = { 7: "7 дней", 30: "30 дней", 90: "90 дней", 0: "всё время" }[state.days] || "период";
+    const wonL = n ? (s.won / n) * C : 0, lostL = n ? (s.lost / n) * C : 0;
+    const gap = n && s.won && s.lost ? 2 : 0;
+    return `
+      <svg class="donut" viewBox="0 0 112 112" role="img" aria-label="${n ? `Точность ${s.accuracy}%: ${s.won} подтвердилось, ${s.lost} не подтвердилось` : "Нет оценённых прогнозов"}">
+        <circle class="d-bg" cx="56" cy="56" r="${R}"/>
+        ${n ? `<circle class="d-won" cx="56" cy="56" r="${R}" stroke-dasharray="${Math.max(0, wonL - gap).toFixed(2)} ${C.toFixed(2)}" transform="rotate(-90 56 56)"/>
+        <circle class="d-lost" cx="56" cy="56" r="${R}" stroke-dasharray="${Math.max(0, lostL - gap).toFixed(2)} ${C.toFixed(2)}" stroke-dashoffset="${(-wonL).toFixed(2)}" transform="rotate(-90 56 56)"/>` : ""}
+        <text class="d-val" x="56" y="60" text-anchor="middle">${n ? s.accuracy + "%" : "—"}</text>
+        <text class="d-sub" x="56" y="76" text-anchor="middle">${n ? "точность" : "нет оценок"}</text>
+      </svg>
+      <div>
+        <h3>Точность за ${esc(per)}</h3>
+        <dl>
+          <div><dt><i style="background:var(--accent)"></i>Подтвердилось</dt><dd>${s.won}</dd></div>
+          <div><dt><i style="background:var(--err)"></i>Не подтвердилось</dt><dd>${s.lost}</dd></div>
+        </dl>
+      </div>`;
+  }
 
   /* ---------- Карточки ---------- */
   function analysisBlock(e) {
@@ -220,15 +250,14 @@
     $("#h-sport").innerHTML = `<option value="">Все виды спорта</option>` +
       sports.map((id) => `<option value="${esc(id)}"${state.sport === id ? " selected" : ""}>${esc(sportName(id))}</option>`).join("");
 
+    $("#h-acc").innerHTML = donutHTML(s);
     const kpi = [
-      ["Опубликовано", s.total, ""],
-      ["Оценено", s.evaluated, ""],
-      ["Подтвердилось", s.won, "won"],
-      ["Не подтвердилось", s.lost, "lost"],
-      ["Точность", s.accuracy == null ? "—" : s.accuracy + "%", "acc"],
-      ["Без результата", s.unresolved, ""],
+      ["Опубликовано", s.total, "все прогнозы за период"],
+      ["Оценено", s.evaluated, "результат известен"],
+      ["Ожидают результата", s.unresolved, "матч впереди или идёт"],
+      ["Не оцениваются", s.excluded, "возвраты, отмены, снятые"],
     ];
-    $("#h-kpi").innerHTML = kpi.map(([t, v, k]) => `<div class="kpi ${k}"><b>${v}</b><span>${t}</span></div>`).join("");
+    $("#h-kpi").innerHTML = kpi.map(([t, v, d]) => `<div class="kpi"><b>${v}</b><span>${t}<br><small>${d}</small></span></div>`).join("");
     $("#h-kpi-note").textContent = s.excluded || s.late
       ? `Не входят в точность: ${s.excluded} (возвраты, отмены, переносы и снятые до начала)${s.late ? `, из них опубликованы после начала: ${s.late}` : ""}. Точность = подтвердившиеся / (подтвердившиеся + неподтвердившиеся).`
       : "Точность = подтвердившиеся / (подтвердившиеся + неподтвердившиеся). Возвраты и отменённые матчи не учитываются.";
@@ -237,6 +266,7 @@
     $("#h-sports").innerHTML = sportBarsHTML(s.bySport);
     $("#h-cal").innerHTML = calibrationHTML(s.byConfidence, s.probability);
 
+    const OPEN = new Set(["upcoming", "live", "awaiting", "review"]);
     const list = scope.slice().sort((a, b) => (H.startMs(b) || 0) - (H.startMs(a) || 0));
     const body = $("#h-list");
     $("#h-count").textContent = list.length
@@ -245,7 +275,21 @@
     if (!list.length) {
       body.innerHTML = `<div class="empty"><strong>${all.length ? "Ничего не найдено" : "История только начинается"}</strong><p>${all.length ? "Измените период или фильтры." : "Прогнозы попадают сюда в момент публикации, а результаты — после проверки по итогам матчей."}</p></div>`;
     } else {
-      body.innerHTML = list.slice(0, state.shown).map((e, i) => cardHTML(e, nowMs, i)).join("") +
+      const openAll = list.filter((e) => OPEN.has(H.displayStatus(e, nowMs))).sort((a, b) => (H.startMs(a) || 0) - (H.startMs(b) || 0)); // ближайшие сверху
+      const doneAll = list.filter((e) => !OPEN.has(H.displayStatus(e, nowMs)));
+      const open = openAll.slice(0, state.shown);
+      const done = doneAll.slice(0, Math.max(0, state.shown - open.length));
+      let k = 0;
+      const days = (arr) => {
+        const by = new Map();
+        arr.forEach((e) => { const d = e.event_date || "—"; if (!by.has(d)) by.set(d, []); by.get(d).push(e); });
+        return [...by.entries()].map(([d, items]) => `
+          <div class="h-day"><span class="h-date">${d === "—" ? "Дата не указана" : esc(fmtDayLong(d))}</span>
+            <div class="h-cards">${items.map((e) => cardHTML(e, nowMs, k++)).join("")}</div></div>`).join("");
+      };
+      body.innerHTML =
+        (open.length ? `<section class="h-group"><h3><i></i>Ожидают результата<small>${openAll.length}</small></h3>${days(open)}</section>` : "") +
+        (done.length ? `<section class="h-group done"><h3><i></i>Завершённые и снятые<small>${doneAll.length}</small></h3>${days(done)}</section>` : "") +
         (list.length > state.shown ? `<button class="toggle h-more" type="button">Показать ещё ${Math.min(30, list.length - state.shown)}</button>` : "");
     }
     root.classList.add("ready");
