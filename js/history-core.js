@@ -449,6 +449,87 @@
     };
   }
 
+
+  /* ---------------- Экспрессы ---------------- */
+
+  const LEG_STATUS = { won: "won", lost: "lost", void: "void", cancelled: "void", postponed: "void", withdrawn: "void" };
+
+  /** Находит запись истории для звена экспресса (по виду спорта, дате, матчу и ставке) */
+  function legEntry(history, leg) {
+    const date = leg.start_iso ? mskDateOf(leg.start_iso) : null;
+    const id = leg.hid || makeId(leg.sport, date, leg.match, leg.bet);
+    return history.predictions.find((e) => e.id === id) || null;
+  }
+
+  /** Пересчитывает статус экспресса по статусам звеньев */
+  function settleExpress(x, history) {
+    let anyLost = false, anyPending = false, allVoid = true, odds = 1;
+    for (const l of x.legs || []) {
+      const e = legEntry(history, l);
+      if (e && !l.hid) l.hid = e.id;
+      const st = e ? (LEG_STATUS[e.status] || "pending") : "pending";
+      l.status = st;
+      if (st === "lost") anyLost = true;
+      else if (st === "pending") anyPending = true;
+      if (st !== "void") allVoid = false;
+      if (st === "won") odds *= Number(l.odds) || 1;
+    }
+    const prev = x.status;
+    x.status = anyLost ? "lost" : anyPending ? "pending" : allVoid ? "void" : "won";
+    x.settled_odds = x.status === "won" ? Math.round(odds * 100) / 100 : null;
+    return prev !== x.status;
+  }
+
+  /**
+   * Синхронизирует архив экспрессов с новым файлом прогнозов и историей.
+   * store — { schema, expresses: [] }; next — новый predictions.json или null; at — время публикации.
+   * Экспресс можно заменить только до начала первого события; после — он фиксируется.
+   * Экспресс, убранный из файла до начала первого события, помечается снятым и не учитывается.
+   */
+  function syncExpress(store, history, next, at) {
+    store = store && Array.isArray(store.expresses) ? store : { schema: SCHEMA_VERSION, expresses: [] };
+    const report = { added: [], replaced: [], withdrawn: [], settled: [] };
+    const atMs = Date.parse(at);
+    const firstStart = (x) => Math.min(...(x.legs || []).map((l) => Date.parse(l.start_iso)).filter((t) => !isNaN(t)));
+    const byId = new Map(store.expresses.map((x) => [x.id, x]));
+    if (next && Array.isArray(next.express)) {
+      const seen = new Set();
+      for (const src of next.express) {
+        if (!src || !src.id || !(src.legs || []).length) continue;
+        seen.add(src.id);
+        const legs = src.legs.map((l) => ({ sport: l.sport, match: l.match, bet: l.bet, odds: Number(l.odds) || null, start_iso: l.start_iso || null }));
+        const total = Math.round(legs.reduce((a, l) => a * (l.odds || 1), 1) * 100) / 100;
+        const item = { id: src.id, tier: src.tier || "mid", title: src.title || "", legs, total_odds: total, reason: src.reason || "", weak_link: src.weak_link || "", published_at: at, status: "pending" };
+        const old = byId.get(src.id);
+        if (!old) { store.expresses.push(item); byId.set(item.id, item); report.added.push(item.id); continue; }
+        if (old.status === "withdrawn" && atMs < firstStart(old)) { old.status = "pending"; report.added.push(old.id); }
+        const same = JSON.stringify(old.legs.map((l) => [l.sport, l.match, l.bet, l.odds])) === JSON.stringify(legs.map((l) => [l.sport, l.match, l.bet, l.odds]));
+        if (!same && atMs < firstStart(old)) {
+          (old.versions = old.versions || []).push({ replaced_at: at, legs: old.legs, total_odds: old.total_odds });
+          Object.assign(old, { ...item, published_at: old.published_at, updated_at: at, versions: old.versions });
+          report.replaced.push(old.id);
+        }
+      }
+      for (const x of store.expresses) {
+        if (x.status === "pending" && !seen.has(x.id) && atMs < firstStart(x)) { x.status = "withdrawn"; report.withdrawn.push(x.id); }
+      }
+    }
+    for (const x of store.expresses) {
+      if (x.status === "withdrawn") continue;
+      if (settleExpress(x, history) && x.status !== "pending") report.settled.push(x.id);
+    }
+    store.expresses.sort((a, b) => Date.parse(a.published_at) - Date.parse(b.published_at) || a.id.localeCompare(b.id));
+    return { store, report };
+  }
+
+  /** Статистика экспрессов: ставка 1000 на каждый рассчитанный */
+  function expressStats(store) {
+    const list = (store && store.expresses) || [];
+    const won = list.filter((x) => x.status === "won"), lost = list.filter((x) => x.status === "lost");
+    const profit = won.reduce((a, x) => a + 1000 * ((x.settled_odds || x.total_odds) - 1), 0) - 1000 * lost.length;
+    return { total: list.length, won: won.length, lost: lost.length, pending: list.filter((x) => x.status === "pending").length, profit: Math.round(profit) };
+  }
+
   /* ---------------- Шардирование по месяцам ---------------- */
 
   const monthOf = (e) => (e.event_date || mskDateOf(e.published_at) || "0000-00").slice(0, 7);
@@ -479,6 +560,7 @@
     snapshot, marketProb, qualityIssues,
     emptyHistory, archive, evaluateBet, parseScore, applyResults,
     displayStatus, dueForCheck, computeStats, splitByMonth, mergeMonths, monthOf,
+    syncExpress, settleExpress, expressStats,
   };
   root.HistoryCore = api;
 })(typeof window !== "undefined" ? window : globalThis);
