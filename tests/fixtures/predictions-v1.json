@@ -1,0 +1,170 @@
+{
+  "updated_at": "2026-11-15T01:45+03:00",
+  "source": "claude",
+  "sports": [
+    {
+      "id": "football",
+      "name": "Футбол",
+      "emoji": "⚽",
+      "picks": [
+        {
+          "match": "Финляндия — Сан-Марино",
+          "tournament": "Лига наций, лига C (группа 1)",
+          "start": "15.11, 20:00 МСК",
+          "bet": "П1 (победа Финляндии)",
+          "odds": "",
+          "confidence": 4,
+          "reason": "Kickoff ждёт 2.4 гола Финляндии против 0.7 у Сан-Марино. Сан-Марино не забивает 14 матчей ЛН подряд и проиграл все пять последних игр; в сентябре Финляндия выиграла в гостях 7:0.",
+          "sources": [
+            {
+              "title": "Kickoff — Finland v San Marino",
+              "url": "https://www.kickoff.co.uk/uefa-nations-league-predictions-stats-odds/finland-vs-san-marino/"
+            },
+            {
+              "title": "BetMines — Finland vs San Marino",
+              "url": "https://betmines.com/matches/predictions-finland-san-marino_19676748"
+            }
+          ]
+        },
+        {
+          "match": "Франция — Турция",
+          "tournament": "Лига наций, лига A (группа 1)",
+          "start": "15.11, 22:45 МСК",
+          "bet": "П1 (победа Франции)",
+          "odds": "1.14",
+          "confidence": 4,
+          "reason": "Сходятся три модели: Foresportia даёт Франции 66.9%, Wincomparator — 58% (лучший кэф 1.14 в 1xBet), Kickoff ждёт от Франции около 2 голов. Турция пропускала 2+ в трёх матчах ЛН подряд, первую встречу Франция выиграла 1:0.",
+          "sources": [
+            {
+              "title": "Foresportia — France vs Turkey",
+              "url": "https://www.foresportia.com/en/prediction/uefa-nations-league/france-turkey-2026-11-15/"
+            },
+            {
+              "title": "Wincomparator — France vs Turkiye",
+              "url": "https://www.wincomparator.com/predictions/france-turkey-8318318/"
+            },
+            {
+              "title": "Kickoff — France v Turkey",
+              "url": "https://www.kickoff.co.uk/uefa-nations-league-predictions-stats-odds/france-vs-turkey/"
+            }
+          ]
+        },
+        {
+          "match": "Хорватия — Чехия",
+          "tournament": "Лига наций, лига A (группа 3)",
+          "start": "15.11, 22:45 МСК",
+          "bet": "П1 (победа Хорватии)",
+          "odds": "",
+          "confidence": 4,
+          "reason": "Победу хозяев дают Wincomparator (65.5%) и Foresportia (57.9%). Kickoff ждёт 1.7 гола Хорватии против 1.0 у Чехии; Wincomparator также видит ТБ 2.5 (75%) и «обе забьют» (68%).",
+          "sources": [
+            {
+              "title": "Wincomparator — Croatia vs Czechia",
+              "url": "https://www.wincomparator.com/predictions/croatia-czech-republic-8318341/"
+            },
+            {
+              "title": "Foresportia — Croatia vs Czech Republic",
+              "url": "https://www.foresportia.com/en/prediction/uefa-nations-league/croatia-czech-republic-2026-11-15/"
+            },
+            {
+              "title": "Kickoff — Croatia v Czech Republic",
+              "url": "https://www.kickoff.co.uk/uefa-nations-league-predictions-stats-odds/croatia-vs-czech-rep/"
+            }
+          ]
+        }
+      ],
+      "updated_at": "2026-11-15T01:45+03:00"
+    },
+    {
+      "id": "basketball",
+      "name": "Баскетбол",
+      "emoji": "🏀",
+      "picks": [
+        {
+          "match": "Миннесота — Чикаго",
+          "tournament": "НБА, регулярный сезон",
+          "start": "15.11, 04:00 МСК",
+          "bet": "П1 (победа Миннесоты)",
+          "odds": "",
+          "confidence": 3,
+          "reason": "Модель DRatings: 75.4% за «Миннесоту» (9-3), прогноз счёта 122.7 : 114.8. У «Чикаго» 1-9, и это второй матч подряд за два дня (Betseeker).",
+          "sources": [
+            {
+              "title": "DRatings — NBA predictions",
+              "url": "https://www.dratings.com/predictor/nba-basketball-predictions/"
+            },
+            {
+              "title": "Betseeker — NBA Tips, Sunday Nov 15",
+              "url": "https://www.betseeker.com.au/nba/nba-tips/nba-tips-sunday-november-15-nba-picks-multi/"
+            }
+          ]
+        }
+      ],
+      "updated_at": "2026-11-15T01:45+03:00"
+    },
+    {
+      "id": "tennis",
+      "name": "Теннис",
+      "emoji": "🎾",
+      "picks": [],
+      "updated_at": "2026-11-15T01:45+03:00"
+    },
+    {
+      "id": "volleyball",
+      "name": "Волейбол",
+      "emoji": "🏐",
+      "picks": [],
+      "updated_at": "2026-11-15T01:45+03:00"
+    },
+    {
+      "id": "cs2",
+      "name": "CS2",
+      "emoji": "🔫",
+      "picks": [
+        {
+          "match": "Spirit — FURIA",
+          "tournament": "BLAST Rivals Fall 2026, гранд-финал (Bo5), тир-1",
+          "start": "15.11, 11:00 МСК",
+          "bet": "П1 (победа Spirit)",
+          "odds": "",
+          "confidence": 3,
+          "reason": "Spirit выиграли все очные встречи с FURIA с марта (2:1, 2:0, 2:1) и в полуфинале прошли MOUZ 2:0. Модель CS2 Observer тоже за Spirit, но перевес небольшой — 54%.",
+          "sources": [
+            {
+              "title": "EGamersWorld — Spirit vs FURIA, финал BLAST Rivals",
+              "url": "https://www.egamersworld.com/blog/blast-rivals-fall-2026-grand-final-spirit-vs-furia-FvGISHdX-y"
+            },
+            {
+              "title": "CS2 Observer — прогнозы модели",
+              "url": "https://www.cs2observer.com/predictions"
+            }
+          ]
+        },
+        {
+          "match": "Virtus.pro — Hype Tech",
+          "tournament": "CCT 2026 Europe Series 13, тир-2",
+          "start": "15.11, 12:00 МСК",
+          "bet": "П1 (победа Virtus.pro)",
+          "odds": "",
+          "confidence": 3,
+          "reason": "Модель CS2 Observer: 83% за Virtus.pro.",
+          "sources": [
+            {
+              "title": "CS2 Observer — прогнозы модели",
+              "url": "https://www.cs2observer.com/predictions"
+            }
+          ]
+        }
+      ],
+      "updated_at": "2026-11-15T01:45+03:00"
+    },
+    {
+      "id": "dota2",
+      "name": "Dota 2",
+      "emoji": "🐉",
+      "picks": [],
+      "updated_at": "2026-11-15T01:45+03:00"
+    }
+  ],
+  "analysis": []
+}
