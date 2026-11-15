@@ -18,6 +18,7 @@
     football: { name: "Футбол", c: "#72F5BB" }, basketball: { name: "Баскетбол", c: "#FF9F5A" },
     tennis: { name: "Теннис", c: "#D9F36A" }, volleyball: { name: "Волейбол", c: "#FFD166" },
     cs2: { name: "CS2", c: "#65B9FF" }, dota2: { name: "Dota 2", c: "#FF6B7A" },
+    hockey: { name: "Хоккей", c: "#E3ECF7" },
   };
   const sportName = (id, fb) => (SPORT[id] && SPORT[id].name) || fb || id;
   const sportColor = (id) => (SPORT[id] && SPORT[id].c) || "#8d99aa";
