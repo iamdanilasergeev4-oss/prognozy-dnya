@@ -206,7 +206,7 @@
     const total = data.sports.reduce((k, s) => k + (s.picks || []).length, 0);
     $("#pulse-cap").textContent =
       `${total} ${plural(total, "прогноз", "прогноза", "прогнозов")} по данным ${hosts.size} ${plural(hosts.size, "сайта", "сайтов", "сайтов")}. ` +
-      `Каждый пик — один прогноз, его высота — насколько сходятся источники.`;
+      `Каждый пик — один прогноз, его высота — уверенность прогноза.`;
 
     rows.querySelectorAll(".lane").forEach((b, i) => {
       b.addEventListener("click", () => { select(b.dataset.id, true); });
@@ -312,6 +312,25 @@
     </div>`;
   }
 
+  const DQ_LABEL = { high: "полные", medium: "частичные", low: "скудные" };
+  /* Разбор прогноза: факты «за», «против», неопределённость */
+  function whyHTML(p, i) {
+    const li = (a) => (Array.isArray(a) ? a : []).filter(Boolean).map((x) => `<li>${esc(x)}</li>`).join("");
+    const pro = li(p.facts), con = li(p.against);
+    if (!pro && !con && !p.uncertainty) return "";
+    const id = `why-${current}-${i}`;
+    return `
+      <div class="why">
+        <button class="why-btn" type="button" aria-expanded="false" aria-controls="${id}"><span>Почему такой вывод</span>${I_CHEV}</button>
+        <div class="more" id="${id}"><div>
+          ${pro ? `<p class="factors-title">Факты в пользу вывода</p><ul class="factors">${pro}</ul>` : ""}
+          ${con ? `<p class="factors-title">Что говорит против</p><ul class="factors con">${con}</ul>` : ""}
+          ${p.uncertainty ? `<p class="factors-title">Неопределённость</p><p class="why-text">${esc(p.uncertainty)}</p>` : ""}
+          ${p.model_prob && p.model_prob.value ? `<p class="why-text small">Вероятность по модели ${esc(p.model_prob.source || "")}: ${Math.round(p.model_prob.value * 100)}%</p>` : ""}
+        </div></div>
+      </div>`;
+  }
+
   function sportHTML(sport) {
     const picks = sport.picks || [];
     const tours = new Set(picks.map((p) => String(p.tournament || "").split(",")[0].trim()).filter(Boolean));
@@ -348,11 +367,13 @@
           </div>
           ${facts(p.tournament, p.start)}
           ${p.reason ? `<p class="reason">${esc(p.reason)}</p>` : ""}
+          ${whyHTML(p, i)}
           <div class="pick-foot">
-            <span class="meter" title="Насколько сходятся источники">
+            <span class="meter" title="Насколько вывод подкреплён фактами и согласием независимых источников">
               <span class="bars" aria-hidden="true">${bars}</span>
-              <span>Согласие источников: <b>${CONF_LABEL[conf]}</b></span>
+              <span>Уверенность: <b>${CONF_LABEL[conf]}</b></span>
             </span>
+            ${p.data_quality && p.data_quality.level ? `<span class="dq dq-${esc(p.data_quality.level)}" title="${esc(p.data_quality.note || "")}">Данные: ${esc(DQ_LABEL[p.data_quality.level] || p.data_quality.level)}</span>` : ""}
             ${(p.sources || []).length ? `<span class="srcs">${srcChips(p.sources)}</span>` : ""}
           </div>
         </article>`;
@@ -404,6 +425,13 @@
   }
 
   function bindPanel() {
+    panel.querySelectorAll(".why-btn").forEach((btn) => btn.addEventListener("click", () => {
+      const box = btn.closest(".why");
+      const open = !box.classList.contains("open");
+      box.classList.toggle("open", open);
+      btn.setAttribute("aria-expanded", open);
+      btn.querySelector("span").textContent = open ? "Свернуть" : "Почему такой вывод";
+    }));
     panel.querySelectorAll(".toggle").forEach((btn) => btn.addEventListener("click", () => {
       const story = btn.closest(".story");
       const open = !story.classList.contains("open");
@@ -440,15 +468,16 @@
     if (current === "analysis" && data) select(data.sports[0].id);
     $("#board").scrollIntoView({ behavior: calm() ? "auto" : "smooth" });
   });
-  let inSuggest = false;
+  const inView = { suggest: false, history: false };
   function syncNav() {
     document.querySelectorAll(".nav a").forEach((a) => a.removeAttribute("aria-current"));
-    const key = inSuggest ? "suggest" : current === "analysis" ? "analysis" : "board";
+    const key = inView.suggest ? "suggest" : inView.history ? "history" : current === "analysis" ? "analysis" : "board";
     $(`[data-nav="${key}"]`)?.setAttribute("aria-current", "true");
   }
   if ("IntersectionObserver" in window) {
-    new IntersectionObserver((ents) => ents.forEach((en) => { inSuggest = en.isIntersecting; syncNav(); }),
-      { rootMargin: "-40% 0px -40% 0px" }).observe($("#suggest"));
+    const io = new IntersectionObserver((ents) => ents.forEach((en) => { inView[en.target.id] = en.isIntersecting; syncNav(); }),
+      { rootMargin: "-40% 0px -40% 0px" });
+    ["suggest", "history"].forEach((id) => $("#" + id) && io.observe($("#" + id)));
   }
 
   /* ---------- Загрузка данных ---------- */
@@ -493,7 +522,7 @@
 
   window.addEventListener("hashchange", () => {
     const id = location.hash.slice(1);
-    if (id === "suggest" || id === "board") return;
+    if (id === "suggest" || id === "board" || id === "history") return;
     if (data && tabList().some((t) => t.id === id)) select(id, true);
   });
 
