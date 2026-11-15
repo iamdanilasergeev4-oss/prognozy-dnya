@@ -18,6 +18,7 @@
     volleyball: '<circle cx="12" cy="12" r="9.2"/><path d="M12 12c0-3.6 1.6-6.6 4.6-8.4M12 12c-3.1 1.8-6.5 1.9-9.1.4M12 12c3.1 1.8 4.9 4.7 4.5 7.9"/><path d="M8 3.8c2.2 1.8 3.6 4.5 4 8.2M2.9 13.2c3.2-.4 6.2.3 9.1 2.6"/>',
     cs2: '<circle cx="12" cy="12" r="7.4"/><circle cx="12" cy="12" r="1.3"/><path d="M12 1.8v5M12 17.2v5M1.8 12h5M17.2 12h5"/>',
     dota2: '<path d="M4.5 3.5h15a1 1 0 011 1v15a1 1 0 01-1 1h-15a1 1 0 01-1-1v-15a1 1 0 011-1z"/><path d="M5.5 18.5L18.5 5.5"/><path d="M6.5 9.5l1.6-1.6M15.9 16.1l1.6-1.6"/><circle cx="7" cy="17" r="1.3"/><circle cx="17" cy="7" r="1.3"/>',
+    hockey: '<path d="M3.2 3.6l7.6 12.2c.5.8 1.3 1.2 2.2 1.2h3.6"/><path d="M20.8 3.6l-7.6 12.2c-.5.8-1.3 1.2-2.2 1.2H7.4"/><ellipse cx="12" cy="20.1" rx="3.1" ry="1.3"/>',
     analysis: '<path d="M4 5.5h16M4 10h16M4 14.5h10M4 19h7"/><path d="M17 15.5l1.4 1.4 2.6-3"/>',
     generic: '<circle cx="12" cy="12" r="9.2"/><path d="M8 12h8"/>',
   };
@@ -33,7 +34,7 @@
   /* Цвет каждого вида спорта внутри общей системы */
   const COLORS = {
     football: "#72F5BB", basketball: "#FF9F5A", tennis: "#D9F36A", volleyball: "#FFD166",
-    cs2: "#65B9FF", dota2: "#FF6B7A", analysis: "#B9A2FF",
+    cs2: "#65B9FF", dota2: "#FF6B7A", hockey: "#E3ECF7", analysis: "#B9A2FF",
   };
   const colorOf = (id) => COLORS[id] || "#72F5BB";
 
