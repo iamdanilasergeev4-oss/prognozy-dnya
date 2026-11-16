@@ -7032,6 +7032,193 @@
           "note": "снят с публикации до начала события"
         }
       ]
+    },
+    {
+      "id": "basketball-20261117-177mq70",
+      "sport": "basketball",
+      "sport_name": "Баскетбол",
+      "home": "Кливленд",
+      "away": "Чикаго",
+      "event_date": "2026-11-17",
+      "start_iso": "2026-11-17T03:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-16T14:03+03:00",
+      "model_version": "v2",
+      "tournament": "НБА, регулярный сезон 2026/27",
+      "match": "Кливленд — Чикаго",
+      "start": "17.11, 03:00 МСК",
+      "bet": "П1 (победа Кливленда)",
+      "odds": "1.27",
+      "confidence": 3,
+      "model_prob": {
+        "value": 0.827,
+        "source": "numberFire"
+      },
+      "reason": "У Чикаго худшая оборона лиги, а Кливленд дома выиграл 5 из 7; Митчелл, Харден и Аллен в строю.",
+      "facts": [
+        "Чикаго пропускает 125 очков за игру (худший показатель НБА), разница −11, на выезде 2-5 — Sports.ru",
+        "Кливленд дома 5-2 при общем балансе 7-7 — Sports.ru",
+        "Донован Митчелл набирает 23,0 очка за игру; Митчелл, Харден и Аллен убраны из отчёта о травмах — iHeart, Predictem",
+        "numberFire: 82,7% на победу Кливленда — FanDuel Research"
+      ],
+      "against": [
+        "Не сыграет Эван Мобли (палец ноги), под вопросом Тайсон и Уотсон",
+        "Чикаго подходит к матчу с двумя победами подряд"
+      ],
+      "uncertainty": "Без Мобли защита Кливленда слабее; результат зависит от того, сыграет ли кто-то из выбывших.",
+      "data_quality": {
+        "level": "medium",
+        "note": "нет рейтингов эффективности; статус двух игроков под вопросом"
+      },
+      "sources": [
+        {
+          "title": "Sports.ru — таблица НБА 2026/27",
+          "url": "https://www.sports.ru/basketball/tournament/nba/table/"
+        },
+        {
+          "title": "FanDuel Research — Cavaliers vs. Bulls, 16.11",
+          "url": "https://www.fanduel.com/research/cavaliers-vs-bulls-prediction-nba-odds-spread-best-bets-for-11-16-2026"
+        },
+        {
+          "title": "iHeart — Bulls vs. Cavaliers Injury Report",
+          "url": "https://wone.iheart.com/content/2026-11-16-bulls-vs-cavaliers-injury-report-nov-16/"
+        },
+        {
+          "title": "Predictem — Bulls vs Cavaliers",
+          "url": "https://www.predictem.com/nba/bulls-vs-cavaliers-prediction-odds-nba-pick-nov-16-2026/"
+        }
+      ],
+      "market_prob": 0.787,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "basketball-20261117-1d5bg2d",
+      "sport": "basketball",
+      "sport_name": "Баскетбол",
+      "home": "Бостон",
+      "away": "Орландо",
+      "event_date": "2026-11-17",
+      "start_iso": "2026-11-17T03:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-16T14:03+03:00",
+      "model_version": "v2",
+      "tournament": "НБА, регулярный сезон 2026/27",
+      "match": "Бостон — Орландо",
+      "start": "17.11, 03:00 МСК",
+      "bet": "П1 (победа Бостона)",
+      "odds": "1.28",
+      "confidence": 4,
+      "model_prob": {
+        "value": 0.762,
+        "source": "ESPN Matchup Predictor"
+      },
+      "reason": "Бостон дома не проигрывает и имеет лучшую разницу очков на Востоке, а Орландо выходит без Банкеро, Айзека и Пенды — у гостей одна из худших атак лиги.",
+      "facts": [
+        "Бостон: 11 побед в 13 матчах, дома 6-0, разница +13 очков за игру, пропускает 102 — Sports.ru",
+        "Орландо: 5-7, разница −4, набирает 108 очков за игру — Sports.ru",
+        "У Орландо не сыграют Паоло Банкеро, Джонатан Айзек, Ноа Пенда и Изайя Нельсон; у Бостона в отчёте о травмах никого — iHeart / NBA injury report",
+        "Модель ESPN Matchup Predictor: 76,2% на победу Бостона — ESPN"
+      ],
+      "against": [
+        "Бостон играет второй матч за две ночи (в ночь на 16.11 по МСК обыграл Даллас 131:94)",
+        "Бостон перекрыл фору лишь в 7 матчах из 13 — победа вероятна, крупная — нет"
+      ],
+      "uncertainty": "Усталость Бостона на втором матче бэк-ту-бэка и возможный отдых кого-то из лидеров.",
+      "data_quality": {
+        "level": "medium",
+        "note": "нет Offensive/Defensive Rating — NBA.com/stats не открывался"
+      },
+      "sources": [
+        {
+          "title": "Sports.ru — таблица НБА 2026/27",
+          "url": "https://www.sports.ru/basketball/tournament/nba/table/"
+        },
+        {
+          "title": "ESPN — Magic @ Celtics, 16.11.2026",
+          "url": "https://www.espn.com/nba/game/_/gameId/401909994/magic-celtics"
+        },
+        {
+          "title": "iHeart — Magic vs. Celtics Injury Report",
+          "url": "https://969thegame.iheart.com/content/2026-11-16-magic-vs-celtics-injury-report-nov-16/"
+        },
+        {
+          "title": "bet-experts — коэффициенты",
+          "url": "https://www.bet-experts.com/picks/basketball/boston-celtics-vs-orlando-magic-prediction-betting-tips-17-11-2026"
+        }
+      ],
+      "market_prob": 0.781,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "basketball-20261117-vylj18",
+      "sport": "basketball",
+      "sport_name": "Баскетбол",
+      "home": "Вашингтон",
+      "away": "Мемфис",
+      "event_date": "2026-11-17",
+      "start_iso": "2026-11-17T03:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-16T14:03+03:00",
+      "model_version": "v2",
+      "tournament": "НБА, регулярный сезон 2026/27",
+      "match": "Вашингтон — Мемфис",
+      "start": "17.11, 03:00 МСК",
+      "bet": "П2 (победа Мемфиса)",
+      "odds": "1.57",
+      "confidence": 3,
+      "model_prob": {
+        "value": 0.7276,
+        "source": "numberFire"
+      },
+      "reason": "Мемфис выиграл все 6 выездных матчей и имеет разницу +8, а Вашингтон играет второй день подряд после разгрома от Хьюстона.",
+      "facts": [
+        "Мемфис: 9-4, на выезде 6-0, разница +8 очков за игру — Sports.ru",
+        "Вашингтон: 4-10, разница −7, пропускает 118 очков за игру — Sports.ru",
+        "Вашингтон накануне (16.11) проиграл Хьюстону 119:147 — второй матч за две ночи — Sports.ru",
+        "numberFire: 72,76% на победу Мемфиса — FanDuel Research"
+      ],
+      "against": [
+        "Не сыграет лучший бомбардир Мемфиса Тай Джером (25,4 очка, бедро) — линия сдвинулась с −6.5 до −4.5",
+        "Вашингтон дома 2-4, не безнадёжен на своей площадке"
+      ],
+      "uncertainty": "Без Джерома атака Мемфиса менее стабильна; запас по форе небольшой.",
+      "data_quality": {
+        "level": "medium",
+        "note": "нет рейтингов эффективности; состав Мемфиса без лидера"
+      },
+      "sources": [
+        {
+          "title": "Sports.ru — таблица НБА 2026/27",
+          "url": "https://www.sports.ru/basketball/tournament/nba/table/"
+        },
+        {
+          "title": "Sports.ru — календарь НБА",
+          "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
+        },
+        {
+          "title": "FanDuel Research — NBA Predictions, 16.11",
+          "url": "https://www.fanduel.com/research/nba-predictions-odds-11-16-2026"
+        },
+        {
+          "title": "Predictem — Grizzlies vs Wizards",
+          "url": "https://www.predictem.com/nba/grizzlies-vs-wizards-prediction-odds-nba-pick-nov-16/"
+        },
+        {
+          "title": "BettingNews — коэффициенты",
+          "url": "https://www.bettingnews.com/nba/matchup/2026-11-16-memphis_grizzlies-washington_wizards-n-1/"
+        }
+      ],
+      "market_prob": 0.637,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
     }
   ]
 }
