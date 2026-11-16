@@ -1456,8 +1456,15 @@
       "published_at": "2026-11-14T06:09+03:00",
       "model_version": "v1",
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "0:2",
+        "note": "Hype Tech выиграли 2:0 (Mirage, Anubis)",
+        "sources": [
+          "HLTV"
+        ],
+        "checked_at": "2026-11-16T13:56+03:00"
+      },
       "versions": [
         {
           "at": "2026-11-14T06:09+03:00",
@@ -1479,7 +1486,14 @@
           }
         }
       ],
-      "status_log": [],
+      "status_log": [
+        {
+          "at": "2026-11-16T13:56+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": "Hype Tech выиграли 2:0 (Mirage, Anubis)"
+        }
+      ],
       "tournament": "CCT Europe Series 13, тир-2",
       "match": "WW — Hype Tech",
       "start": "14.11, 21:00 МСК",
@@ -1492,7 +1506,8 @@
           "url": "https://www.cs2observer.com/predictions"
         }
       ],
-      "updated_at": "2026-11-14T06:53+03:00"
+      "updated_at": "2026-11-14T06:53+03:00",
+      "last_sync": "2026-11-16T13:56+03:00"
     },
     {
       "id": "football-20261114-19nyy9c",
@@ -3031,10 +3046,26 @@
         }
       ],
       "market_prob": 0.543,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "76:62",
+        "note": "по сетам 3:0 (25:18, 26:24, 25:20) — разница +14 очков, фора −16.5 не сыграла",
+        "sources": [
+          "Матч ТВ",
+          "Redyarsk"
+        ],
+        "checked_at": "2026-11-16T13:56+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-16T13:56+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": "по сетам 3:0 (25:18, 26:24, 25:20) — разница +14 очков, фора −16.5 не сыграла"
+        }
+      ],
+      "last_sync": "2026-11-16T13:56+03:00"
     },
     {
       "id": "volleyball-20261115-1wf5f71",
@@ -3578,10 +3609,26 @@
       ],
       "format": "BO3, онлайн",
       "market_prob": 0.633,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "0:2",
+        "note": "Aces выиграли 2:0",
+        "sources": [
+          "bo3.gg",
+          "tips.gg"
+        ],
+        "checked_at": "2026-11-16T13:56+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-16T13:56+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": "Aces выиграли 2:0"
+        }
+      ],
+      "last_sync": "2026-11-16T13:56+03:00"
     },
     {
       "id": "tennis-20261115-dync7q",
@@ -3982,8 +4029,17 @@
       "published_at": "2026-11-15T01:35+03:00",
       "model_version": "v1",
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "0:2",
+        "note": "голы: Манай 28′, Хюсай 57′",
+        "sources": [
+          "Sports.ru",
+          "Спорт-Экспресс",
+          "Прессбол"
+        ],
+        "checked_at": "2026-11-16T13:56+03:00"
+      },
       "versions": [
         {
           "at": "2026-11-15T01:35+03:00",
@@ -4040,7 +4096,14 @@
           }
         }
       ],
-      "status_log": [],
+      "status_log": [
+        {
+          "at": "2026-11-16T13:56+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": "голы: Манай 28′, Хюсай 57′"
+        }
+      ],
       "updated_at": "2026-11-15T13:49+03:00",
       "tournament": "Лига наций, лига C (группа 1), 6-й тур",
       "match": "Беларусь — Албания",
@@ -4071,7 +4134,8 @@
           "title": "Wincomparator — Belarus vs Albania",
           "url": "https://www.wincomparator.com/predictions/belarus-albania-8318441/"
         }
-      ]
+      ],
+      "last_sync": "2026-11-16T13:56+03:00"
     },
     {
       "id": "volleyball-20261115-10o94cn",
@@ -4799,8 +4863,16 @@
       "published_at": "2026-11-15T07:16+03:00",
       "model_version": "v1",
       "market_prob": 0.826,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "0:3",
+        "note": "16:25, 15:25, 20:25",
+        "sources": [
+          "Polsat Sport",
+          "TVP Wrocław"
+        ],
+        "checked_at": "2026-11-16T13:56+03:00"
+      },
       "versions": [
         {
           "at": "2026-11-15T07:16+03:00",
@@ -4823,7 +4895,14 @@
           }
         }
       ],
-      "status_log": [],
+      "status_log": [
+        {
+          "at": "2026-11-16T13:56+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": "16:25, 15:25, 20:25"
+        }
+      ],
       "tournament": "Польша, Tauron Liga (женщины)",
       "match": "Воллей Вроцлав — Будовляни Лодзь",
       "start": "15.11, 22:30 МСК",
@@ -4850,7 +4929,8 @@
           "url": "https://stavka.tv/matches/volleyball/15-11-2026-impel-wroclaw-w-budowlani-lodz-w-"
         }
       ],
-      "updated_at": "2026-11-15T13:49+03:00"
+      "updated_at": "2026-11-15T13:49+03:00",
+      "last_sync": "2026-11-16T13:56+03:00"
     },
     {
       "id": "football-20261115-13i592w",
@@ -5403,8 +5483,16 @@
       "published_at": "2026-11-15T07:16+03:00",
       "model_version": "v1",
       "market_prob": 0.725,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "2:0",
+        "note": "7:5, 6:3",
+        "sources": [
+          "Sports.ru",
+          "Спорт-Экспресс"
+        ],
+        "checked_at": "2026-11-16T13:56+03:00"
+      },
       "versions": [
         {
           "at": "2026-11-15T07:16+03:00",
@@ -5439,7 +5527,14 @@
           }
         }
       ],
-      "status_log": [],
+      "status_log": [
+        {
+          "at": "2026-11-16T13:56+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": "7:5, 6:3"
+        }
+      ],
       "tournament": "Итоговый турнир WTA, финал",
       "match": "Мирра Андреева — Элина Свитолина",
       "start": "15.11, 23:00 МСК",
@@ -5476,7 +5571,8 @@
           "url": "https://lastwordonsports.com/tennis/2026/11/14/wta-finals-final-prediction-andreeva-svitolina/"
         }
       ],
-      "updated_at": "2026-11-15T13:49+03:00"
+      "updated_at": "2026-11-15T13:49+03:00",
+      "last_sync": "2026-11-16T13:56+03:00"
     },
     {
       "id": "basketball-20261116-11rbb4z",
@@ -5490,8 +5586,16 @@
       "published_at": "2026-11-15T01:35+03:00",
       "model_version": "v1",
       "market_prob": 0.943,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "102:110",
+        "note": null,
+        "sources": [
+          "Sports.ru",
+          "Спорт-Экспресс"
+        ],
+        "checked_at": "2026-11-16T13:56+03:00"
+      },
       "versions": [
         {
           "at": "2026-11-15T01:35+03:00",
@@ -5545,7 +5649,14 @@
           }
         }
       ],
-      "status_log": [],
+      "status_log": [
+        {
+          "at": "2026-11-16T13:56+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
       "updated_at": "2026-11-15T13:49+03:00",
       "tournament": "НБА, регулярный сезон",
       "match": "Юта — Сан-Антонио",
@@ -5581,7 +5692,8 @@
           "title": "SportBusy — Spurs at Jazz",
           "url": "https://www.sportbusy.com/games/nba/14315880-san-antonio-spurs-at-utah-jazz-2026-11-15/"
         }
-      ]
+      ],
+      "last_sync": "2026-11-16T13:56+03:00"
     },
     {
       "id": "basketball-20261116-1ootij8",
@@ -5631,8 +5743,16 @@
       "published_at": "2026-11-15T07:16+03:00",
       "model_version": "v1",
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "131:94",
+        "note": null,
+        "sources": [
+          "Sports.ru",
+          "Спорт-Экспресс"
+        ],
+        "checked_at": "2026-11-16T13:56+03:00"
+      },
       "versions": [
         {
           "at": "2026-11-15T07:16+03:00",
@@ -5658,7 +5778,14 @@
           }
         }
       ],
-      "status_log": [],
+      "status_log": [
+        {
+          "at": "2026-11-16T13:56+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
       "tournament": "НБА, регулярный сезон",
       "match": "Бостон — Даллас",
       "start": "16.11, 02:00 МСК",
@@ -5688,7 +5815,8 @@
           "url": "https://www.sportbusy.com/games/nba/14315881-dallas-mavericks-at-boston-celtics-2026-11-15/"
         }
       ],
-      "updated_at": "2026-11-15T13:49+03:00"
+      "updated_at": "2026-11-15T13:49+03:00",
+      "last_sync": "2026-11-16T13:56+03:00"
     },
     {
       "id": "basketball-20261116-1sdixy6",
@@ -5743,8 +5871,16 @@
       "published_at": "2026-11-15T07:16+03:00",
       "model_version": "v1",
       "market_prob": 0.725,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "106:113",
+        "note": null,
+        "sources": [
+          "Sports.ru",
+          "UA-Футбол"
+        ],
+        "checked_at": "2026-11-16T13:56+03:00"
+      },
       "versions": [
         {
           "at": "2026-11-15T07:16+03:00",
@@ -5771,7 +5907,14 @@
           }
         }
       ],
-      "status_log": [],
+      "status_log": [
+        {
+          "at": "2026-11-16T13:56+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
       "tournament": "НБА, регулярный сезон",
       "match": "Милуоки — Атланта",
       "start": "16.11, 04:00 МСК",
@@ -5802,7 +5945,8 @@
           "url": "https://www.sportbusy.com/games/nba/14315884-atlanta-hawks-at-milwaukee-bucks-2026-11-15/"
         }
       ],
-      "updated_at": "2026-11-15T13:49+03:00"
+      "updated_at": "2026-11-15T13:49+03:00",
+      "last_sync": "2026-11-16T13:56+03:00"
     },
     {
       "id": "basketball-20261116-11h1m5x",
@@ -5816,8 +5960,16 @@
       "published_at": "2026-11-15T01:35+03:00",
       "model_version": "v1",
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "103:125",
+        "note": null,
+        "sources": [
+          "Sports.ru",
+          "Sportarena"
+        ],
+        "checked_at": "2026-11-16T13:56+03:00"
+      },
       "versions": [
         {
           "at": "2026-11-15T01:35+03:00",
@@ -5866,7 +6018,14 @@
           }
         }
       ],
-      "status_log": [],
+      "status_log": [
+        {
+          "at": "2026-11-16T13:56+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
       "updated_at": "2026-11-15T13:49+03:00",
       "tournament": "НБА, регулярный сезон",
       "match": "Сакраменто — Оклахома-Сити",
@@ -5896,7 +6055,8 @@
           "title": "Covers — Thunder vs Kings",
           "url": "https://www.covers.com/sport/basketball/nba/matchup/388730/picks"
         }
-      ]
+      ],
+      "last_sync": "2026-11-16T13:56+03:00"
     },
     {
       "id": "hockey-20261116-17jx0x7",
@@ -5910,8 +6070,16 @@
       "published_at": "2026-11-16T01:16+03:00",
       "model_version": "v2",
       "market_prob": 0.704,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "3:6",
+        "note": "основное время 3:6",
+        "sources": [
+          "Sports.ru",
+          "Спорт-Экспресс"
+        ],
+        "checked_at": "2026-11-16T13:56+03:00"
+      },
       "versions": [
         {
           "at": "2026-11-16T01:16+03:00",
@@ -5948,7 +6116,14 @@
           }
         }
       ],
-      "status_log": [],
+      "status_log": [
+        {
+          "at": "2026-11-16T13:56+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": "основное время 3:6"
+        }
+      ],
       "tournament": "НХЛ, регулярный чемпионат 2026/27",
       "match": "Вегас — Ванкувер",
       "start": "16.11, 05:00 МСК",
@@ -5977,7 +6152,8 @@
           "url": "https://www.sports.ru/hockey/match/vancouver-canucks-vs-vegas/"
         }
       ],
-      "updated_at": "2026-11-16T01:55+03:00"
+      "updated_at": "2026-11-16T01:55+03:00",
+      "last_sync": "2026-11-16T13:56+03:00"
     },
     {
       "id": "tennis-20261116-1ck6fbt",
