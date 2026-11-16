@@ -6802,36 +6802,92 @@
               }
             ]
           }
+        },
+        {
+          "at": "2026-11-15T13:49+03:00",
+          "replaced_at": "2026-11-16T15:13+03:00",
+          "reason": "плановое обновление",
+          "snapshot": {
+            "tournament": "Итоговый турнир ATP, Турин, группа Лендла",
+            "match": "Даниил Медведев — Флавио Коболли",
+            "start": "16.11, не ранее 22:30 МСК",
+            "bet": "П1 (победа Медведева)",
+            "odds": "1.23",
+            "confidence": 3,
+            "reason": "Медведев сильнее на быстром закрытом харде и выигрывал у Коболли чаще.",
+            "facts": [
+              "Elo stringtension: 63.8% за Медведева",
+              "Очные встречи 2–1 в пользу Медведева",
+              "Медведев — чемпион Итогового турнира 2020"
+            ],
+            "against": [
+              "Коболли играет перед домашней публикой в Турине"
+            ],
+            "uncertainty": "Форма Медведева осенью нестабильна.",
+            "data_quality": {
+              "level": "medium",
+              "note": "нет статистики подачи/приёма"
+            },
+            "sources": [
+              {
+                "title": "Stringtension — Medvedev vs Cobolli",
+                "url": "https://stringtension.com/head-to-head/atp/daniil-medvedev/flavio-cobolli"
+              }
+            ]
+          }
         }
       ],
       "status_log": [],
+      "updated_at": "2026-11-16T15:13+03:00",
       "tournament": "Итоговый турнир ATP, Турин, группа Лендла",
       "match": "Даниил Медведев — Флавио Коболли",
       "start": "16.11, не ранее 22:30 МСК",
       "bet": "П1 (победа Медведева)",
       "odds": "1.23",
       "confidence": 3,
-      "reason": "Медведев сильнее на быстром закрытом харде и выигрывал у Коболли чаще.",
+      "model_prob": {
+        "value": 0.77,
+        "source": "Dimers"
+      },
+      "reason": "Медведев сильнее на закрытом быстром харде и опытнее на Итоговом турнире, а Коболли дебютирует в Турине после снятия с травмой в Вене.",
       "facts": [
-        "Elo stringtension: 63.8% за Медведева",
-        "Очные встречи 2–1 в пользу Медведева",
-        "Медведев — чемпион Итогового турнира 2020"
+        "Модель Dimers: 77% на победу Медведева — Dimers",
+        "Медведев выиграл Итоговый турнир в 2020 году; Коболли играет в Турине впервые — RG.org",
+        "Коболли в 2026 году: 18-15 на харде, удержание подачи на харде 77,9% — RG.org",
+        "Коболли в последний раз снялся по ходу матча в Вене из-за травмы — bets.com.au",
+        "Elo на харде (String Tension): Медведев 1869, Коболли 1443 — String Tension"
       ],
       "against": [
-        "Коболли играет перед домашней публикой в Турине"
+        "Коболли выиграл последнюю очную встречу (Мадрид, грунт, 2026) и играет перед домашней публикой",
+        "С 2021 года у Медведева на Итоговом 3 победы и 8 поражений"
       ],
-      "uncertainty": "Форма Медведева осенью нестабильна.",
+      "uncertainty": "Состояние Коболли после травмы и поддержка трибун в Турине.",
       "data_quality": {
         "level": "medium",
-        "note": "нет статистики подачи/приёма"
+        "note": "нет детальной статистики подачи/приёма за 10 матчей"
       },
       "sources": [
         {
-          "title": "Stringtension — Medvedev vs Cobolli",
+          "title": "Dimers — Medvedev vs Cobolli",
+          "url": "https://www.dimers.com/tennis/news/daniil-medvedev-vs-flavio-cobolli-tennis-prediction-atp-world-tour-finals-2026-ac"
+        },
+        {
+          "title": "Sporting Life — Monday ATP Finals preview",
+          "url": "https://www.sportinglife.com/tennis/news/tennis-betting-tips-mondays-atp-finals-preview-and-best-bets/235455"
+        },
+        {
+          "title": "bets.com.au — Medvedev vs Cobolli",
+          "url": "https://www.bets.com.au/tennis/atp-tour/daniil-medvedev-vs-flavio-cobolli-atp-finals-tips-prediction-live-stream-20261116-0001/"
+        },
+        {
+          "title": "RG.org — ATP Finals 2026 preview",
+          "url": "https://rg.org/news/tennis/atp-finals-2026-odds-preview-alcaraz-zverev-shelton-best-bets"
+        },
+        {
+          "title": "String Tension — H2H",
           "url": "https://stringtension.com/head-to-head/atp/daniil-medvedev/flavio-cobolli"
         }
-      ],
-      "updated_at": "2026-11-15T13:49+03:00"
+      ]
     },
     {
       "id": "volleyball-20261116-co969g",
@@ -7363,6 +7419,106 @@
       "status_log": []
     },
     {
+      "id": "hockey-20261117-nsfpv1",
+      "sport": "hockey",
+      "sport_name": "Хоккей",
+      "home": "Юта",
+      "away": "Ванкувер",
+      "event_date": "2026-11-17",
+      "start_iso": "2026-11-17T05:30+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-16T15:13+03:00",
+      "model_version": "v2",
+      "tournament": "НХЛ, регулярный чемпионат 2026/27",
+      "match": "Юта — Ванкувер",
+      "start": "17.11, 05:30 МСК",
+      "bet": "П1 (победа Юты в основное время)",
+      "odds": "1.58",
+      "confidence": 3,
+      "reason": "Ванкувер — худшая команда лиги (2 победы в основное время за 22 матча, шайбы 63:98) и играет второй день подряд после выезда в Вегас, а Юта выиграла 5 последних очных встреч.",
+      "facts": [
+        "Ванкувер: 22 матча, 2 победы в основное время, 2 в ОТ, 17 поражений, шайбы 63:98 (−35); Юта: 8 побед, шайбы 71:75 — Sports.ru",
+        "Ванкувер играет второй матч за два дня: 16.11 в 05:00 МСК обыграл Вегас 6:3 — Sports.ru",
+        "Юта выиграла 5 последних очных встреч, в т.ч. 7:4 и 6:2 в прошлом сезоне — Sports.ru"
+      ],
+      "against": [
+        "Юта проиграла 5 матчей подряд, три из них — в ОТ или по буллитам",
+        "Ванкувер прервал серию из 7 поражений и забивает в 6 последних матчах против Юты"
+      ],
+      "uncertainty": "Форма Юты и риск ничьей после 60 минут; стартовые вратари не подтверждены.",
+      "data_quality": {
+        "level": "medium",
+        "note": "нет xG и данных Daily Faceoff по вратарям"
+      },
+      "sources": [
+        {
+          "title": "Sports.ru — Юта — Ванкувер",
+          "url": "https://www.sports.ru/hockey/match/utah-mammoth-vs-vancouver-canucks/"
+        },
+        {
+          "title": "Sports.ru — таблица НХЛ",
+          "url": "https://www.sports.ru/hockey/tournament/nhl/table/"
+        },
+        {
+          "title": "Sports.ru — календарь НХЛ",
+          "url": "https://www.sports.ru/hockey/tournament/nhl/calendar/"
+        }
+      ],
+      "market_prob": 0.633,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "hockey-20261117-14qizh2",
+      "sport": "hockey",
+      "sport_name": "Хоккей",
+      "home": "Автомобилист",
+      "away": "Спартак",
+      "event_date": "2026-11-17",
+      "start_iso": "2026-11-17T17:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-16T15:13+03:00",
+      "model_version": "v2",
+      "tournament": "КХЛ, регулярный чемпионат 2026/27",
+      "match": "Автомобилист — Спартак",
+      "start": "17.11, 17:00 МСК",
+      "bet": "ТБ 5.5",
+      "confidence": 3,
+      "reason": "Автомобилист забивает дома по 3–5 шайб, а Спартак в последних 5 матчах пропускает 4,2 шайбы за игру; в его играх стабильно 7–9 шайб.",
+      "facts": [
+        "Спартак в последних 5 матчах пропускает в среднем 4,2 шайбы — Sports.ru",
+        "Тоталы последних 5 матчей Спартака: 9, 7, 8, 8, 5 (6:3 с Адмиралом, 3:4 с Амуром, 1:7 со СКА, 5:3 с Динамо Минск, 1:4 с Локомотивом) — Sports.ru",
+        "Автомобилист выиграл 5 последних домашних матчей: 5:1 с Ак Барсом, 4:2 с Шанхаем — Sports.ru",
+        "Спартак забивает в 11 последних матчах против Автомобилиста — Sports.ru"
+      ],
+      "against": [
+        "Тотал считается по основному времени — овертайм не помогает",
+        "Автомобилист в двух матчах из пяти играл на 2–3 шайбы"
+      ],
+      "uncertainty": "Стартовые вратари не известны; коэффициент на тотал не найден.",
+      "data_quality": {
+        "level": "medium",
+        "note": "нет статистики бросков; коэффициент на тотал не найден"
+      },
+      "sources": [
+        {
+          "title": "Sports.ru — Автомобилист — Спартак",
+          "url": "https://www.sports.ru/hockey/match/avtomobilist-vs-spartak/"
+        },
+        {
+          "title": "Sports.ru — таблица КХЛ",
+          "url": "https://www.sports.ru/hockey/tournament/khl/table/"
+        }
+      ],
+      "market_prob": null,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
       "id": "hockey-20261117-5zqrya",
       "sport": "hockey",
       "sport_name": "Хоккей",
@@ -7405,6 +7561,151 @@
         }
       ],
       "market_prob": 0.699,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "football-20261117-1nakhgy",
+      "sport": "football",
+      "sport_name": "Футбол",
+      "home": "Уэльс",
+      "away": "Португалия",
+      "event_date": "2026-11-17",
+      "start_iso": "2026-11-17T22:45+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-16T15:13+03:00",
+      "model_version": "v2",
+      "tournament": "Лига наций УЕФА 2026/27, лига A, групповой этап, 6-й тур",
+      "match": "Уэльс — Португалия",
+      "start": "17.11, 22:45 МСК",
+      "bet": "П2 (победа Португалии)",
+      "odds": "1.45",
+      "confidence": 3,
+      "reason": "Португалии нужна победа, чтобы удержать первое место, а Уэльс проиграл 4 из 5 матчей группы и забил всего 3 мяча.",
+      "facts": [
+        "Португалия: 4 победы в 5 матчах, 12 очков; Уэльс: 1 победа, 3 очка, мячи 3:8 — Sports.ru",
+        "Португалия выиграла 3 последние очные встречи, не пропустив ни разу (в т.ч. 1:0 в сентябре 2026) — Sports.ru",
+        "Португалия не проигрывает в 5 последних выездных матчах Лиги наций — Sports.ru",
+        "Дания (9 очков) отстаёт на 3, и личные встречи у неё лучше (4:2 и 1:4) — Португалии нельзя проигрывать — Sports.ru"
+      ],
+      "against": [
+        "14.11 Португалия проиграла дома Дании 1:4 и пропускает в среднем 1,6 гола в последних 5 матчах",
+        "Уэльс дома обыграл Норвегию 2:1"
+      ],
+      "uncertainty": "Форма обороны Португалии после 1:4; составы неизвестны.",
+      "data_quality": {
+        "level": "medium",
+        "note": "нет xG; составы не объявлены"
+      },
+      "sources": [
+        {
+          "title": "Sports.ru — Уэльс — Португалия",
+          "url": "https://www.sports.ru/football/match/portugal-vs-wales/"
+        },
+        {
+          "title": "Sports.ru — таблица Лиги наций 2026/27",
+          "url": "https://www.sports.ru/football/tournament/uefa-nations-league/table/"
+        }
+      ],
+      "market_prob": 0.69,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "football-20261117-oswzd9",
+      "sport": "football",
+      "sport_name": "Футбол",
+      "home": "Венгрия",
+      "away": "Северная Ирландия",
+      "event_date": "2026-11-17",
+      "start_iso": "2026-11-17T22:45+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-16T15:13+03:00",
+      "model_version": "v2",
+      "tournament": "Лига наций УЕФА 2026/27, лига B, групповой этап, 6-й тур",
+      "match": "Венгрия — Северная Ирландия",
+      "start": "17.11, 22:45 МСК",
+      "bet": "ТМ 2.5",
+      "confidence": 4,
+      "reason": "Две лучшие обороны группы: Северная Ирландия не пропустила ни одного мяча за 5 матчей, Венгрия — 2; первая встреча закончилась 0:0.",
+      "facts": [
+        "Северная Ирландия: 5 матчей, мячи 5:0; Венгрия: 5:2 — Sports.ru",
+        "Тоталы последних 5 матчей Северной Ирландии: 1, 0, 3, 0, 1; Венгрии: 2, 3, 1, 0, 1 — Sports.ru",
+        "Первая встреча в этом розыгрыше — 0:0 (28.09.2026); в 2022 году — 1:0 Венгрия — Sports.ru",
+        "Северная Ирландия забивает в среднем 1,0 гол за игру в последних 5 матчах — Sports.ru"
+      ],
+      "against": [
+        "Матч решает первое место: Северной Ирландии (11 очков) хватает ничьей, Венгрии (10) нужна победа — она может рисковать",
+        "Венгрия выиграла 3 последних матча"
+      ],
+      "uncertainty": "Ранний гол заставит Северную Ирландию раскрыться; коэффициент на тотал не нашёлся.",
+      "data_quality": {
+        "level": "medium",
+        "note": "нет xG; коэффициент на тотал не найден — в экспресс не идёт"
+      },
+      "sources": [
+        {
+          "title": "Sports.ru — Венгрия — Северная Ирландия",
+          "url": "https://www.sports.ru/football/match/hungary-vs-northern-ireland/"
+        },
+        {
+          "title": "Sports.ru — таблица Лиги наций 2026/27",
+          "url": "https://www.sports.ru/football/tournament/uefa-nations-league/table/"
+        }
+      ],
+      "market_prob": null,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "football-20261117-poju55",
+      "sport": "football",
+      "sport_name": "Футбол",
+      "home": "Украина",
+      "away": "Грузия",
+      "event_date": "2026-11-17",
+      "start_iso": "2026-11-17T22:45+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-16T15:13+03:00",
+      "model_version": "v2",
+      "tournament": "Лига наций УЕФА 2026/27, лига B, групповой этап, 6-й тур (нейтральное поле, Кошице)",
+      "match": "Украина — Грузия",
+      "start": "17.11, 22:45 МСК",
+      "bet": "ТМ 2.5",
+      "confidence": 4,
+      "reason": "Две самые малозабивающие команды группы: Украина забила 2 мяча за 5 матчей, Грузия — ни одного; очные встречи последних лет — 0:0, 1:1, 1:0.",
+      "facts": [
+        "Украина в Лиге наций: 5 матчей, мячи 2:6; Грузия: 5 матчей, 0:4 — Sports.ru",
+        "Тоталы последних 5 матчей Украины: 1, 3, 3, 0, 1; Грузии: 2, 0, 1, 0, 1 — Sports.ru",
+        "Очные встречи: 0:0 (28.09.2026), 1:1 (16.11.2024), 1:0 (11.10.2024) — Sports.ru",
+        "Украина забивает в среднем 0,4 гола за игру в последних 5 матчах — Sports.ru"
+      ],
+      "against": [
+        "Обеим командам нужна только победа, чтобы не остаться последними — возможна открытая игра в конце",
+        "Украина пропускает 3 матча подряд"
+      ],
+      "uncertainty": "Если рано забьют, матч может раскрыться; коэффициент на тотал не нашёлся.",
+      "data_quality": {
+        "level": "medium",
+        "note": "нет xG; коэффициент на тотал не найден — в экспресс не идёт"
+      },
+      "sources": [
+        {
+          "title": "Sports.ru — Украина — Грузия",
+          "url": "https://www.sports.ru/football/match/georgia-vs-ukraine/"
+        },
+        {
+          "title": "Sports.ru — таблица Лиги наций 2026/27",
+          "url": "https://www.sports.ru/football/tournament/uefa-nations-league/table/"
+        }
+      ],
+      "market_prob": null,
       "status": "pending",
       "result": null,
       "versions": [],
