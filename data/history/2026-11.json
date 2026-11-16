@@ -6241,6 +6241,55 @@
       ]
     },
     {
+      "id": "cs2-20261116-1int41x",
+      "sport": "cs2",
+      "sport_name": "CS2",
+      "home": "Omega",
+      "away": "PRIVATE",
+      "event_date": "2026-11-16",
+      "start_iso": "2026-11-16T17:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-16T15:06+03:00",
+      "model_version": "v2",
+      "tournament": "CCT 2026 Europe Series 13, полуфинал, тир-3",
+      "match": "Omega — PRIVATE",
+      "start": "16.11, 17:00 МСК",
+      "bet": "П2 (победа PRIVATE)",
+      "confidence": 4,
+      "reason": "PRIVATE заметно выше в обоих рейтингах, дважды за последние месяцы обыграл Omega 2:0 и сильнее на картах, которые, вероятно, будут сыграны.",
+      "facts": [
+        "Рейтинг HLTV: PRIVATE #46, Omega #131; VRS: PRIVATE #52, Omega #82 — HLTV",
+        "Очные встречи: PRIVATE выиграл 2:0 в CIS Esports League (31.10: Dust2 13:5, Ancient 13:9) — HLTV",
+        "Винрейт за 3 месяца: PRIVATE — Dust2 78% (18 карт), Ancient 71% (14), Mirage 67% (21); Omega — Dust2 47% (15), Ancient 33% (3), Mirage 62% (8) — HLTV",
+        "Средний рейтинг игроков за 3 месяца: PRIVATE 1.15, Omega 1.13 — HLTV"
+      ],
+      "against": [
+        "Omega в последних матчах обыграла Iberian Soul и Inner Circle Academy, обе серии 2:1",
+        "PRIVATE за 3 месяца проигрывал командам уровня FORZE Reload и BBL"
+      ],
+      "uncertainty": "Онлайн BO3 тир-3: возможны сюрпризы на одной карте; коэффициент не найден.",
+      "data_quality": {
+        "level": "medium",
+        "note": "коэффициент на матч не нашёлся — в экспресс не идёт"
+      },
+      "sources": [
+        {
+          "title": "HLTV — Omega vs PRIVATE",
+          "url": "https://www.hltv.org/matches/2400166/omega-vs-private-cct-2026-europe-series-13"
+        },
+        {
+          "title": "HLTV — CCT 2026 Europe Series 13",
+          "url": "https://www.hltv.org/events/9465/cct-2026-europe-series-13"
+        }
+      ],
+      "format": "BO3, онлайн",
+      "market_prob": null,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
       "id": "football-20261116-1oqjg7n",
       "sport": "football",
       "sport_name": "Футбол",
@@ -6550,6 +6599,99 @@
           "note": "снят с публикации до начала события"
         }
       ]
+    },
+    {
+      "id": "football-20261116-12o3gxb",
+      "sport": "football",
+      "sport_name": "Футбол",
+      "home": "Литва",
+      "away": "Лихтенштейн",
+      "event_date": "2026-11-16",
+      "start_iso": "2026-11-16T20:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-16T15:06+03:00",
+      "model_version": "v2",
+      "tournament": "Лига наций УЕФА 2026/27, групповой этап, 6-й тур",
+      "match": "Литва — Лихтенштейн",
+      "start": "16.11, 20:00 МСК",
+      "bet": "П1 (победа Литвы)",
+      "odds": "1.11",
+      "confidence": 3,
+      "reason": "Лихтенштейн не забил ни одного гола в 5 последних матчах и не выигрывает 8 игр подряд, а Литва уже обыграла его в гостях 2:0.",
+      "facts": [
+        "Лихтенштейн в 5 последних матчах: 0:1, 0:2, 0:0, 0:2, 0:2 — ноль забитых — Sports.ru",
+        "Литва выиграла 3 последние очные встречи, в том числе 2:0 в первом круге (24.09) — Sports.ru",
+        "Литва не проигрывает в 5 из 7 последних домашних матчей — Sports.ru"
+      ],
+      "against": [
+        "Литва забивает в среднем 1,2 гола в последних 5 матчах; 12.11 сыграла 0:0 с Суринамом",
+        "При слабой атаке Литвы ничья 0:0 вполне возможна"
+      ],
+      "uncertainty": "Низкая результативность Литвы — главный риск.",
+      "data_quality": {
+        "level": "low",
+        "note": "мало статистики по сборным этого уровня; нет xG"
+      },
+      "sources": [
+        {
+          "title": "Sports.ru — Литва — Лихтенштейн",
+          "url": "https://www.sports.ru/football/match/liechtenstein-vs-lithuania/"
+        }
+      ],
+      "market_prob": 0.901,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "football-20261116-1qwjuur",
+      "sport": "football",
+      "sport_name": "Футбол",
+      "home": "Исландия",
+      "away": "Люксембург",
+      "event_date": "2026-11-16",
+      "start_iso": "2026-11-16T20:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-16T15:06+03:00",
+      "model_version": "v2",
+      "tournament": "Лига наций УЕФА 2026/27, групповой этап, 6-й тур",
+      "match": "Исландия — Люксембург",
+      "start": "16.11, 20:00 МСК",
+      "bet": "П1 (победа Исландии)",
+      "odds": "1.20",
+      "confidence": 4,
+      "reason": "Исландия лидирует в группе и не проигрывает 5 матчей подряд, а Люксембург проиграл 4 последних матча, не забив ни одного гола.",
+      "facts": [
+        "Исландия: 1-е место в группе, 11 очков, разница мячей +11; Люксембург: 3 очка, разница −6 — Sports.ru",
+        "Исландия 13.11 разгромила Болгарию 5:0 на выезде; в первом круге обыграла Люксембург 3:0 в гостях (29.09) — Sports.ru",
+        "Люксембург в 4 последних матчах: 0:1, 0:2, 0:1, 0:3 — ни одного забитого гола — Sports.ru",
+        "Исландия не проигрывает Люксембургу в 7 из 8 последних очных матчей — Sports.ru"
+      ],
+      "against": [
+        "Исландия уже обеспечила себе первое место — возможна ротация",
+        "В 2023 году Люксембург обыграл Исландию 3:1"
+      ],
+      "uncertainty": "Мотивация Исландии в последнем туре и стартовые составы неизвестны.",
+      "data_quality": {
+        "level": "medium",
+        "note": "нет xG; составы не объявлены"
+      },
+      "sources": [
+        {
+          "title": "Sports.ru — Исландия — Люксембург",
+          "url": "https://www.sports.ru/football/match/iceland-vs-luxembourg/"
+        },
+        {
+          "title": "Sports.ru — календарь Лиги наций",
+          "url": "https://www.sports.ru/football/tournament/uefa-nations-league/calendar/"
+        }
+      ],
+      "market_prob": 0.833,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
     },
     {
       "id": "dota2-20261116-kd7bpb",
@@ -7215,6 +7357,54 @@
         }
       ],
       "market_prob": 0.637,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "hockey-20261117-5zqrya",
+      "sport": "hockey",
+      "sport_name": "Хоккей",
+      "home": "Лада",
+      "away": "Металлург Мг",
+      "event_date": "2026-11-17",
+      "start_iso": "2026-11-17T18:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-16T15:06+03:00",
+      "model_version": "v2",
+      "tournament": "КХЛ, регулярный чемпионат 2026/27",
+      "match": "Лада — Металлург Мг",
+      "start": "17.11, 18:00 МСК",
+      "bet": "П2 (победа Металлурга в основное время)",
+      "odds": "1.43",
+      "confidence": 3,
+      "reason": "Лидер Востока с разницей +28 едет к последней команде Запада (−44), которая проиграла 4 последних домашних матча.",
+      "facts": [
+        "Металлург: 27 матчей, 18 побед, разница шайб +28, 1-е место на Востоке; Лада: 6 побед в 27 матчах, разница −44, последнее место на Западе — Sports.ru",
+        "Лада проиграла 4 последних домашних матча и за 5 последних игр забросила 9 шайб — Sports.ru",
+        "Металлург не проигрывает Ладе 6 матчей подряд и не проигрывает в 8 из 10 последних игр — Sports.ru"
+      ],
+      "against": [
+        "Лада часто доводит матчи до овертайма: 8 игр сезона решились в ОТ или по буллитам",
+        "6 ноября Лада обыграла Локомотив 1:0 по буллитам"
+      ],
+      "uncertainty": "Ничья после 60 минут — главный риск для ставки на основное время; составы и вратари не объявлены.",
+      "data_quality": {
+        "level": "medium",
+        "note": "нет статистики бросков и стартовых вратарей"
+      },
+      "sources": [
+        {
+          "title": "Sports.ru — Лада — Металлург Мг",
+          "url": "https://www.sports.ru/hockey/match/lada-vs-metallurg-magnitogorsk/"
+        },
+        {
+          "title": "Sports.ru — таблица КХЛ",
+          "url": "https://www.sports.ru/hockey/tournament/khl/table/"
+        }
+      ],
+      "market_prob": 0.699,
       "status": "pending",
       "result": null,
       "versions": [],
