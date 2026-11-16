@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-16T15:13+03:00",
+  "updated_at": "2026-11-17T02:09+03:00",
   "source": "claude",
   "sports": [
     {
@@ -7,210 +7,6 @@
       "name": "Футбол",
       "emoji": "⚽",
       "picks": [
-        {
-          "match": "Казахстан — Словакия",
-          "tournament": "Лига наций, лига C, 6-й тур",
-          "start": "16.11, 18:00 МСК",
-          "start_iso": "2026-11-16T18:00+03:00",
-          "bet": "П2 (победа Словакии)",
-          "odds": "",
-          "confidence": 3,
-          "reason": "Пересмотр прежнего прогноза «обе забьют»: Казахстан забивает меньше гола за игру, а по форме и классу заметно сильнее Словакия.",
-          "facts": [
-            "Последние 20 матчей: Словакия 11 побед, 1.30 гола за игру; Казахстан 5 побед и 12 поражений, 0.85 гола за игру (FootballCritic)",
-            "Казахстан проиграл Словакии и Молдове подряд в этом розыгрыше (Sports Mole)",
-            "Модель Foresportia: Словакия 65.6%, Казахстан 13.7%"
-          ],
-          "against": [
-            "Словакия могла уже решить турнирные задачи — возможна ротация",
-            "Дома в Астане Казахстан опаснее"
-          ],
-          "uncertainty": "Состав Словакии на последний матч неизвестен.",
-          "data_quality": {
-            "level": "medium",
-            "note": "нет xG"
-          },
-          "sources": [
-            {
-              "title": "FootballCritic — Kazakhstan vs Slovakia",
-              "url": "https://www.footballcritic.com/uefa-nations-league-kazakhstan-slovakia/preview/4095590"
-            },
-            {
-              "title": "Foresportia — Kazakhstan vs Slovakia",
-              "url": "https://www.foresportia.com/en/prediction/uefa-nations-league/kazakhstan-slovakia-2026-11-16/"
-            },
-            {
-              "title": "Sports Mole — Moldova vs Kazakhstan",
-              "url": "https://www.sportsmole.co.uk/football/moldova/uefa-nations-league/preview/moldova-vs-kazakhstan-prediction-team-news-lineups_608901.html"
-            }
-          ]
-        },
-        {
-          "match": "Исландия — Люксембург",
-          "tournament": "Лига наций УЕФА 2026/27, групповой этап, 6-й тур",
-          "start": "16.11, 20:00 МСК",
-          "start_iso": "2026-11-16T20:00+03:00",
-          "bet": "П1 (победа Исландии)",
-          "odds": "1.20",
-          "confidence": 4,
-          "reason": "Исландия лидирует в группе и не проигрывает 5 матчей подряд, а Люксембург проиграл 4 последних матча, не забив ни одного гола.",
-          "facts": [
-            "Исландия: 1-е место в группе, 11 очков, разница мячей +11; Люксембург: 3 очка, разница −6 — Sports.ru",
-            "Исландия 13.11 разгромила Болгарию 5:0 на выезде; в первом круге обыграла Люксембург 3:0 в гостях (29.09) — Sports.ru",
-            "Люксембург в 4 последних матчах: 0:1, 0:2, 0:1, 0:3 — ни одного забитого гола — Sports.ru",
-            "Исландия не проигрывает Люксембургу в 7 из 8 последних очных матчей — Sports.ru"
-          ],
-          "against": [
-            "Исландия уже обеспечила себе первое место — возможна ротация",
-            "В 2023 году Люксембург обыграл Исландию 3:1"
-          ],
-          "uncertainty": "Мотивация Исландии в последнем туре и стартовые составы неизвестны.",
-          "data_quality": {
-            "level": "medium",
-            "note": "нет xG; составы не объявлены"
-          },
-          "sources": [
-            {
-              "title": "Sports.ru — Исландия — Люксембург",
-              "url": "https://www.sports.ru/football/match/iceland-vs-luxembourg/"
-            },
-            {
-              "title": "Sports.ru — календарь Лиги наций",
-              "url": "https://www.sports.ru/football/tournament/uefa-nations-league/calendar/"
-            }
-          ]
-        },
-        {
-          "match": "Литва — Лихтенштейн",
-          "tournament": "Лига наций УЕФА 2026/27, групповой этап, 6-й тур",
-          "start": "16.11, 20:00 МСК",
-          "start_iso": "2026-11-16T20:00+03:00",
-          "bet": "П1 (победа Литвы)",
-          "odds": "1.11",
-          "confidence": 3,
-          "reason": "Лихтенштейн не забил ни одного гола в 5 последних матчах и не выигрывает 8 игр подряд, а Литва уже обыграла его в гостях 2:0.",
-          "facts": [
-            "Лихтенштейн в 5 последних матчах: 0:1, 0:2, 0:0, 0:2, 0:2 — ноль забитых — Sports.ru",
-            "Литва выиграла 3 последние очные встречи, в том числе 2:0 в первом круге (24.09) — Sports.ru",
-            "Литва не проигрывает в 5 из 7 последних домашних матчей — Sports.ru"
-          ],
-          "against": [
-            "Литва забивает в среднем 1,2 гола в последних 5 матчах; 12.11 сыграла 0:0 с Суринамом",
-            "При слабой атаке Литвы ничья 0:0 вполне возможна"
-          ],
-          "uncertainty": "Низкая результативность Литвы — главный риск.",
-          "data_quality": {
-            "level": "low",
-            "note": "мало статистики по сборным этого уровня; нет xG"
-          },
-          "sources": [
-            {
-              "title": "Sports.ru — Литва — Лихтенштейн",
-              "url": "https://www.sports.ru/football/match/liechtenstein-vs-lithuania/"
-            }
-          ]
-        },
-        {
-          "match": "Швейцария — Шотландия",
-          "tournament": "Лига наций, лига B, 6-й тур",
-          "start": "16.11, 22:45 МСК",
-          "start_iso": "2026-11-16T22:45+03:00",
-          "bet": "ТБ 1.5",
-          "odds": "1.33",
-          "confidence": 4,
-          "reason": "Швейцария забивает минимум два почти в каждом матче этого розыгрыша, а Шотландия плохо обороняется.",
-          "facts": [
-            "Швейцария выиграла 4 стартовых матча группы: 3:0, 3:0, 2:1, 3:0 — каждый раз 2+ гола (101 Great Goals)",
-            "Шотландия проиграла Швейцарии 0:3 дома и Словении 1:2",
-            "Перед ноябрём у Швейцарии 12 очков из 12 (Sports Mole)"
-          ],
-          "against": [
-            "Шотландия сыграла 0:0 со Словенией, имея 2.16 xG — её матчи бывают закрытыми"
-          ],
-          "uncertainty": "Результат матча Швейцарии со Словенией 13.11 не учтён; возможна ротация, если Швейцария уже выиграла группу.",
-          "data_quality": {
-            "level": "medium",
-            "note": "нет данных о составах"
-          },
-          "sources": [
-            {
-              "title": "101 Great Goals — Scotland v Switzerland",
-              "url": "https://www.101greatgoals.com/football/internationals/scotland-v-switzerland-preview-expected-line-ups-stats-and-where-to-watch/"
-            },
-            {
-              "title": "Sports Mole — Slovenia vs Switzerland",
-              "url": "https://www.sportsmole.co.uk/football/slovenia/uefa-nations-league/preview/slovenia-vs-switzerland-prediction-team-news-lineups_608906.html"
-            }
-          ]
-        },
-        {
-          "match": "Греция — Сербия",
-          "tournament": "Лига наций, лига A, 6-й тур",
-          "start": "16.11, 22:45 МСК",
-          "start_iso": "2026-11-16T22:45+03:00",
-          "bet": "П1 (победа Греции)",
-          "odds": "1.43",
-          "confidence": 3,
-          "reason": "Греция без поражений в последних пяти матчах и уже обыграла Сербию в гостях, а Сербия проиграла четыре из пяти последних.",
-          "facts": [
-            "Греция: 3 победы и 2 ничьих в последних 5 матчах, 8 забитых и 3 пропущенных (Gainblers)",
-            "Сербия: 1 победа и 4 поражения в последних 5 матчах (Gainblers)",
-            "В сентябре Греция выиграла в Белграде 2:1; Греция обыграла и Германию 1:0",
-            "Рейтинг Эло: Греция 1783, Сербия 1716 (Foresportia)"
-          ],
-          "against": [
-            "Модель Foresportia даёт Греции лишь 45.5%, ничья — 24.8%",
-            "Две из трёх последних игр Греции — ничьи"
-          ],
-          "uncertainty": "Греция часто играет вничью с сильными соперниками; мотивация Сербии в последнем туре неизвестна.",
-          "data_quality": {
-            "level": "medium",
-            "note": "нет xG и составов"
-          },
-          "sources": [
-            {
-              "title": "Gainblers — Greece vs Serbia",
-              "url": "https://gainblers.com/us/bets/football/europe/uefa-nations-league/greece-serbia/"
-            },
-            {
-              "title": "Foresportia — Greece vs Serbia",
-              "url": "https://www.foresportia.com/en/prediction/uefa-nations-league/greece-serbia-2026-11-16/"
-            }
-          ]
-        },
-        {
-          "match": "Германия — Нидерланды",
-          "tournament": "Лига наций, лига A, 6-й тур",
-          "start": "16.11, 22:45 МСК",
-          "start_iso": "2026-11-16T22:45+03:00",
-          "bet": "Обе забьют — да",
-          "odds": "1.40",
-          "confidence": 2,
-          "reason": "Очные встречи этих сборных почти всегда результативны, но атака Германии в этом розыгрыше буксует — поэтому уверенность низкая.",
-          "facts": [
-            "В 7 из 9 последних очных матчей забивали обе команды (Football Faithful)",
-            "Первая встреча этого розыгрыша — 1:1",
-            "Нидерланды забили Греции два мяча (2:2) — ту же Грецию, которой Германия не забила дважды"
-          ],
-          "against": [
-            "Германия не забила в 2 из 4 матчей ЛН (0:1 и 0:0 с Грецией)"
-          ],
-          "uncertainty": "Неясно, в каком составе выйдет Германия и насколько сохранилась её проблема с реализацией.",
-          "data_quality": {
-            "level": "low",
-            "note": "нет xG и данных о травмах за ноябрь"
-          },
-          "sources": [
-            {
-              "title": "Football Faithful — Germany vs Netherlands",
-              "url": "https://thefootballfaithful.com/germany-vs-netherlands-prediction-betting-tips-16-11-2026/"
-            },
-            {
-              "title": "101 Great Goals — Netherlands v Germany",
-              "url": "https://www.101greatgoals.com/match-previews/netherlands-v-germany-preview-team-news-line-ups-where-to-watch-tv-channel-live-online-stream-prediction-nations-league/"
-            }
-          ]
-        },
         {
           "match": "Украина — Грузия",
           "tournament": "Лига наций УЕФА 2026/27, лига B, групповой этап, 6-й тур (нейтральное поле, Кошице)",
@@ -317,7 +113,7 @@
           ]
         }
       ],
-      "updated_at": "2026-11-16T15:13+03:00"
+      "updated_at": "2026-11-17T02:09+03:00"
     },
     {
       "id": "basketball",
@@ -476,61 +272,8 @@
       "id": "tennis",
       "name": "Теннис",
       "emoji": "🎾",
-      "picks": [
-        {
-          "match": "Даниил Медведев — Флавио Коболли",
-          "tournament": "Итоговый турнир ATP, Турин, группа Лендла",
-          "start": "16.11, не ранее 22:30 МСК",
-          "start_iso": "2026-11-16T22:30+03:00",
-          "bet": "П1 (победа Медведева)",
-          "odds": "1.23",
-          "confidence": 3,
-          "reason": "Медведев сильнее на закрытом быстром харде и опытнее на Итоговом турнире, а Коболли дебютирует в Турине после снятия с травмой в Вене.",
-          "facts": [
-            "Модель Dimers: 77% на победу Медведева — Dimers",
-            "Медведев выиграл Итоговый турнир в 2020 году; Коболли играет в Турине впервые — RG.org",
-            "Коболли в 2026 году: 18-15 на харде, удержание подачи на харде 77,9% — RG.org",
-            "Коболли в последний раз снялся по ходу матча в Вене из-за травмы — bets.com.au",
-            "Elo на харде (String Tension): Медведев 1869, Коболли 1443 — String Tension"
-          ],
-          "against": [
-            "Коболли выиграл последнюю очную встречу (Мадрид, грунт, 2026) и играет перед домашней публикой",
-            "С 2021 года у Медведева на Итоговом 3 победы и 8 поражений"
-          ],
-          "uncertainty": "Состояние Коболли после травмы и поддержка трибун в Турине.",
-          "data_quality": {
-            "level": "medium",
-            "note": "нет детальной статистики подачи/приёма за 10 матчей"
-          },
-          "sources": [
-            {
-              "title": "Dimers — Medvedev vs Cobolli",
-              "url": "https://www.dimers.com/tennis/news/daniil-medvedev-vs-flavio-cobolli-tennis-prediction-atp-world-tour-finals-2026-ac"
-            },
-            {
-              "title": "Sporting Life — Monday ATP Finals preview",
-              "url": "https://www.sportinglife.com/tennis/news/tennis-betting-tips-mondays-atp-finals-preview-and-best-bets/235455"
-            },
-            {
-              "title": "bets.com.au — Medvedev vs Cobolli",
-              "url": "https://www.bets.com.au/tennis/atp-tour/daniil-medvedev-vs-flavio-cobolli-atp-finals-tips-prediction-live-stream-20261116-0001/"
-            },
-            {
-              "title": "RG.org — ATP Finals 2026 preview",
-              "url": "https://rg.org/news/tennis/atp-finals-2026-odds-preview-alcaraz-zverev-shelton-best-bets"
-            },
-            {
-              "title": "String Tension — H2H",
-              "url": "https://stringtension.com/head-to-head/atp/daniil-medvedev/flavio-cobolli"
-            }
-          ],
-          "model_prob": {
-            "value": 0.77,
-            "source": "Dimers"
-          }
-        }
-      ],
-      "updated_at": "2026-11-16T15:13+03:00"
+      "picks": [],
+      "updated_at": "2026-11-17T02:09+03:00"
     },
     {
       "id": "volleyball",
@@ -544,76 +287,6 @@
       "name": "Хоккей",
       "emoji": "🏒",
       "picks": [
-        {
-          "match": "Локомотив — Сочи",
-          "tournament": "КХЛ, регулярный чемпионат 2026/27",
-          "start": "16.11, 19:30 МСК",
-          "start_iso": "2026-11-16T19:30+03:00",
-          "bet": "П1 (победа Локомотива в основное время)",
-          "odds": "1.30",
-          "confidence": 4,
-          "reason": "Лучшая оборона лиги принимает предпоследнюю команду Запада: разница шайб +30 против −42, и в этом сезоне Локомотив уже дважды забросил Сочи по шесть.",
-          "facts": [
-            "Локомотив: 25 матчей, 18 побед, шайбы 69:39 (+30), 2-е место на Западе; Сочи: 26 матчей, 8 побед, шайбы 45:87 (−42), 10-е место — Sports.ru",
-            "Сочи пропускает в среднем 3,3 шайбы за игру, Локомотив — 1,6 — расчёт по таблице Sports.ru",
-            "Очные встречи сезона: 6:3 (17.10) и 6:2 (29.10) в пользу Локомотива — Sports.ru",
-            "Сочи в последних 5 матчах выиграл только один, и тот в овертайме (3:2 с Динамо Минск); в основное время — 0 побед — Sports.ru"
-          ],
-          "against": [
-            "Локомотив дважды за последние 5 игр не забил Ладе (0:1 и 0:1 по буллитам)",
-            "Ставка на основное время проигрывает при ничьей после 60 минут"
-          ],
-          "uncertainty": "Нет данных о составе и вратаре Локомотива на этот матч; возможна ротация после игры 14.11.",
-          "data_quality": {
-            "level": "medium",
-            "note": "нет xG и статистики бросков; составы не подтверждены"
-          },
-          "sources": [
-            {
-              "title": "Sports.ru — превью Локомотив — Сочи",
-              "url": "https://www.sports.ru/hockey/match/lokomotiv-yaroslavl-vs-sochi/"
-            },
-            {
-              "title": "Sports.ru — таблица КХЛ 2026/27",
-              "url": "https://www.sports.ru/hockey/tournament/khl/table/"
-            }
-          ]
-        },
-        {
-          "match": "ЦСКА — Амур",
-          "tournament": "КХЛ, регулярный чемпионат 2026/27",
-          "start": "16.11, 19:30 МСК",
-          "start_iso": "2026-11-16T19:30+03:00",
-          "bet": "П1 (победа ЦСКА в основное время)",
-          "odds": "1.48",
-          "confidence": 3,
-          "reason": "Лидер Запада с третьей атакой лиги дома против крепкой, но малорезультативной команды Востока, которая заканчивает длинный выезд.",
-          "facts": [
-            "ЦСКА: 25 матчей, 19 побед, шайбы 83:46 (+37), 1-е место на Западе; Амур: 25 матчей, 14 побед, шайбы 52:41 — Sports.ru",
-            "ЦСКА в последних 5 матчах: 4 победы, шайбы 20:9 (Торпедо 5:1, Сибирь 4:1, Металлург 7:3) — Sports.ru",
-            "Амур играет 3-й выездной матч за 5 дней (Спартак 12.11, Сочи 14.11) — Sports.ru",
-            "Единственная очная встреча сезона — 2:0 ЦСКА в Хабаровске 23.09 — Sports.ru"
-          ],
-          "against": [
-            "У Амура вторая оборона лиги — 1,64 пропущенной шайбы за игру, и он выиграл 3 последних матча",
-            "Амур выигрывал у ЦСКА 2:0 в сентябре 2025-го"
-          ],
-          "uncertainty": "Низкая результативность Амура повышает шанс ничьей в основное время; вратари не объявлены.",
-          "data_quality": {
-            "level": "medium",
-            "note": "нет xG и статистики бросков; составы не подтверждены"
-          },
-          "sources": [
-            {
-              "title": "Sports.ru — превью ЦСКА — Амур",
-              "url": "https://www.sports.ru/hockey/match/amur-vs-cska/"
-            },
-            {
-              "title": "Sports.ru — таблица КХЛ 2026/27",
-              "url": "https://www.sports.ru/hockey/tournament/khl/table/"
-            }
-          ]
-        },
         {
           "match": "Юта — Ванкувер",
           "tournament": "НХЛ, регулярный чемпионат 2026/27",
@@ -722,223 +395,24 @@
           ]
         }
       ],
-      "updated_at": "2026-11-16T15:13+03:00"
+      "updated_at": "2026-11-17T02:09+03:00"
     },
     {
       "id": "cs2",
       "name": "CS2",
       "emoji": "🔫",
-      "picks": [
-        {
-          "match": "Omega — PRIVATE",
-          "tournament": "CCT 2026 Europe Series 13, полуфинал, тир-3",
-          "start": "16.11, 17:00 МСК",
-          "start_iso": "2026-11-16T17:00+03:00",
-          "format": "BO3, онлайн",
-          "bet": "П2 (победа PRIVATE)",
-          "odds": "",
-          "confidence": 4,
-          "reason": "PRIVATE заметно выше в обоих рейтингах, дважды за последние месяцы обыграл Omega 2:0 и сильнее на картах, которые, вероятно, будут сыграны.",
-          "facts": [
-            "Рейтинг HLTV: PRIVATE #46, Omega #131; VRS: PRIVATE #52, Omega #82 — HLTV",
-            "Очные встречи: PRIVATE выиграл 2:0 в CIS Esports League (31.10: Dust2 13:5, Ancient 13:9) — HLTV",
-            "Винрейт за 3 месяца: PRIVATE — Dust2 78% (18 карт), Ancient 71% (14), Mirage 67% (21); Omega — Dust2 47% (15), Ancient 33% (3), Mirage 62% (8) — HLTV",
-            "Средний рейтинг игроков за 3 месяца: PRIVATE 1.15, Omega 1.13 — HLTV"
-          ],
-          "against": [
-            "Omega в последних матчах обыграла Iberian Soul и Inner Circle Academy, обе серии 2:1",
-            "PRIVATE за 3 месяца проигрывал командам уровня FORZE Reload и BBL"
-          ],
-          "uncertainty": "Онлайн BO3 тир-3: возможны сюрпризы на одной карте; коэффициент не найден.",
-          "data_quality": {
-            "level": "medium",
-            "note": "коэффициент на матч не нашёлся — в экспресс не идёт"
-          },
-          "sources": [
-            {
-              "title": "HLTV — Omega vs PRIVATE",
-              "url": "https://www.hltv.org/matches/2400166/omega-vs-private-cct-2026-europe-series-13"
-            },
-            {
-              "title": "HLTV — CCT 2026 Europe Series 13",
-              "url": "https://www.hltv.org/events/9465/cct-2026-europe-series-13"
-            }
-          ]
-        }
-      ],
-      "updated_at": "2026-11-16T15:13+03:00"
+      "picks": [],
+      "updated_at": "2026-11-17T02:09+03:00"
     },
     {
       "id": "dota2",
       "name": "Dota 2",
       "emoji": "🐉",
-      "picks": [
-        {
-          "match": "Zero Tenacity — PlayTime",
-          "tournament": "DreamLeague Division 2 Series 5, плей-офф, тир-2",
-          "start": "16.11, 20:30 МСК",
-          "start_iso": "2026-11-16T20:30+03:00",
-          "bet": "П2 (победа PlayTime)",
-          "odds": "",
-          "confidence": 2,
-          "reason": "PlayTime прошла группу без поражений.",
-          "facts": [
-            "PlayTime выиграла все 6 матчей группы (dota2protips)",
-            "Модель dota2protips: 60% за PlayTime",
-            "PlayTime прошла и плей-ин 1win Essence III в ноябре"
-          ],
-          "against": [
-            "Модель даёт лишь 60% — разрыв небольшой"
-          ],
-          "uncertainty": "Нет данных о составах и патче.",
-          "data_quality": {
-            "level": "low",
-            "note": "мало статистики"
-          },
-          "sources": [
-            {
-              "title": "dota2protips — DreamLeague Division 2",
-              "url": "https://www.dota2protips.com/tournaments/dreamleague-division-2-series-5"
-            }
-          ]
-        }
-      ],
-      "updated_at": "2026-11-16T15:13+03:00"
+      "picks": [],
+      "updated_at": "2026-11-17T02:09+03:00"
     }
   ],
   "analysis": [
-    {
-      "sport": "⚽ Футбол",
-      "match": "Германия — Нидерланды",
-      "tournament": "Лига наций УЕФА, лига A, группа 2, 6-й тур",
-      "start": "16.11, 22:45 МСК",
-      "text": "Нидерланды лидируют в группе с 11 очками и лучшей атакой (14 забитых в 5 матчах), Германия с 8 очками делит второе место с Грецией. Для Германии это матч за первое место: победа уравнивает очки с Нидерландами.\nУ Германии в этом розыгрыше проблемы с голами — всего 6 забитых за 5 матчей, при этом пропущено лишь 3: это лучшая оборона группы. Нидерланды забивают стабильно, в том числе два мяча Греции, которой Германия не забила.\nОчные матчи этих сборных обычно результативны: в 7 из 9 последних встреч забивали обе команды, первая игра этого розыгрыша — 1:1. Но если Германия снова будет буксовать в атаке, матч может получиться закрытым.",
-      "key_factors": [
-        "Германии нужна победа для борьбы за первое место",
-        "Лучшая оборона (Германия, 3 пропущенных) против лучшей атаки (Нидерланды, 14 забитых)",
-        "В 7 из 9 последних очных матчей забивали обе команды",
-        "Германия возможно даст время резервистам — последний матч группы"
-      ],
-      "verdict": "Склоняемся к голам с обеих сторон, но уверенность низкая из-за слабой атаки Германии (наш прогноз: «Обе забьют — да», 2/5).",
-      "sources": [
-        {
-          "title": "Sports.ru — таблица Лиги наций",
-          "url": "https://www.sports.ru/football/tournament/uefa-nations-league/table/"
-        },
-        {
-          "title": "Football Faithful — Germany vs Netherlands",
-          "url": "https://thefootballfaithful.com/germany-vs-netherlands-prediction-betting-tips-16-11-2026/"
-        },
-        {
-          "title": "101 Great Goals — Netherlands v Germany",
-          "url": "https://www.101greatgoals.com/match-previews/netherlands-v-germany-preview-team-news-line-ups-where-to-watch-tv-channel-live-online-stream-prediction-nations-league/"
-        },
-        {
-          "title": "Starting11 — Germany vs Netherlands",
-          "url": "https://starting11.com/fixtures/germany-vs-netherlands"
-        }
-      ]
-    },
-    {
-      "sport": "⚽ Футбол",
-      "match": "Греция — Сербия",
-      "tournament": "Лига наций УЕФА, лига A, группа 2, 6-й тур",
-      "start": "16.11, 22:45 МСК",
-      "text": "Сербия проиграла все 5 матчей группы (мячи 4:11) и уже не догонит соперников; Греция набрала 8 очков и не проигрывает пять матчей подряд — три победы и две ничьи.\nВ сентябре Греция выиграла в Белграде 2:1, а позже обыграла и Германию 1:0. Рейтинг Эло у Греции выше (1783 против 1716).\nПри этом Греция пропустила 10 мячей за 5 матчей, а модель Foresportia даёт ей лишь 45,5% — ничья (24,8%) остаётся реальным сценарием, особенно если Греция сыграет от обороны.",
-      "key_factors": [
-        "Сербия — 0 очков и 5 поражений подряд в группе",
-        "Греция не проигрывает 5 матчей",
-        "Победа Греции в Белграде 2:1 в первом круге",
-        "Модель Foresportia: 45,5% на Грецию"
-      ],
-      "verdict": "Греция — фаворит, но без запаса (наш прогноз: П1, 3/5).",
-      "sources": [
-        {
-          "title": "Sports.ru — таблица Лиги наций",
-          "url": "https://www.sports.ru/football/tournament/uefa-nations-league/table/"
-        },
-        {
-          "title": "Gainblers — Greece vs Serbia",
-          "url": "https://gainblers.com/us/bets/football/europe/uefa-nations-league/greece-serbia/"
-        },
-        {
-          "title": "Foresportia — Greece vs Serbia",
-          "url": "https://www.foresportia.com/en/prediction/uefa-nations-league/greece-serbia-2026-11-16/"
-        },
-        {
-          "title": "Спорт Mail — Греция — Сербия",
-          "url": "https://sportmail.ru/football-nations/409/match/452822/"
-        }
-      ]
-    },
-    {
-      "sport": "🎾 Теннис",
-      "match": "Даниил Медведев — Флавио Коболли",
-      "tournament": "Итоговый турнир ATP, группа Ивана Лендла",
-      "start": "16.11, 22:30 МСК",
-      "text": "Медведев — единственный в этой паре, кто уже выигрывал Итоговый турнир (2020), а быстрый закрытый хард в Турине подходит его игре. Модель Dimers даёт ему 77%, Elo String Tension на харде — 1869 против 1443.\nКоболли дебютирует в Турине, в 2026 году у него 18-15 на харде, а последний его турнир (Вена) закончился снятием из-за травмы. Зато он выиграл последнюю очную встречу (на грунте Мадрида) и будет играть при домашней публике.\nУ Медведева после 2021 года на Итоговом турнире лишь 3 победы при 8 поражениях — фаворит, но не гарантированный.",
-      "key_factors": [
-        "Покрытие: быстрый закрытый хард",
-        "Опыт Медведева против дебюта Коболли",
-        "Здоровье Коболли после снятия в Вене",
-        "Поддержка трибун в Турине"
-      ],
-      "verdict": "Медведев — фаворит (наш прогноз: П1, 3/5); многие аналитики ждут победы в двух сетах.",
-      "sources": [
-        {
-          "title": "Dimers — Medvedev vs Cobolli",
-          "url": "https://www.dimers.com/tennis/news/daniil-medvedev-vs-flavio-cobolli-tennis-prediction-atp-world-tour-finals-2026-ac"
-        },
-        {
-          "title": "Sporting Life — ATP Finals preview",
-          "url": "https://www.sportinglife.com/tennis/news/tennis-betting-tips-mondays-atp-finals-preview-and-best-bets/235455"
-        },
-        {
-          "title": "bets.com.au — Medvedev vs Cobolli",
-          "url": "https://www.bets.com.au/tennis/atp-tour/daniil-medvedev-vs-flavio-cobolli-atp-finals-tips-prediction-live-stream-20261116-0001/"
-        },
-        {
-          "title": "RG.org — ATP Finals preview",
-          "url": "https://rg.org/news/tennis/atp-finals-2026-odds-preview-alcaraz-zverev-shelton-best-bets"
-        },
-        {
-          "title": "String Tension — H2H",
-          "url": "https://stringtension.com/head-to-head/atp/daniil-medvedev/flavio-cobolli"
-        }
-      ]
-    },
-    {
-      "sport": "🏒 Хоккей",
-      "match": "ЦСКА — Амур",
-      "tournament": "КХЛ, регулярный чемпионат",
-      "start": "16.11, 19:30 МСК",
-      "text": "ЦСКА лидирует на Западе: 19 побед в 25 матчах и лучшая разница шайб лиги (+37, 83:46). В последних пяти играх армейцы забросили 20 шайб.\nАмур — неудобный соперник: вторая оборона лиги (1,64 пропущенной за игру) и три победы подряд. Но это третий выездной матч дальневосточников за пять дней после игр со Спартаком и Сочи.\nЕдинственная очная встреча сезона закончилась 2:0 в пользу ЦСКА в Хабаровске. Главный риск ставки на основное время — ничья после 60 минут против плотной обороны Амура.",
-      "key_factors": [
-        "Атака ЦСКА (20 шайб в 5 матчах) против обороны Амура (1,64 за игру)",
-        "Усталость Амура: 3-й выезд за 5 дней",
-        "ЦСКА уже обыграл Амур 2:0 в этом сезоне",
-        "Риск овертайма"
-      ],
-      "verdict": "ЦСКА — фаворит в основное время (наш прогноз: П1, 3/5).",
-      "sources": [
-        {
-          "title": "Sports.ru — ЦСКА — Амур",
-          "url": "https://www.sports.ru/hockey/match/amur-vs-cska/"
-        },
-        {
-          "title": "Sports.ru — таблица КХЛ",
-          "url": "https://www.sports.ru/hockey/tournament/khl/table/"
-        },
-        {
-          "title": "Sports.ru — календарь КХЛ",
-          "url": "https://www.sports.ru/hockey/tournament/khl/calendar/"
-        },
-        {
-          "title": "Спорт Mail — Амур — ЦСКА (23.09)",
-          "url": "https://sportmail.ru/hockey-khl/407/match/8129718/"
-        }
-      ]
-    },
     {
       "sport": "🏀 Баскетбол",
       "match": "Бостон — Орландо",
@@ -974,75 +448,6 @@
   ],
   "model_version": "v2",
   "express": [
-    {
-      "id": "x-20261116-safe",
-      "tier": "safe",
-      "title": "Надёжный",
-      "legs": [
-        {
-          "sport": "hockey",
-          "match": "Локомотив — Сочи",
-          "bet": "П1 (победа Локомотива в основное время)",
-          "odds": 1.3,
-          "start_iso": "2026-11-16T19:30+03:00"
-        },
-        {
-          "sport": "football",
-          "match": "Швейцария — Шотландия",
-          "bet": "ТБ 1.5",
-          "odds": 1.33,
-          "start_iso": "2026-11-16T22:45+03:00"
-        },
-        {
-          "sport": "tennis",
-          "match": "Даниил Медведев — Флавио Коболли",
-          "bet": "П1 (победа Медведева)",
-          "odds": 1.23,
-          "start_iso": "2026-11-16T22:30+03:00"
-        }
-      ],
-      "total_odds": 2.13,
-      "reason": "Три самых обоснованных прогноза дня из разных видов спорта: Локомотив дважды забросил Сочи по шесть в этом сезоне, Швейцария забивает минимум два почти в каждом матче розыгрыша, Медведев ведёт в очных встречах с Коболли 2–1.",
-      "weak_link": "Локомотив — ставка на основное время: ничья после 60 минут сожжёт весь экспресс."
-    },
-    {
-      "id": "x-20261116-mid",
-      "tier": "mid",
-      "title": "Средний",
-      "legs": [
-        {
-          "sport": "hockey",
-          "match": "ЦСКА — Амур",
-          "bet": "П1 (победа ЦСКА в основное время)",
-          "odds": 1.48,
-          "start_iso": "2026-11-16T19:30+03:00"
-        },
-        {
-          "sport": "football",
-          "match": "Греция — Сербия",
-          "bet": "П1 (победа Греции)",
-          "odds": 1.43,
-          "start_iso": "2026-11-16T22:45+03:00"
-        },
-        {
-          "sport": "hockey",
-          "match": "Локомотив — Сочи",
-          "bet": "П1 (победа Локомотива в основное время)",
-          "odds": 1.3,
-          "start_iso": "2026-11-16T19:30+03:00"
-        },
-        {
-          "sport": "football",
-          "match": "Швейцария — Шотландия",
-          "bet": "ТБ 1.5",
-          "odds": 1.33,
-          "start_iso": "2026-11-16T22:45+03:00"
-        }
-      ],
-      "total_odds": 3.66,
-      "reason": "К двум самым надёжным событиям добавлены ЦСКА дома и Греция, которая не проигрывает пять матчей подряд и уже обыграла Сербию в Белграде. Так общий коэффициент переходит за 3.",
-      "weak_link": "У ЦСКА и Греции уверенность 3 из 5: у Амура вторая оборона лиги, а Сербия способна огрызнуться дома и в гостях."
-    },
     {
       "id": "x-20261117-mid",
       "tier": "mid",
