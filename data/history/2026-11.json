@@ -7471,10 +7471,27 @@
         }
       ],
       "market_prob": 0.787,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "126:115",
+        "note": null,
+        "sources": [
+          "Sports.ru",
+          "GMA Network",
+          "Yardbarker"
+        ],
+        "checked_at": "2026-11-17T12:27+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-17T12:27+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-17T12:27+03:00"
     },
     {
       "id": "basketball-20261117-1d5bg2d",
@@ -7532,10 +7549,27 @@
         }
       ],
       "market_prob": 0.781,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "105:115",
+        "note": null,
+        "sources": [
+          "Sports.ru",
+          "ESPN",
+          "NBA.com"
+        ],
+        "checked_at": "2026-11-17T12:27+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-17T12:27+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-17T12:27+03:00"
     },
     {
       "id": "basketball-20261117-vylj18",
@@ -7597,10 +7631,27 @@
         }
       ],
       "market_prob": 0.637,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "120:136",
+        "note": null,
+        "sources": [
+          "Sports.ru",
+          "ESPN",
+          "GMA Network"
+        ],
+        "checked_at": "2026-11-17T12:27+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-17T12:27+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-17T12:27+03:00"
     },
     {
       "id": "hockey-20261117-nsfpv1",
@@ -7649,10 +7700,27 @@
         }
       ],
       "market_prob": 0.633,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "2:3",
+        "note": "основное время 2:3 (0:0, 0:1, 2:2), победная шайба Бёзера за 4:23 до конца",
+        "sources": [
+          "Sports.ru",
+          "ESPN",
+          "NHL.com"
+        ],
+        "checked_at": "2026-11-17T12:27+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-17T12:27+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": "основное время 2:3 (0:0, 0:1, 2:2), победная шайба Бёзера за 4:23 до конца"
+        }
+      ],
+      "last_sync": "2026-11-17T12:27+03:00"
     },
     {
       "id": "hockey-20261117-14qizh2",
@@ -7745,6 +7813,71 @@
         }
       ],
       "market_prob": 0.699,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "tennis-20261117-1ybtlqt",
+      "sport": "tennis",
+      "sport_name": "Теннис",
+      "home": "Александр Зверев",
+      "away": "Бен Шелтон",
+      "event_date": "2026-11-17",
+      "start_iso": "2026-11-17T22:30+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-17T12:27+03:00",
+      "model_version": "v2",
+      "tournament": "Итоговый турнир ATP, Турин, групповой этап (хард, зал), группа Джона Макинроя",
+      "match": "Александр Зверев — Бен Шелтон",
+      "start": "17.11, 22:30 МСК",
+      "bet": "П1 (победа Зверева)",
+      "odds": "1.50",
+      "confidence": 3,
+      "model_prob": {
+        "value": 0.61,
+        "source": "Dimers"
+      },
+      "reason": "Зверев выиграл все 6 личных встреч, включая финал US Open-2026, и почти не проигрывает левшам; на быстром зале его подача не уступает подаче Шелтона.",
+      "facts": [
+        "Личные встречи 6-0 в пользу Зверева, последняя — финал US Open-2026 (6:3, 7:6, 5:7, 6:2) — bet365 News, Sportskeeda",
+        "Зверев выиграл 48 из 49 последних матчей против левшей — bets.com.au",
+        "В финале US Open Зверев взял 85% очков на первой подаче против 71% у Шелтона и сделал 4 брейка, отдав 1 — Lineups.com",
+        "Модель Dimers: 61% на Зверева — Dimers"
+      ],
+      "against": [
+        "Подача Шелтона-левши — главное оружие на быстром закрытом корте",
+        "Шелтон уже обыграл Фиса в первом туре (6:2, 3:6, 6:3)"
+      ],
+      "uncertainty": "Матчи на тай-брейках; один сет может решить исход.",
+      "data_quality": {
+        "level": "medium",
+        "note": "нет детальной статистики приёма за 10 матчей"
+      },
+      "sources": [
+        {
+          "title": "Sportskeeda — Zverev vs Shelton",
+          "url": "https://www.sportskeeda.com/tennis/alexander-zverev-vs-ben-shelton-preview-head-to-head-odds-prediction-betting-tips-atp-finals-2026"
+        },
+        {
+          "title": "bet365 News — Zverev vs Shelton",
+          "url": "https://news.bet365.com/en-us/article/zverev-vs-shelton-nitto-atp-finals-preview-betting-odds/2026111621473415131"
+        },
+        {
+          "title": "bets.com.au — Zverev vs Shelton",
+          "url": "https://www.bets.com.au/tennis/atp-tour/alexander-zverev-vs-ben-shelton-atp-finals-tips-prediction-live-stream-20261116-0009/"
+        },
+        {
+          "title": "Dimers — Zverev vs Shelton",
+          "url": "https://www.dimers.com/tennis/news/alexander-zverev-vs-ben-shelton-tennis-prediction-atp-world-tour-finals-2026-ac"
+        },
+        {
+          "title": "Lineups — ATP Finals preview",
+          "url": "https://www.lineups.com/articles/atp-tennis-preview-2026-atp-finals-turin-betting-odds-picks-analysis/"
+        }
+      ],
+      "market_prob": 0.667,
       "status": "pending",
       "result": null,
       "versions": [],
@@ -7890,6 +8023,299 @@
         }
       ],
       "market_prob": null,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "basketball-20261118-1jikjje",
+      "sport": "basketball",
+      "sport_name": "Баскетбол",
+      "home": "Сан-Антонио",
+      "away": "Детройт",
+      "event_date": "2026-11-18",
+      "start_iso": "2026-11-18T04:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-17T12:27+03:00",
+      "model_version": "v2",
+      "tournament": "НБА, регулярный сезон 2026/27",
+      "match": "Сан-Антонио — Детройт",
+      "start": "18.11, 04:00 МСК",
+      "bet": "П1 (победа Сан-Антонио)",
+      "odds": "1.28",
+      "confidence": 3,
+      "model_prob": {
+        "value": 0.652,
+        "source": "numberFire"
+      },
+      "reason": "Сан-Антонио выиграл 12 матчей подряд, а у Детройта нет основного центрового Дюрена и ещё трёх игроков ротации — под кольцом Вембаньяме противостоять некому.",
+      "facts": [
+        "Сан-Антонио: 12-2 и серия из 12 побед — Bleacher Nation",
+        "У Детройта не сыграют Джален Дюрен, Дункан Робинсон, Рональд Холланд и Тауриан Принс (официальный injury report НБА от 16.11) — ATS.io",
+        "Вембаньяма ставит 4,3 блок-шота за игру — Bleacher Report",
+        "numberFire: 65,2% на победу Сан-Антонио — FanDuel Research"
+      ],
+      "against": [
+        "Детройт — 8-4 и одна из лучших команд Востока",
+        "Модель Dimers видит ценность в форе Детройта +8.5 — победа Спёрс может быть небольшой"
+      ],
+      "uncertainty": "Короткая скамейка Детройта иногда играет без страха; Спёрс против ATS 6-8.",
+      "data_quality": {
+        "level": "medium",
+        "note": "нет рейтингов эффективности NBA.com"
+      },
+      "sources": [
+        {
+          "title": "Bleacher Nation — Spurs vs Pistons",
+          "url": "https://www.bleachernation.com/picks/2026/11/17/spurs-vs-pistons-predictions-best-bets-and-odds-tuesday-november-17-2026/"
+        },
+        {
+          "title": "ATS.io — Pistons vs Spurs",
+          "url": "https://ats.io/nba/pistons-vs-spurs-prediction-november-17-2026/"
+        },
+        {
+          "title": "FanDuel Research — NBA 17.11",
+          "url": "https://www.fanduel.com/research/nba-predictions-odds-11-17-2026"
+        },
+        {
+          "title": "Bleacher Report — Spurs vs Pistons",
+          "url": "https://bleacherreport.com/game/detroit-pistons-vs-san-antonio-spurs-2026-11-17-19-00"
+        }
+      ],
+      "market_prob": 0.781,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "basketball-20261118-7y4any",
+      "sport": "basketball",
+      "sport_name": "Баскетбол",
+      "home": "Клипперс",
+      "away": "Юта",
+      "event_date": "2026-11-18",
+      "start_iso": "2026-11-18T06:30+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-17T12:27+03:00",
+      "model_version": "v2",
+      "tournament": "НБА, регулярный сезон 2026/27",
+      "match": "Клипперс — Юта",
+      "start": "18.11, 06:30 МСК",
+      "bet": "П1 (победа Клипперс)",
+      "odds": "1.43",
+      "confidence": 3,
+      "model_prob": {
+        "value": 0.8045,
+        "source": "numberFire"
+      },
+      "reason": "Юта — худшая команда лиги (1-13) и проиграла 6 выездных матчей подряд, а без Маркканена, Джексона-младшего и Нуркича её атака ещё слабее.",
+      "facts": [
+        "Юта: 1-13, шесть выездных поражений подряд — Bleacher Nation",
+        "У Юты не сыграют Лаури Маркканен, Джарен Джексон-мл., Юсуф Нуркич — ESPN",
+        "Юта набирает 107,1 очка и пропускает 118,0 за игру — BangTheBook",
+        "numberFire: 80,45% на Клипперс — FanDuel Research"
+      ],
+      "against": [
+        "Клипперс сами 4-8 и без Брэндона Ингрэма и Брэдли Била",
+        "Модель ESPN даёт Клипперс только 62%"
+      ],
+      "uncertainty": "Обе команды в кризисе и с длинными списками травмированных.",
+      "data_quality": {
+        "level": "medium",
+        "note": "нет рейтингов эффективности"
+      },
+      "sources": [
+        {
+          "title": "Bleacher Nation — Clippers vs Jazz",
+          "url": "https://www.bleachernation.com/picks/2026/11/17/clippers-vs-jazz-predictions-best-bets-and-odds-tuesday-november-17-2026/"
+        },
+        {
+          "title": "ESPN — Jazz @ Clippers",
+          "url": "https://www.espn.com/nba/game/_/gameId/401910006/jazz-clippers"
+        },
+        {
+          "title": "BangTheBook — Jazz vs Clippers",
+          "url": "https://bangthebook.com/utah-jazz-vs-la-clippers-prediction-2026-11-17/"
+        },
+        {
+          "title": "FanDuel Research — NBA 17.11",
+          "url": "https://www.fanduel.com/research/nba-predictions-odds-11-17-2026"
+        }
+      ],
+      "market_prob": 0.699,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "basketball-20261118-15mdd4z",
+      "sport": "basketball",
+      "sport_name": "Баскетбол",
+      "home": "Лейкерс",
+      "away": "Шарлотт",
+      "event_date": "2026-11-18",
+      "start_iso": "2026-11-18T07:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-17T12:27+03:00",
+      "model_version": "v2",
+      "tournament": "НБА, регулярный сезон 2026/27",
+      "match": "Лейкерс — Шарлотт",
+      "start": "18.11, 07:00 МСК",
+      "bet": "П1 (победа Лейкерс)",
+      "odds": "1.26",
+      "confidence": 4,
+      "reason": "Лучшая атака лиги (122,8 очка, 50,3% с игры) и серия из 8 побед против одной из самых слабых атак (99,1 очка) без Кнюппеля и Шрёдера.",
+      "facts": [
+        "Лейкерс: 12-2, серия из 8 побед, 122,8 очка за игру и 50,3% с игры — лучший показатель лиги — NBC Sports",
+        "Шарлотт: 4-9, 99,1 очка за игру и 40,0% с игры — NBC Sports",
+        "У Шарлотт не сыграют Кон Кнюппель и Деннис Шрёдер — iHeart, Yahoo Sports",
+        "Модель iHeart прогнозирует 122:101 в пользу Лейкерс — iHeart"
+      ],
+      "against": [
+        "У Лейкерс нет Остина Ривза и Уокера Кесслера",
+        "Модель Dimers даёт Шарлотт 53,8% на то, что проигрыш будет меньше 7,5 очка"
+      ],
+      "uncertainty": "Без Ривза нагрузка на лидеров Лейкерс растёт; возможна расслабленная игра после выезда.",
+      "data_quality": {
+        "level": "medium",
+        "note": "нет рейтингов эффективности"
+      },
+      "sources": [
+        {
+          "title": "NBC Sports — Hornets vs Lakers",
+          "url": "https://www.nbcsports.com/nba/news/hornets-vs-lakers-predictions-odds-recent-stats-trends-and-best-bets-for-november-17"
+        },
+        {
+          "title": "iHeart — Hornets vs. Lakers",
+          "url": "https://1049foxsports.iheart.com/content/2026-11-17-hornets-vs-lakers-predictions-odds-stats-nov-17/"
+        },
+        {
+          "title": "Yahoo Sports — Lakers vs. Hornets preview",
+          "url": "https://sports.yahoo.com/articles/lakers-vs-hornets-preview-winning-024029476.html"
+        },
+        {
+          "title": "Bleacher Nation — Lakers vs Hornets",
+          "url": "https://www.bleachernation.com/picks/2026/11/17/lakers-vs-hornets-predictions-best-bets-and-odds-tuesday-november-17-2026/"
+        }
+      ],
+      "market_prob": 0.794,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "tennis-20261118-p6qvu0",
+      "sport": "tennis",
+      "sport_name": "Теннис",
+      "home": "Карлос Алькарас",
+      "away": "Даниил Медведев",
+      "event_date": "2026-11-18",
+      "start_iso": "2026-11-18T16:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-17T12:27+03:00",
+      "model_version": "v2",
+      "tournament": "Итоговый турнир ATP, Турин, групповой этап (хард, зал), группа Ивана Лендла",
+      "match": "Карлос Алькарас — Даниил Медведев",
+      "start": "18.11, 16:00 МСК",
+      "bet": "П1 (победа Алькараса)",
+      "odds": "1.25",
+      "confidence": 4,
+      "reason": "Алькарас в лучшей форме сезона — подряд выиграл Вену и Париж и разгромил Тиафу 6:2, 6:2 — и ведёт в личных встречах с Медведевым 7-3.",
+      "facts": [
+        "Личные встречи: Алькарас 7-3 — Tennisnerd, FreeTips",
+        "Этой осенью Алькарас выиграл два турнира в зале подряд: ATP 500 в Вене и Masters в Париже — Scores24",
+        "Стартовый матч в Турине Алькарас выиграл у Тиафу 6:2, 6:2 — nittoatpfinals.com",
+        "Алькарас выигрывает 31,7% геймов на приёме — лучший показатель тура в 2026 году — Lineups.com"
+      ],
+      "against": [
+        "Медведев уверенно обыграл Коболли (7:6, 6:3, 9 эйсов) и на быстром харде опасен",
+        "Медведев выигрывал у Алькараса, в том числе в полуфинале US Open-2023"
+      ],
+      "uncertainty": "Быстрый корт уравнивает игру на подаче; Медведев может затянуть розыгрыши.",
+      "data_quality": {
+        "level": "medium",
+        "note": "нет статистики последних 10 матчей по подаче"
+      },
+      "sources": [
+        {
+          "title": "Bleacher Nation — Alcaraz vs Medvedev",
+          "url": "https://www.bleachernation.com/picks/2026/11/16/alcaraz-vs-medvedev-prediction-at-the-nitto-atp-finals-wednesday-november-18/"
+        },
+        {
+          "title": "Tennisnerd — ATP Finals 2026 preview",
+          "url": "https://www.tennisnerd.net/news/atp-finals-2026-preview-predictions-odds-my-pick-to-win-in-turin/70638"
+        },
+        {
+          "title": "FreeTips — ATP Finals preview",
+          "url": "https://www.freetips.com/tennis/2026-atp-finals-betting-preview-20261113-0023/"
+        },
+        {
+          "title": "Scores24 — ATP Finals outrights",
+          "url": "https://scores24.live/en/articles/blog/atp-finals-2026-outright-predictions"
+        },
+        {
+          "title": "Nitto ATP Finals — результаты",
+          "url": "https://www.nittoatpfinals.com/en/scores-centre/results"
+        }
+      ],
+      "market_prob": 0.8,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "hockey-20261118-1mix27w",
+      "sport": "hockey",
+      "sport_name": "Хоккей",
+      "home": "Северсталь",
+      "away": "Сочи",
+      "event_date": "2026-11-18",
+      "start_iso": "2026-11-18T19:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-17T12:27+03:00",
+      "model_version": "v2",
+      "tournament": "КХЛ, регулярный чемпионат 2026/27",
+      "match": "Северсталь — Сочи",
+      "start": "18.11, 19:00 МСК",
+      "bet": "П1 (победа Северстали в основное время)",
+      "odds": "1.55",
+      "confidence": 3,
+      "reason": "Сочи не забил ни одной шайбы в двух последних матчах и занимает предпоследнее место на Западе, а Северсталь не проигрывает 7 домашних матчей и 9 встреч с Сочи подряд.",
+      "facts": [
+        "Северсталь не проигрывает в 7 последних домашних матчах и в 9 последних встречах с Сочи — Sports.ru",
+        "Сочи в двух последних матчах: 0:3 с Локомотивом и 0:2 с Амуром — Sports.ru",
+        "05.11 Северсталь выиграла в Сочи 4:1 — Sports.ru",
+        "Сочи: 17 очков, 10-е место на Западе — Спорт-Экспресс"
+      ],
+      "against": [
+        "Северсталь в двух из трёх последних домашних побед выигрывала только в одну шайбу (4:3 по буллитам с Трактором, 4:3 с Ладой)",
+        "Сочи забивает в 5 последних матчах против Северстали"
+      ],
+      "uncertainty": "Ничья после 60 минут — основной риск; вратари не объявлены.",
+      "data_quality": {
+        "level": "medium",
+        "note": "нет статистики бросков и стартовых вратарей"
+      },
+      "sources": [
+        {
+          "title": "Sports.ru — Северсталь — Сочи",
+          "url": "https://www.sports.ru/hockey/match/severstal-vs-sochi/"
+        },
+        {
+          "title": "Sports.ru — таблица КХЛ",
+          "url": "https://www.sports.ru/hockey/tournament/khl/table/"
+        },
+        {
+          "title": "Спорт-Экспресс — Локомотив — Сочи",
+          "url": "https://www.sport-express.net/hockey/khl/news/lokomotiv-sochi-rezultat-matcha-khl-16-noyabrya-2026-2475650/"
+        }
+      ],
+      "market_prob": 0.645,
       "status": "pending",
       "result": null,
       "versions": [],
