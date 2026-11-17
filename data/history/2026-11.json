@@ -8029,6 +8029,105 @@
       "status_log": []
     },
     {
+      "id": "football-20261117-zhz9k5",
+      "sport": "football",
+      "sport_name": "Футбол",
+      "home": "Израиль",
+      "away": "Австрия",
+      "event_date": "2026-11-17",
+      "start_iso": "2026-11-17T22:45+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-17T12:48+03:00",
+      "model_version": "v2",
+      "tournament": "Лига наций УЕФА 2026/27, лига B, группа 3, 6-й тур (нейтральное поле, Дебрецен)",
+      "match": "Израиль — Австрия",
+      "start": "17.11, 22:45 МСК",
+      "bet": "П2 (победа Австрии)",
+      "confidence": 3,
+      "reason": "Австрия уже обыграла Израиль 3:1 в первом круге, а Израиль играет не дома — матч проходит в венгерском Дебрецене.",
+      "facts": [
+        "Первая встреча в этом розыгрыше: Австрия — Израиль 3:1 (24.09.2026) — Cybersport.ru",
+        "Перед первым матчем букмекеры давали на Австрию 1.45, на Израиль 6.71 — Спорт Mail",
+        "Матч пройдёт на стадионе «Нагидерди» в Дебрецене — theScore"
+      ],
+      "against": [
+        "Израиль сыграл вничью 0:0 с Косово и выиграл у Молдовы 4:1",
+        "В отборе к ЧМ-2022 Израиль дома обыграл Австрию 5:2"
+      ],
+      "uncertainty": "Коэффициент на этот матч не нашёлся; составы и мотивация в последнем туре неизвестны.",
+      "data_quality": {
+        "level": "low",
+        "note": "нет коэффициента и xG — в экспресс не идёт"
+      },
+      "sources": [
+        {
+          "title": "Cybersport.ru — Израиль — Австрия",
+          "url": "https://www.cybersport.ru/matches/football/10099024"
+        },
+        {
+          "title": "Спорт Mail — Израиль — Австрия",
+          "url": "https://sportmail.ru/football-nations/410/match/452881/"
+        },
+        {
+          "title": "theScore — Austria @ Israel",
+          "url": "https://www.thescore.com/natleagueb/event/96952"
+        }
+      ],
+      "market_prob": null,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "basketball-20261118-1toqmu6",
+      "sport": "basketball",
+      "sport_name": "Баскетбол",
+      "home": "Торонто",
+      "away": "Нью-Йорк",
+      "event_date": "2026-11-18",
+      "start_iso": "2026-11-18T03:30+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-17T12:48+03:00",
+      "model_version": "v2",
+      "tournament": "НБА, регулярный сезон 2026/27",
+      "match": "Торонто — Нью-Йорк",
+      "start": "18.11, 03:30 МСК",
+      "bet": "П2 (победа Нью-Йорка, с учётом овертайма)",
+      "confidence": 3,
+      "reason": "Торонто проиграл 4 матча подряд, а Нью-Йорк обыграл его в Торонто всего два дня назад; Скотти Барнс под вопросом.",
+      "facts": [
+        "Тренер Торонто Ракович комментировал уже 4-е поражение подряд (16.11) — Sports.ru",
+        "15.11 Нью-Йорк выиграл в Торонто в овертайме после решающего трёхочкового Брансона — Sports.ru",
+        "Таунс (28+17) сделал 13-й дабл-дабл подряд, повторив клубный рекорд — Sports.ru",
+        "Перед матчем 15.11: Нью-Йорк 6-5, Торонто 5-6 — Pickswise"
+      ],
+      "against": [
+        "Прошлая встреча дошла до овертайма — команды близки по силе",
+        "Торонто играет дома и будет мстить"
+      ],
+      "uncertainty": "Коэффициент не нашёлся; статус Барнса неизвестен.",
+      "data_quality": {
+        "level": "low",
+        "note": "нет коэффициента — в экспресс не идёт"
+      },
+      "sources": [
+        {
+          "title": "Sports.ru — Торонто — Нью-Йорк",
+          "url": "https://www.sports.ru/basketball/match/new-york-knicks-vs-toronto-raptors/"
+        },
+        {
+          "title": "Pickswise — Knicks vs Raptors 15.11",
+          "url": "https://www.pickswise.com/nba/games/toronto-raptors-new-york-knicks-nba-2026-11-15-1800/"
+        }
+      ],
+      "market_prob": null,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
       "id": "basketball-20261118-1jikjje",
       "sport": "basketball",
       "sport_name": "Баскетбол",
@@ -8263,6 +8362,58 @@
         }
       ],
       "market_prob": 0.8,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "hockey-20261118-1f28zmb",
+      "sport": "hockey",
+      "sport_name": "Хоккей",
+      "home": "Авангард",
+      "away": "Адмирал",
+      "event_date": "2026-11-18",
+      "start_iso": "2026-11-18T16:30+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-17T12:48+03:00",
+      "model_version": "v2",
+      "tournament": "КХЛ, регулярный чемпионат 2026/27",
+      "match": "Авангард — Адмирал",
+      "start": "18.11, 16:30 МСК",
+      "bet": "1X (Авангард не проиграет в основное время)",
+      "odds": "1.15",
+      "confidence": 4,
+      "reason": "Авангард не проигрывает Адмиралу 23 матча подряд, идёт 4-м на Востоке, а Адмирал — 10-й.",
+      "facts": [
+        "Авангард не проигрывает в 23 последних матчах с Адмиралом — Sports.ru",
+        "КХЛ, Восток: Авангард 4-й (30 очков), Адмирал 10-й (25) — Sports.ru",
+        "Авангард выиграл 2 последних выездных матча — у Металлурга (12.11, в овертайме) и у Нефтехимика (14.11) — Sports.ru"
+      ],
+      "against": [
+        "Авангард не выигрывает в основное время 5 домашних матчей подряд",
+        "Адмирал выиграл 3 последних выездных матча"
+      ],
+      "uncertainty": "Низкий коэффициент; вратари не объявлены.",
+      "data_quality": {
+        "level": "medium",
+        "note": "нет статистики бросков и стартовых вратарей"
+      },
+      "sources": [
+        {
+          "title": "Sports.ru — Авангард — Адмирал",
+          "url": "https://www.sports.ru/hockey/match/admiral-vs-avangard/"
+        },
+        {
+          "title": "Sports.ru — таблица КХЛ",
+          "url": "https://www.sports.ru/hockey/tournament/khl/table/"
+        },
+        {
+          "title": "Спорт Mail — Авангард — Адмирал",
+          "url": "https://sportmail.ru/hockey-khl/407/match/8129373/"
+        }
+      ],
+      "market_prob": 0.87,
       "status": "pending",
       "result": null,
       "versions": [],
