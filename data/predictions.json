@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-17T02:09+03:00",
+  "updated_at": "2026-11-17T12:27+03:00",
   "source": "claude",
   "sports": [
     {
@@ -113,7 +113,7 @@
           ]
         }
       ],
-      "updated_at": "2026-11-17T02:09+03:00"
+      "updated_at": "2026-11-17T12:27+03:00"
     },
     {
       "id": "basketball",
@@ -121,210 +121,263 @@
       "emoji": "🏀",
       "picks": [
         {
-          "match": "Бостон — Орландо",
+          "match": "Сан-Антонио — Детройт",
           "tournament": "НБА, регулярный сезон 2026/27",
-          "start": "17.11, 03:00 МСК",
-          "start_iso": "2026-11-17T03:00+03:00",
-          "bet": "П1 (победа Бостона)",
+          "start": "18.11, 04:00 МСК",
+          "start_iso": "2026-11-18T04:00+03:00",
+          "bet": "П1 (победа Сан-Антонио)",
           "odds": "1.28",
+          "confidence": 3,
+          "reason": "Сан-Антонио выиграл 12 матчей подряд, а у Детройта нет основного центрового Дюрена и ещё трёх игроков ротации — под кольцом Вембаньяме противостоять некому.",
+          "facts": [
+            "Сан-Антонио: 12-2 и серия из 12 побед — Bleacher Nation",
+            "У Детройта не сыграют Джален Дюрен, Дункан Робинсон, Рональд Холланд и Тауриан Принс (официальный injury report НБА от 16.11) — ATS.io",
+            "Вембаньяма ставит 4,3 блок-шота за игру — Bleacher Report",
+            "numberFire: 65,2% на победу Сан-Антонио — FanDuel Research"
+          ],
+          "against": [
+            "Детройт — 8-4 и одна из лучших команд Востока",
+            "Модель Dimers видит ценность в форе Детройта +8.5 — победа Спёрс может быть небольшой"
+          ],
+          "uncertainty": "Короткая скамейка Детройта иногда играет без страха; Спёрс против ATS 6-8.",
+          "data_quality": {
+            "level": "medium",
+            "note": "нет рейтингов эффективности NBA.com"
+          },
+          "model_prob": {
+            "value": 0.652,
+            "source": "numberFire"
+          },
+          "sources": [
+            {
+              "title": "Bleacher Nation — Spurs vs Pistons",
+              "url": "https://www.bleachernation.com/picks/2026/11/17/spurs-vs-pistons-predictions-best-bets-and-odds-tuesday-november-17-2026/"
+            },
+            {
+              "title": "ATS.io — Pistons vs Spurs",
+              "url": "https://ats.io/nba/pistons-vs-spurs-prediction-november-17-2026/"
+            },
+            {
+              "title": "FanDuel Research — NBA 17.11",
+              "url": "https://www.fanduel.com/research/nba-predictions-odds-11-17-2026"
+            },
+            {
+              "title": "Bleacher Report — Spurs vs Pistons",
+              "url": "https://bleacherreport.com/game/detroit-pistons-vs-san-antonio-spurs-2026-11-17-19-00"
+            }
+          ]
+        },
+        {
+          "match": "Клипперс — Юта",
+          "tournament": "НБА, регулярный сезон 2026/27",
+          "start": "18.11, 06:30 МСК",
+          "start_iso": "2026-11-18T06:30+03:00",
+          "bet": "П1 (победа Клипперс)",
+          "odds": "1.43",
+          "confidence": 3,
+          "reason": "Юта — худшая команда лиги (1-13) и проиграла 6 выездных матчей подряд, а без Маркканена, Джексона-младшего и Нуркича её атака ещё слабее.",
+          "facts": [
+            "Юта: 1-13, шесть выездных поражений подряд — Bleacher Nation",
+            "У Юты не сыграют Лаури Маркканен, Джарен Джексон-мл., Юсуф Нуркич — ESPN",
+            "Юта набирает 107,1 очка и пропускает 118,0 за игру — BangTheBook",
+            "numberFire: 80,45% на Клипперс — FanDuel Research"
+          ],
+          "against": [
+            "Клипперс сами 4-8 и без Брэндона Ингрэма и Брэдли Била",
+            "Модель ESPN даёт Клипперс только 62%"
+          ],
+          "uncertainty": "Обе команды в кризисе и с длинными списками травмированных.",
+          "data_quality": {
+            "level": "medium",
+            "note": "нет рейтингов эффективности"
+          },
+          "model_prob": {
+            "value": 0.8045,
+            "source": "numberFire"
+          },
+          "sources": [
+            {
+              "title": "Bleacher Nation — Clippers vs Jazz",
+              "url": "https://www.bleachernation.com/picks/2026/11/17/clippers-vs-jazz-predictions-best-bets-and-odds-tuesday-november-17-2026/"
+            },
+            {
+              "title": "ESPN — Jazz @ Clippers",
+              "url": "https://www.espn.com/nba/game/_/gameId/401910006/jazz-clippers"
+            },
+            {
+              "title": "BangTheBook — Jazz vs Clippers",
+              "url": "https://bangthebook.com/utah-jazz-vs-la-clippers-prediction-2026-11-17/"
+            },
+            {
+              "title": "FanDuel Research — NBA 17.11",
+              "url": "https://www.fanduel.com/research/nba-predictions-odds-11-17-2026"
+            }
+          ]
+        },
+        {
+          "match": "Лейкерс — Шарлотт",
+          "tournament": "НБА, регулярный сезон 2026/27",
+          "start": "18.11, 07:00 МСК",
+          "start_iso": "2026-11-18T07:00+03:00",
+          "bet": "П1 (победа Лейкерс)",
+          "odds": "1.26",
           "confidence": 4,
-          "reason": "Бостон дома не проигрывает и имеет лучшую разницу очков на Востоке, а Орландо выходит без Банкеро, Айзека и Пенды — у гостей одна из худших атак лиги.",
+          "reason": "Лучшая атака лиги (122,8 очка, 50,3% с игры) и серия из 8 побед против одной из самых слабых атак (99,1 очка) без Кнюппеля и Шрёдера.",
           "facts": [
-            "Бостон: 11 побед в 13 матчах, дома 6-0, разница +13 очков за игру, пропускает 102 — Sports.ru",
-            "Орландо: 5-7, разница −4, набирает 108 очков за игру — Sports.ru",
-            "У Орландо не сыграют Паоло Банкеро, Джонатан Айзек, Ноа Пенда и Изайя Нельсон; у Бостона в отчёте о травмах никого — iHeart / NBA injury report",
-            "Модель ESPN Matchup Predictor: 76,2% на победу Бостона — ESPN"
+            "Лейкерс: 12-2, серия из 8 побед, 122,8 очка за игру и 50,3% с игры — лучший показатель лиги — NBC Sports",
+            "Шарлотт: 4-9, 99,1 очка за игру и 40,0% с игры — NBC Sports",
+            "У Шарлотт не сыграют Кон Кнюппель и Деннис Шрёдер — iHeart, Yahoo Sports",
+            "Модель iHeart прогнозирует 122:101 в пользу Лейкерс — iHeart"
           ],
           "against": [
-            "Бостон играет второй матч за две ночи (в ночь на 16.11 по МСК обыграл Даллас 131:94)",
-            "Бостон перекрыл фору лишь в 7 матчах из 13 — победа вероятна, крупная — нет"
+            "У Лейкерс нет Остина Ривза и Уокера Кесслера",
+            "Модель Dimers даёт Шарлотт 53,8% на то, что проигрыш будет меньше 7,5 очка"
           ],
-          "uncertainty": "Усталость Бостона на втором матче бэк-ту-бэка и возможный отдых кого-то из лидеров.",
+          "uncertainty": "Без Ривза нагрузка на лидеров Лейкерс растёт; возможна расслабленная игра после выезда.",
           "data_quality": {
             "level": "medium",
-            "note": "нет Offensive/Defensive Rating — NBA.com/stats не открывался"
-          },
-          "model_prob": {
-            "value": 0.762,
-            "source": "ESPN Matchup Predictor"
+            "note": "нет рейтингов эффективности"
           },
           "sources": [
             {
-              "title": "Sports.ru — таблица НБА 2026/27",
-              "url": "https://www.sports.ru/basketball/tournament/nba/table/"
+              "title": "NBC Sports — Hornets vs Lakers",
+              "url": "https://www.nbcsports.com/nba/news/hornets-vs-lakers-predictions-odds-recent-stats-trends-and-best-bets-for-november-17"
             },
             {
-              "title": "ESPN — Magic @ Celtics, 16.11.2026",
-              "url": "https://www.espn.com/nba/game/_/gameId/401909994/magic-celtics"
+              "title": "iHeart — Hornets vs. Lakers",
+              "url": "https://1049foxsports.iheart.com/content/2026-11-17-hornets-vs-lakers-predictions-odds-stats-nov-17/"
             },
             {
-              "title": "iHeart — Magic vs. Celtics Injury Report",
-              "url": "https://969thegame.iheart.com/content/2026-11-16-magic-vs-celtics-injury-report-nov-16/"
+              "title": "Yahoo Sports — Lakers vs. Hornets preview",
+              "url": "https://sports.yahoo.com/articles/lakers-vs-hornets-preview-winning-024029476.html"
             },
             {
-              "title": "bet-experts — коэффициенты",
-              "url": "https://www.bet-experts.com/picks/basketball/boston-celtics-vs-orlando-magic-prediction-betting-tips-17-11-2026"
-            }
-          ]
-        },
-        {
-          "match": "Кливленд — Чикаго",
-          "tournament": "НБА, регулярный сезон 2026/27",
-          "start": "17.11, 03:00 МСК",
-          "start_iso": "2026-11-17T03:00+03:00",
-          "bet": "П1 (победа Кливленда)",
-          "odds": "1.27",
-          "confidence": 3,
-          "reason": "У Чикаго худшая оборона лиги, а Кливленд дома выиграл 5 из 7; Митчелл, Харден и Аллен в строю.",
-          "facts": [
-            "Чикаго пропускает 125 очков за игру (худший показатель НБА), разница −11, на выезде 2-5 — Sports.ru",
-            "Кливленд дома 5-2 при общем балансе 7-7 — Sports.ru",
-            "Донован Митчелл набирает 23,0 очка за игру; Митчелл, Харден и Аллен убраны из отчёта о травмах — iHeart, Predictem",
-            "numberFire: 82,7% на победу Кливленда — FanDuel Research"
-          ],
-          "against": [
-            "Не сыграет Эван Мобли (палец ноги), под вопросом Тайсон и Уотсон",
-            "Чикаго подходит к матчу с двумя победами подряд"
-          ],
-          "uncertainty": "Без Мобли защита Кливленда слабее; результат зависит от того, сыграет ли кто-то из выбывших.",
-          "data_quality": {
-            "level": "medium",
-            "note": "нет рейтингов эффективности; статус двух игроков под вопросом"
-          },
-          "model_prob": {
-            "value": 0.827,
-            "source": "numberFire"
-          },
-          "sources": [
-            {
-              "title": "Sports.ru — таблица НБА 2026/27",
-              "url": "https://www.sports.ru/basketball/tournament/nba/table/"
-            },
-            {
-              "title": "FanDuel Research — Cavaliers vs. Bulls, 16.11",
-              "url": "https://www.fanduel.com/research/cavaliers-vs-bulls-prediction-nba-odds-spread-best-bets-for-11-16-2026"
-            },
-            {
-              "title": "iHeart — Bulls vs. Cavaliers Injury Report",
-              "url": "https://wone.iheart.com/content/2026-11-16-bulls-vs-cavaliers-injury-report-nov-16/"
-            },
-            {
-              "title": "Predictem — Bulls vs Cavaliers",
-              "url": "https://www.predictem.com/nba/bulls-vs-cavaliers-prediction-odds-nba-pick-nov-16-2026/"
-            }
-          ]
-        },
-        {
-          "match": "Вашингтон — Мемфис",
-          "tournament": "НБА, регулярный сезон 2026/27",
-          "start": "17.11, 03:00 МСК",
-          "start_iso": "2026-11-17T03:00+03:00",
-          "bet": "П2 (победа Мемфиса)",
-          "odds": "1.57",
-          "confidence": 3,
-          "reason": "Мемфис выиграл все 6 выездных матчей и имеет разницу +8, а Вашингтон играет второй день подряд после разгрома от Хьюстона.",
-          "facts": [
-            "Мемфис: 9-4, на выезде 6-0, разница +8 очков за игру — Sports.ru",
-            "Вашингтон: 4-10, разница −7, пропускает 118 очков за игру — Sports.ru",
-            "Вашингтон накануне (16.11) проиграл Хьюстону 119:147 — второй матч за две ночи — Sports.ru",
-            "numberFire: 72,76% на победу Мемфиса — FanDuel Research"
-          ],
-          "against": [
-            "Не сыграет лучший бомбардир Мемфиса Тай Джером (25,4 очка, бедро) — линия сдвинулась с −6.5 до −4.5",
-            "Вашингтон дома 2-4, не безнадёжен на своей площадке"
-          ],
-          "uncertainty": "Без Джерома атака Мемфиса менее стабильна; запас по форе небольшой.",
-          "data_quality": {
-            "level": "medium",
-            "note": "нет рейтингов эффективности; состав Мемфиса без лидера"
-          },
-          "model_prob": {
-            "value": 0.7276,
-            "source": "numberFire"
-          },
-          "sources": [
-            {
-              "title": "Sports.ru — таблица НБА 2026/27",
-              "url": "https://www.sports.ru/basketball/tournament/nba/table/"
-            },
-            {
-              "title": "Sports.ru — календарь НБА",
-              "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
-            },
-            {
-              "title": "FanDuel Research — NBA Predictions, 16.11",
-              "url": "https://www.fanduel.com/research/nba-predictions-odds-11-16-2026"
-            },
-            {
-              "title": "Predictem — Grizzlies vs Wizards",
-              "url": "https://www.predictem.com/nba/grizzlies-vs-wizards-prediction-odds-nba-pick-nov-16/"
-            },
-            {
-              "title": "BettingNews — коэффициенты",
-              "url": "https://www.bettingnews.com/nba/matchup/2026-11-16-memphis_grizzlies-washington_wizards-n-1/"
+              "title": "Bleacher Nation — Lakers vs Hornets",
+              "url": "https://www.bleachernation.com/picks/2026/11/17/lakers-vs-hornets-predictions-best-bets-and-odds-tuesday-november-17-2026/"
             }
           ]
         }
       ],
-      "updated_at": "2026-11-16T15:13+03:00"
+      "updated_at": "2026-11-17T12:27+03:00"
     },
     {
       "id": "tennis",
       "name": "Теннис",
       "emoji": "🎾",
-      "picks": [],
-      "updated_at": "2026-11-17T02:09+03:00"
+      "picks": [
+        {
+          "match": "Александр Зверев — Бен Шелтон",
+          "tournament": "Итоговый турнир ATP, Турин, групповой этап (хард, зал), группа Джона Макинроя",
+          "start": "17.11, 22:30 МСК",
+          "start_iso": "2026-11-17T22:30+03:00",
+          "bet": "П1 (победа Зверева)",
+          "odds": "1.50",
+          "confidence": 3,
+          "reason": "Зверев выиграл все 6 личных встреч, включая финал US Open-2026, и почти не проигрывает левшам; на быстром зале его подача не уступает подаче Шелтона.",
+          "facts": [
+            "Личные встречи 6-0 в пользу Зверева, последняя — финал US Open-2026 (6:3, 7:6, 5:7, 6:2) — bet365 News, Sportskeeda",
+            "Зверев выиграл 48 из 49 последних матчей против левшей — bets.com.au",
+            "В финале US Open Зверев взял 85% очков на первой подаче против 71% у Шелтона и сделал 4 брейка, отдав 1 — Lineups.com",
+            "Модель Dimers: 61% на Зверева — Dimers"
+          ],
+          "against": [
+            "Подача Шелтона-левши — главное оружие на быстром закрытом корте",
+            "Шелтон уже обыграл Фиса в первом туре (6:2, 3:6, 6:3)"
+          ],
+          "uncertainty": "Матчи на тай-брейках; один сет может решить исход.",
+          "data_quality": {
+            "level": "medium",
+            "note": "нет детальной статистики приёма за 10 матчей"
+          },
+          "model_prob": {
+            "value": 0.61,
+            "source": "Dimers"
+          },
+          "sources": [
+            {
+              "title": "Sportskeeda — Zverev vs Shelton",
+              "url": "https://www.sportskeeda.com/tennis/alexander-zverev-vs-ben-shelton-preview-head-to-head-odds-prediction-betting-tips-atp-finals-2026"
+            },
+            {
+              "title": "bet365 News — Zverev vs Shelton",
+              "url": "https://news.bet365.com/en-us/article/zverev-vs-shelton-nitto-atp-finals-preview-betting-odds/2026111621473415131"
+            },
+            {
+              "title": "bets.com.au — Zverev vs Shelton",
+              "url": "https://www.bets.com.au/tennis/atp-tour/alexander-zverev-vs-ben-shelton-atp-finals-tips-prediction-live-stream-20261116-0009/"
+            },
+            {
+              "title": "Dimers — Zverev vs Shelton",
+              "url": "https://www.dimers.com/tennis/news/alexander-zverev-vs-ben-shelton-tennis-prediction-atp-world-tour-finals-2026-ac"
+            },
+            {
+              "title": "Lineups — ATP Finals preview",
+              "url": "https://www.lineups.com/articles/atp-tennis-preview-2026-atp-finals-turin-betting-odds-picks-analysis/"
+            }
+          ]
+        },
+        {
+          "match": "Карлос Алькарас — Даниил Медведев",
+          "tournament": "Итоговый турнир ATP, Турин, групповой этап (хард, зал), группа Ивана Лендла",
+          "start": "18.11, 16:00 МСК",
+          "start_iso": "2026-11-18T16:00+03:00",
+          "bet": "П1 (победа Алькараса)",
+          "odds": "1.25",
+          "confidence": 4,
+          "reason": "Алькарас в лучшей форме сезона — подряд выиграл Вену и Париж и разгромил Тиафу 6:2, 6:2 — и ведёт в личных встречах с Медведевым 7-3.",
+          "facts": [
+            "Личные встречи: Алькарас 7-3 — Tennisnerd, FreeTips",
+            "Этой осенью Алькарас выиграл два турнира в зале подряд: ATP 500 в Вене и Masters в Париже — Scores24",
+            "Стартовый матч в Турине Алькарас выиграл у Тиафу 6:2, 6:2 — nittoatpfinals.com",
+            "Алькарас выигрывает 31,7% геймов на приёме — лучший показатель тура в 2026 году — Lineups.com"
+          ],
+          "against": [
+            "Медведев уверенно обыграл Коболли (7:6, 6:3, 9 эйсов) и на быстром харде опасен",
+            "Медведев выигрывал у Алькараса, в том числе в полуфинале US Open-2023"
+          ],
+          "uncertainty": "Быстрый корт уравнивает игру на подаче; Медведев может затянуть розыгрыши.",
+          "data_quality": {
+            "level": "medium",
+            "note": "нет статистики последних 10 матчей по подаче"
+          },
+          "sources": [
+            {
+              "title": "Bleacher Nation — Alcaraz vs Medvedev",
+              "url": "https://www.bleachernation.com/picks/2026/11/16/alcaraz-vs-medvedev-prediction-at-the-nitto-atp-finals-wednesday-november-18/"
+            },
+            {
+              "title": "Tennisnerd — ATP Finals 2026 preview",
+              "url": "https://www.tennisnerd.net/news/atp-finals-2026-preview-predictions-odds-my-pick-to-win-in-turin/70638"
+            },
+            {
+              "title": "FreeTips — ATP Finals preview",
+              "url": "https://www.freetips.com/tennis/2026-atp-finals-betting-preview-20261113-0023/"
+            },
+            {
+              "title": "Scores24 — ATP Finals outrights",
+              "url": "https://scores24.live/en/articles/blog/atp-finals-2026-outright-predictions"
+            },
+            {
+              "title": "Nitto ATP Finals — результаты",
+              "url": "https://www.nittoatpfinals.com/en/scores-centre/results"
+            }
+          ]
+        }
+      ],
+      "updated_at": "2026-11-17T12:27+03:00"
     },
     {
       "id": "volleyball",
       "name": "Волейбол",
       "emoji": "🏐",
       "picks": [],
-      "updated_at": "2026-11-16T15:13+03:00"
+      "updated_at": "2026-11-17T12:27+03:00"
     },
     {
       "id": "hockey",
       "name": "Хоккей",
       "emoji": "🏒",
       "picks": [
-        {
-          "match": "Юта — Ванкувер",
-          "tournament": "НХЛ, регулярный чемпионат 2026/27",
-          "start": "17.11, 05:30 МСК",
-          "start_iso": "2026-11-17T05:30+03:00",
-          "bet": "П1 (победа Юты в основное время)",
-          "odds": "1.58",
-          "confidence": 3,
-          "reason": "Ванкувер — худшая команда лиги (2 победы в основное время за 22 матча, шайбы 63:98) и играет второй день подряд после выезда в Вегас, а Юта выиграла 5 последних очных встреч.",
-          "facts": [
-            "Ванкувер: 22 матча, 2 победы в основное время, 2 в ОТ, 17 поражений, шайбы 63:98 (−35); Юта: 8 побед, шайбы 71:75 — Sports.ru",
-            "Ванкувер играет второй матч за два дня: 16.11 в 05:00 МСК обыграл Вегас 6:3 — Sports.ru",
-            "Юта выиграла 5 последних очных встреч, в т.ч. 7:4 и 6:2 в прошлом сезоне — Sports.ru"
-          ],
-          "against": [
-            "Юта проиграла 5 матчей подряд, три из них — в ОТ или по буллитам",
-            "Ванкувер прервал серию из 7 поражений и забивает в 6 последних матчах против Юты"
-          ],
-          "uncertainty": "Форма Юты и риск ничьей после 60 минут; стартовые вратари не подтверждены.",
-          "data_quality": {
-            "level": "medium",
-            "note": "нет xG и данных Daily Faceoff по вратарям"
-          },
-          "sources": [
-            {
-              "title": "Sports.ru — Юта — Ванкувер",
-              "url": "https://www.sports.ru/hockey/match/utah-mammoth-vs-vancouver-canucks/"
-            },
-            {
-              "title": "Sports.ru — таблица НХЛ",
-              "url": "https://www.sports.ru/hockey/tournament/nhl/table/"
-            },
-            {
-              "title": "Sports.ru — календарь НХЛ",
-              "url": "https://www.sports.ru/hockey/tournament/nhl/calendar/"
-            }
-          ]
-        },
         {
           "match": "Автомобилист — Спартак",
           "tournament": "КХЛ, регулярный чемпионат 2026/27",
@@ -393,55 +446,230 @@
               "url": "https://www.sports.ru/hockey/tournament/khl/table/"
             }
           ]
+        },
+        {
+          "match": "Северсталь — Сочи",
+          "tournament": "КХЛ, регулярный чемпионат 2026/27",
+          "start": "18.11, 19:00 МСК",
+          "start_iso": "2026-11-18T19:00+03:00",
+          "bet": "П1 (победа Северстали в основное время)",
+          "odds": "1.55",
+          "confidence": 3,
+          "reason": "Сочи не забил ни одной шайбы в двух последних матчах и занимает предпоследнее место на Западе, а Северсталь не проигрывает 7 домашних матчей и 9 встреч с Сочи подряд.",
+          "facts": [
+            "Северсталь не проигрывает в 7 последних домашних матчах и в 9 последних встречах с Сочи — Sports.ru",
+            "Сочи в двух последних матчах: 0:3 с Локомотивом и 0:2 с Амуром — Sports.ru",
+            "05.11 Северсталь выиграла в Сочи 4:1 — Sports.ru",
+            "Сочи: 17 очков, 10-е место на Западе — Спорт-Экспресс"
+          ],
+          "against": [
+            "Северсталь в двух из трёх последних домашних побед выигрывала только в одну шайбу (4:3 по буллитам с Трактором, 4:3 с Ладой)",
+            "Сочи забивает в 5 последних матчах против Северстали"
+          ],
+          "uncertainty": "Ничья после 60 минут — основной риск; вратари не объявлены.",
+          "data_quality": {
+            "level": "medium",
+            "note": "нет статистики бросков и стартовых вратарей"
+          },
+          "sources": [
+            {
+              "title": "Sports.ru — Северсталь — Сочи",
+              "url": "https://www.sports.ru/hockey/match/severstal-vs-sochi/"
+            },
+            {
+              "title": "Sports.ru — таблица КХЛ",
+              "url": "https://www.sports.ru/hockey/tournament/khl/table/"
+            },
+            {
+              "title": "Спорт-Экспресс — Локомотив — Сочи",
+              "url": "https://www.sport-express.net/hockey/khl/news/lokomotiv-sochi-rezultat-matcha-khl-16-noyabrya-2026-2475650/"
+            }
+          ]
         }
       ],
-      "updated_at": "2026-11-17T02:09+03:00"
+      "updated_at": "2026-11-17T12:27+03:00"
     },
     {
       "id": "cs2",
       "name": "CS2",
       "emoji": "🔫",
       "picks": [],
-      "updated_at": "2026-11-17T02:09+03:00"
+      "updated_at": "2026-11-17T12:27+03:00"
     },
     {
       "id": "dota2",
       "name": "Dota 2",
       "emoji": "🐉",
       "picks": [],
-      "updated_at": "2026-11-17T02:09+03:00"
+      "updated_at": "2026-11-17T12:27+03:00"
     }
   ],
   "analysis": [
     {
-      "sport": "🏀 Баскетбол",
-      "match": "Бостон — Орландо",
-      "tournament": "НБА, регулярный сезон",
-      "start": "17.11, 03:00 МСК",
-      "text": "Бостон — 11-2 и 6-0 дома, лучшая разница очков на Востоке (+13 за игру) и пропускает лишь 102 очка. В отчёте о травмах у «Селтикс» никого.\nОрландо (5-7, разница −4) выходит без Паоло Банкеро, Джонатана Айзека, Ноа Пенды и Изайи Нельсона — атака «Мэджик» и так одна из слабейших (108 очков за игру).\nГлавный минус Бостона — второй матч за две ночи после разгрома Далласа 131:94. Модель ESPN даёт хозяевам 76,2%, линия — около −10.",
+      "sport": "🎾 Теннис",
+      "match": "Александр Зверев — Бен Шелтон",
+      "tournament": "Итоговый турнир ATP, группа Джона Макинроя, 2-й тур",
+      "start": "17.11, 22:30 МСК",
+      "text": "Повтор финала US Open-2026: тогда Зверев выиграл в четырёх сетах, взяв 85% очков на первой подаче и сделав четыре брейка. В личных встречах у немца 6-0, а против левшей он выиграл 48 из 49 последних матчей.\nШелтон стартовал в Турине с победы над Фисом в трёх сетах и на быстром закрытом корте опасен прежде всего подачей. Если он удержит свои геймы, всё решат тай-брейки — у Зверева здесь опыт двух титулов Итогового турнира.\nРынок и модели сходятся на Звереве, но без запаса: Dimers даёт ему 61%. Наиболее вероятный сценарий — плотный матч с одним-двумя тай-брейками.",
       "key_factors": [
-        "Бостон 6-0 дома",
-        "Орландо без Банкеро и ещё трёх игроков",
-        "Бэк-ту-бэк у Бостона",
-        "ESPN Matchup Predictor: 76,2%"
+        "Личные встречи 6-0",
+        "48-1 против левшей",
+        "Подача Шелтона на быстром корте",
+        "Модель Dimers: 61% за Зверева"
       ],
-      "verdict": "Победа Бостона (наш прогноз: П1, 4/5); крупная фора рискованнее.",
+      "verdict": "Зверев — фаворит (наш прогноз: П1, 3/5); матч может затянуться.",
       "sources": [
         {
-          "title": "Sports.ru — таблица НБА",
-          "url": "https://www.sports.ru/basketball/tournament/nba/table/"
+          "title": "Sportskeeda — Zverev vs Shelton",
+          "url": "https://www.sportskeeda.com/tennis/alexander-zverev-vs-ben-shelton-preview-head-to-head-odds-prediction-betting-tips-atp-finals-2026"
         },
         {
-          "title": "ESPN — Magic @ Celtics",
-          "url": "https://www.espn.com/nba/game/_/gameId/401909994/magic-celtics"
+          "title": "bet365 News — Zverev vs Shelton",
+          "url": "https://news.bet365.com/en-us/article/zverev-vs-shelton-nitto-atp-finals-preview-betting-odds/2026111621473415131"
         },
         {
-          "title": "iHeart — Magic vs. Celtics Injury Report",
-          "url": "https://969thegame.iheart.com/content/2026-11-16-magic-vs-celtics-injury-report-nov-16/"
+          "title": "bets.com.au — Zverev vs Shelton",
+          "url": "https://www.bets.com.au/tennis/atp-tour/alexander-zverev-vs-ben-shelton-atp-finals-tips-prediction-live-stream-20261116-0009/"
         },
         {
-          "title": "Bleacher Nation — Celtics vs. Magic",
-          "url": "https://www.bleachernation.com/picks/2026/11/16/celtics-vs-magic-predictions-best-bets-and-odds-monday-november-16-2026/"
+          "title": "Dimers — Zverev vs Shelton",
+          "url": "https://www.dimers.com/tennis/news/alexander-zverev-vs-ben-shelton-tennis-prediction-atp-world-tour-finals-2026-ac"
+        },
+        {
+          "title": "Lineups — ATP Finals preview",
+          "url": "https://www.lineups.com/articles/atp-tennis-preview-2026-atp-finals-turin-betting-odds-picks-analysis/"
+        }
+      ]
+    },
+    {
+      "sport": "⚽ Футбол",
+      "match": "Уэльс — Португалия",
+      "tournament": "Лига наций УЕФА, лига A, группа 4, 6-й тур",
+      "start": "17.11, 22:45 МСК",
+      "text": "Португалия лидирует в группе с 12 очками, но 14 ноября дома проиграла Дании 1:4. Дания отстаёт на 3 очка и выигрывает личные встречи, поэтому при поражении Португалия рискует потерять первое место.\nУэльс выиграл только один матч из пяти и забил 3 мяча. Дома валлийцы обыграли Норвегию 2:1, но Португалии проиграли все три последние очные встречи, не забив ни разу.\nГлавный вопрос — оборона португальцев, которые пропускают 1,6 гола за игру в последних пяти матчах.",
+      "key_factors": [
+        "Мотивация Португалии на первое место",
+        "Уэльс: 3 забитых мяча в 5 матчах",
+        "Португалия 3-0 в последних очных встречах",
+        "Свежее поражение Португалии 1:4"
+      ],
+      "verdict": "Склоняемся к победе Португалии (наш прогноз: П2, 3/5).",
+      "sources": [
+        {
+          "title": "Sports.ru — Уэльс — Португалия",
+          "url": "https://www.sports.ru/football/match/portugal-vs-wales/"
+        },
+        {
+          "title": "Sports.ru — таблица Лиги наций",
+          "url": "https://www.sports.ru/football/tournament/uefa-nations-league/table/"
+        },
+        {
+          "title": "Спорт-Экспресс — результаты 6-го тура",
+          "url": "https://www.sport-express.ru/football/nation-league/news/severnaya-makedoniya-sloveniya-shveycariya-shotlandiya-schet-i-rezultaty-matchey-ligi-naciy-16-noyabrya-2026-2475677/"
+        },
+        {
+          "title": "Sport.ua — таблицы Лиги наций",
+          "url": "https://sport.ua/news/925757-tablitsy-ligi-natsiy-pyat-nol-germaniya-i-niderlandy-vyshli-v-14-finala"
+        }
+      ]
+    },
+    {
+      "sport": "🏀 Баскетбол",
+      "match": "Лейкерс — Шарлотт",
+      "tournament": "НБА, регулярный сезон",
+      "start": "18.11, 07:00 МСК",
+      "text": "Лейкерс вернулись домой после выездной серии с балансом 12-2 и восемью победами подряд. У них лучшая атака лиги — 122,8 очка за игру при 50,3% с игры.\nШарлотт (4-9) набирает лишь 99,1 очка и бросает 40% с игры, а в этом матче у «Хорнетс» не сыграют Кон Кнюппель и Деннис Шрёдер.\nУ хозяев тоже потери — нет Остина Ривза и Уокера Кесслера, поэтому крупная фора рискованнее, чем сама победа. Модель iHeart ждёт 122:101.",
+      "key_factors": [
+        "Лучшая атака лиги против одной из худших",
+        "Серия Лейкерс из 8 побед",
+        "Травмы Ривза и Кесслера",
+        "Без Кнюппеля и Шрёдера у Шарлотт"
+      ],
+      "verdict": "Победа Лейкерс (наш прогноз: П1, 4/5).",
+      "sources": [
+        {
+          "title": "NBC Sports — Hornets vs Lakers",
+          "url": "https://www.nbcsports.com/nba/news/hornets-vs-lakers-predictions-odds-recent-stats-trends-and-best-bets-for-november-17"
+        },
+        {
+          "title": "iHeart — Hornets vs. Lakers",
+          "url": "https://1049foxsports.iheart.com/content/2026-11-17-hornets-vs-lakers-predictions-odds-stats-nov-17/"
+        },
+        {
+          "title": "Yahoo Sports — Lakers vs. Hornets preview",
+          "url": "https://sports.yahoo.com/articles/lakers-vs-hornets-preview-winning-024029476.html"
+        },
+        {
+          "title": "Bleacher Nation — Lakers vs Hornets",
+          "url": "https://www.bleachernation.com/picks/2026/11/17/lakers-vs-hornets-predictions-best-bets-and-odds-tuesday-november-17-2026/"
+        }
+      ]
+    },
+    {
+      "sport": "🎾 Теннис",
+      "match": "Карлос Алькарас — Даниил Медведев",
+      "tournament": "Итоговый турнир ATP, группа Ивана Лендла, 2-й тур",
+      "start": "18.11, 16:00 МСК",
+      "text": "Алькарас приехал в Турин после двух подряд титулов в зале — в Вене и Париже — и начал турнир с 6:2, 6:2 против Тиафу. В личных встречах с Медведевым он ведёт 7-3.\nМедведев тоже стартовал с победы (7:6, 6:3 над Коболли, 9 эйсов) и на быстром корте опасен подачей и длинными розыгрышами с задней линии. Он уже обыгрывал Алькараса, в том числе в полуфинале US Open-2023.\nПобедитель матча фактически обеспечит себе выход в полуфинал, поэтому мотивация у обоих максимальная.",
+      "key_factors": [
+        "Форма Алькараса: 2 титула в зале подряд",
+        "Личные встречи 7-3",
+        "Подача Медведева на быстром корте",
+        "Борьба за выход из группы"
+      ],
+      "verdict": "Алькарас — явный фаворит (наш прогноз: П1, 4/5).",
+      "sources": [
+        {
+          "title": "Bleacher Nation — Alcaraz vs Medvedev",
+          "url": "https://www.bleachernation.com/picks/2026/11/16/alcaraz-vs-medvedev-prediction-at-the-nitto-atp-finals-wednesday-november-18/"
+        },
+        {
+          "title": "Tennisnerd — ATP Finals 2026 preview",
+          "url": "https://www.tennisnerd.net/news/atp-finals-2026-preview-predictions-odds-my-pick-to-win-in-turin/70638"
+        },
+        {
+          "title": "FreeTips — ATP Finals preview",
+          "url": "https://www.freetips.com/tennis/2026-atp-finals-betting-preview-20261113-0023/"
+        },
+        {
+          "title": "Scores24 — ATP Finals outrights",
+          "url": "https://scores24.live/en/articles/blog/atp-finals-2026-outright-predictions"
+        },
+        {
+          "title": "Nitto ATP Finals — результаты",
+          "url": "https://www.nittoatpfinals.com/en/scores-centre/results"
+        }
+      ]
+    },
+    {
+      "sport": "🏒 Хоккей",
+      "match": "ЦСКА — Локомотив",
+      "tournament": "КХЛ, регулярный чемпионат",
+      "start": "18.11, 19:30 МСК",
+      "text": "Матч двух лидеров Запада: ЦСКА (40 очков) и Локомотив (39). Армейцы до поражения от Амура по буллитам выиграли семь матчей подряд, Локомотив — шесть подряд, последние два всухую (5:0 с Шанхаем и 3:0 с Сочи).\nЛокомотив не проигрывает ЦСКА 7 матчей подряд и забивает в 8 последних очных встречах. При этом у ЦСКА лучшая разница шайб лиги.\nКоэффициенты почти равные (2.30 на ЦСКА и 2.65 на Локомотив), данных в пользу одной из сторон недостаточно.",
+      "key_factors": [
+        "Лидеры Запада с разницей в одно очко",
+        "Локомотив 7 матчей без поражений против ЦСКА",
+        "Локомотив — два сухаря подряд",
+        "ЦСКА уступил Амуру по буллитам"
+      ],
+      "verdict": "Без ставки: перевеса ни у одной команды нет.",
+      "sources": [
+        {
+          "title": "Sports.ru — ЦСКА — Локомотив",
+          "url": "https://www.sports.ru/hockey/match/cska-vs-lokomotiv-yaroslavl/"
+        },
+        {
+          "title": "Sports.ru — таблица КХЛ",
+          "url": "https://www.sports.ru/hockey/tournament/khl/table/"
+        },
+        {
+          "title": "Совспорт — Амур обыграл ЦСКА",
+          "url": "https://www.sovsport.ru/hockey/news/amur-po-bullitam-obygral-cz-ska-i-podnyalsya-na-vtoroe-mesto-na-vostoke"
+        },
+        {
+          "title": "Спорт-Экспресс — Локомотив — Сочи",
+          "url": "https://www.sport-express.net/hockey/khl/news/lokomotiv-sochi-rezultat-matcha-khl-16-noyabrya-2026-2475650/"
         }
       ]
     }
@@ -449,35 +677,73 @@
   "model_version": "v2",
   "express": [
     {
-      "id": "x-20261117-mid",
+      "id": "x-20261118-safe",
+      "tier": "safe",
+      "title": "Надёжный",
+      "legs": [
+        {
+          "sport": "basketball",
+          "match": "Сан-Антонио — Детройт",
+          "bet": "П1 (победа Сан-Антонио)",
+          "odds": 1.28,
+          "start_iso": "2026-11-18T04:00+03:00"
+        },
+        {
+          "sport": "basketball",
+          "match": "Лейкерс — Шарлотт",
+          "bet": "П1 (победа Лейкерс)",
+          "odds": 1.26,
+          "start_iso": "2026-11-18T07:00+03:00"
+        },
+        {
+          "sport": "tennis",
+          "match": "Карлос Алькарас — Даниил Медведев",
+          "bet": "П1 (победа Алькараса)",
+          "odds": 1.25,
+          "start_iso": "2026-11-18T16:00+03:00"
+        }
+      ],
+      "total_odds": 2.02,
+      "reason": "Три фаворита с самыми сильными аргументами: Сан-Антонио с серией из 12 побед против Детройта без Дюрена, лучшая атака лиги Лейкерс против Шарлотт без двух игроков старта и Алькарас в лучшей форме сезона против Медведева, которого он обыгрывал 7 раз из 10.",
+      "weak_link": "Сан-Антонио — уверенность 3 из 5: Детройт (8-4) — сильный соперник, модели видят шансы на упорную игру."
+    },
+    {
+      "id": "x-20261118-mid",
       "tier": "mid",
       "title": "Средний",
       "legs": [
         {
-          "sport": "hockey",
-          "match": "Юта — Ванкувер",
-          "bet": "П1 (победа Юты в основное время)",
-          "odds": 1.58,
-          "start_iso": "2026-11-17T05:30+03:00"
-        },
-        {
-          "sport": "hockey",
-          "match": "Лада — Металлург Мг",
-          "bet": "П2 (победа Металлурга в основное время)",
+          "sport": "basketball",
+          "match": "Клипперс — Юта",
+          "bet": "П1 (победа Клипперс)",
           "odds": 1.43,
-          "start_iso": "2026-11-17T18:00+03:00"
+          "start_iso": "2026-11-18T06:30+03:00"
         },
         {
-          "sport": "football",
-          "match": "Уэльс — Португалия",
-          "bet": "П2 (победа Португалии)",
-          "odds": 1.45,
-          "start_iso": "2026-11-17T22:45+03:00"
+          "sport": "basketball",
+          "match": "Лейкерс — Шарлотт",
+          "bet": "П1 (победа Лейкерс)",
+          "odds": 1.26,
+          "start_iso": "2026-11-18T07:00+03:00"
+        },
+        {
+          "sport": "tennis",
+          "match": "Карлос Алькарас — Даниил Медведев",
+          "bet": "П1 (победа Алькараса)",
+          "odds": 1.25,
+          "start_iso": "2026-11-18T16:00+03:00"
+        },
+        {
+          "sport": "hockey",
+          "match": "Северсталь — Сочи",
+          "bet": "П1 (победа Северстали в основное время)",
+          "odds": 1.55,
+          "start_iso": "2026-11-18T19:00+03:00"
         }
       ],
-      "total_odds": 3.28,
-      "reason": "Три фаворита против явных аутсайдеров: Юта против худшей команды НХЛ на втором дне бэк-ту-бэка, лидер Востока КХЛ у последней команды Запада и Португалия, которой нужна победа для первого места.",
-      "weak_link": "Юта — проиграла 5 матчей подряд, а ставка на основное время проигрывает и при ничьей после 60 минут."
+      "total_odds": 3.49,
+      "reason": "К двум самым надёжным событиям дня добавлены Клипперс против худшей команды НБА и Северсталь, которая не проигрывает Сочи 9 матчей подряд — так общий коэффициент переходит за 3.",
+      "weak_link": "Клипперс сами 4-8 и без Ингрэма и Била, а ставка на Северсталь проигрывает и при ничьей после 60 минут."
     }
   ]
 }
