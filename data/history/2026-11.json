@@ -8080,6 +8080,61 @@
       "status_log": []
     },
     {
+      "id": "hockey-20261118-q5k881",
+      "sport": "hockey",
+      "sport_name": "Хоккей",
+      "home": "Лос-Анджелес Кингз",
+      "away": "Бостон Брюинз",
+      "event_date": "2026-11-18",
+      "start_iso": "2026-11-18T03:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-17T17:19+03:00",
+      "model_version": "v2",
+      "tournament": "НХЛ, регулярный сезон 2026/27 (матч в Бостоне)",
+      "match": "Лос-Анджелес Кингз — Бостон Брюинз",
+      "start": "18.11, 03:00 МСК",
+      "bet": "Победа Бостона (включая ОТ и буллиты)",
+      "odds": "1.67",
+      "confidence": 3,
+      "reason": "Бостон заметно сильнее по результатам и игре в равных составах, а у Кингз худшая атака и одно из худших меньшинств лиги, плюс без Панарина.",
+      "facts": [
+        "Бостон 13-6-1 (27 очков), Кингз 5-11-2 — 30-е место в НХЛ и 4 поражения подряд (BostonHockeyNow, 17.11.2026)",
+        "Кингз забили 49 шайб (30-е место) и пропустили 63; Бостон в равных составах 59:38 по шайбам (Doc's Sports, 17.11.2026)",
+        "Меньшинство Кингз — 67.2% (29-е место), большинство Бостона за сезон 18.5% (BostonHockeyNow)",
+        "Вероятный вратарь Кингз Дарси Кемпер: 5-5-1, GAA 3.58, 87.2% отражённых; Суэйман у Бостона: 9-5-1, GAA 2.60, 90.6% (BostonHockeyNow, вратари не подтверждены)",
+        "Артемий Панарин не полетел с командой; 17.10 Бостон выиграл в Лос-Анджелесе 4:1 (BostonHockeyNow)"
+      ],
+      "against": [
+        "Бостон проиграл два последних матча с общим счётом 4:11 (Монреаль, Миннесота)",
+        "Большинство Бостона — 4 из 29 (13.8%) в последних 8 играх",
+        "На следующий день Бостон играет в Детройте — возможна экономия сил"
+      ],
+      "uncertainty": "Стартовые вратари не подтверждены; после двух крупных поражений неясно состояние обороны Бостона.",
+      "data_quality": {
+        "level": "medium",
+        "note": "Нет данных xG 5×5 (Natural Stat Trick/MoneyPuck не проверялись); вратари — вероятные, не подтверждённые"
+      },
+      "sources": [
+        {
+          "title": "BostonHockeyNow — Bruins Game 21: notes, lines",
+          "url": "https://bostonhockeynow.com/2026-11-17-bruins-game-21-notes-lines-watch-kings/"
+        },
+        {
+          "title": "Doc's Sports — Kings vs Bruins 11/17/2026",
+          "url": "https://www.docsports.com/free-picks/nhl-hockey/2026/los-angeles-kings-vs-boston-bruins-prediction-11-17-2026-nhl-picks-best-bets-odds.html"
+        },
+        {
+          "title": "Inside The Rink — Kings at Bruins 11/17/2026",
+          "url": "https://insidetherink.com/nhl-game-preview-los-angeles-kings-at-boston-bruins-with-line-combinations-11-17-2026/"
+        }
+      ],
+      "market_prob": 0.599,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
       "id": "basketball-20261118-1toqmu6",
       "sport": "basketball",
       "sport_name": "Баскетбол",
