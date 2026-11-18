@@ -160,7 +160,7 @@
           "odds": 1.25,
           "start_iso": "2026-11-18T16:00+03:00",
           "hid": "tennis-20261118-p6qvu0",
-          "status": "pending"
+          "status": "won"
         },
         {
           "sport": "hockey",
@@ -169,7 +169,7 @@
           "odds": 1.55,
           "start_iso": "2026-11-18T19:00+03:00",
           "hid": "hockey-20261118-1mix27w",
-          "status": "pending"
+          "status": "won"
         }
       ],
       "total_odds": 3.49,
@@ -209,7 +209,7 @@
           "odds": 1.25,
           "start_iso": "2026-11-18T16:00+03:00",
           "hid": "tennis-20261118-p6qvu0",
-          "status": "pending"
+          "status": "won"
         }
       ],
       "total_odds": 2.02,
