@@ -910,18 +910,14 @@
       "status": "postponed",
       "result": {
         "score": null,
-        "note": "матч перенесён (Sports.ru: «Перенесен», Sky Sport DE: «Verlegt»)",
+        "note": "Матч Лестер — Брэдфорд 14.11 перенесён (ESPN: Postponed).",
         "sources": [
           {
-            "title": "Sports.ru — футбол 14.11",
-            "url": "https://www.sports.ru/football/match/2026-11-14/"
-          },
-          {
-            "title": "Sky Sport — Leicester — Bradford",
-            "url": "https://sport.sky.de/"
+            "title": "ESPN — League One 14.11",
+            "url": "https://www.espn.com/soccer/scoreboard/_/league/eng.3/date/20261114"
           }
         ],
-        "checked_at": "2026-11-15T19:49+03:00"
+        "checked_at": "2026-11-18T13:04+03:00"
       },
       "versions": [],
       "status_log": [
@@ -932,7 +928,7 @@
           "note": "матч перенесён (Sports.ru: «Перенесен», Sky Sport DE: «Verlegt»)"
         }
       ],
-      "last_sync": "2026-11-15T19:49+03:00"
+      "last_sync": "2026-11-18T13:04+03:00"
     },
     {
       "id": "football-20261114-o8mmy",
@@ -7765,10 +7761,32 @@
         }
       ],
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "1:1",
+        "note": "Основное время 1:1 (Автомобилист выиграл 2:1 по буллитам) — всего 2 шайбы, ТБ 5.5 не зашёл.",
+        "sources": [
+          {
+            "title": "Sports.ru — Автомобилист — Спартак",
+            "url": "https://www.sports.ru/hockey/match/avtomobilist-vs-spartak/"
+          },
+          {
+            "title": "Профиль — Спартак уступил по буллитам",
+            "url": "https://profile.ru/news/sport/spartak-v-serii-bullitov-ustupil-avtomobilistu-v-ramkah-khl-1757045/amp/"
+          }
+        ],
+        "checked_at": "2026-11-18T13:04+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-18T13:04+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": "Основное время 1:1 (Автомобилист выиграл 2:1 по буллитам) — всего 2 шайбы, ТБ 5.5 не зашёл."
+        }
+      ],
+      "last_sync": "2026-11-18T13:04+03:00"
     },
     {
       "id": "hockey-20261117-5zqrya",
@@ -7813,10 +7831,32 @@
         }
       ],
       "market_prob": 0.699,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "2:7",
+        "note": null,
+        "sources": [
+          {
+            "title": "Sports.ru — Лада — Металлург Мг",
+            "url": "https://www.sports.ru/hockey/match/lada-vs-metallurg-magnitogorsk/"
+          },
+          {
+            "title": "Спорт Mail — Металлург разгромил Ладу 7:2",
+            "url": "https://sportmail.ru/news/hockey-khl/72328848/"
+          }
+        ],
+        "checked_at": "2026-11-18T13:04+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-18T13:04+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-18T13:04+03:00"
     },
     {
       "id": "tennis-20261117-1ybtlqt",
@@ -7878,10 +7918,32 @@
         }
       ],
       "market_prob": 0.667,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "2:0",
+        "note": "6:2, 7:6(4)",
+        "sources": [
+          {
+            "title": "ATP Tour — Nitto ATP Finals results",
+            "url": "https://www.atptour.com/en/scores/current/nitto-atp-finals/605/results"
+          },
+          {
+            "title": "ESPN — ATP scoreboard",
+            "url": "https://www.espn.com/tennis/scoreboard"
+          }
+        ],
+        "checked_at": "2026-11-18T13:04+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-18T13:04+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": "6:2, 7:6(4)"
+        }
+      ],
+      "last_sync": "2026-11-18T13:04+03:00"
     },
     {
       "id": "football-20261117-1nakhgy",
@@ -7927,10 +7989,32 @@
         }
       ],
       "market_prob": 0.69,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "2:3",
+        "note": null,
+        "sources": [
+          {
+            "title": "Sports.ru — Лига наций, календарь",
+            "url": "https://www.sports.ru/football/tournament/uefa-nations-league/calendar/"
+          },
+          {
+            "title": "ESPN — UEFA Nations League scoreboard",
+            "url": "https://www.espn.com/soccer/scoreboard/_/league/uefa.nations/date/20261117"
+          }
+        ],
+        "checked_at": "2026-11-18T13:04+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-18T13:04+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-18T13:04+03:00"
     },
     {
       "id": "football-20261117-oswzd9",
@@ -7975,10 +8059,32 @@
         }
       ],
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "1:1",
+        "note": null,
+        "sources": [
+          {
+            "title": "Sports.ru — Лига наций, календарь",
+            "url": "https://www.sports.ru/football/tournament/uefa-nations-league/calendar/"
+          },
+          {
+            "title": "ESPN — UEFA Nations League scoreboard",
+            "url": "https://www.espn.com/soccer/scoreboard/_/league/uefa.nations/date/20261117"
+          }
+        ],
+        "checked_at": "2026-11-18T13:04+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-18T13:04+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-18T13:04+03:00"
     },
     {
       "id": "football-20261117-poju55",
@@ -8023,10 +8129,32 @@
         }
       ],
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "1:0",
+        "note": null,
+        "sources": [
+          {
+            "title": "Sports.ru — Лига наций, календарь",
+            "url": "https://www.sports.ru/football/tournament/uefa-nations-league/calendar/"
+          },
+          {
+            "title": "ESPN — UEFA Nations League scoreboard",
+            "url": "https://www.espn.com/soccer/scoreboard/_/league/uefa.nations/date/20261117"
+          }
+        ],
+        "checked_at": "2026-11-18T13:04+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-18T13:04+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-18T13:04+03:00"
     },
     {
       "id": "football-20261117-zhz9k5",
@@ -8074,10 +8202,32 @@
         }
       ],
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "1:1",
+        "note": null,
+        "sources": [
+          {
+            "title": "Sports.ru — Лига наций, календарь",
+            "url": "https://www.sports.ru/football/tournament/uefa-nations-league/calendar/"
+          },
+          {
+            "title": "ESPN — UEFA Nations League scoreboard",
+            "url": "https://www.espn.com/soccer/scoreboard/_/league/uefa.nations/date/20261117"
+          }
+        ],
+        "checked_at": "2026-11-18T13:04+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-18T13:04+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-18T13:04+03:00"
     },
     {
       "id": "hockey-20261118-q5k881",
@@ -8129,10 +8279,32 @@
         }
       ],
       "market_prob": 0.599,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "3:0",
+        "note": "Кингз выиграли в Бостоне 3:0 в основное время — Бостон проиграл.",
+        "sources": [
+          {
+            "title": "Sports.ru — календарь НХЛ",
+            "url": "https://www.sports.ru/hockey/tournament/nhl/calendar/"
+          },
+          {
+            "title": "ESPN — NHL scoreboard 17.11",
+            "url": "https://www.espn.com/nhl/scoreboard/_/date/20261117"
+          }
+        ],
+        "checked_at": "2026-11-18T13:04+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-18T13:04+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": "Кингз выиграли в Бостоне 3:0 в основное время — Бостон проиграл."
+        }
+      ],
+      "last_sync": "2026-11-18T13:04+03:00"
     },
     {
       "id": "basketball-20261118-1toqmu6",
@@ -8177,10 +8349,32 @@
         }
       ],
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "102:111",
+        "note": null,
+        "sources": [
+          {
+            "title": "Sports.ru — календарь НБА",
+            "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
+          },
+          {
+            "title": "ESPN — NBA scoreboard 17.11",
+            "url": "https://www.espn.com/nba/scoreboard/_/date/20261117"
+          }
+        ],
+        "checked_at": "2026-11-18T13:04+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-18T13:04+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-18T13:04+03:00"
     },
     {
       "id": "basketball-20261118-1jikjje",
@@ -8238,10 +8432,32 @@
         }
       ],
       "market_prob": 0.781,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "93:105",
+        "note": null,
+        "sources": [
+          {
+            "title": "Sports.ru — календарь НБА",
+            "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
+          },
+          {
+            "title": "ESPN — NBA scoreboard 17.11",
+            "url": "https://www.espn.com/nba/scoreboard/_/date/20261117"
+          }
+        ],
+        "checked_at": "2026-11-18T13:04+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-18T13:04+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-18T13:04+03:00"
     },
     {
       "id": "basketball-20261118-7y4any",
@@ -8299,10 +8515,32 @@
         }
       ],
       "market_prob": 0.699,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "107:132",
+        "note": null,
+        "sources": [
+          {
+            "title": "Sports.ru — календарь НБА",
+            "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
+          },
+          {
+            "title": "ESPN — NBA scoreboard 17.11",
+            "url": "https://www.espn.com/nba/scoreboard/_/date/20261117"
+          }
+        ],
+        "checked_at": "2026-11-18T13:04+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-18T13:04+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-18T13:04+03:00"
     },
     {
       "id": "basketball-20261118-15mdd4z",
@@ -8356,10 +8594,32 @@
         }
       ],
       "market_prob": 0.794,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "118:114",
+        "note": "Победа Лейкерс в овертайме",
+        "sources": [
+          {
+            "title": "Sports.ru — календарь НБА",
+            "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
+          },
+          {
+            "title": "ESPN — NBA scoreboard 17.11",
+            "url": "https://www.espn.com/nba/scoreboard/_/date/20261117"
+          }
+        ],
+        "checked_at": "2026-11-18T13:04+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-18T13:04+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": "Победа Лейкерс в овертайме"
+        }
+      ],
+      "last_sync": "2026-11-18T13:04+03:00"
     },
     {
       "id": "tennis-20261118-p6qvu0",
@@ -8522,6 +8782,344 @@
         }
       ],
       "market_prob": 0.645,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "basketball-20261119-11gmhdr",
+      "sport": "basketball",
+      "sport_name": "Баскетбол",
+      "home": "Майами",
+      "away": "Милуоки",
+      "event_date": "2026-11-19",
+      "start_iso": "2026-11-19T03:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-18T13:04+03:00",
+      "model_version": "v2",
+      "tournament": "НБА, регулярный сезон 2026/27",
+      "match": "Майами — Милуоки",
+      "start": "19.11, 03:00 МСК",
+      "bet": "П1 (победа Майами)",
+      "odds": "1.13",
+      "confidence": 4,
+      "model_prob": {
+        "value": 0.803,
+        "source": "ESPN BPI"
+      },
+      "reason": "Милуоки — худшая команда лиги (1-13), не выиграла ни одного выездного матча и проиграла 5 игр подряд, а Майами выиграл 5 последних.",
+      "facts": [
+        "Милуоки: 1-13, на выезде 0-6 — ESPN",
+        "Последние 5 игр Милуоки — 5 поражений, в т.ч. 85:117 в Нью-Йорке — ESPN",
+        "Майами выиграл 5 матчей подряд, в т.ч. 133:121 у Кливленда и 128:110 у Хьюстона — ESPN",
+        "Модель ESPN BPI даёт Майами 80,3% — ESPN"
+      ],
+      "against": [
+        "Адебайо и Йович под вопросом (day-to-day)",
+        "Майами дома лишь 4-3"
+      ],
+      "uncertainty": "Если Адебайо не сыграет, перевес в краске уменьшится.",
+      "data_quality": {
+        "level": "medium",
+        "note": "нет рейтингов атаки/защиты; составы не подтверждены"
+      },
+      "sources": [
+        {
+          "title": "ESPN — превью матча (травмы, последние 5 игр, BPI)",
+          "url": "https://www.espn.com/nba/game/_/gameId/401910009"
+        },
+        {
+          "title": "ESPN — NBA scoreboard 18.11 (записи, линия)",
+          "url": "https://www.espn.com/nba/scoreboard/_/date/20261118"
+        },
+        {
+          "title": "Sports.ru — календарь НБА",
+          "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
+        }
+      ],
+      "market_prob": 0.885,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "basketball-20261119-14h5y3y",
+      "sport": "basketball",
+      "sport_name": "Баскетбол",
+      "home": "Индиана",
+      "away": "Хьюстон",
+      "event_date": "2026-11-19",
+      "start_iso": "2026-11-19T03:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-18T13:04+03:00",
+      "model_version": "v2",
+      "tournament": "НБА, регулярный сезон 2026/27",
+      "match": "Индиана — Хьюстон",
+      "start": "19.11, 03:00 МСК",
+      "bet": "П2 (победа Хьюстона)",
+      "odds": "1.34",
+      "confidence": 4,
+      "model_prob": {
+        "value": 0.732,
+        "source": "ESPN BPI"
+      },
+      "reason": "Хьюстон (11-4) выиграл 4 матча подряд, а Индиана (5-9) без Халибёртона проиграла 3 из 5 последних.",
+      "facts": [
+        "Хьюстон: 11-4, 4 победы подряд (в т.ч. 147:119 в Вашингтоне) — ESPN",
+        "Индиана: 5-9, дома 2-4 — ESPN",
+        "У Индианы не сыграют Халибёртон, Ферфи и Шеппард; Макконнелл и Нембхард под вопросом — ESPN",
+        "Модель ESPN BPI даёт Хьюстону 73,2% — ESPN"
+      ],
+      "against": [
+        "У Хьюстона нет Капелы, Амен Томпсон под вопросом",
+        "Хьюстон на выезде лишь 4-3"
+      ],
+      "uncertainty": "Если не сыграет Амен Томпсон, защита Хьюстона ослабнет.",
+      "data_quality": {
+        "level": "medium",
+        "note": "нет рейтингов атаки/защиты"
+      },
+      "sources": [
+        {
+          "title": "ESPN — превью матча (травмы, последние 5 игр, BPI)",
+          "url": "https://www.espn.com/nba/game/_/gameId/401910008"
+        },
+        {
+          "title": "ESPN — NBA scoreboard 18.11 (записи, линия)",
+          "url": "https://www.espn.com/nba/scoreboard/_/date/20261118"
+        },
+        {
+          "title": "Sports.ru — календарь НБА",
+          "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
+        }
+      ],
+      "market_prob": 0.746,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "basketball-20261119-jwmczl",
+      "sport": "basketball",
+      "sport_name": "Баскетбол",
+      "home": "Новый Орлеан",
+      "away": "Детройт",
+      "event_date": "2026-11-19",
+      "start_iso": "2026-11-19T04:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-18T13:04+03:00",
+      "model_version": "v2",
+      "tournament": "НБА, регулярный сезон 2026/27",
+      "match": "Новый Орлеан — Детройт",
+      "start": "19.11, 04:00 МСК",
+      "bet": "П2 (победа Детройта)",
+      "odds": "1.36",
+      "confidence": 3,
+      "model_prob": {
+        "value": 0.743,
+        "source": "ESPN BPI"
+      },
+      "reason": "Детройт на выезде 6-2 и только что прервал серию Сан-Антонио, а Новый Орлеан без Трея Мёрфи и Мюррея проиграл 4 из 5 последних.",
+      "facts": [
+        "Детройт: 9-4, на выезде 6-2; 18.11 выиграл в Сан-Антонио 105:93 — ESPN, Sports.ru",
+        "Новый Орлеан: 5-10, 4 поражения в 5 играх, в т.ч. 87:138 в Голден Стэйт — ESPN",
+        "У Нового Орлеана не сыграют Мёрфи, Мюррей, Матурин, Уотфорд — ESPN",
+        "Модель ESPN BPI даёт Детройту 74,3% — ESPN"
+      ],
+      "against": [
+        "У Детройта тоже много потерь: Дюрен, Робинсон, Джо, Принс, Холланд",
+        "Второй выездной матч за две ночи"
+      ],
+      "uncertainty": "Ротация Детройта сильно урезана — возможна усталость.",
+      "data_quality": {
+        "level": "medium",
+        "note": "нет рейтингов атаки/защиты"
+      },
+      "sources": [
+        {
+          "title": "ESPN — превью матча (травмы, последние 5 игр, BPI)",
+          "url": "https://www.espn.com/nba/game/_/gameId/401910013"
+        },
+        {
+          "title": "ESPN — NBA scoreboard 18.11 (записи, линия)",
+          "url": "https://www.espn.com/nba/scoreboard/_/date/20261118"
+        },
+        {
+          "title": "Sports.ru — календарь НБА",
+          "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
+        }
+      ],
+      "market_prob": 0.735,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "basketball-20261119-13k36sl",
+      "sport": "basketball",
+      "sport_name": "Баскетбол",
+      "home": "Лейкерс",
+      "away": "Юта",
+      "event_date": "2026-11-19",
+      "start_iso": "2026-11-19T06:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-18T13:04+03:00",
+      "model_version": "v2",
+      "tournament": "НБА, регулярный сезон 2026/27",
+      "match": "Лейкерс — Юта",
+      "start": "19.11, 06:00 МСК",
+      "bet": "П1 (победа Лейкерс)",
+      "odds": "1.21",
+      "confidence": 4,
+      "model_prob": {
+        "value": 0.816,
+        "source": "ESPN BPI"
+      },
+      "reason": "Лейкерс (13-2) выиграли 5 матчей подряд, а у Юты (2-13) нет Маркканена, Джексона-младшего и Нуркича.",
+      "facts": [
+        "Лейкерс: 13-2, дома 6-1, 5 побед подряд — ESPN",
+        "Юта: 2-13, на выезде 1-6 — ESPN",
+        "У Юты не сыграют Маркканен, Джексон-младший, Нуркич и Хейс — ESPN (injury report)",
+        "Модель ESPN BPI даёт Лейкерс 81,6% — ESPN"
+      ],
+      "against": [
+        "Юта только что разгромила Клипперс в гостях 132:107",
+        "У Лейкерс нет Ривза и Кесслера; накануне Лейкерс играли овертайм с Шарлотт"
+      ],
+      "uncertainty": "Второй матч подряд для Лейкерс после овертайма — возможна усталость.",
+      "data_quality": {
+        "level": "medium",
+        "note": "нет рейтингов атаки/защиты"
+      },
+      "sources": [
+        {
+          "title": "ESPN — превью матча (травмы, последние 5 игр, BPI)",
+          "url": "https://www.espn.com/nba/game/_/gameId/401910017"
+        },
+        {
+          "title": "ESPN — NBA scoreboard 18.11 (записи, линия)",
+          "url": "https://www.espn.com/nba/scoreboard/_/date/20261118"
+        },
+        {
+          "title": "Sports.ru — календарь НБА",
+          "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
+        }
+      ],
+      "market_prob": 0.826,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "basketball-20261119-18dwgaq",
+      "sport": "basketball",
+      "sport_name": "Баскетбол",
+      "home": "Сакраменто",
+      "away": "Финикс",
+      "event_date": "2026-11-19",
+      "start_iso": "2026-11-19T06:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-18T13:04+03:00",
+      "model_version": "v2",
+      "tournament": "НБА, регулярный сезон 2026/27",
+      "match": "Сакраменто — Финикс",
+      "start": "19.11, 06:00 МСК",
+      "bet": "П2 (победа Финикса)",
+      "odds": "1.37",
+      "confidence": 3,
+      "model_prob": {
+        "value": 0.718,
+        "source": "ESPN BPI"
+      },
+      "reason": "Сакраменто (1-12) проиграл все 8 домашних матчей и 5 последних игр подряд.",
+      "facts": [
+        "Сакраменто: 1-12, дома 0-8, 5 поражений подряд — ESPN",
+        "Финикс выиграл 3 из 5 последних, в т.ч. 133:110 у Клипперс — ESPN",
+        "У Сакраменто не сыграют Симмонс и Рейно, Хантер и Ачиува под вопросом — ESPN",
+        "Модель ESPN BPI даёт Финиксу 71,8% — ESPN"
+      ],
+      "against": [
+        "Финикс на выезде 1-3",
+        "У Финикса нет Марка Уильямса"
+      ],
+      "uncertainty": "Финикс слабо играет в гостях.",
+      "data_quality": {
+        "level": "medium",
+        "note": "нет рейтингов атаки/защиты"
+      },
+      "sources": [
+        {
+          "title": "ESPN — превью матча (травмы, последние 5 игр, BPI)",
+          "url": "https://www.espn.com/nba/game/_/gameId/401910018"
+        },
+        {
+          "title": "ESPN — NBA scoreboard 18.11 (записи, линия)",
+          "url": "https://www.espn.com/nba/scoreboard/_/date/20261118"
+        },
+        {
+          "title": "Sports.ru — календарь НБА",
+          "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
+        }
+      ],
+      "market_prob": 0.73,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "hockey-20261119-1s3e25c",
+      "sport": "hockey",
+      "sport_name": "Хоккей",
+      "home": "Металлург Мг",
+      "away": "Трактор",
+      "event_date": "2026-11-19",
+      "start_iso": "2026-11-19T17:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-18T13:04+03:00",
+      "model_version": "v2",
+      "tournament": "КХЛ, регулярный чемпионат 2026/27",
+      "match": "Металлург Мг — Трактор",
+      "start": "19.11, 17:00 МСК",
+      "bet": "1X (Металлург не проиграет в основное время)",
+      "odds": "1.25",
+      "confidence": 3,
+      "reason": "Металлург — лидер Востока и не проигрывает Трактору 6 из 8 последних встреч; Трактор 7-й.",
+      "facts": [
+        "КХЛ, Восток: Металлург 1-й (39 очков до 17.11, +28), Трактор 7-й (29, −2) — Sports.ru",
+        "Металлург не проигрывает в 6 из 8 последних матчей с Трактором — Sports.ru",
+        "17.11 Металлург выиграл в Тольятти 7:2 — Sports.ru, Спорт Mail",
+        "Трактор пропускает в среднем 2,4 шайбы за игру в 5 последних матчах — Sports.ru"
+      ],
+      "against": [
+        "Перед этим Металлург проиграл 3 из 4 (Барысу, Авангарду в ОТ, ЦСКА)",
+        "Последняя очная встреча — 6:2 в пользу Трактора (18.03.2026)"
+      ],
+      "uncertainty": "Ничья после 60 минут входит в ставку; вратари не объявлены.",
+      "data_quality": {
+        "level": "medium",
+        "note": "нет статистики бросков и стартовых вратарей"
+      },
+      "sources": [
+        {
+          "title": "Sports.ru — Металлург Мг — Трактор",
+          "url": "https://www.sports.ru/hockey/match/metallurg-magnitogorsk-vs-traktor/"
+        },
+        {
+          "title": "Sports.ru — таблица КХЛ",
+          "url": "https://www.sports.ru/hockey/tournament/khl/table/"
+        },
+        {
+          "title": "Sports.ru — Лада — Металлург Мг",
+          "url": "https://www.sports.ru/hockey/match/lada-vs-metallurg-magnitogorsk/"
+        }
+      ],
+      "market_prob": 0.8,
       "status": "pending",
       "result": null,
       "versions": [],
