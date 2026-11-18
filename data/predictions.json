@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-18T17:25+03:00",
+  "updated_at": "2026-11-19T01:16+03:00",
   "source": "claude",
   "sports": [
     {
@@ -78,53 +78,82 @@
               "url": "https://www.espn.co.uk/football/match/_/gameId/401841121"
             }
           ]
+        },
+        {
+          "match": "Бавария — Кёльн",
+          "tournament": "Бундеслига 2026/27, 10-й тур",
+          "start": "20.11, 22:30 МСК",
+          "start_iso": "2026-11-20T22:30+03:00",
+          "bet": "П1 (победа Баварии)",
+          "odds": "1.06",
+          "confidence": 4,
+          "reason": "Непобеждённый лидер Бундеслиги (6-3-0, +20) принимает 15-ю команду, у которой 2 победы за 9 туров.",
+          "facts": [
+            "Бавария: 1-е место, 21 очко, 6 побед и 3 ничьи, разница +20 — ESPN",
+            "Кёльн: 15-е место, 9 очков, 2-3-4, разница −4 — ESPN",
+            "Первый тур после паузы на сборные — ESPN"
+          ],
+          "against": [
+            "После паузы на сборные возможна ротация у Баварии",
+            "Бавария сыграла вничью 3 матча из 9"
+          ],
+          "uncertainty": "Нет данных о составах после матчей сборных.",
+          "data_quality": {
+            "level": "medium",
+            "note": "нет xG и составов"
+          },
+          "sources": [
+            {
+              "title": "ESPN — Bayern vs Cologne",
+              "url": "https://www.espn.com/soccer/match/_/gameId/401884736"
+            },
+            {
+              "title": "ESPN — Bundesliga scoreboard 20.11",
+              "url": "https://www.espn.com/soccer/scoreboard/_/league/ger.1/date/20261120"
+            }
+          ]
+        },
+        {
+          "match": "Атлетик — Эспаньол",
+          "tournament": "Ла Лига 2026/27, 13-й тур",
+          "start": "20.11, 23:00 МСК",
+          "start_iso": "2026-11-20T23:00+03:00",
+          "bet": "П1 (победа Атлетика)",
+          "odds": "1.48",
+          "confidence": 3,
+          "reason": "Атлетик дома против Эспаньола, который проиграл половину матчей сезона (6 из 12).",
+          "facts": [
+            "Атлетик: 7-е место, 16 очков за 11 туров, разница +4 — ESPN",
+            "Эспаньол: 13-е место, 12 очков, 6 поражений в 12 турах — ESPN",
+            "Первый тур после паузы на сборные — ESPN"
+          ],
+          "against": [
+            "Атлетик выиграл лишь 4 из 11 матчей, 4 ничьи"
+          ],
+          "uncertainty": "Нет данных о составах и xG.",
+          "data_quality": {
+            "level": "low",
+            "note": "нет xG и формы за последние туры"
+          },
+          "sources": [
+            {
+              "title": "ESPN — Athletic vs Espanyol",
+              "url": "https://www.espn.com/soccer/match/_/gameId/401882805"
+            },
+            {
+              "title": "ESPN — LaLiga scoreboard 20.11",
+              "url": "https://www.espn.com/soccer/scoreboard/_/league/esp.1/date/20261120"
+            }
+          ]
         }
       ],
-      "updated_at": "2026-11-18T17:25+03:00"
+      "updated_at": "2026-11-19T01:16+03:00"
     },
     {
       "id": "basketball",
       "name": "Баскетбол",
       "emoji": "🏀",
       "picks": [
-        {
-          "match": "Бешикташ — Реал",
-          "tournament": "Евролига 2026/27, регулярный сезон, 13-й тур",
-          "start": "18.11, 20:00 МСК",
-          "start_iso": "2026-11-18T20:00+03:00",
-          "bet": "П2 (победа Реала)",
-          "odds": "",
-          "confidence": 3,
-          "reason": "Бешикташ дома выиграл лишь 1 матч из 5, а у Реала лучшая атака турнира.",
-          "facts": [
-            "Бешикташ: 5-6, дома 1-4 — Sports.ru",
-            "Реал: 7-4, разница +8, 98 очков за игру — лучшая атака Евролиги — Sports.ru",
-            "Бешикташ пропускает 90 очков за игру — Sports.ru"
-          ],
-          "against": [
-            "Реал на выезде лишь 3-3",
-            "Бешикташ на выезде 4-2 — команда опасна"
-          ],
-          "uncertainty": "Коэффициент не нашёлся; составы неизвестны.",
-          "data_quality": {
-            "level": "low",
-            "note": "нет коэффициента и травм"
-          },
-          "sources": [
-            {
-              "title": "Sports.ru — Бешикташ — Реал",
-              "url": "https://www.sports.ru/basketball/match/besiktas-vs-real-madrid/"
-            },
-            {
-              "title": "Sports.ru — таблица Евролиги",
-              "url": "https://www.sports.ru/basketball/tournament/euroleague/table/"
-            },
-            {
-              "title": "Sports.ru — календарь Евролиги",
-              "url": "https://www.sports.ru/basketball/tournament/euroleague/calendar/"
-            }
-          ]
-        },
         {
           "match": "Майами — Милуоки",
           "tournament": "НБА, регулярный сезон 2026/27",
@@ -626,15 +655,247 @@
               "url": "https://www.sports.ru/basketball/tournament/euroleague/calendar/"
             }
           ]
+        },
+        {
+          "match": "Сан-Антонио — Клипперс",
+          "tournament": "НБА, регулярный сезон 2026/27",
+          "start": "20.11, 04:00 МСК",
+          "start_iso": "2026-11-20T04:00+03:00",
+          "bet": "П1 (победа Сан-Антонио)",
+          "odds": "",
+          "confidence": 4,
+          "reason": "Сан-Антонио (12-3) против Клипперс, которые не выиграли ни одного выездного матча (0-5) и играют без Ингрэма и Била.",
+          "facts": [
+            "Сан-Антонио: 12-3, 4 победы в 5 последних, в т.ч. 123:85 над Голден Стэйт — ESPN",
+            "Клипперс: 4-9, на выезде 0-5; не сыграют Ингрэм, Бил, Миллер — ESPN",
+            "17.11 Клипперс проиграли дома Юте 107:132 — ESPN, Sports.ru",
+            "Модель ESPN BPI даёт Сан-Антонио 90,5% — ESPN"
+          ],
+          "against": [
+            "Сан-Антонио дома лишь 5-3 и только что проиграл Детройту 93:105",
+            "Дилан Харпер под вопросом"
+          ],
+          "uncertainty": "Коэффициент ещё не выставлен.",
+          "data_quality": {
+            "level": "medium",
+            "note": "нет коэффициента и рейтингов атаки/защиты"
+          },
+          "model_prob": {
+            "value": 0.905,
+            "source": "ESPN BPI"
+          },
+          "sources": [
+            {
+              "title": "ESPN — превью матча (травмы, последние 5 игр, BPI)",
+              "url": "https://www.espn.com/nba/game/_/gameId/401910022"
+            },
+            {
+              "title": "ESPN — NBA scoreboard 19.11",
+              "url": "https://www.espn.com/nba/scoreboard/_/date/20261119"
+            },
+            {
+              "title": "Sports.ru — календарь НБА",
+              "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
+            }
+          ]
+        },
+        {
+          "match": "Милуоки — Портленд",
+          "tournament": "НБА, регулярный сезон 2026/27",
+          "start": "20.11, 04:00 МСК",
+          "start_iso": "2026-11-20T04:00+03:00",
+          "bet": "П2 (победа Портленда)",
+          "odds": "",
+          "confidence": 4,
+          "reason": "Милуоки (1-13) проиграл 5 матчей подряд, а Портленд (9-5) на выезде 6-3.",
+          "facts": [
+            "Милуоки: 1-13, дома 1-7, 5 поражений подряд — ESPN",
+            "Портленд: 9-5, на выезде 6-3; дважды обыграл Оклахому — ESPN",
+            "Модель ESPN BPI даёт Портленду 79,5% — ESPN"
+          ],
+          "against": [
+            "У Портленда нет Моранта и Шарпа, Авдия под вопросом",
+            "Портленд проиграл 2 последних выездных матча в Миннесоте"
+          ],
+          "uncertainty": "Коэффициент ещё не выставлен; состав Портленда урезан.",
+          "data_quality": {
+            "level": "medium",
+            "note": "нет коэффициента"
+          },
+          "model_prob": {
+            "value": 0.795,
+            "source": "ESPN BPI"
+          },
+          "sources": [
+            {
+              "title": "ESPN — превью матча (травмы, последние 5 игр, BPI)",
+              "url": "https://www.espn.com/nba/game/_/gameId/401910020"
+            },
+            {
+              "title": "ESPN — NBA scoreboard 19.11",
+              "url": "https://www.espn.com/nba/scoreboard/_/date/20261119"
+            },
+            {
+              "title": "Sports.ru — календарь НБА",
+              "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
+            }
+          ]
+        },
+        {
+          "match": "Мемфис — Голден Стэйт",
+          "tournament": "НБА, регулярный сезон 2026/27",
+          "start": "20.11, 04:00 МСК",
+          "start_iso": "2026-11-20T04:00+03:00",
+          "bet": "П1 (победа Мемфиса)",
+          "odds": "",
+          "confidence": 3,
+          "reason": "Голден Стэйт без Карри и Порзиньгиса играет второй матч за две ночи (накануне в Далласе) и на выезде лишь 2-5.",
+          "facts": [
+            "Мемфис: 10-4, выиграл 4 из 5 последних — ESPN",
+            "Голден Стэйт на выезде 2-5; не сыграют Карри и Порзиньгис, Грин и Хорфорд под вопросом — ESPN",
+            "19.11 Голден Стэйт играет в Далласе — второй матч подряд на выезде — ESPN",
+            "Модель ESPN BPI даёт Мемфису 66,2% — ESPN"
+          ],
+          "against": [
+            "Мемфис дома лишь 3-4",
+            "У Мемфиса не сыграют Стюарт, Джером, Пиппен-младший"
+          ],
+          "uncertainty": "Коэффициент ещё не выставлен.",
+          "data_quality": {
+            "level": "medium",
+            "note": "нет коэффициента"
+          },
+          "model_prob": {
+            "value": 0.662,
+            "source": "ESPN BPI"
+          },
+          "sources": [
+            {
+              "title": "ESPN — превью матча (травмы, последние 5 игр, BPI)",
+              "url": "https://www.espn.com/nba/game/_/gameId/401910019"
+            },
+            {
+              "title": "ESPN — NBA scoreboard 19.11",
+              "url": "https://www.espn.com/nba/scoreboard/_/date/20261119"
+            },
+            {
+              "title": "Sports.ru — календарь НБА",
+              "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
+            }
+          ]
+        },
+        {
+          "match": "Анадолу Эфес — АСВЕЛ",
+          "tournament": "Евролига 2026/27, регулярный сезон, 13-й тур",
+          "start": "20.11, 20:30 МСК",
+          "start_iso": "2026-11-20T20:30+03:00",
+          "bet": "П1 (победа Эфеса)",
+          "odds": "",
+          "confidence": 3,
+          "reason": "Эфес дома 4-2, а АСВЕЛ на выезде выиграл лишь 1 матч из 5 и пропускает больше всех в лиге.",
+          "facts": [
+            "Эфес дома 4-2 — Sports.ru",
+            "АСВЕЛ: 4-8, на выезде 1-4, пропускает 95 очков за игру — худший показатель Евролиги — Sports.ru",
+            "Разница: Эфес −1, АСВЕЛ −7 — Sports.ru"
+          ],
+          "against": [
+            "Эфес всего 5-7 и на выезде 1-5 — нестабилен"
+          ],
+          "uncertainty": "Коэффициент не нашёлся.",
+          "data_quality": {
+            "level": "low",
+            "note": "нет коэффициента и травм"
+          },
+          "sources": [
+            {
+              "title": "Sports.ru — таблица Евролиги",
+              "url": "https://www.sports.ru/basketball/tournament/euroleague/table/"
+            },
+            {
+              "title": "Sports.ru — календарь Евролиги",
+              "url": "https://www.sports.ru/basketball/tournament/euroleague/calendar/"
+            }
+          ]
+        },
+        {
+          "match": "Олимпиакос — Реал",
+          "tournament": "Евролига 2026/27, регулярный сезон, 13-й тур",
+          "start": "20.11, 22:15 МСК",
+          "start_iso": "2026-11-20T22:15+03:00",
+          "bet": "П1 (победа Олимпиакоса)",
+          "odds": "",
+          "confidence": 3,
+          "reason": "Олимпиакос (9-3) делит первое место, а Реал два дня назад проиграл Бешикташу и на выезде лишь 3-4.",
+          "facts": [
+            "Олимпиакос: 9-3, 2-е место, разница +7 — Sports.ru",
+            "Реал 18.11 проиграл в Стамбуле Бешикташу 79:83; на выезде 3-4 — Sports.ru",
+            "Олимпиакос пропускает 81 очко за игру — одна из лучших защит турнира — Sports.ru"
+          ],
+          "against": [
+            "Олимпиакос дома лишь 3-2",
+            "У Реала лучшая атака Евролиги — 98 очков за игру"
+          ],
+          "uncertainty": "Коэффициент не нашёлся; составы неизвестны.",
+          "data_quality": {
+            "level": "low",
+            "note": "нет коэффициента и травм"
+          },
+          "sources": [
+            {
+              "title": "Sports.ru — таблица Евролиги",
+              "url": "https://www.sports.ru/basketball/tournament/euroleague/table/"
+            },
+            {
+              "title": "Sports.ru — календарь Евролиги",
+              "url": "https://www.sports.ru/basketball/tournament/euroleague/calendar/"
+            }
+          ]
         }
       ],
-      "updated_at": "2026-11-18T17:25+03:00"
+      "updated_at": "2026-11-19T01:16+03:00"
     },
     {
       "id": "tennis",
       "name": "Теннис",
       "emoji": "🎾",
       "picks": [
+        {
+          "match": "Рафаэль Ходар — Бен Шелтон",
+          "tournament": "Итоговый турнир ATP, группа Джона Макинроя, 3-й тур",
+          "start": "19.11, 16:00 МСК",
+          "start_iso": "2026-11-19T16:00+03:00",
+          "bet": "П2 (победа Шелтона)",
+          "odds": "",
+          "confidence": 3,
+          "reason": "Дебютант Ходар проиграл оба матча, а Шелтон обыграл Фиса и уступил только первой ракетке мира Звереву.",
+          "facts": [
+            "Ходар: 0-2 — 4:6, 4:6 Звереву и 6:4, 2:6, 2:6 Фису — ESPN",
+            "Шелтон: 1-1 — 6:2, 3:6, 6:3 над Фисом и 2:6, 6:7 от Зверева — ESPN, Tennis Majors",
+            "У Шелтона 46 побед в сезоне — личный рекорд — Tennistourtalk"
+          ],
+          "against": [
+            "Ходар уже выбыл и может сыграть без давления"
+          ],
+          "uncertainty": "Коэффициент не нашёлся; мотивация зависит от расклада в группе.",
+          "data_quality": {
+            "level": "medium",
+            "note": "нет коэффициента и статистики подачи"
+          },
+          "sources": [
+            {
+              "title": "ESPN — ATP scoreboard",
+              "url": "https://www.espn.com/tennis/scoreboard"
+            },
+            {
+              "title": "Tennis Majors — Shelton vs Fils",
+              "url": "https://www.tennismajors.com/atp/nitto-atp-finals-atp/shelton-holds-off-fils-fightback-to-join-zverev-on-top-of-the-john-mcenroe-group-867094.html"
+            },
+            {
+              "title": "Tennistourtalk — Shelton",
+              "url": "https://tennistourtalk.com/139064/nitto-atp-finals-draw-revealed-in-turin"
+            }
+          ]
+        },
         {
           "match": "Александр Зверев — Артур Фис",
           "tournament": "Итоговый турнир ATP, Турин, групповой этап (хард, зал), группа A",
@@ -674,61 +935,55 @@
               "url": "https://www.atptour.com/en/news/zverev-shelton-fils-jodar-nitto-atp-finals-2026-day-3-preview"
             }
           ]
+        },
+        {
+          "match": "Флавио Коболли — Карлос Алькарас",
+          "tournament": "Итоговый турнир ATP, группа Ивана Лендла, 3-й тур",
+          "start": "20.11, 16:00 МСК",
+          "start_iso": "2026-11-20T16:00+03:00",
+          "bet": "П2 (победа Алькараса)",
+          "odds": "",
+          "confidence": 4,
+          "reason": "Алькарас выиграл оба матча, не отдав ни сета, а Коболли проиграл оба и последний сет Тиафу — 0:6.",
+          "facts": [
+            "Алькарас: 6:2, 6:2 Тиафу и 6:2, 6:4 Медведеву — ESPN",
+            "Коболли: проиграл Медведеву и Тиафу (6:7, 0:6) — ESPN",
+            "Алькарас приехал в Турин после двух титулов подряд в зале (Вена, Париж) — Tennisnerd"
+          ],
+          "against": [
+            "Если Алькарас уже обеспечит выход из группы, возможна экономия сил"
+          ],
+          "uncertainty": "Коэффициент не нашёлся.",
+          "data_quality": {
+            "level": "medium",
+            "note": "нет коэффициента"
+          },
+          "sources": [
+            {
+              "title": "ESPN — ATP scoreboard",
+              "url": "https://www.espn.com/tennis/scoreboard"
+            },
+            {
+              "title": "Tennisnerd — ATP Finals 2026 preview",
+              "url": "https://www.tennisnerd.net/news/atp-finals-2026-preview-predictions-odds-my-pick-to-win-in-turin/70638"
+            }
+          ]
         }
       ],
-      "updated_at": "2026-11-18T17:25+03:00"
+      "updated_at": "2026-11-19T01:16+03:00"
     },
     {
       "id": "volleyball",
       "name": "Волейбол",
       "emoji": "🏐",
       "picks": [],
-      "updated_at": "2026-11-18T17:25+03:00"
+      "updated_at": "2026-11-19T01:16+03:00"
     },
     {
       "id": "hockey",
       "name": "Хоккей",
       "emoji": "🏒",
       "picks": [
-        {
-          "match": "Северсталь — Сочи",
-          "tournament": "КХЛ, регулярный чемпионат 2026/27",
-          "start": "18.11, 19:00 МСК",
-          "start_iso": "2026-11-18T19:00+03:00",
-          "bet": "П1 (победа Северстали в основное время)",
-          "odds": "1.55",
-          "confidence": 3,
-          "reason": "Сочи не забил ни одной шайбы в двух последних матчах и занимает предпоследнее место на Западе, а Северсталь не проигрывает 7 домашних матчей и 9 встреч с Сочи подряд.",
-          "facts": [
-            "Северсталь не проигрывает в 7 последних домашних матчах и в 9 последних встречах с Сочи — Sports.ru",
-            "Сочи в двух последних матчах: 0:3 с Локомотивом и 0:2 с Амуром — Sports.ru",
-            "05.11 Северсталь выиграла в Сочи 4:1 — Sports.ru",
-            "Сочи: 17 очков, 10-е место на Западе — Спорт-Экспресс"
-          ],
-          "against": [
-            "Северсталь в двух из трёх последних домашних побед выигрывала только в одну шайбу (4:3 по буллитам с Трактором, 4:3 с Ладой)",
-            "Сочи забивает в 5 последних матчах против Северстали"
-          ],
-          "uncertainty": "Ничья после 60 минут — основной риск; вратари не объявлены.",
-          "data_quality": {
-            "level": "medium",
-            "note": "нет статистики бросков и стартовых вратарей"
-          },
-          "sources": [
-            {
-              "title": "Sports.ru — Северсталь — Сочи",
-              "url": "https://www.sports.ru/hockey/match/severstal-vs-sochi/"
-            },
-            {
-              "title": "Sports.ru — таблица КХЛ",
-              "url": "https://www.sports.ru/hockey/tournament/khl/table/"
-            },
-            {
-              "title": "Спорт-Экспресс — Локомотив — Сочи",
-              "url": "https://www.sport-express.net/hockey/khl/news/lokomotiv-sochi-rezultat-matcha-khl-16-noyabrya-2026-2475650/"
-            }
-          ]
-        },
         {
           "match": "Металлург Мг — Трактор",
           "tournament": "КХЛ, регулярный чемпионат 2026/27",
@@ -803,7 +1058,7 @@
           ]
         }
       ],
-      "updated_at": "2026-11-18T17:25+03:00"
+      "updated_at": "2026-11-19T01:16+03:00"
     },
     {
       "id": "cs2",
@@ -811,118 +1066,85 @@
       "emoji": "🔫",
       "picks": [
         {
-          "match": "Sinners — Alliance",
-          "tournament": "Rush Brno 2026, групповой этап, тир-3",
-          "start": "18.11, 19:00 МСК",
-          "start_iso": "2026-11-18T19:00+03:00",
-          "format": "BO3, LAN",
-          "bet": "П1 (победа Sinners)",
-          "odds": "",
-          "confidence": 3,
-          "reason": "Sinners в октябре обыгрывали Heroic и Eternal Fire, а Alliance набирает победы в ESL Challenger League против команд уровнем ниже.",
-          "facts": [
-            "Sinners: 2:0 над Nexus (17.11), 2:1 над Heroic и Eternal Fire (21–22.10) — Cyber.Sports.ru",
-            "Alliance: 4 победы подряд в ESL Challenger League Cup #12 (13–14.11) и 2:0 над Iberian Soul — Cyber.Sports.ru",
-            "Sinners выиграли 4 из 5 последних матчей — Cyber.Sports.ru"
-          ],
-          "against": [
-            "Alliance выиграл 5 матчей подряд"
-          ],
-          "uncertainty": "Коэффициент не нашёлся; нет статистики карт.",
-          "data_quality": {
-            "level": "low",
-            "note": "нет коэффициента и статистики карт"
-          },
-          "sources": [
-            {
-              "title": "Cyber.Sports.ru — sinners-esports-416olsk-2026-11-18-v2",
-              "url": "https://cyber.sports.ru/cs/match/sinners-esports-416olsk-2026-11-18-v2/"
-            },
-            {
-              "title": "Cyber.Sports.ru — матчи CS2 18.11",
-              "url": "https://cyber.sports.ru/cs/match/2026-11-18/"
-            }
-          ]
-        },
-        {
-          "match": "Luminosity — Ninjas in Pyjamas",
+          "match": "Inner Circle — GamerLegion",
           "tournament": "Stake Ranked 6, плей-офф, тир-2",
-          "start": "18.11, 21:30 МСК",
-          "start_iso": "2026-11-18T21:30+03:00",
+          "start": "19.11, 14:00 МСК",
+          "start_iso": "2026-11-19T14:00+03:00",
           "format": "BO3, онлайн",
-          "bet": "П2 (победа NiP)",
-          "odds": "1.45",
+          "bet": "П2 (победа GamerLegion)",
+          "odds": "1.65",
           "confidence": 3,
-          "reason": "NiP выиграл 4 из 5 последних матчей, в т.ч. у MIBR, Heroic и Liquid, а Luminosity проиграл 4 из 5 до вчерашней победы над GamerLegion.",
+          "reason": "GamerLegion в октябре обыгрывал FaZe и Envy и вчера прошёл Unity, а Inner Circle проиграл Sangal 0:2.",
           "facts": [
-            "NiP: 2:0 Unity (17.11), 2:1 MIBR, 2:1 Heroic, 2:1 Liquid (16–17.10) — Cyber.Sports.ru",
-            "Luminosity до 17.11 проиграл 4 матча подряд: Envy, Hotu, BBL, Nexus — Cyber.Sports.ru",
-            "Личные встречи 2026 года — 1:1 — Cyber.Sports.ru"
+            "GamerLegion: 2:1 над FaZe и 2:0 над Envy (Tesla Cup, 28–29.10), 2:1 над Unity (18.11) — Cyber.Sports.ru",
+            "Inner Circle 18.11 проиграл Sangal 0:2, в октябре проиграл Astralis и MIBR — Cyber.Sports.ru",
+            "Владелец Inner Circle арестован в Италии — новость bo3.gg 18.11"
           ],
           "against": [
-            "Luminosity вчера обыграл GamerLegion 2:1",
-            "В сентябре Luminosity выиграл у NiP"
+            "Inner Circle 17.11 уверенно обыграл Apogee 2:0"
           ],
           "uncertainty": "Нет статистики карт и вето.",
           "data_quality": {
             "level": "medium",
-            "note": "HLTV не проверялся: нет статистики карт"
+            "note": "HLTV не проверялся"
           },
           "sources": [
             {
-              "title": "Cyber.Sports.ru — ninjas-in-pyjamas-luminosity-gaming-2026-11-18",
-              "url": "https://cyber.sports.ru/cs/match/ninjas-in-pyjamas-luminosity-gaming-2026-11-18/"
+              "title": "Cyber.Sports.ru — team-gamerlegion-inner-circle-esports-2026-11-19",
+              "url": "https://cyber.sports.ru/cs/match/team-gamerlegion-inner-circle-esports-2026-11-19/"
             },
             {
-              "title": "Cyber.Sports.ru — матчи CS2 18.11",
-              "url": "https://cyber.sports.ru/cs/match/2026-11-18/"
+              "title": "bo3.gg — Stake Ranked 6, следующие матчи (сетка плей-офф)",
+              "url": "https://bo3.gg/matches/finished"
+            }
+          ]
+        },
+        {
+          "match": "MOUZ NXT — WBT",
+          "tournament": "European Pro League 11, плей-офф, тир-3",
+          "start": "19.11, 14:30 МСК",
+          "start_iso": "2026-11-19T14:30+03:00",
+          "format": "BO3, онлайн",
+          "bet": "П2 (победа WBT)",
+          "odds": "1.25",
+          "confidence": 3,
+          "reason": "WBT обыграл Ex Ence 2:0, а MOUZ NXT вчера проиграл Ex Rustec 0:2 и уступил Walczaki.",
+          "facts": [
+            "WBT 17.11 обыграл Ex Ence 2:0 — Cyber.Sports.ru",
+            "MOUZ NXT: 0:2 Ex Rustec (18.11), 1:2 Walczaki (15.11) — Cyber.Sports.ru",
+            "WBT в октябре играл на уровне Draculan 7 против Nexus и BC.Game — Cyber.Sports.ru"
+          ],
+          "against": [
+            "MOUZ NXT обыграл Infinite и NAVI Junior в этом турнире"
+          ],
+          "uncertainty": "Нет статистики карт; выборка матчей WBT маленькая.",
+          "data_quality": {
+            "level": "low",
+            "note": "нет статистики карт"
+          },
+          "sources": [
+            {
+              "title": "Cyber.Sports.ru — mouz-nxt-wbt-2026-11-19",
+              "url": "https://cyber.sports.ru/cs/match/mouz-nxt-wbt-2026-11-19/"
+            },
+            {
+              "title": "Cyber.Sports.ru — матчи CS2 19.11",
+              "url": "https://cyber.sports.ru/cs/match/2026-11-19/"
             }
           ]
         }
       ],
-      "updated_at": "2026-11-18T17:25+03:00"
+      "updated_at": "2026-11-19T01:16+03:00"
     },
     {
       "id": "dota2",
       "name": "Dota 2",
       "emoji": "🐉",
       "picks": [],
-      "updated_at": "2026-11-18T17:25+03:00"
+      "updated_at": "2026-11-19T01:16+03:00"
     }
   ],
   "analysis": [
-    {
-      "sport": "🏒 Хоккей",
-      "match": "ЦСКА — Локомотив",
-      "tournament": "КХЛ, регулярный чемпионат",
-      "start": "18.11, 19:30 МСК",
-      "text": "Матч двух лидеров Запада: ЦСКА (40 очков) и Локомотив (39). Армейцы до поражения от Амура по буллитам выиграли семь матчей подряд, Локомотив — шесть подряд, последние два всухую (5:0 с Шанхаем и 3:0 с Сочи).\nЛокомотив не проигрывает ЦСКА 7 матчей подряд и забивает в 8 последних очных встречах. При этом у ЦСКА лучшая разница шайб лиги.\nКоэффициенты почти равные (2.30 на ЦСКА и 2.65 на Локомотив), данных в пользу одной из сторон недостаточно.",
-      "key_factors": [
-        "Лидеры Запада с разницей в одно очко",
-        "Локомотив 7 матчей без поражений против ЦСКА",
-        "Локомотив — два сухаря подряд",
-        "ЦСКА уступил Амуру по буллитам"
-      ],
-      "verdict": "Без ставки: перевеса ни у одной команды нет.",
-      "sources": [
-        {
-          "title": "Sports.ru — ЦСКА — Локомотив",
-          "url": "https://www.sports.ru/hockey/match/cska-vs-lokomotiv-yaroslavl/"
-        },
-        {
-          "title": "Sports.ru — таблица КХЛ",
-          "url": "https://www.sports.ru/hockey/tournament/khl/table/"
-        },
-        {
-          "title": "Совспорт — Амур обыграл ЦСКА",
-          "url": "https://www.sovsport.ru/hockey/news/amur-po-bullitam-obygral-cz-ska-i-podnyalsya-na-vtoroe-mesto-na-vostoke"
-        },
-        {
-          "title": "Спорт-Экспресс — Локомотив — Сочи",
-          "url": "https://www.sport-express.net/hockey/khl/news/lokomotiv-sochi-rezultat-matcha-khl-16-noyabrya-2026-2475650/"
-        }
-      ]
-    },
     {
       "sport": "🏀 Баскетбол",
       "match": "Лейкерс — Юта",
