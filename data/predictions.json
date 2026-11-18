@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-18T13:15+03:00",
+  "updated_at": "2026-11-18T17:25+03:00",
   "source": "claude",
   "sports": [
     {
@@ -80,7 +80,7 @@
           ]
         }
       ],
-      "updated_at": "2026-11-18T13:15+03:00"
+      "updated_at": "2026-11-18T17:25+03:00"
     },
     {
       "id": "basketball",
@@ -628,7 +628,7 @@
           ]
         }
       ],
-      "updated_at": "2026-11-18T13:15+03:00"
+      "updated_at": "2026-11-18T17:25+03:00"
     },
     {
       "id": "tennis",
@@ -636,105 +636,60 @@
       "emoji": "🎾",
       "picks": [
         {
-          "match": "Карлос Алькарас — Даниил Медведев",
-          "tournament": "Итоговый турнир ATP, Турин, групповой этап (хард, зал), группа Ивана Лендла",
-          "start": "18.11, 16:00 МСК",
-          "start_iso": "2026-11-18T16:00+03:00",
-          "bet": "П1 (победа Алькараса)",
-          "odds": "1.25",
-          "confidence": 4,
-          "reason": "Алькарас в лучшей форме сезона — подряд выиграл Вену и Париж и разгромил Тиафу 6:2, 6:2 — и ведёт в личных встречах с Медведевым 7-3.",
+          "match": "Александр Зверев — Артур Фис",
+          "tournament": "Итоговый турнир ATP, Турин, групповой этап (хард, зал), группа A",
+          "start": "19.11, 22:30 МСК",
+          "start_iso": "2026-11-19T22:30+03:00",
+          "bet": "П1 (победа Зверева)",
+          "odds": "",
+          "confidence": 3,
+          "reason": "Зверев — единственный в группе с двумя победами без потери сета, а Фис в обоих матчах в Турине отдавал по сету и уже проиграл Шелтону; в последней очной встрече на харде (Индиан-Уэллс 2026) Зверев не отдал сопернику и 6 геймов за матч.",
           "facts": [
-            "Личные встречи: Алькарас 7-3 — Tennisnerd, FreeTips",
-            "Этой осенью Алькарас выиграл два турнира в зале подряд: ATP 500 в Вене и Masters в Париже — Scores24",
-            "Стартовый матч в Турине Алькарас выиграл у Тиафу 6:2, 6:2 — nittoatpfinals.com",
-            "Алькарас выигрывает 31,7% геймов на приёме — лучший показатель тура в 2026 году — Lineups.com"
+            "Зверев в Турине 2–0 по матчам и 4–0 по сетам: 6:4, 6:4 с Ходаром и 6:2, 7:6(4) с Шелтоном (tennistourcalendar.com, 15–17.11.2026)",
+            "Фис 1–1 и 6 сыгранных сетов: 2:6, 6:3, 3:6 от Шелтона и 4:6, 6:2, 6:2 против Ходара (tennistourcalendar.com, 15–17.11.2026)",
+            "Последняя очная встреча — Индиан-Уэллс 2026, хард, 1/4 финала: Зверев 6:2, 6:3; в целом счёт личных встреч 5–3 в пользу Зверева, на харде 2–2 (dropshotft.com)",
+            "Зверев — 9-е участие и 32-й матч на Итоговом турнире, два титула (2018, 2021); Фис — дебютант турнира (atptour.com, превью 3-го дня)"
           ],
           "against": [
-            "Медведев уверенно обыграл Коболли (7:6, 6:3, 9 эйсов) и на быстром харде опасен",
-            "Медведев выигрывал у Алькараса, в том числе в полуфинале US Open-2023"
+            "Фис выиграл Мастерс в Цинциннати 2026 на харде и обыгрывал Зверева дважды на харде (Майами 2025)",
+            "Фису для выхода в полуфинал нужна только победа, а у Зверева, вероятно, мотивация ниже при 2–0",
+            "Фис начал сезон только в феврале из-за травмы — меньше накопленной усталости к концу года"
           ],
-          "uncertainty": "Быстрый корт уравнивает игру на подаче; Медведев может затянуть розыгрыши.",
+          "uncertainty": "Если Зверев к началу матча будет гарантированно в полуфинале, он может экономить силы; точные сценарии выхода из группы до матча Шелтон — Ходар неизвестны.",
           "data_quality": {
             "level": "medium",
-            "note": "нет статистики последних 10 матчей по подаче"
+            "note": "Нет подтверждённой статистики подачи/приёма и Elo по покрытию за 12 месяцев; коэффициент в линии не найден"
           },
           "sources": [
             {
-              "title": "Bleacher Nation — Alcaraz vs Medvedev",
-              "url": "https://www.bleachernation.com/picks/2026/11/16/alcaraz-vs-medvedev-prediction-at-the-nitto-atp-finals-wednesday-november-18/"
+              "title": "2026 ATP Finals: расписание и результаты (Tennis Tour Calendar)",
+              "url": "https://tennistourcalendar.com/?p=7382"
             },
             {
-              "title": "Tennisnerd — ATP Finals 2026 preview",
-              "url": "https://www.tennisnerd.net/news/atp-finals-2026-preview-predictions-odds-my-pick-to-win-in-turin/70638"
+              "title": "Zverev vs Fils H2H (Dropshot)",
+              "url": "https://dropshotft.com/h2h/alexander-zverev-vs-arthur-fils"
             },
             {
-              "title": "FreeTips — ATP Finals preview",
-              "url": "https://www.freetips.com/tennis/2026-atp-finals-betting-preview-20261113-0023/"
-            },
-            {
-              "title": "Scores24 — ATP Finals outrights",
-              "url": "https://scores24.live/en/articles/blog/atp-finals-2026-outright-predictions"
-            },
-            {
-              "title": "Nitto ATP Finals — результаты",
-              "url": "https://www.nittoatpfinals.com/en/scores-centre/results"
+              "title": "ATP: Day 3 preview",
+              "url": "https://www.atptour.com/en/news/zverev-shelton-fils-jodar-nitto-atp-finals-2026-day-3-preview"
             }
           ]
         }
       ],
-      "updated_at": "2026-11-18T13:15+03:00"
+      "updated_at": "2026-11-18T17:25+03:00"
     },
     {
       "id": "volleyball",
       "name": "Волейбол",
       "emoji": "🏐",
       "picks": [],
-      "updated_at": "2026-11-18T13:15+03:00"
+      "updated_at": "2026-11-18T17:25+03:00"
     },
     {
       "id": "hockey",
       "name": "Хоккей",
       "emoji": "🏒",
       "picks": [
-        {
-          "match": "Авангард — Адмирал",
-          "tournament": "КХЛ, регулярный чемпионат 2026/27",
-          "start": "18.11, 16:30 МСК",
-          "start_iso": "2026-11-18T16:30+03:00",
-          "bet": "1X (Авангард не проиграет в основное время)",
-          "odds": "1.15",
-          "confidence": 4,
-          "reason": "Авангард не проигрывает Адмиралу 23 матча подряд, идёт 4-м на Востоке, а Адмирал — 10-й.",
-          "facts": [
-            "Авангард не проигрывает в 23 последних матчах с Адмиралом — Sports.ru",
-            "КХЛ, Восток: Авангард 4-й (30 очков), Адмирал 10-й (25) — Sports.ru",
-            "Авангард выиграл 2 последних выездных матча — у Металлурга (12.11, в овертайме) и у Нефтехимика (14.11) — Sports.ru"
-          ],
-          "against": [
-            "Авангард не выигрывает в основное время 5 домашних матчей подряд",
-            "Адмирал выиграл 3 последних выездных матча"
-          ],
-          "uncertainty": "Низкий коэффициент; вратари не объявлены.",
-          "data_quality": {
-            "level": "medium",
-            "note": "нет статистики бросков и стартовых вратарей"
-          },
-          "sources": [
-            {
-              "title": "Sports.ru — Авангард — Адмирал",
-              "url": "https://www.sports.ru/hockey/match/admiral-vs-avangard/"
-            },
-            {
-              "title": "Sports.ru — таблица КХЛ",
-              "url": "https://www.sports.ru/hockey/tournament/khl/table/"
-            },
-            {
-              "title": "Спорт Mail — Авангард — Адмирал",
-              "url": "https://sportmail.ru/hockey-khl/407/match/8129373/"
-            }
-          ]
-        },
         {
           "match": "Северсталь — Сочи",
           "tournament": "КХЛ, регулярный чемпионат 2026/27",
@@ -848,47 +803,13 @@
           ]
         }
       ],
-      "updated_at": "2026-11-18T13:15+03:00"
+      "updated_at": "2026-11-18T17:25+03:00"
     },
     {
       "id": "cs2",
       "name": "CS2",
       "emoji": "🔫",
       "picks": [
-        {
-          "match": "GamerLegion — Unity Esports",
-          "tournament": "Stake Ranked 6, плей-офф, тир-2",
-          "start": "18.11, 16:30 МСК",
-          "start_iso": "2026-11-18T16:30+03:00",
-          "format": "BO3, онлайн",
-          "bet": "П1 (победа GamerLegion)",
-          "odds": "1.26",
-          "confidence": 4,
-          "reason": "GamerLegion в конце октября обыгрывал FaZe и Envy, а Unity выигрывает только у команд третьего эшелона и вчера уступил NiP 0:2.",
-          "facts": [
-            "GamerLegion: 2:1 над FaZe и 2:0 над Envy на Tesla Cup (28–29.10) — Cyber.Sports.ru",
-            "Unity 17.11 проиграл NiP 0:2; до этого побеждал BRUTE SQ, Gothboiclique, Gatorian — Cyber.Sports.ru",
-            "GamerLegion 17.11 проиграл Luminosity 1:2 и выбыл в нижнюю сетку — Cyber.Sports.ru"
-          ],
-          "against": [
-            "GamerLegion проиграл 3 из 5 последних матчей (Luminosity, Hotu дважды)"
-          ],
-          "uncertainty": "Нет статистики карт и вето.",
-          "data_quality": {
-            "level": "medium",
-            "note": "HLTV не проверялся: нет статистики карт за 3 месяца"
-          },
-          "sources": [
-            {
-              "title": "Cyber.Sports.ru — team-gamerlegion-unity-esports-2026-11-18",
-              "url": "https://cyber.sports.ru/cs/match/team-gamerlegion-unity-esports-2026-11-18/"
-            },
-            {
-              "title": "Cyber.Sports.ru — матчи CS2 18.11",
-              "url": "https://cyber.sports.ru/cs/match/2026-11-18/"
-            }
-          ]
-        },
         {
           "match": "Sinners — Alliance",
           "tournament": "Rush Brno 2026, групповой этап, тир-3",
@@ -959,88 +880,17 @@
           ]
         }
       ],
-      "updated_at": "2026-11-18T13:15+03:00"
+      "updated_at": "2026-11-18T17:25+03:00"
     },
     {
       "id": "dota2",
       "name": "Dota 2",
       "emoji": "🐉",
-      "picks": [
-        {
-          "match": "PARIVISION — Aurora",
-          "tournament": "1win Essence 3, плей-офф, тир-2",
-          "start": "18.11, 15:10 МСК",
-          "start_iso": "2026-11-18T15:10+03:00",
-          "format": "BO3, онлайн",
-          "bet": "П1 (победа PARIVISION)",
-          "odds": "1.15",
-          "confidence": 4,
-          "reason": "PARIVISION ведёт в личных встречах 10-5 и дважды обыграл Aurora 2:0 в октябре; вчера PARIVISION выиграл два матча 2:0, а Aurora проиграла Spirit 0:2.",
-          "facts": [
-            "Личные встречи: 10 побед PARIVISION, 5 — Aurora, 2 ничьи (17 игр) — Cyber.Sports.ru",
-            "BLAST Slam 8: PARIVISION — Aurora 2:0 (03.10) и 2:0 (10.10) — Cyber.Sports.ru",
-            "17.11 PARIVISION обыграл LGD и Froglings по 2:0; Aurora проиграла Spirit 0:2 — Cyber.Sports.ru"
-          ],
-          "against": [
-            "PARIVISION 16.11 проиграл Spirit 0:2"
-          ],
-          "uncertainty": "Нет данных о патче и драфтах.",
-          "data_quality": {
-            "level": "medium",
-            "note": "Liquipedia/Datdota не проверялись"
-          },
-          "sources": [
-            {
-              "title": "Cyber.Sports.ru — PARIVISION — Aurora",
-              "url": "https://cyber.sports.ru/dota2/match/aurora-parivision-2026-11-18/"
-            },
-            {
-              "title": "Cyber.Sports.ru — матчи Dota 2 18.11",
-              "url": "https://cyber.sports.ru/dota2/match/2026-11-18/"
-            }
-          ]
-        }
-      ],
-      "updated_at": "2026-11-18T13:15+03:00"
+      "picks": [],
+      "updated_at": "2026-11-18T17:25+03:00"
     }
   ],
   "analysis": [
-    {
-      "sport": "🎾 Теннис",
-      "match": "Карлос Алькарас — Даниил Медведев",
-      "tournament": "Итоговый турнир ATP, группа Ивана Лендла, 2-й тур",
-      "start": "18.11, 16:00 МСК",
-      "text": "Алькарас приехал в Турин после двух подряд титулов в зале — в Вене и Париже — и начал турнир с 6:2, 6:2 против Тиафу. В личных встречах с Медведевым он ведёт 7-3.\nМедведев тоже стартовал с победы (7:6, 6:3 над Коболли, 9 эйсов) и на быстром корте опасен подачей и длинными розыгрышами с задней линии. Он уже обыгрывал Алькараса, в том числе в полуфинале US Open-2023.\nПобедитель матча фактически обеспечит себе выход в полуфинал, поэтому мотивация у обоих максимальная.",
-      "key_factors": [
-        "Форма Алькараса: 2 титула в зале подряд",
-        "Личные встречи 7-3",
-        "Подача Медведева на быстром корте",
-        "Борьба за выход из группы"
-      ],
-      "verdict": "Алькарас — явный фаворит (наш прогноз: П1, 4/5).",
-      "sources": [
-        {
-          "title": "Bleacher Nation — Alcaraz vs Medvedev",
-          "url": "https://www.bleachernation.com/picks/2026/11/16/alcaraz-vs-medvedev-prediction-at-the-nitto-atp-finals-wednesday-november-18/"
-        },
-        {
-          "title": "Tennisnerd — ATP Finals 2026 preview",
-          "url": "https://www.tennisnerd.net/news/atp-finals-2026-preview-predictions-odds-my-pick-to-win-in-turin/70638"
-        },
-        {
-          "title": "FreeTips — ATP Finals preview",
-          "url": "https://www.freetips.com/tennis/2026-atp-finals-betting-preview-20261113-0023/"
-        },
-        {
-          "title": "Scores24 — ATP Finals outrights",
-          "url": "https://scores24.live/en/articles/blog/atp-finals-2026-outright-predictions"
-        },
-        {
-          "title": "Nitto ATP Finals — результаты",
-          "url": "https://www.nittoatpfinals.com/en/scores-centre/results"
-        }
-      ]
-    },
     {
       "sport": "🏒 Хоккей",
       "match": "ЦСКА — Локомотив",
