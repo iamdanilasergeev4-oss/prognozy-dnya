@@ -8622,6 +8622,54 @@
       "last_sync": "2026-11-18T13:04+03:00"
     },
     {
+      "id": "dota2-20261118-wtnxg0",
+      "sport": "dota2",
+      "sport_name": "Dota 2",
+      "home": "PARIVISION",
+      "away": "Aurora",
+      "event_date": "2026-11-18",
+      "start_iso": "2026-11-18T15:10+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-18T13:15+03:00",
+      "model_version": "v2",
+      "tournament": "1win Essence 3, плей-офф, тир-2",
+      "match": "PARIVISION — Aurora",
+      "start": "18.11, 15:10 МСК",
+      "bet": "П1 (победа PARIVISION)",
+      "odds": "1.15",
+      "confidence": 4,
+      "reason": "PARIVISION ведёт в личных встречах 10-5 и дважды обыграл Aurora 2:0 в октябре; вчера PARIVISION выиграл два матча 2:0, а Aurora проиграла Spirit 0:2.",
+      "facts": [
+        "Личные встречи: 10 побед PARIVISION, 5 — Aurora, 2 ничьи (17 игр) — Cyber.Sports.ru",
+        "BLAST Slam 8: PARIVISION — Aurora 2:0 (03.10) и 2:0 (10.10) — Cyber.Sports.ru",
+        "17.11 PARIVISION обыграл LGD и Froglings по 2:0; Aurora проиграла Spirit 0:2 — Cyber.Sports.ru"
+      ],
+      "against": [
+        "PARIVISION 16.11 проиграл Spirit 0:2"
+      ],
+      "uncertainty": "Нет данных о патче и драфтах.",
+      "data_quality": {
+        "level": "medium",
+        "note": "Liquipedia/Datdota не проверялись"
+      },
+      "sources": [
+        {
+          "title": "Cyber.Sports.ru — PARIVISION — Aurora",
+          "url": "https://cyber.sports.ru/dota2/match/aurora-parivision-2026-11-18/"
+        },
+        {
+          "title": "Cyber.Sports.ru — матчи Dota 2 18.11",
+          "url": "https://cyber.sports.ru/dota2/match/2026-11-18/"
+        }
+      ],
+      "format": "BO3, онлайн",
+      "market_prob": 0.87,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
       "id": "tennis-20261118-p6qvu0",
       "sport": "tennis",
       "sport_name": "Теннис",
@@ -8683,6 +8731,54 @@
       "status_log": []
     },
     {
+      "id": "cs2-20261118-1quspjr",
+      "sport": "cs2",
+      "sport_name": "CS2",
+      "home": "GamerLegion",
+      "away": "Unity Esports",
+      "event_date": "2026-11-18",
+      "start_iso": "2026-11-18T16:30+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-18T13:15+03:00",
+      "model_version": "v2",
+      "tournament": "Stake Ranked 6, плей-офф, тир-2",
+      "match": "GamerLegion — Unity Esports",
+      "start": "18.11, 16:30 МСК",
+      "bet": "П1 (победа GamerLegion)",
+      "odds": "1.26",
+      "confidence": 4,
+      "reason": "GamerLegion в конце октября обыгрывал FaZe и Envy, а Unity выигрывает только у команд третьего эшелона и вчера уступил NiP 0:2.",
+      "facts": [
+        "GamerLegion: 2:1 над FaZe и 2:0 над Envy на Tesla Cup (28–29.10) — Cyber.Sports.ru",
+        "Unity 17.11 проиграл NiP 0:2; до этого побеждал BRUTE SQ, Gothboiclique, Gatorian — Cyber.Sports.ru",
+        "GamerLegion 17.11 проиграл Luminosity 1:2 и выбыл в нижнюю сетку — Cyber.Sports.ru"
+      ],
+      "against": [
+        "GamerLegion проиграл 3 из 5 последних матчей (Luminosity, Hotu дважды)"
+      ],
+      "uncertainty": "Нет статистики карт и вето.",
+      "data_quality": {
+        "level": "medium",
+        "note": "HLTV не проверялся: нет статистики карт за 3 месяца"
+      },
+      "sources": [
+        {
+          "title": "Cyber.Sports.ru — team-gamerlegion-unity-esports-2026-11-18",
+          "url": "https://cyber.sports.ru/cs/match/team-gamerlegion-unity-esports-2026-11-18/"
+        },
+        {
+          "title": "Cyber.Sports.ru — матчи CS2 18.11",
+          "url": "https://cyber.sports.ru/cs/match/2026-11-18/"
+        }
+      ],
+      "format": "BO3, онлайн",
+      "market_prob": 0.794,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
       "id": "hockey-20261118-1f28zmb",
       "sport": "hockey",
       "sport_name": "Хоккей",
@@ -8729,6 +8825,53 @@
         }
       ],
       "market_prob": 0.87,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "cs2-20261118-vbnbl",
+      "sport": "cs2",
+      "sport_name": "CS2",
+      "home": "Sinners",
+      "away": "Alliance",
+      "event_date": "2026-11-18",
+      "start_iso": "2026-11-18T19:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-18T13:15+03:00",
+      "model_version": "v2",
+      "tournament": "Rush Brno 2026, групповой этап, тир-3",
+      "match": "Sinners — Alliance",
+      "start": "18.11, 19:00 МСК",
+      "bet": "П1 (победа Sinners)",
+      "confidence": 3,
+      "reason": "Sinners в октябре обыгрывали Heroic и Eternal Fire, а Alliance набирает победы в ESL Challenger League против команд уровнем ниже.",
+      "facts": [
+        "Sinners: 2:0 над Nexus (17.11), 2:1 над Heroic и Eternal Fire (21–22.10) — Cyber.Sports.ru",
+        "Alliance: 4 победы подряд в ESL Challenger League Cup #12 (13–14.11) и 2:0 над Iberian Soul — Cyber.Sports.ru",
+        "Sinners выиграли 4 из 5 последних матчей — Cyber.Sports.ru"
+      ],
+      "against": [
+        "Alliance выиграл 5 матчей подряд"
+      ],
+      "uncertainty": "Коэффициент не нашёлся; нет статистики карт.",
+      "data_quality": {
+        "level": "low",
+        "note": "нет коэффициента и статистики карт"
+      },
+      "sources": [
+        {
+          "title": "Cyber.Sports.ru — sinners-esports-416olsk-2026-11-18-v2",
+          "url": "https://cyber.sports.ru/cs/match/sinners-esports-416olsk-2026-11-18-v2/"
+        },
+        {
+          "title": "Cyber.Sports.ru — матчи CS2 18.11",
+          "url": "https://cyber.sports.ru/cs/match/2026-11-18/"
+        }
+      ],
+      "format": "BO3, LAN",
+      "market_prob": null,
       "status": "pending",
       "result": null,
       "versions": [],
@@ -8782,6 +8925,206 @@
         }
       ],
       "market_prob": 0.645,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "basketball-20261118-m6fk6q",
+      "sport": "basketball",
+      "sport_name": "Баскетбол",
+      "home": "Бешикташ",
+      "away": "Реал",
+      "event_date": "2026-11-18",
+      "start_iso": "2026-11-18T20:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-18T13:15+03:00",
+      "model_version": "v2",
+      "tournament": "Евролига 2026/27, регулярный сезон, 13-й тур",
+      "match": "Бешикташ — Реал",
+      "start": "18.11, 20:00 МСК",
+      "bet": "П2 (победа Реала)",
+      "confidence": 3,
+      "reason": "Бешикташ дома выиграл лишь 1 матч из 5, а у Реала лучшая атака турнира.",
+      "facts": [
+        "Бешикташ: 5-6, дома 1-4 — Sports.ru",
+        "Реал: 7-4, разница +8, 98 очков за игру — лучшая атака Евролиги — Sports.ru",
+        "Бешикташ пропускает 90 очков за игру — Sports.ru"
+      ],
+      "against": [
+        "Реал на выезде лишь 3-3",
+        "Бешикташ на выезде 4-2 — команда опасна"
+      ],
+      "uncertainty": "Коэффициент не нашёлся; составы неизвестны.",
+      "data_quality": {
+        "level": "low",
+        "note": "нет коэффициента и травм"
+      },
+      "sources": [
+        {
+          "title": "Sports.ru — Бешикташ — Реал",
+          "url": "https://www.sports.ru/basketball/match/besiktas-vs-real-madrid/"
+        },
+        {
+          "title": "Sports.ru — таблица Евролиги",
+          "url": "https://www.sports.ru/basketball/tournament/euroleague/table/"
+        },
+        {
+          "title": "Sports.ru — календарь Евролиги",
+          "url": "https://www.sports.ru/basketball/tournament/euroleague/calendar/"
+        }
+      ],
+      "market_prob": null,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "cs2-20261118-adcjrv",
+      "sport": "cs2",
+      "sport_name": "CS2",
+      "home": "Luminosity",
+      "away": "Ninjas in Pyjamas",
+      "event_date": "2026-11-18",
+      "start_iso": "2026-11-18T21:30+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-18T13:15+03:00",
+      "model_version": "v2",
+      "tournament": "Stake Ranked 6, плей-офф, тир-2",
+      "match": "Luminosity — Ninjas in Pyjamas",
+      "start": "18.11, 21:30 МСК",
+      "bet": "П2 (победа NiP)",
+      "odds": "1.45",
+      "confidence": 3,
+      "reason": "NiP выиграл 4 из 5 последних матчей, в т.ч. у MIBR, Heroic и Liquid, а Luminosity проиграл 4 из 5 до вчерашней победы над GamerLegion.",
+      "facts": [
+        "NiP: 2:0 Unity (17.11), 2:1 MIBR, 2:1 Heroic, 2:1 Liquid (16–17.10) — Cyber.Sports.ru",
+        "Luminosity до 17.11 проиграл 4 матча подряд: Envy, Hotu, BBL, Nexus — Cyber.Sports.ru",
+        "Личные встречи 2026 года — 1:1 — Cyber.Sports.ru"
+      ],
+      "against": [
+        "Luminosity вчера обыграл GamerLegion 2:1",
+        "В сентябре Luminosity выиграл у NiP"
+      ],
+      "uncertainty": "Нет статистики карт и вето.",
+      "data_quality": {
+        "level": "medium",
+        "note": "HLTV не проверялся: нет статистики карт"
+      },
+      "sources": [
+        {
+          "title": "Cyber.Sports.ru — ninjas-in-pyjamas-luminosity-gaming-2026-11-18",
+          "url": "https://cyber.sports.ru/cs/match/ninjas-in-pyjamas-luminosity-gaming-2026-11-18/"
+        },
+        {
+          "title": "Cyber.Sports.ru — матчи CS2 18.11",
+          "url": "https://cyber.sports.ru/cs/match/2026-11-18/"
+        }
+      ],
+      "format": "BO3, онлайн",
+      "market_prob": 0.69,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "football-20261119-q92gd",
+      "sport": "football",
+      "sport_name": "Футбол",
+      "home": "Ремо",
+      "away": "Шапекоэнсе",
+      "event_date": "2026-11-19",
+      "start_iso": "2026-11-19T02:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-18T13:15+03:00",
+      "model_version": "v2",
+      "tournament": "Чемпионат Бразилии (Серия A) 2026, 35-й тур",
+      "match": "Ремо — Шапекоэнсе",
+      "start": "19.11, 02:00 МСК",
+      "bet": "П1 (победа Ремо)",
+      "odds": "1.49",
+      "confidence": 3,
+      "reason": "Шапекоэнсе — худшая команда лиги (21 очко, разница −37), Ремо дома борется за выживание.",
+      "facts": [
+        "Шапекоэнсе: 20-е место, 21 очко за 34 тура, разница −37 — ESPN",
+        "Ремо: 19-е место, 29 очков, разница −20 — ESPN",
+        "Ремо играет дома — ESPN"
+      ],
+      "against": [
+        "Ремо сам в зоне вылета и плохо забивает",
+        "Матч двух аутсайдеров — высокий шанс ничьей"
+      ],
+      "uncertainty": "Нет данных о форме и составах.",
+      "data_quality": {
+        "level": "low",
+        "note": "нет xG и формы за последние 5 туров"
+      },
+      "sources": [
+        {
+          "title": "ESPN — Remo vs Chapecoense",
+          "url": "https://www.espn.com/soccer/match/_/gameId/401841310"
+        },
+        {
+          "title": "ESPN — Brasileirão, таблица и линия",
+          "url": "https://www.espn.com/soccer/scoreboard/_/league/bra.1/date/20261118"
+        }
+      ],
+      "market_prob": 0.671,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "football-20261119-a5ahjc",
+      "sport": "football",
+      "sport_name": "Футбол",
+      "home": "Фламенго",
+      "away": "Атлетико Паранаэнсе",
+      "event_date": "2026-11-19",
+      "start_iso": "2026-11-19T02:30+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-18T13:15+03:00",
+      "model_version": "v2",
+      "tournament": "Чемпионат Бразилии (Серия A) 2026, 35-й тур",
+      "match": "Фламенго — Атлетико Паранаэнсе",
+      "start": "19.11, 02:30 МСК",
+      "bet": "П1 (победа Фламенго)",
+      "odds": "1.21",
+      "confidence": 3,
+      "reason": "Лидер чемпионата Фламенго (76 очков, +42) дома против 5-й команды с разницей мячей +8.",
+      "facts": [
+        "Фламенго: 1-е место, 76 очков за 34 тура, разница +42 — ESPN",
+        "Атлетико Паранаэнсе: 5-е место, 54 очка, разница +8 — ESPN",
+        "Первая встреча сезона 17.05 в Куритибе — 1:1 — ESPN, prediksi"
+      ],
+      "against": [
+        "Атлетико — сильная домашняя команда, но в гостях менее опасна; первая встреча — ничья",
+        "Фламенго может ротировать после гонки за титул"
+      ],
+      "uncertainty": "Нет данных о составах и форме за последние туры.",
+      "data_quality": {
+        "level": "low",
+        "note": "нет xG и формы за последние 5 туров"
+      },
+      "sources": [
+        {
+          "title": "ESPN — Flamengo vs Athletico-PR",
+          "url": "https://www.espn.com/soccer/match/_/gameId/401841313"
+        },
+        {
+          "title": "ESPN — Brasileirão, таблица и линия",
+          "url": "https://www.espn.com/soccer/scoreboard/_/league/bra.1/date/20261118"
+        },
+        {
+          "title": "ESPN — Athletico-PR v Flamengo (17.05)",
+          "url": "https://www.espn.co.uk/football/match/_/gameId/401841121"
+        }
+      ],
+      "market_prob": 0.826,
       "status": "pending",
       "result": null,
       "versions": [],
@@ -8902,6 +9245,175 @@
       "status_log": []
     },
     {
+      "id": "basketball-20261119-t7dqch",
+      "sport": "basketball",
+      "sport_name": "Баскетбол",
+      "home": "Орландо",
+      "away": "Филадельфия",
+      "event_date": "2026-11-19",
+      "start_iso": "2026-11-19T03:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-18T13:15+03:00",
+      "model_version": "v2",
+      "tournament": "НБА, регулярный сезон 2026/27",
+      "match": "Орландо — Филадельфия",
+      "start": "19.11, 03:00 МСК",
+      "bet": "П2 (победа Филадельфии)",
+      "odds": "1.74",
+      "confidence": 3,
+      "model_prob": {
+        "value": 0.587,
+        "source": "ESPN BPI"
+      },
+      "reason": "Филадельфия (12-3) на выезде 6-1, а Орландо без Банкеро дома выиграло лишь 1 матч из 5.",
+      "facts": [
+        "Филадельфия: 12-3, на выезде 6-1 — ESPN",
+        "Орландо дома 1-4; не сыграют Банкеро и Айзек — ESPN",
+        "Модель ESPN BPI даёт Филадельфии 58,7% — ESPN"
+      ],
+      "against": [
+        "У Филадельфии нет Джейлена Брауна",
+        "Орландо выиграло 4 из 5 последних (в т.ч. в Бостоне)"
+      ],
+      "uncertainty": "Без Брауна атака Филадельфии слабее.",
+      "data_quality": {
+        "level": "medium",
+        "note": "нет рейтингов атаки/защиты"
+      },
+      "sources": [
+        {
+          "title": "ESPN — превью матча (травмы, последние 5 игр, BPI)",
+          "url": "https://www.espn.com/nba/game/_/gameId/401910010"
+        },
+        {
+          "title": "ESPN — NBA scoreboard 18.11",
+          "url": "https://www.espn.com/nba/scoreboard/_/date/20261118"
+        },
+        {
+          "title": "Sports.ru — календарь НБА",
+          "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
+        }
+      ],
+      "market_prob": 0.575,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "basketball-20261119-1lr95em",
+      "sport": "basketball",
+      "sport_name": "Баскетбол",
+      "home": "Торонто",
+      "away": "Вашингтон",
+      "event_date": "2026-11-19",
+      "start_iso": "2026-11-19T03:30+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-18T13:15+03:00",
+      "model_version": "v2",
+      "tournament": "НБА, регулярный сезон 2026/27",
+      "match": "Торонто — Вашингтон",
+      "start": "19.11, 03:30 МСК",
+      "bet": "П1 (победа Торонто)",
+      "odds": "1.40",
+      "confidence": 3,
+      "model_prob": {
+        "value": 0.653,
+        "source": "ESPN BPI"
+      },
+      "reason": "Вашингтон (4-11) проиграл 5 матчей подряд и на выезде выиграл лишь 2 из 8.",
+      "facts": [
+        "Вашингтон: 4-11, на выезде 2-6, 5 поражений подряд (в т.ч. 119:147 от Хьюстона) — ESPN",
+        "У Вашингтона не сыграют Вукчевич, Бикман, Шампани, Уоткинс — ESPN",
+        "Модель ESPN BPI даёт Торонто 65,3% — ESPN"
+      ],
+      "against": [
+        "Торонто сам проиграл 5 матчей подряд и без Кавая Леонарда",
+        "Торонто дома лишь 2-5"
+      ],
+      "uncertainty": "Обе команды в плохой форме — матч может пойти как угодно.",
+      "data_quality": {
+        "level": "medium",
+        "note": "нет рейтингов атаки/защиты"
+      },
+      "sources": [
+        {
+          "title": "ESPN — превью матча (травмы, последние 5 игр, BPI)",
+          "url": "https://www.espn.com/nba/game/_/gameId/401910012"
+        },
+        {
+          "title": "ESPN — NBA scoreboard 18.11",
+          "url": "https://www.espn.com/nba/scoreboard/_/date/20261118"
+        },
+        {
+          "title": "Sports.ru — календарь НБА",
+          "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
+        }
+      ],
+      "market_prob": 0.714,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "basketball-20261119-19hbjac",
+      "sport": "basketball",
+      "sport_name": "Баскетбол",
+      "home": "Оклахома-Сити",
+      "away": "Атланта",
+      "event_date": "2026-11-19",
+      "start_iso": "2026-11-19T04:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-18T13:15+03:00",
+      "model_version": "v2",
+      "tournament": "НБА, регулярный сезон 2026/27",
+      "match": "Оклахома-Сити — Атланта",
+      "start": "19.11, 04:00 МСК",
+      "bet": "П1 (победа Оклахомы)",
+      "odds": "1.35",
+      "confidence": 3,
+      "model_prob": {
+        "value": 0.744,
+        "source": "ESPN BPI"
+      },
+      "reason": "Оклахома дома не проигрывает (5-0), а у Атланты нет Макколлума, Лэндейла и ещё трёх игроков.",
+      "facts": [
+        "Оклахома дома 5-0 — ESPN",
+        "У Атланты не сыграют Макколлум, Лэндейл, Флемингс, Ньюэлл, Гей — ESPN",
+        "15.11 Оклахома разгромила Вашингтон 114:75 — ESPN",
+        "Модель ESPN BPI даёт Оклахоме 74,4% — ESPN"
+      ],
+      "against": [
+        "У Оклахомы нет Холмгрена, Джейлена Уильямса и Уоллеса",
+        "Оклахома проиграла 3 из 5 последних"
+      ],
+      "uncertainty": "Короткая ротация Оклахомы без двух звёзд.",
+      "data_quality": {
+        "level": "medium",
+        "note": "нет рейтингов атаки/защиты"
+      },
+      "sources": [
+        {
+          "title": "ESPN — превью матча (травмы, последние 5 игр, BPI)",
+          "url": "https://www.espn.com/nba/game/_/gameId/401910014"
+        },
+        {
+          "title": "ESPN — NBA scoreboard 18.11",
+          "url": "https://www.espn.com/nba/scoreboard/_/date/20261118"
+        },
+        {
+          "title": "Sports.ru — календарь НБА",
+          "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
+        }
+      ],
+      "market_prob": 0.741,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
       "id": "basketball-20261119-jwmczl",
       "sport": "basketball",
       "sport_name": "Баскетбол",
@@ -8953,6 +9465,120 @@
         }
       ],
       "market_prob": 0.735,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "basketball-20261119-o89ag8",
+      "sport": "basketball",
+      "sport_name": "Баскетбол",
+      "home": "Даллас",
+      "away": "Голден Стэйт",
+      "event_date": "2026-11-19",
+      "start_iso": "2026-11-19T04:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-18T13:15+03:00",
+      "model_version": "v2",
+      "tournament": "НБА, регулярный сезон 2026/27",
+      "match": "Даллас — Голден Стэйт",
+      "start": "19.11, 04:00 МСК",
+      "bet": "П1 (победа Далласа)",
+      "odds": "1.45",
+      "confidence": 3,
+      "model_prob": {
+        "value": 0.652,
+        "source": "ESPN BPI"
+      },
+      "reason": "У Голден Стэйт нет Карри и Порзиньгиса, а на выезде команда выиграла лишь 2 матча из 7; Даллас дома 5-2.",
+      "facts": [
+        "Голден Стэйт на выезде 2-5; не сыграют Карри и Порзиньгис, Грин и Хорфорд под вопросом — ESPN",
+        "Даллас дома 5-2 — ESPN",
+        "Голден Стэйт проиграл 3 последних выездных матча: 108:115 в Хьюстоне, 85:123 в Сан-Антонио, 94:115 в Новом Орлеане — ESPN",
+        "Модель ESPN BPI даёт Далласу 65,2% — ESPN"
+      ],
+      "against": [
+        "Даллас проиграл 3 из 5 последних, в т.ч. 94:131 в Бостоне",
+        "У Далласа нет Лайвли"
+      ],
+      "uncertainty": "Если сыграют Грин и Хорфорд, шансы выровняются.",
+      "data_quality": {
+        "level": "medium",
+        "note": "нет рейтингов атаки/защиты"
+      },
+      "sources": [
+        {
+          "title": "ESPN — превью матча (травмы, последние 5 игр, BPI)",
+          "url": "https://www.espn.com/nba/game/_/gameId/401910016"
+        },
+        {
+          "title": "ESPN — NBA scoreboard 18.11",
+          "url": "https://www.espn.com/nba/scoreboard/_/date/20261118"
+        },
+        {
+          "title": "Sports.ru — календарь НБА",
+          "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
+        }
+      ],
+      "market_prob": 0.69,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "basketball-20261119-1qvae3l",
+      "sport": "basketball",
+      "sport_name": "Баскетбол",
+      "home": "Денвер",
+      "away": "Бостон",
+      "event_date": "2026-11-19",
+      "start_iso": "2026-11-19T05:30+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-18T13:15+03:00",
+      "model_version": "v2",
+      "tournament": "НБА, регулярный сезон 2026/27",
+      "match": "Денвер — Бостон",
+      "start": "19.11, 05:30 МСК",
+      "bet": "П2 (победа Бостона)",
+      "odds": "1.74",
+      "confidence": 3,
+      "model_prob": {
+        "value": 0.59,
+        "source": "ESPN BPI"
+      },
+      "reason": "Бостон (11-3) без потерь в составе и выиграл 4 из 5 последних, а Денвер дома лишь 2-3.",
+      "facts": [
+        "Бостон: 11-3, на выезде 5-2, травмированных нет — ESPN",
+        "Бостон выиграл 4 из 5 последних, в т.ч. 123:101 в Филадельфии и 117:97 в Милуоки — ESPN",
+        "Денвер дома 2-3 — ESPN",
+        "Модель ESPN BPI даёт Бостону 59% — ESPN"
+      ],
+      "against": [
+        "Денвер выиграл 3 из 5 последних",
+        "Высота Денвера — традиционно тяжёлый выезд"
+      ],
+      "uncertainty": "Перевес небольшой, матч близкий.",
+      "data_quality": {
+        "level": "medium",
+        "note": "нет рейтингов атаки/защиты"
+      },
+      "sources": [
+        {
+          "title": "ESPN — превью матча (травмы, последние 5 игр, BPI)",
+          "url": "https://www.espn.com/nba/game/_/gameId/401910015"
+        },
+        {
+          "title": "ESPN — NBA scoreboard 18.11",
+          "url": "https://www.espn.com/nba/scoreboard/_/date/20261118"
+        },
+        {
+          "title": "Sports.ru — календарь НБА",
+          "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
+        }
+      ],
+      "market_prob": 0.575,
       "status": "pending",
       "result": null,
       "versions": [],
@@ -9120,6 +9746,153 @@
         }
       ],
       "market_prob": 0.8,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "hockey-20261119-detwg6",
+      "sport": "hockey",
+      "sport_name": "Хоккей",
+      "home": "Нефтехимик",
+      "away": "СКА",
+      "event_date": "2026-11-19",
+      "start_iso": "2026-11-19T19:30+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-18T13:15+03:00",
+      "model_version": "v2",
+      "tournament": "КХЛ, регулярный чемпионат 2026/27",
+      "match": "Нефтехимик — СКА",
+      "start": "19.11, 19:30 МСК",
+      "bet": "X2 (СКА не проиграет в основное время)",
+      "confidence": 3,
+      "reason": "Нефтехимик не выиграл в основное время ни одного из 5 последних матчей, а СКА выиграл 24 из 33 очных встреч.",
+      "facts": [
+        "Последние 5 матчей Нефтехимика: 1:2 Б, 1:5, 4:3 Б, 1:5, 1:8 — ни одной победы в основное время — Sports.ru",
+        "Очные встречи: 24 победы СКА, 9 — Нефтехимика; последняя — 5:1 СКА (10.02.2026) — Sports.ru",
+        "СКА: 9-е место на Западе (26 очков) — Sports.ru"
+      ],
+      "against": [
+        "Нефтехимик не проигрывает в 6 из 8 последних домашних матчей",
+        "Нефтехимик 3-й на Востоке"
+      ],
+      "uncertainty": "Коэффициент не нашёлся; вратари не объявлены.",
+      "data_quality": {
+        "level": "low",
+        "note": "нет коэффициента и статистики бросков"
+      },
+      "sources": [
+        {
+          "title": "Sports.ru — Нефтехимик — СКА",
+          "url": "https://www.sports.ru/hockey/match/neftekhimik-vs-ska/"
+        },
+        {
+          "title": "Sports.ru — таблица КХЛ",
+          "url": "https://www.sports.ru/hockey/tournament/khl/table/"
+        }
+      ],
+      "market_prob": null,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "basketball-20261119-cx036e",
+      "sport": "basketball",
+      "sport_name": "Баскетбол",
+      "home": "Маккаби Тель-Авив",
+      "away": "Дубай",
+      "event_date": "2026-11-19",
+      "start_iso": "2026-11-19T20:15+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-18T13:15+03:00",
+      "model_version": "v2",
+      "tournament": "Евролига 2026/27, регулярный сезон, 13-й тур",
+      "match": "Маккаби Тель-Авив — Дубай",
+      "start": "19.11, 20:15 МСК",
+      "bet": "П2 (победа Дубая)",
+      "confidence": 3,
+      "reason": "Дубай (8-4) на выезде 4-2, а Маккаби (3-9) дома выиграл лишь 2 из 6.",
+      "facts": [
+        "Дубай: 8-4, 4-е место, на выезде 4-2 — Sports.ru",
+        "Маккаби: 3-9, 18-е место, дома 2-4, разница −7 — Sports.ru",
+        "Маккаби пропускает 92 очка за игру — Sports.ru"
+      ],
+      "against": [
+        "Маккаби забивает 85 очков за игру — почти как Дубай (86)"
+      ],
+      "uncertainty": "Коэффициент не нашёлся; составы неизвестны.",
+      "data_quality": {
+        "level": "low",
+        "note": "нет коэффициента и травм"
+      },
+      "sources": [
+        {
+          "title": "Sports.ru — Маккаби — Дубай",
+          "url": "https://www.sports.ru/basketball/match/bc-dubai-vs-makkabi-fox/"
+        },
+        {
+          "title": "Sports.ru — таблица Евролиги",
+          "url": "https://www.sports.ru/basketball/tournament/euroleague/table/"
+        },
+        {
+          "title": "Sports.ru — календарь Евролиги",
+          "url": "https://www.sports.ru/basketball/tournament/euroleague/calendar/"
+        }
+      ],
+      "market_prob": null,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "basketball-20261119-xxqov7",
+      "sport": "basketball",
+      "sport_name": "Баскетбол",
+      "home": "Валенсия",
+      "away": "Виртус",
+      "event_date": "2026-11-19",
+      "start_iso": "2026-11-19T23:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-18T13:15+03:00",
+      "model_version": "v2",
+      "tournament": "Евролига 2026/27, регулярный сезон, 13-й тур",
+      "match": "Валенсия — Виртус",
+      "start": "19.11, 23:00 МСК",
+      "bet": "П1 (победа Валенсии)",
+      "confidence": 3,
+      "reason": "Лидер Евролиги Валенсия (9-3) принимает Виртус, который на выезде выиграл 2 матча из 6.",
+      "facts": [
+        "Валенсия: 9-3, 1-е место, разница +7 — Sports.ru",
+        "Виртус: 5-7, 15-е место, на выезде 2-4, разница −3 — Sports.ru",
+        "Валенсия набирает 94 очка за игру против 85 у Виртуса — Sports.ru"
+      ],
+      "against": [
+        "Валенсия дома 4-2 — в гостях она даже сильнее (5-1)"
+      ],
+      "uncertainty": "Коэффициент не нашёлся; составы неизвестны.",
+      "data_quality": {
+        "level": "low",
+        "note": "нет коэффициента и травм"
+      },
+      "sources": [
+        {
+          "title": "Sports.ru — Валенсия — Виртус",
+          "url": "https://www.sports.ru/basketball/match/valencia-vs-virtus-pallacanestro-bologna/"
+        },
+        {
+          "title": "Sports.ru — таблица Евролиги",
+          "url": "https://www.sports.ru/basketball/tournament/euroleague/table/"
+        },
+        {
+          "title": "Sports.ru — календарь Евролиги",
+          "url": "https://www.sports.ru/basketball/tournament/euroleague/calendar/"
+        }
+      ],
+      "market_prob": null,
       "status": "pending",
       "result": null,
       "versions": [],
