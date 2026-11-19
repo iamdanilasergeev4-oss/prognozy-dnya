@@ -10401,6 +10401,58 @@
       "status_log": []
     },
     {
+      "id": "volleyball-20261119-3imkzz",
+      "sport": "volleyball",
+      "sport_name": "Волейбол",
+      "home": "Норвид",
+      "away": "Проект Варшава",
+      "event_date": "2026-11-19",
+      "start_iso": "2026-11-19T19:30+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-19T16:59+03:00",
+      "model_version": "v3",
+      "tournament": "TAURON Liga (Польша), 7-й тур",
+      "match": "Норвид — Проект Варшава",
+      "start": "19.11, 19:30 МСК",
+      "bet": "П2 (победа Проекта)",
+      "odds": "1.46",
+      "confidence": 3,
+      "reason": "Проект заметно сильнее по таблице и партиям и выиграл три последние очные встречи. Оценка 72% против 68% в линии — перевес около +3 п.п., несмотря на выезд.",
+      "facts": [
+        "Проект — 3-е место: 15 очков, 5-2, партии 18:11 (Flashscore)",
+        "Норвид — 11-е место: 6 очков, 2-4, партии 9:15 (Flashscore)",
+        "Три последние очные встречи выиграл Проект: 3:1, 3:0, 3:0 (Flashscore)"
+      ],
+      "against": [
+        "Проект играет на выезде",
+        "Из последних 6 очных встреч одну выиграл Норвид — 3:1 в январе 2024 (Sofascore)"
+      ],
+      "uncertainty": "Нет данных о составах и травмах; выборка сезона — 6–7 матчей.",
+      "data_quality": {
+        "level": "medium",
+        "note": "таблица и личные встречи — Flashscore и Sofascore, составов нет"
+      },
+      "sources": [
+        {
+          "title": "Flashscore — Норвид — Проект Варшава",
+          "url": "https://www.flashscore.com.ua/match/volleyball/norwid-czestochowa-EuwcJPKB/projekt-warszawa-zav73FX6/?mid=tKQFdh5D"
+        },
+        {
+          "title": "Flashscore — таблица TAURON Liga",
+          "url": "https://www.flashscore.com.ua/volleyball/poland/tauron-liga/standings/"
+        },
+        {
+          "title": "Sofascore — Norwid vs Projekt Warszawa",
+          "url": "https://www.sofascore.com/volleyball/match/norwid-czestochowa-projekt-warszawa/RRrsocuc#id:16501409"
+        }
+      ],
+      "market_prob": 0.685,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
       "id": "basketball-20261119-cx036e",
       "sport": "basketball",
       "sport_name": "Баскетбол",
@@ -10637,6 +10689,58 @@
         }
       ],
       "market_prob": null,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "volleyball-20261119-158im9k",
+      "sport": "volleyball",
+      "sport_name": "Волейбол",
+      "home": "Кендзежин-Козле",
+      "away": "Барком",
+      "event_date": "2026-11-19",
+      "start_iso": "2026-11-19T22:30+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-19T16:59+03:00",
+      "model_version": "v3",
+      "tournament": "TAURON Liga (Польша), 7-й тур",
+      "match": "Кендзежин-Козле — Барком",
+      "start": "19.11, 22:30 МСК",
+      "bet": "П2 (победа Баркома)",
+      "odds": "4.35",
+      "confidence": 2,
+      "reason": "Рискованная ставка на андердога: линия даёт Баркому 23%, но ЗАКСА выше лишь умеренно (партии 13:10), а две последние очные встречи прошли в пяти партиях. Оценка 27% — перевес около +4 п.п., однако чаще эта ставка будет проигрывать.",
+      "facts": [
+        "Кендзежин-Козле — 5-е место: 10 очков, 4-2, партии 13:10 (Flashscore)",
+        "Барком — 10-е место: 6 очков, 2-4, партии 10:14 (Flashscore)",
+        "Две последние очные встречи — 3:2 и 2:3 по партиям (Flashscore)"
+      ],
+      "against": [
+        "ЗАКСА выиграла 4 из 5 последних матчей, Барком проиграл 4 из 5",
+        "ЗАКСА играет дома"
+      ],
+      "uncertainty": "Матч ранее значился перенесённым на Sofascore (дубль записи); составы неизвестны.",
+      "data_quality": {
+        "level": "low",
+        "note": "один полноценный источник (Flashscore), выборка сезона мала"
+      },
+      "sources": [
+        {
+          "title": "Flashscore — Кендзежин-Козле — Барком",
+          "url": "https://www.flashscore.com.ua/match/volleyball/barkom-jm1YCctT/kedzierzyn-kozle-n7gpLG2s/?mid=b3ofjuKD"
+        },
+        {
+          "title": "Flashscore — таблица TAURON Liga",
+          "url": "https://www.flashscore.com.ua/volleyball/poland/tauron-liga/standings/"
+        },
+        {
+          "title": "Sofascore — волейбол, расписание",
+          "url": "https://www.sofascore.com/volleyball"
+        }
+      ],
+      "market_prob": 0.23,
       "status": "pending",
       "result": null,
       "versions": [],
@@ -11853,6 +11957,58 @@
       "status_log": []
     },
     {
+      "id": "football-20261120-1q9wq2b",
+      "sport": "football",
+      "sport_name": "Футбол",
+      "home": "Молде",
+      "away": "Будё-Глимт",
+      "event_date": "2026-11-20",
+      "start_iso": "2026-11-20T21:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-19T16:59+03:00",
+      "model_version": "v3",
+      "tournament": "Элитсерия (Норвегия), 27-й тур",
+      "match": "Молде — Будё-Глимт",
+      "start": "20.11, 21:00 МСК",
+      "bet": "П2 (победа Будё-Глимт)",
+      "odds": "1.80",
+      "confidence": 3,
+      "model_prob": {
+        "value": 0.6,
+        "source": "ClubElo"
+      },
+      "reason": "ClubElo даёт Будё 60% на победу, линия 1.80 закладывает 56%. Наша оценка 58% (смещена к рынку из-за выезда и двух поражений Будё в последних пяти): перевес +2 п.п. — ниже порога в 3 п.п., поэтому это прогноз на исход, а не ставка с перевесом над линией.",
+      "facts": [
+        "Будё — 2-е место: 62 очка за 26 игр (20-2-4), разница мячей +40 (ESPN)",
+        "Молде — 5-е место: 44 очка (13-5-8), разница +20 (ESPN)",
+        "Последние 5 матчей (ESPN): у Будё 2 победы, 1 ничья, 2 поражения; у Молде 2 победы, 2 ничьи, 1 поражение"
+      ],
+      "against": [
+        "Будё проиграл 2 из последних 5 матчей",
+        "Молде дома: 2 победы и 2 ничьи в последних 5 матчах (ESPN)"
+      ],
+      "uncertainty": "Нет подтверждённых составов и данных о травмах; перевес над линией в пределах погрешности.",
+      "data_quality": {
+        "level": "medium",
+        "note": "таблица и форма — ESPN, вероятность — ClubElo; составов нет"
+      },
+      "sources": [
+        {
+          "title": "ESPN — Molde vs Bodø/Glimt",
+          "url": "https://www.espn.com/soccer/match/_/gameId/401843486"
+        },
+        {
+          "title": "ClubElo — прогнозы по Elo",
+          "url": "http://clubelo.com/"
+        }
+      ],
+      "market_prob": 0.556,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
       "id": "football-20261120-pmen04",
       "sport": "football",
       "sport_name": "Футбол",
@@ -11894,6 +12050,62 @@
         }
       ],
       "market_prob": 0.877,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "football-20261120-x3dttn",
+      "sport": "football",
+      "sport_name": "Футбол",
+      "home": "Алмере Сити",
+      "away": "НАК Бреда",
+      "event_date": "2026-11-20",
+      "start_iso": "2026-11-20T22:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-19T16:59+03:00",
+      "model_version": "v3",
+      "tournament": "Эрсте Дивизи (Нидерланды), 16-й тур",
+      "match": "Алмере Сити — НАК Бреда",
+      "start": "20.11, 22:00 МСК",
+      "bet": "П1 (победа Алмере Сити)",
+      "odds": "2.70",
+      "confidence": 3,
+      "model_prob": {
+        "value": 0.41,
+        "source": "ClubElo"
+      },
+      "reason": "Ставка на хозяев, которых линия недооценивает: ClubElo даёт Алмере 41%, коэффициент 2.70 — только 37%. Оценка 40%, перевес около +3 п.п. Это не фаворит рынка: вероятность проигрыша ставки — около 60%.",
+      "facts": [
+        "Алмере — 2-е место: 31 очко за 15 игр (10-1-4), разница +21 (ESPN)",
+        "НАК — 4-е место: 28 очков (8-4-3), разница +7 (ESPN)",
+        "Алмере — 4 победы в последних 5 матчах (ESPN), 3 победы подряд в лиге (Sofascore)"
+      ],
+      "against": [
+        "НАК без поражений в последних 5 матчах (В Н В Н В)",
+        "Линия видит фаворитом НАК (2.20)"
+      ],
+      "uncertainty": "Нет данных о составах; источники расходятся в оценке фаворита — ClubElo за Алмере, рынок за НАК.",
+      "data_quality": {
+        "level": "medium",
+        "note": "таблица и форма — ESPN и Sofascore, вероятность — ClubElo"
+      },
+      "sources": [
+        {
+          "title": "ESPN — Almere City vs NAC Breda",
+          "url": "https://www.espn.com/soccer/match/_/gameId/401875846"
+        },
+        {
+          "title": "ClubElo — прогнозы по Elo",
+          "url": "http://clubelo.com/"
+        },
+        {
+          "title": "Sofascore — Almere City vs NAC Breda",
+          "url": "https://www.sofascore.com/football/match/almere-city-fc-nac-breda/XibsPjb#id:16317492"
+        }
+      ],
+      "market_prob": 0.37,
       "status": "pending",
       "result": null,
       "versions": [],
