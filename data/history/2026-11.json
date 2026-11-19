@@ -910,14 +910,18 @@
       "status": "postponed",
       "result": {
         "score": null,
-        "note": "Матч Лестер — Брэдфорд 14.11 перенесён (ESPN: Postponed).",
+        "note": "Матч перенесён",
         "sources": [
           {
-            "title": "ESPN — League One 14.11",
-            "url": "https://www.espn.com/soccer/scoreboard/_/league/eng.3/date/20261114"
+            "title": "Sofascore — футбол 14.11",
+            "url": "https://www.sofascore.com/football/2026-11-14"
+          },
+          {
+            "title": "ESPN — Leicester vs Bradford",
+            "url": "https://www.espn.com/soccer/scoreboard/_/league/eng.2/date/20261114"
           }
         ],
-        "checked_at": "2026-11-18T13:04+03:00"
+        "checked_at": "2026-11-20T00:34+03:00"
       },
       "versions": [],
       "status_log": [
@@ -928,7 +932,7 @@
           "note": "матч перенесён (Sports.ru: «Перенесен», Sky Sport DE: «Verlegt»)"
         }
       ],
-      "last_sync": "2026-11-18T13:04+03:00"
+      "last_sync": "2026-11-20T00:34+03:00"
     },
     {
       "id": "football-20261114-o8mmy",
@@ -10153,10 +10157,32 @@
       ],
       "format": "BO3, онлайн",
       "market_prob": 0.606,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "1:2",
+        "note": null,
+        "sources": [
+          {
+            "title": "Cyber.Sports.ru — CS2 19.11",
+            "url": "https://cyber.sports.ru/cs/match/2026-11-19/"
+          },
+          {
+            "title": "Sofascore — киберспорт 19.11",
+            "url": "https://www.sofascore.com/esports/2026-11-19"
+          }
+        ],
+        "checked_at": "2026-11-20T00:34+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-20T00:34+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-20T00:34+03:00"
     },
     {
       "id": "cs2-20261119-1rfokvm",
@@ -10201,10 +10227,32 @@
       ],
       "format": "BO3, онлайн",
       "market_prob": 0.8,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "1:2",
+        "note": null,
+        "sources": [
+          {
+            "title": "Cyber.Sports.ru — CS2 19.11",
+            "url": "https://cyber.sports.ru/cs/match/2026-11-19/"
+          },
+          {
+            "title": "Sofascore — киберспорт 19.11",
+            "url": "https://www.sofascore.com/esports/2026-11-19"
+          }
+        ],
+        "checked_at": "2026-11-20T00:34+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-20T00:34+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-20T00:34+03:00"
     },
     {
       "id": "tennis-20261119-23ecwe",
@@ -10251,10 +10299,32 @@
         }
       ],
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "0:2",
+        "note": "Шелтон выиграл 7:6, 7:5 (ESPN)",
+        "sources": [
+          {
+            "title": "ESPN — ATP Finals",
+            "url": "https://www.espn.com/tennis/scoreboard"
+          },
+          {
+            "title": "Sofascore — теннис 19.11",
+            "url": "https://www.sofascore.com/tennis/2026-11-19"
+          }
+        ],
+        "checked_at": "2026-11-20T00:34+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-20T00:34+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": "Шелтон выиграл 7:6, 7:5 (ESPN)"
+        }
+      ],
+      "last_sync": "2026-11-20T00:34+03:00"
     },
     {
       "id": "hockey-20261119-1s3e25c",
@@ -10304,10 +10374,32 @@
         }
       ],
       "market_prob": 0.8,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "5:5",
+        "note": "Основное время 5:5 (итог 6:5 в овертайме по Flashscore и Sofascore) — ставка 1X сыграла",
+        "sources": [
+          {
+            "title": "Flashscore — КХЛ, результаты",
+            "url": "https://www.flashscore.com.ua/hockey/russia/khl/results/"
+          },
+          {
+            "title": "Sofascore — хоккей 19.11",
+            "url": "https://www.sofascore.com/ice-hockey/2026-11-19"
+          }
+        ],
+        "checked_at": "2026-11-20T00:34+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-20T00:34+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": "Основное время 5:5 (итог 6:5 в овертайме по Flashscore и Sofascore) — ставка 1X сыграла"
+        }
+      ],
+      "last_sync": "2026-11-20T00:34+03:00"
     },
     {
       "id": "cs2-20261119-kg991",
@@ -10348,10 +10440,32 @@
       ],
       "format": "BO3, онлайн",
       "market_prob": 0.676,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "2:1",
+        "note": null,
+        "sources": [
+          {
+            "title": "Cyber.Sports.ru — CS2 19.11",
+            "url": "https://cyber.sports.ru/cs/match/2026-11-19/"
+          },
+          {
+            "title": "Sofascore — киберспорт 19.11",
+            "url": "https://www.sofascore.com/esports/2026-11-19"
+          }
+        ],
+        "checked_at": "2026-11-20T00:34+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-20T00:34+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-20T00:34+03:00"
     },
     {
       "id": "hockey-20261119-detwg6",
@@ -10395,10 +10509,32 @@
         }
       ],
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "2:3",
+        "note": null,
+        "sources": [
+          {
+            "title": "Flashscore — КХЛ, результаты",
+            "url": "https://www.flashscore.com.ua/hockey/russia/khl/results/"
+          },
+          {
+            "title": "Sofascore — хоккей 19.11",
+            "url": "https://www.sofascore.com/ice-hockey/2026-11-19"
+          }
+        ],
+        "checked_at": "2026-11-20T00:34+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-20T00:34+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-20T00:34+03:00"
     },
     {
       "id": "volleyball-20261119-3imkzz",
@@ -10447,10 +10583,32 @@
         }
       ],
       "market_prob": 0.685,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "1:3",
+        "note": null,
+        "sources": [
+          {
+            "title": "Flashscore — Норвид — Проект",
+            "url": "https://www.flashscore.com.ua/match/volleyball/norwid-czestochowa-EuwcJPKB/projekt-warszawa-zav73FX6/?mid=tKQFdh5D"
+          },
+          {
+            "title": "Sofascore — волейбол 19.11",
+            "url": "https://www.sofascore.com/volleyball/2026-11-19"
+          }
+        ],
+        "checked_at": "2026-11-20T00:34+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-20T00:34+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-20T00:34+03:00"
     },
     {
       "id": "basketball-20261119-cx036e",
@@ -10497,10 +10655,32 @@
         }
       ],
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "74:80",
+        "note": null,
+        "sources": [
+          {
+            "title": "Flashscore — Евролига, результаты",
+            "url": "https://www.flashscore.com.ua/basketball/europe/euroleague/results/"
+          },
+          {
+            "title": "Sofascore — баскетбол 19.11",
+            "url": "https://www.sofascore.com/basketball/2026-11-19"
+          }
+        ],
+        "checked_at": "2026-11-20T00:34+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-20T00:34+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-20T00:34+03:00"
     },
     {
       "id": "cs2-20261119-1q57qgq",
@@ -11776,6 +11956,58 @@
       "status_log": []
     },
     {
+      "id": "volleyball-20261120-2obu2e",
+      "sport": "volleyball",
+      "sport_name": "Волейбол",
+      "home": "Ольштын",
+      "away": "ГКС Катовице",
+      "event_date": "2026-11-20",
+      "start_iso": "2026-11-20T19:30+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-20T00:34+03:00",
+      "model_version": "v3",
+      "tournament": "TAURON Liga (Польша), 8-й тур",
+      "match": "Ольштын — ГКС Катовице",
+      "start": "20.11, 19:30 МСК",
+      "bet": "П2 (победа ГКС Катовице)",
+      "odds": "3.04",
+      "confidence": 2,
+      "reason": "Рискованная ставка против линии: по таблице Катовице заметно сильнее, а букмекеры делают фаворитом Ольштын (1.36). Наша оценка 40% против 33% в линии. Ставка чаще проиграет, чем зайдёт.",
+      "facts": [
+        "ГКС Катовице — 6-е место: 9 очков, 3-3, партии 11:11 (Flashscore)",
+        "Ольштын — 14-е (последнее) место: 3 очка, 1-5, партии 7:15 (Flashscore)",
+        "Из трёх последних очных встреч Ольштын выиграл две (Flashscore)"
+      ],
+      "against": [
+        "Линия сильно за Ольштын — рынок может знать о составах",
+        "Ольштын дома и выигрывал 2 из 3 последних личных встреч"
+      ],
+      "uncertainty": "Большое расхождение таблицы и линии без понятной причины; выборка сезона — 6 матчей.",
+      "data_quality": {
+        "level": "low",
+        "note": "таблица и личные встречи — Flashscore, составов нет"
+      },
+      "sources": [
+        {
+          "title": "Flashscore — TAURON Liga, календарь",
+          "url": "https://www.flashscore.com.ua/volleyball/poland/tauron-liga/fixtures/"
+        },
+        {
+          "title": "Flashscore — таблица TAURON Liga",
+          "url": "https://www.flashscore.com.ua/volleyball/poland/tauron-liga/standings/"
+        },
+        {
+          "title": "Sofascore — волейбол 20.11",
+          "url": "https://www.sofascore.com/volleyball/2026-11-20"
+        }
+      ],
+      "market_prob": 0.329,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
       "id": "dota2-20261120-hevhpi",
       "sport": "dota2",
       "sport_name": "Dota 2",
@@ -12248,6 +12480,110 @@
         }
       ],
       "market_prob": 0.676,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "volleyball-20261121-v3lhh5",
+      "sport": "volleyball",
+      "sport_name": "Волейбол",
+      "home": "Ресовия",
+      "away": "Белхатув",
+      "event_date": "2026-11-21",
+      "start_iso": "2026-11-21T17:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-20T00:34+03:00",
+      "model_version": "v3",
+      "tournament": "TAURON Liga (Польша), 8-й тур",
+      "match": "Ресовия — Белхатув",
+      "start": "21.11, 17:00 МСК",
+      "bet": "П2 (победа Белхатува)",
+      "odds": "3.61",
+      "confidence": 2,
+      "reason": "Ставка против линии: Белхатув выше в таблице (4-е место против 7-го), но букмекеры дают ему лишь 28%. Наша оценка 35% — перевес около +7 п.п., при этом ставка чаще проиграет.",
+      "facts": [
+        "Белхатув — 4-е место: 11 очков, 4-2, партии 13:10 (Flashscore)",
+        "Ресовия (Жешув) — 7-е место: 8 очков, 2-4, партии 10:13 (Flashscore)",
+        "Последние очные: 3:1 Белхатув (22.02.26), 3:0 Ресовия (29.11.25), 3:0 Ресовия на выезде (01.03.25) (Flashscore)"
+      ],
+      "against": [
+        "Линия однозначно за Ресовию — возможно, она учитывает состав и класс игроков",
+        "Ресовия дома"
+      ],
+      "uncertainty": "Причина расхождения с рынком неизвестна; ранний этап сезона.",
+      "data_quality": {
+        "level": "low",
+        "note": "таблица и личные встречи — Flashscore, составов нет"
+      },
+      "sources": [
+        {
+          "title": "Flashscore — TAURON Liga, календарь",
+          "url": "https://www.flashscore.com.ua/volleyball/poland/tauron-liga/fixtures/"
+        },
+        {
+          "title": "Flashscore — таблица TAURON Liga",
+          "url": "https://www.flashscore.com.ua/volleyball/poland/tauron-liga/standings/"
+        },
+        {
+          "title": "Sofascore — волейбол 21.11",
+          "url": "https://www.sofascore.com/volleyball/2026-11-21"
+        }
+      ],
+      "market_prob": 0.277,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "football-20261121-bupsqt",
+      "sport": "football",
+      "sport_name": "Футбол",
+      "home": "Астон Вилла",
+      "away": "Сандерленд",
+      "event_date": "2026-11-21",
+      "start_iso": "2026-11-21T18:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-20T00:34+03:00",
+      "model_version": "v3",
+      "tournament": "АПЛ, 12-й тур",
+      "match": "Астон Вилла — Сандерленд",
+      "start": "21.11, 18:00 МСК",
+      "bet": "П1 (победа Астон Виллы)",
+      "odds": "1.80",
+      "confidence": 3,
+      "model_prob": {
+        "value": 0.67,
+        "source": "ClubElo"
+      },
+      "reason": "ClubElo даёт Вилле 67%, линия 1.80 — 56%. Мы не берём Elo как есть, а усредняем его с рынком: 60%. Перевес около +4 п.п.",
+      "facts": [
+        "Астон Вилла — 10-е место: 13 очков за 10 игр (3-4-3), разница −3 (ESPN)",
+        "Сандерленд — 19-е место: 8 очков (2-2-6), разница −9 (ESPN)",
+        "Сандерленд выиграл 2 из последних 5 матчей, в том числе 1:0 у Челси 08.11 (ESPN)"
+      ],
+      "against": [
+        "Вилла не выигрывает 4 матча подряд (Н, П, Н, Н с учётом еврокубка, ESPN)",
+        "Elo отражает долгосрочную силу и может отставать от текущей формы"
+      ],
+      "uncertainty": "Нет подтверждённых составов; разница между Elo и рынком может объясняться формой Виллы.",
+      "data_quality": {
+        "level": "medium",
+        "note": "таблица и форма — ESPN, вероятность — ClubElo"
+      },
+      "sources": [
+        {
+          "title": "ESPN — Aston Villa vs Sunderland",
+          "url": "https://www.espn.com/soccer/match/_/gameId/401878756"
+        },
+        {
+          "title": "ClubElo — Aston Villa",
+          "url": "http://clubelo.com/AstonVilla"
+        }
+      ],
+      "market_prob": 0.556,
       "status": "pending",
       "result": null,
       "versions": [],
