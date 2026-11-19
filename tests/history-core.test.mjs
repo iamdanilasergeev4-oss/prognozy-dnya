@@ -269,3 +269,27 @@ test("статус на сайте: ожидается / идёт / ждёт п�
   assert.equal(H.displayStatus(e, Date.parse("2026-11-15T23:30+03:00")), "live");
   assert.equal(H.displayStatus(e, Date.parse("2026-11-16T03:00+03:00")), "awaiting");
 });
+
+test("сравнение с рынком, прибыльность и наша вероятность", () => {
+  const h = H.emptyHistory();
+  const picks = [
+    pick({ match: "A — B", odds: "1.25", prob: { value: 0.85, method: "Elo + форма" }, data_as_of: "2026-11-15T09:30+03:00", estimates: ["Elo: 1650 против 1520"], assumptions: ["основной состав"] }),
+    pick({ match: "C — D", odds: "2.00", prob: { value: 0.55, method: "Elo" } }),
+    pick({ match: "E — F", odds: "1.60" }),
+  ];
+  H.archive(h, file(picks), "2026-11-15T10:00+03:00");
+  const [a, b, c] = h.predictions;
+  assert.equal(a.prob.value, 0.85);
+  assert.equal(a.data_as_of, "2026-11-15T09:30+03:00");
+  assert.deepEqual(a.estimates, ["Elo: 1650 против 1520"]);
+  H.applyResults(h, [{ id: a.id, score: "1:0" }, { id: b.id, score: "1:0" }, { id: c.id, score: "0:1" }]);
+  const s = H.computeStats(h.predictions, { nowMs: Date.parse("2026-11-16T10:00+03:00") });
+  assert.equal(s.market.n, 3);
+  assert.equal(s.market.won, 2);
+  assert.equal(s.market.expected, Math.round((0.8 + 0.5 + 0.625) * 10) / 10);
+  assert.equal(s.market.roi, Math.round(((0.25 + 1 - 1) / 3) * 1000) / 10);
+  assert.equal(s.byOdds.length, 3);
+  assert.equal(s.estimate.n, 2);
+  assert.equal(s.estimate.brier, Math.round((((0.85 - 1) ** 2 + (0.55 - 1) ** 2) / 2) * 1000) / 1000);
+  assert.equal(s.bySport[0].roi, s.market.roi);
+});
