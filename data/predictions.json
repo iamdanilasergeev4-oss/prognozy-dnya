@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-19T13:35+03:00",
+  "updated_at": "2026-11-19T16:21+03:00",
   "source": "claude",
   "sports": [
     {
@@ -7,6 +7,272 @@
       "name": "Футбол",
       "emoji": "⚽",
       "picks": [
+        {
+          "against": [
+            "Пеньяроль сыграл вничью 6 раз из 14",
+            "Серро-Ларго часто играет на ничью (7 ничьих)"
+          ],
+          "data_quality": {
+            "level": "low",
+            "note": "нет xG, формы за последние туры и составов; данные — таблица ESPN"
+          },
+          "match": "Пеньяроль — Серро-Ларго",
+          "tournament": "Чемпионат Уругвая (Клаусура) 2026, тир-2 по Южной Америке",
+          "start": "19.11, 22:30 МСК",
+          "start_iso": "2026-11-19T22:30+03:00",
+          "bet": "П1 (победа Пеньяроля)",
+          "odds": "1.41",
+          "confidence": 3,
+          "reason": "Пеньяроль (4-е место, 2 поражения в 14 турах) дома против 15-й команды, которая выиграла лишь 1 матч из 14.",
+          "facts": [
+            "Пеньяроль: 4-е место, 23 очка, 6-6-2, разница +8 — ESPN",
+            "Серро-Ларго: 15-е из 16, 10 очков, 1 победа в 14 турах, разница −7 — ESPN",
+            "Серро-Ларго сыграл вничью 7 матчей из 14 — ESPN"
+          ],
+          "uncertainty": "Высокий шанс ничьей у обоих.",
+          "sources": [
+            {
+              "title": "ESPN — Peñarol vs Cerro Largo (таблица, линия)",
+              "url": "https://www.espn.com/soccer/match/_/gameId/401934686"
+            },
+            {
+              "title": "ESPN — Uruguay Primera scoreboard",
+              "url": "https://www.espn.com/soccer/scoreboard/_/league/uru.1/date/20261119"
+            }
+          ]
+        },
+        {
+          "against": [
+            "Матч в гостях"
+          ],
+          "data_quality": {
+            "level": "low",
+            "note": "нет xG, формы за последние туры и составов; данные — таблица ESPN"
+          },
+          "match": "Прогресо — Монтевидео Сити Торке",
+          "tournament": "Чемпионат Уругвая (Клаусура) 2026",
+          "start": "19.11, 22:30 МСК",
+          "start_iso": "2026-11-19T22:30+03:00",
+          "bet": "П2 (победа Монтевидео Сити Торке)",
+          "odds": "1.54",
+          "confidence": 3,
+          "reason": "Вторая команда чемпионата (9-2-3, +12) против 8-й с отрицательной разницей мячей.",
+          "facts": [
+            "Монтевидео Сити Торке: 2-е место, 29 очков, 9 побед в 14 турах, разница +12 — ESPN",
+            "Прогресо: 8-е место, 20 очков, 6 поражений, разница −2 — ESPN",
+            "Торке проиграл лишь 3 матча из 14 — ESPN"
+          ],
+          "uncertainty": "Нет данных о составах.",
+          "sources": [
+            {
+              "title": "ESPN — Progreso vs Montevideo City Torque (таблица, линия)",
+              "url": "https://www.espn.com/soccer/match/_/gameId/401934703"
+            },
+            {
+              "title": "ESPN — Uruguay Primera scoreboard",
+              "url": "https://www.espn.com/soccer/scoreboard/_/league/uru.1/date/20261119"
+            }
+          ]
+        },
+        {
+          "against": [
+            "Разница мячей почти равна: −5 у Васко, −4 у Интера",
+            "Интер мотивирован борьбой за выживание"
+          ],
+          "data_quality": {
+            "level": "low",
+            "note": "нет xG, формы за последние туры и составов; данные — таблица ESPN"
+          },
+          "match": "Васко да Гама — Интернасьонал",
+          "tournament": "Чемпионат Бразилии (Серия A) 2026, 35-й тур",
+          "start": "20.11, 01:30 МСК",
+          "start_iso": "2026-11-20T01:30+03:00",
+          "bet": "П1 (победа Васко)",
+          "odds": "1.56",
+          "confidence": 3,
+          "reason": "Интернасьонал (17-е место, 9 побед за 34 тура) борется за выживание и сводит много матчей вничью; Васко дома.",
+          "facts": [
+            "Васко: 11-е место, 44 очка, 12 побед — ESPN",
+            "Интернасьонал: 17-е место, 38 очков, 9 побед и 11 ничьих в 34 турах — ESPN",
+            "Интернасьонал в зоне вылета — ESPN"
+          ],
+          "uncertainty": "Нет данных о форме и составах.",
+          "sources": [
+            {
+              "title": "ESPN — Vasco vs Internacional (таблица, линия)",
+              "url": "https://www.espn.com/soccer/match/_/gameId/401841308"
+            },
+            {
+              "title": "ESPN — Brasileirão scoreboard",
+              "url": "https://www.espn.com/soccer/scoreboard/_/league/bra.1/date/20261119"
+            }
+          ]
+        },
+        {
+          "against": [
+            "Касима проиграла 5 матчей из 14"
+          ],
+          "data_quality": {
+            "level": "low",
+            "note": "нет xG, формы за последние туры и составов; данные — таблица ESPN"
+          },
+          "match": "Касима Антлерс — Симидзу С-Палс",
+          "tournament": "J1 Лига, специальный сезон 2026",
+          "start": "20.11, 13:00 МСК",
+          "start_iso": "2026-11-20T13:00+03:00",
+          "bet": "П1 (победа Касимы)",
+          "odds": "1.50",
+          "confidence": 3,
+          "reason": "Касима (6-е место, +5) дома против 15-й команды, проигравшей 8 матчей из 14.",
+          "facts": [
+            "Касима: 6-е место, 23 очка, 7 побед, разница +5 — ESPN",
+            "Симидзу: 15-е место, 14 очков, 8 поражений, разница −13 — ESPN",
+            "Симидзу выиграл лишь 4 матча из 14 — ESPN"
+          ],
+          "uncertainty": "Нет данных о составах.",
+          "sources": [
+            {
+              "title": "ESPN — Kashima vs Shimizu (таблица, линия)",
+              "url": "https://www.espn.com/soccer/match/_/gameId/401877534"
+            },
+            {
+              "title": "ESPN — J1 League scoreboard",
+              "url": "https://www.espn.com/soccer/scoreboard/_/league/jpn.1/date/20261120"
+            }
+          ]
+        },
+        {
+          "against": [
+            "Дерби префектуры Тиба — в дерби фаворит часто буксует"
+          ],
+          "data_quality": {
+            "level": "low",
+            "note": "нет xG, формы за последние туры и составов; данные — таблица ESPN"
+          },
+          "match": "Касива Рейсол — ДЖЕФ Юнайтед Чиба",
+          "tournament": "J1 Лига, специальный сезон 2026",
+          "start": "20.11, 13:00 МСК",
+          "start_iso": "2026-11-20T13:00+03:00",
+          "bet": "П1 (победа Касивы)",
+          "odds": "1.50",
+          "confidence": 4,
+          "reason": "Вторая команда лиги (10 побед в 14 турах) против 17-й.",
+          "facts": [
+            "Касива: 2-е место, 31 очко, 10-1-3, разница +11 — ESPN",
+            "ДЖЕФ Чиба: 17-е место, 13 очков, 3 победы, разница −8 — ESPN",
+            "Касива проиграла лишь 3 матча из 14 — ESPN"
+          ],
+          "uncertainty": "Нет данных о составах.",
+          "sources": [
+            {
+              "title": "ESPN — Kashiwa vs JEF Chiba (таблица, линия)",
+              "url": "https://www.espn.com/soccer/match/_/gameId/401877553"
+            },
+            {
+              "title": "ESPN — J1 League scoreboard",
+              "url": "https://www.espn.com/soccer/scoreboard/_/league/jpn.1/date/20261120"
+            }
+          ]
+        },
+        {
+          "against": [
+            "Мито борется за выживание"
+          ],
+          "data_quality": {
+            "level": "low",
+            "note": "нет xG, формы за последние туры и составов; данные — таблица ESPN"
+          },
+          "match": "Виссел Кобе — Мито Холлихок",
+          "tournament": "J1 Лига, специальный сезон 2026",
+          "start": "20.11, 13:00 МСК",
+          "start_iso": "2026-11-20T13:00+03:00",
+          "bet": "П1 (победа Виссела)",
+          "odds": "1.42",
+          "confidence": 4,
+          "reason": "Виссел (5-е место, 3 поражения) принимает предпоследнюю команду, выигравшую 2 матча из 14.",
+          "facts": [
+            "Виссел: 5-е место, 27 очков, 8-3-3, разница +9 — ESPN",
+            "Мито: 19-е из 20, 9 очков, 2 победы и 9 поражений, разница −14 — ESPN",
+            "Виссел проиграл 3 матча из 14 — ESPN"
+          ],
+          "uncertainty": "Нет данных о составах.",
+          "sources": [
+            {
+              "title": "ESPN — Vissel vs Mito (таблица, линия)",
+              "url": "https://www.espn.com/soccer/match/_/gameId/401877548"
+            },
+            {
+              "title": "ESPN — J1 League scoreboard",
+              "url": "https://www.espn.com/soccer/scoreboard/_/league/jpn.1/date/20261120"
+            }
+          ]
+        },
+        {
+          "against": [
+            "Макара — второй по силе соперник чемпионата"
+          ],
+          "data_quality": {
+            "level": "low",
+            "note": "нет xG, формы за последние туры и составов; данные — таблица ESPN"
+          },
+          "match": "Индепендьенте дель Валье — Макара",
+          "tournament": "Чемпионат Эквадора 2026, финальная стадия",
+          "start": "20.11, 20:00 МСК",
+          "start_iso": "2026-11-20T20:00+03:00",
+          "bet": "П1 (победа Индепендьенте)",
+          "odds": "1.48",
+          "confidence": 3,
+          "reason": "Лидер чемпионата (27 побед, +44) дома против второй команды, которая отстаёт на 17 очков.",
+          "facts": [
+            "Индепендьенте дель Валье: 1-е место, 84 очка, 27-3-5, разница +44 — ESPN",
+            "Макара: 2-е место, 67 очков, разница +15 — ESPN",
+            "Индепендьенте проиграл 5 матчей из 35 — ESPN"
+          ],
+          "uncertainty": "Нет данных о составах и мотивации.",
+          "sources": [
+            {
+              "title": "ESPN — IDV vs Macará (таблица, линия)",
+              "url": "https://www.espn.com/soccer/match/_/gameId/401921320"
+            },
+            {
+              "title": "ESPN — LigaPro scoreboard",
+              "url": "https://www.espn.com/soccer/scoreboard/_/league/ecu.1/date/20261120"
+            }
+          ]
+        },
+        {
+          "against": [
+            "Молодёжные команды непредсказуемы, могут усилиться игроками основы"
+          ],
+          "data_quality": {
+            "level": "low",
+            "note": "нет xG, формы за последние туры и составов; данные — таблица ESPN"
+          },
+          "match": "Хераклес — Йонг ПСВ",
+          "tournament": "Эрсте дивизи (2-й дивизион Нидерландов) 2026/27, тир-2",
+          "start": "20.11, 22:00 МСК",
+          "start_iso": "2026-11-20T22:00+03:00",
+          "bet": "П1 (победа Хераклеса)",
+          "odds": "1.14",
+          "confidence": 4,
+          "reason": "Лидер второго дивизиона (12-2-1, +30) дома против молодёжной команды ПСВ с 4 победами в 14 матчах.",
+          "facts": [
+            "Хераклес: 1-е место, 38 очков, 12-2-1, разница +30 — ESPN",
+            "Йонг ПСВ: 13-е место, 17 очков, 4 победы, разница −4 — ESPN",
+            "Хераклес проиграл 1 матч из 15 — ESPN"
+          ],
+          "uncertainty": "Состав Йонг ПСВ неизвестен.",
+          "sources": [
+            {
+              "title": "ESPN — Heracles vs Jong PSV (таблица, линия)",
+              "url": "https://www.espn.com/soccer/match/_/gameId/401875841"
+            },
+            {
+              "title": "ESPN — Eerste Divisie scoreboard",
+              "url": "https://www.espn.com/soccer/scoreboard/_/league/ned.2/date/20261120"
+            }
+          ]
+        },
         {
           "match": "Бавария — Кёльн",
           "tournament": "Бундеслига 2026/27, 10-й тур",
@@ -75,7 +341,7 @@
           ]
         }
       ],
-      "updated_at": "2026-11-19T13:35+03:00"
+      "updated_at": "2026-11-19T16:21+03:00"
     },
     {
       "id": "basketball",
@@ -352,50 +618,13 @@
           ]
         }
       ],
-      "updated_at": "2026-11-19T13:35+03:00"
+      "updated_at": "2026-11-19T16:21+03:00"
     },
     {
       "id": "tennis",
       "name": "Теннис",
       "emoji": "🎾",
       "picks": [
-        {
-          "match": "Рафаэль Ходар — Бен Шелтон",
-          "tournament": "Итоговый турнир ATP, группа Джона Макинроя, 3-й тур",
-          "start": "19.11, 16:00 МСК",
-          "start_iso": "2026-11-19T16:00+03:00",
-          "bet": "П2 (победа Шелтона)",
-          "odds": "",
-          "confidence": 3,
-          "reason": "Дебютант Ходар проиграл оба матча, а Шелтон обыграл Фиса и уступил только первой ракетке мира Звереву.",
-          "facts": [
-            "Ходар: 0-2 — 4:6, 4:6 Звереву и 6:4, 2:6, 2:6 Фису — ESPN",
-            "Шелтон: 1-1 — 6:2, 3:6, 6:3 над Фисом и 2:6, 6:7 от Зверева — ESPN, Tennis Majors",
-            "У Шелтона 46 побед в сезоне — личный рекорд — Tennistourtalk"
-          ],
-          "against": [
-            "Ходар уже выбыл и может сыграть без давления"
-          ],
-          "uncertainty": "Коэффициент не нашёлся; мотивация зависит от расклада в группе.",
-          "data_quality": {
-            "level": "medium",
-            "note": "нет коэффициента и статистики подачи"
-          },
-          "sources": [
-            {
-              "title": "ESPN — ATP scoreboard",
-              "url": "https://www.espn.com/tennis/scoreboard"
-            },
-            {
-              "title": "Tennis Majors — Shelton vs Fils",
-              "url": "https://www.tennismajors.com/atp/nitto-atp-finals-atp/shelton-holds-off-fils-fightback-to-join-zverev-on-top-of-the-john-mcenroe-group-867094.html"
-            },
-            {
-              "title": "Tennistourtalk — Shelton",
-              "url": "https://tennistourtalk.com/139064/nitto-atp-finals-draw-revealed-in-turin"
-            }
-          ]
-        },
         {
           "match": "Александр Зверев — Артур Фис",
           "tournament": "Итоговый турнир ATP, Турин, групповой этап (хард, зал), группа A",
@@ -470,14 +699,14 @@
           ]
         }
       ],
-      "updated_at": "2026-11-19T13:35+03:00"
+      "updated_at": "2026-11-19T16:21+03:00"
     },
     {
       "id": "volleyball",
       "name": "Волейбол",
       "emoji": "🏐",
       "picks": [],
-      "updated_at": "2026-11-19T13:35+03:00"
+      "updated_at": "2026-11-19T16:21+03:00"
     },
     {
       "id": "hockey",
@@ -670,9 +899,110 @@
               "url": "https://www.sports.ru/hockey/tournament/nhl/table/"
             }
           ]
+        },
+        {
+          "match": "Сибирь — Автомобилист",
+          "tournament": "КХЛ, регулярный чемпионат 2026/27",
+          "start": "20.11, 15:30 МСК",
+          "start_iso": "2026-11-20T15:30+03:00",
+          "bet": "П2 (победа Автомобилиста в основное время)",
+          "odds": "2.05",
+          "confidence": 3,
+          "reason": "Автомобилист выиграл 6 последних очных матчей и забивает в 17 матчах подряд, а Сибирь — последняя на Востоке.",
+          "facts": [
+            "Автомобилист побеждает в 6 последних матчах с Сибирью: 5:2, 2:0, 5:0 — Sports.ru",
+            "Сибирь: 11-е место на Востоке, 24 очка — Sports.ru",
+            "Автомобилист забивает в 17 матчах подряд — Sports.ru"
+          ],
+          "against": [
+            "Сибирь 17.11 обыграла Трактор 4:1",
+            "Ничья после 60 минут — частый исход"
+          ],
+          "uncertainty": "Вратари не объявлены.",
+          "data_quality": {
+            "level": "medium",
+            "note": "нет бросков и вратарей"
+          },
+          "sources": [
+            {
+              "title": "Sports.ru — avtomobilist-vs-sibir",
+              "url": "https://www.sports.ru/hockey/match/avtomobilist-vs-sibir/"
+            },
+            {
+              "title": "Sports.ru — таблица КХЛ",
+              "url": "https://www.sports.ru/hockey/tournament/khl/table/"
+            }
+          ]
+        },
+        {
+          "match": "Северсталь — Амур",
+          "tournament": "КХЛ, регулярный чемпионат 2026/27",
+          "start": "20.11, 19:00 МСК",
+          "start_iso": "2026-11-20T19:00+03:00",
+          "bet": "1X (Северсталь не проиграет в основное время)",
+          "odds": "1.35",
+          "confidence": 3,
+          "reason": "Северсталь не проигрывает Амуру 6 матчей подряд и выиграла 4 из 5 последних игр.",
+          "facts": [
+            "Северсталь не проигрывает в 6 последних матчах с Амуром; в сентябре — 4:1 в Хабаровске — Sports.ru",
+            "Северсталь выиграла 4 из 5 последних матчей (4:2 Сочи, 4:3 Б Трактор, 4:3 Лада, 4:1 Сочи) — Sports.ru",
+            "Северсталь: 4-е место на Западе, 34 очка — Sports.ru"
+          ],
+          "against": [
+            "Амур не проигрывает в 5 из 7 последних выездных матчей",
+            "Амур — 2-й на Востоке"
+          ],
+          "uncertainty": "Вратари не объявлены.",
+          "data_quality": {
+            "level": "medium",
+            "note": "нет бросков и вратарей"
+          },
+          "sources": [
+            {
+              "title": "Sports.ru — severstal-vs-amur",
+              "url": "https://www.sports.ru/hockey/match/severstal-vs-amur/"
+            },
+            {
+              "title": "Sports.ru — таблица КХЛ",
+              "url": "https://www.sports.ru/hockey/tournament/khl/table/"
+            }
+          ]
+        },
+        {
+          "match": "Шанхай Дрэгонс — ЦСКА",
+          "tournament": "КХЛ, регулярный чемпионат 2026/27",
+          "start": "20.11, 19:30 МСК",
+          "start_iso": "2026-11-20T19:30+03:00",
+          "bet": "П2 (победа ЦСКА в основное время)",
+          "odds": "1.70",
+          "confidence": 3,
+          "reason": "Лидер Запада ЦСКА выиграл 3 последних матча и не проигрывает Шанхаю 5 встреч, а Шанхай проиграл 5 матчей подряд.",
+          "facts": [
+            "ЦСКА: 1-е место на Западе, 42 очка; 3 победы подряд — Sports.ru",
+            "Шанхай проиграл 5 последних матчей: 0:5 Локомотиву, 2:4 Автомобилисту, 2:5 Трактору — Sports.ru",
+            "Очные встречи: 22 победы ЦСКА, 6 — Шанхая; ЦСКА не проигрывает 5 матчей — Sports.ru"
+          ],
+          "against": [
+            "Последние 2 очные встречи решились в овертайме"
+          ],
+          "uncertainty": "Ничья после 60 минут — главный риск.",
+          "data_quality": {
+            "level": "medium",
+            "note": "нет бросков и вратарей"
+          },
+          "sources": [
+            {
+              "title": "Sports.ru — cska-vs-shanghai-dragons",
+              "url": "https://www.sports.ru/hockey/match/cska-vs-shanghai-dragons/"
+            },
+            {
+              "title": "Sports.ru — таблица КХЛ",
+              "url": "https://www.sports.ru/hockey/tournament/khl/table/"
+            }
+          ]
         }
       ],
-      "updated_at": "2026-11-19T13:35+03:00"
+      "updated_at": "2026-11-19T16:21+03:00"
     },
     {
       "id": "cs2",
@@ -680,82 +1010,225 @@
       "emoji": "🔫",
       "picks": [
         {
-          "match": "Inner Circle — GamerLegion",
-          "tournament": "Stake Ranked 6, плей-офф, тир-2",
-          "start": "19.11, 14:00 МСК",
-          "start_iso": "2026-11-19T14:00+03:00",
+          "match": "Forze Reload — Ex Inox",
+          "tournament": "CCT Europe 2026 Series 14, плей-офф, тир-3",
+          "start": "19.11, 18:00 МСК",
+          "start_iso": "2026-11-19T18:00+03:00",
           "format": "BO3, онлайн",
-          "bet": "П2 (победа GamerLegion)",
-          "odds": "1.65",
+          "bet": "П1 (победа Forze Reload)",
+          "odds": "1.48",
           "confidence": 3,
-          "reason": "GamerLegion в октябре обыгрывал FaZe и Envy и вчера прошёл Unity, а Inner Circle проиграл Sangal 0:2.",
+          "reason": "Forze Reload вчера уже обыграл Ex Inox 2:1 и выиграл 4 из 5 последних матчей.",
           "facts": [
-            "GamerLegion: 2:1 над FaZe и 2:0 над Envy (Tesla Cup, 28–29.10), 2:1 над Unity (18.11) — Cyber.Sports.ru",
-            "Inner Circle 18.11 проиграл Sangal 0:2, в октябре проиграл Astralis и MIBR — Cyber.Sports.ru",
-            "Владелец Inner Circle арестован в Италии — новость bo3.gg 18.11"
+            "18.11 Forze Reload обыграл Ex Inox 2:1 (Nodwin Clutch 14) — Cyber.Sports.ru",
+            "Forze Reload: 2:1 G2 Ares, 2:1 Nexus, 2:0 Private — Cyber.Sports.ru",
+            "Ex Inox проиграл Hype Tech 1:2 и Forze 1:2 на этой неделе — Cyber.Sports.ru"
           ],
           "against": [
-            "Inner Circle 17.11 уверенно обыграл Apogee 2:0"
+            "Ex Inox сегодня обыграл Maybe 2:0"
           ],
-          "uncertainty": "Нет статистики карт и вето.",
+          "uncertainty": "Нет статистики карт.",
           "data_quality": {
-            "level": "medium",
-            "note": "HLTV не проверялся"
+            "level": "low",
+            "note": "тир-3: нет статистики карт и HLTV"
           },
           "sources": [
             {
-              "title": "Cyber.Sports.ru — team-gamerlegion-inner-circle-esports-2026-11-19",
-              "url": "https://cyber.sports.ru/cs/match/team-gamerlegion-inner-circle-esports-2026-11-19/"
-            },
-            {
-              "title": "bo3.gg — Stake Ranked 6, следующие матчи (сетка плей-офф)",
-              "url": "https://bo3.gg/matches/finished"
+              "title": "Cyber.Sports.ru — forze-reload-exinox-2026-11-19",
+              "url": "https://cyber.sports.ru/cs/match/forze-reload-exinox-2026-11-19/"
             }
           ]
         },
         {
-          "match": "MOUZ NXT — WBT",
-          "tournament": "European Pro League 11, плей-офф, тир-3",
-          "start": "19.11, 14:30 МСК",
-          "start_iso": "2026-11-19T14:30+03:00",
+          "match": "Nexus Gaming — Aimclub",
+          "tournament": "CCT Europe 2026 Series 14, плей-офф, тир-3",
+          "start": "19.11, 21:00 МСК",
+          "start_iso": "2026-11-19T21:00+03:00",
           "format": "BO3, онлайн",
-          "bet": "П2 (победа WBT)",
+          "bet": "П1 (победа Nexus)",
           "odds": "1.25",
           "confidence": 3,
-          "reason": "WBT обыграл Ex Ence 2:0, а MOUZ NXT вчера проиграл Ex Rustec 0:2 и уступил Walczaki.",
+          "reason": "Nexus играет на уровне Rush Brno и обыгрывает Iberian Soul и Walczaki, а Aimclub проигрывает командам ESL Challenger League.",
           "facts": [
-            "WBT 17.11 обыграл Ex Ence 2:0 — Cyber.Sports.ru",
-            "MOUZ NXT: 0:2 Ex Rustec (18.11), 1:2 Walczaki (15.11) — Cyber.Sports.ru",
-            "WBT в октябре играл на уровне Draculan 7 против Nexus и BC.Game — Cyber.Sports.ru"
+            "Nexus: 2:0 Iberian Soul (18.11), 2:0 Walczaki (17.11) — Cyber.Sports.ru",
+            "Aimclub: 0:2 Alliance, 1:2 9ine, 0:1 WW Team в ноябре — Cyber.Sports.ru",
+            "Nexus 13.11 обыграл Ex Rustec 2:0 — Cyber.Sports.ru"
           ],
           "against": [
-            "MOUZ NXT обыграл Infinite и NAVI Junior в этом турнире"
+            "Nexus проиграл Sinners 0:2 и Forze 1:2"
           ],
-          "uncertainty": "Нет статистики карт; выборка матчей WBT маленькая.",
+          "uncertainty": "Нет статистики карт.",
           "data_quality": {
             "level": "low",
-            "note": "нет статистики карт"
+            "note": "тир-3: нет статистики карт"
           },
           "sources": [
             {
-              "title": "Cyber.Sports.ru — mouz-nxt-wbt-2026-11-19",
-              "url": "https://cyber.sports.ru/cs/match/mouz-nxt-wbt-2026-11-19/"
-            },
+              "title": "Cyber.Sports.ru — aimclub-nexus-gaming-2026-11-19",
+              "url": "https://cyber.sports.ru/cs/match/aimclub-nexus-gaming-2026-11-19/"
+            }
+          ]
+        },
+        {
+          "match": "Baks — Nice Try",
+          "tournament": "CCT Europe 2026 Series 14, плей-офф, тир-3",
+          "start": "20.11, 12:00 МСК",
+          "start_iso": "2026-11-20T12:00+03:00",
+          "format": "BO3, онлайн",
+          "bet": "П1 (победа Baks)",
+          "odds": "1.38",
+          "confidence": 3,
+          "reason": "Baks выиграл 4 из 5 последних матчей, в т.ч. 2:0 The Last Resort и Masonic, а Nice Try проиграл Forze 0:2.",
+          "facts": [
+            "Baks: 2:0 The Last Resort (18.11), 2:0 Masonic (16.11), 2:0 Butterfly (15.11) — Cyber.Sports.ru",
+            "Nice Try: 0:2 Forze Reload (14.11), ничья с Ex Zero Tenacity — Cyber.Sports.ru",
+            "Nice Try 18.11 обыграл Ex Rustec 2:0 — Cyber.Sports.ru"
+          ],
+          "against": [
+            "Nice Try в хорошей серии — 2 победы подряд"
+          ],
+          "uncertainty": "Нет статистики карт.",
+          "data_quality": {
+            "level": "low",
+            "note": "тир-3: нет статистики карт"
+          },
+          "sources": [
             {
-              "title": "Cyber.Sports.ru — матчи CS2 19.11",
-              "url": "https://cyber.sports.ru/cs/match/2026-11-19/"
+              "title": "Cyber.Sports.ru — baks-esports-nt-2026-11-20",
+              "url": "https://cyber.sports.ru/cs/match/baks-esports-nt-2026-11-20/"
+            }
+          ]
+        },
+        {
+          "match": "L&G — Genone",
+          "tournament": "CCT Europe 2026 Series 14, плей-офф, тир-3",
+          "start": "20.11, 21:00 МСК",
+          "start_iso": "2026-11-20T21:00+03:00",
+          "format": "BO3, онлайн",
+          "bet": "П1 (победа L&G)",
+          "odds": "1.48",
+          "confidence": 3,
+          "reason": "L&G ведёт в личных встречах 8-5 и обыграл Genone 2:1 неделю назад, а Genone проиграл 4 из 5 последних матчей.",
+          "facts": [
+            "Личные встречи: 8 побед L&G, 5 — Genone; 12.11 L&G выиграл 2:1 — Cyber.Sports.ru",
+            "Genone: 0:2 33, 1:2 Balkan Outlaws, 0:2 ACES, 0:2 Inner Circle Academy — Cyber.Sports.ru",
+            "L&G 18.11 обыграл Walczaki 2:1 — Cyber.Sports.ru"
+          ],
+          "against": [
+            "L&G проиграл Apogee, Butterfly и The Last Resort по 0:2"
+          ],
+          "uncertainty": "Нет статистики карт.",
+          "data_quality": {
+            "level": "low",
+            "note": "тир-3: нет статистики карт"
+          },
+          "sources": [
+            {
+              "title": "Cyber.Sports.ru — genone-lg-2026-11-20",
+              "url": "https://cyber.sports.ru/cs/match/genone-lg-2026-11-20/"
             }
           ]
         }
       ],
-      "updated_at": "2026-11-19T13:35+03:00"
+      "updated_at": "2026-11-19T16:21+03:00"
     },
     {
       "id": "dota2",
       "name": "Dota 2",
       "emoji": "🐉",
-      "picks": [],
-      "updated_at": "2026-11-19T13:35+03:00"
+      "picks": [
+        {
+          "match": "Nemesis — Team Spirit",
+          "tournament": "BLAST Slam 9, групповой этап, тир-1",
+          "start": "20.11, 14:00 МСК",
+          "start_iso": "2026-11-20T14:00+03:00",
+          "format": "BO3, LAN",
+          "bet": "П2 (победа Spirit)",
+          "odds": "1.04",
+          "confidence": 4,
+          "reason": "Spirit дошёл до финала Essence 3, а Nemesis с начала октября не играл и проиграл Spirit оба последних матча.",
+          "facts": [
+            "Spirit в Essence 3: 2:0 PARIVISION, 2:0 LGD, 2:0 Aurora, финал 1:3 PARIVISION (18.11) — Cyber.Sports.ru",
+            "Nemesis: последний матч 02.10 — 0:2 1w — Cyber.Sports.ru",
+            "Очные: Spirit 2:1 (29.09) и 2:0 (08.07) — Cyber.Sports.ru"
+          ],
+          "against": [
+            "Spirit вчера сыграл финал BO5 — возможна усталость"
+          ],
+          "uncertainty": "Перелёт на LAN после финала.",
+          "data_quality": {
+            "level": "medium",
+            "note": "нет данных о патче"
+          },
+          "sources": [
+            {
+              "title": "Cyber.Sports.ru — team-spirit-team-nemesis-2026-11-20",
+              "url": "https://cyber.sports.ru/dota2/match/team-spirit-team-nemesis-2026-11-20/"
+            }
+          ]
+        },
+        {
+          "match": "OG — NAVI",
+          "tournament": "BLAST Slam 9, групповой этап, тир-1",
+          "start": "20.11, 17:00 МСК",
+          "start_iso": "2026-11-20T17:00+03:00",
+          "format": "BO3, LAN",
+          "bet": "П2 (победа NAVI)",
+          "odds": "1.28",
+          "confidence": 4,
+          "reason": "NAVI выиграл 4 последних матча на EPL Masters III, а OG проиграл 4 из 5 последних.",
+          "facts": [
+            "NAVI: 3:1 GamerLegion, 2:0 GamerLegion, 2:0 Yellow Submarine, 2:0 Nemiga (2–5.11) — Cyber.Sports.ru",
+            "OG: 0:2 GamerLegion, 0:2 Yellow Submarine, 0:2 Liquid, 0:2 GamerLegion — Cyber.Sports.ru",
+            "Последняя очная встреча (02.2026) — победа NAVI — Cyber.Sports.ru"
+          ],
+          "against": [
+            "Личные встречи за всё время равны: 5-5"
+          ],
+          "uncertainty": "NAVI не играл с 5.11.",
+          "data_quality": {
+            "level": "medium",
+            "note": "нет данных о патче"
+          },
+          "sources": [
+            {
+              "title": "Cyber.Sports.ru — natus-vincere-og-2026-11-20",
+              "url": "https://cyber.sports.ru/dota2/match/natus-vincere-og-2026-11-20/"
+            }
+          ]
+        },
+        {
+          "match": "Do Konca — Team Liquid",
+          "tournament": "BLAST Slam 9, групповой этап, тир-1",
+          "start": "20.11, 20:00 МСК",
+          "start_iso": "2026-11-20T20:00+03:00",
+          "format": "BO3, LAN",
+          "bet": "П2 (победа Liquid)",
+          "odds": "1.28",
+          "confidence": 3,
+          "reason": "Do Konca проиграл 3 из 4 матчей на Essence 3, включая 0:2 PARIVISION и Aurora.",
+          "facts": [
+            "Do Konca: 1:2 Froglings, 0:2 Aurora, 0:2 PARIVISION (12–16.11) — Cyber.Sports.ru",
+            "Liquid: 2:0 OG и 2:0 Astra Invicta (29–30.10) — Cyber.Sports.ru",
+            "Do Konca выиграл лишь у Yellow Submarine — Cyber.Sports.ru"
+          ],
+          "against": [
+            "Liquid проиграл Legion и LGD на Essence 3"
+          ],
+          "uncertainty": "Форма Liquid нестабильна.",
+          "data_quality": {
+            "level": "medium",
+            "note": "нет данных о патче"
+          },
+          "sources": [
+            {
+              "title": "Cyber.Sports.ru — team-liquid-do-konca-2026-11-20",
+              "url": "https://cyber.sports.ru/dota2/match/team-liquid-do-konca-2026-11-20/"
+            }
+          ]
+        }
+      ],
+      "updated_at": "2026-11-19T16:21+03:00"
     }
   ],
   "analysis": [
@@ -917,6 +1390,155 @@
       "total_odds": 3.12,
       "reason": "Мемфис против Голден Стэйт без Карри во втором матче за две ночи, Оттава дома против Филадельфии и Атлетик дома против Эспаньола.",
       "weak_link": "Атлетик — выиграл лишь 4 из 11 матчей сезона."
+    },
+    {
+      "id": "x-20261119-bold",
+      "tier": "bold",
+      "title": "Рисковый: вечер и ночь",
+      "legs": [
+        {
+          "sport": "cs2",
+          "match": "Forze Reload — Ex Inox",
+          "bet": "П1 (победа Forze Reload)",
+          "odds": 1.48,
+          "start_iso": "2026-11-19T18:00+03:00"
+        },
+        {
+          "sport": "cs2",
+          "match": "Nexus Gaming — Aimclub",
+          "bet": "П1 (победа Nexus)",
+          "odds": 1.25,
+          "start_iso": "2026-11-19T21:00+03:00"
+        },
+        {
+          "sport": "football",
+          "match": "Пеньяроль — Серро-Ларго",
+          "bet": "П1 (победа Пеньяроля)",
+          "odds": 1.41,
+          "start_iso": "2026-11-19T22:30+03:00"
+        },
+        {
+          "sport": "football",
+          "match": "Прогресо — Монтевидео Сити Торке",
+          "bet": "П2 (победа Монтевидео Сити Торке)",
+          "odds": 1.54,
+          "start_iso": "2026-11-19T22:30+03:00"
+        },
+        {
+          "sport": "football",
+          "match": "Васко да Гама — Интернасьонал",
+          "bet": "П1 (победа Васко)",
+          "odds": 1.56,
+          "start_iso": "2026-11-20T01:30+03:00"
+        },
+        {
+          "sport": "hockey",
+          "match": "Оттава — Филадельфия",
+          "bet": "Победа Оттавы (включая ОТ и буллиты)",
+          "odds": 1.56,
+          "start_iso": "2026-11-20T03:00+03:00"
+        }
+      ],
+      "total_odds": 9.78,
+      "reason": "Шесть фаворитов тир-2/3 с явным перевесом по таблице и форме: два матча CCT Europe, два уругвайских фаворита, Васко дома против Интера из зоны вылета и Оттава дома.",
+      "weak_link": "Васко да Гама — разница мячей у команд почти равна, а Интер борется за выживание."
+    },
+    {
+      "id": "x-20261120-bold1",
+      "tier": "bold",
+      "title": "Рисковый: Япония и киберспорт",
+      "legs": [
+        {
+          "sport": "football",
+          "match": "Касима Антлерс — Симидзу С-Палс",
+          "bet": "П1 (победа Касимы)",
+          "odds": 1.5,
+          "start_iso": "2026-11-20T13:00+03:00"
+        },
+        {
+          "sport": "football",
+          "match": "Касива Рейсол — ДЖЕФ Юнайтед Чиба",
+          "bet": "П1 (победа Касивы)",
+          "odds": 1.5,
+          "start_iso": "2026-11-20T13:00+03:00"
+        },
+        {
+          "sport": "football",
+          "match": "Виссел Кобе — Мито Холлихок",
+          "bet": "П1 (победа Виссела)",
+          "odds": 1.42,
+          "start_iso": "2026-11-20T13:00+03:00"
+        },
+        {
+          "sport": "cs2",
+          "match": "Baks — Nice Try",
+          "bet": "П1 (победа Baks)",
+          "odds": 1.38,
+          "start_iso": "2026-11-20T12:00+03:00"
+        },
+        {
+          "sport": "dota2",
+          "match": "OG — NAVI",
+          "bet": "П2 (победа NAVI)",
+          "odds": 1.28,
+          "start_iso": "2026-11-20T17:00+03:00"
+        },
+        {
+          "sport": "dota2",
+          "match": "Do Konca — Team Liquid",
+          "bet": "П2 (победа Liquid)",
+          "odds": 1.28,
+          "start_iso": "2026-11-20T20:00+03:00"
+        }
+      ],
+      "total_odds": 7.22,
+      "reason": "Три фаворита J1 Лиги против команд из нижней части таблицы, Baks в CCT и два фаворита BLAST Slam 9 по Dota 2.",
+      "weak_link": "Касива — Чиба: дерби, в котором фаворит часто буксует."
+    },
+    {
+      "id": "x-20261120-bold2",
+      "tier": "bold",
+      "title": "Рисковый: вечер пятницы",
+      "legs": [
+        {
+          "sport": "hockey",
+          "match": "Сибирь — Автомобилист",
+          "bet": "П2 (победа Автомобилиста в основное время)",
+          "odds": 2.05,
+          "start_iso": "2026-11-20T15:30+03:00"
+        },
+        {
+          "sport": "hockey",
+          "match": "Шанхай Дрэгонс — ЦСКА",
+          "bet": "П2 (победа ЦСКА в основное время)",
+          "odds": 1.7,
+          "start_iso": "2026-11-20T19:30+03:00"
+        },
+        {
+          "sport": "football",
+          "match": "Индепендьенте дель Валье — Макара",
+          "bet": "П1 (победа Индепендьенте)",
+          "odds": 1.48,
+          "start_iso": "2026-11-20T20:00+03:00"
+        },
+        {
+          "sport": "cs2",
+          "match": "L&G — Genone",
+          "bet": "П1 (победа L&G)",
+          "odds": 1.48,
+          "start_iso": "2026-11-20T21:00+03:00"
+        },
+        {
+          "sport": "football",
+          "match": "Атлетик — Эспаньол",
+          "bet": "П1 (победа Атлетика)",
+          "odds": 1.48,
+          "start_iso": "2026-11-20T23:00+03:00"
+        }
+      ],
+      "total_odds": 11.3,
+      "reason": "Два хоккейных исхода в основное время (Автомобилист и ЦСКА), лидер Эквадора дома, L&G против Genone и Атлетик дома.",
+      "weak_link": "Сибирь — Автомобилист: ставка на победу в основное время при коэффициенте 2.05."
     }
   ]
 }
