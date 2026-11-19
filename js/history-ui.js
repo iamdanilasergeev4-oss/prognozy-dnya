@@ -159,7 +159,7 @@
     const verdict = Math.abs(diff) < 3
       ? "попадания совпадают с тем, что закладывала линия — перевеса над рынком нет"
       : diff > 0 ? `прогнозы заходят на ${diff} п.п. чаще, чем ожидала линия` : `прогнозы заходят на ${-diff} п.п. реже, чем ожидала линия`;
-    let html = `<p class="chart-note"><b>Сравнение с рынком.</b> По ${m.n} ${plural(m.n, "прогнозу", "прогнозам", "прогнозам")} с коэффициентом линия ожидала ${m.expected} ${plural(Math.round(m.expected), "победу", "победы", "побед")} (${m.implied}%), фактически — ${m.won} (${m.hit}%): ${verdict}. Результат при одинаковой ставке на каждый прогноз: ${m.roi > 0 ? "+" : ""}${m.roi}%. Brier линии: ${m.brier}.</p>`;
+    let html = `<p class="chart-note"><b>Сравнение с рынком.</b> По ${m.n} ${plural(m.n, "прогнозу", "прогнозам", "прогнозам")} с коэффициентом линия ожидала ≈${Math.round(m.expected)} ${plural(Math.round(m.expected), "победу", "победы", "побед")} (${m.implied}%), фактически — ${m.won} (${m.hit}%): ${verdict}. Результат при одинаковой ставке на каждый прогноз: ${m.roi > 0 ? "+" : ""}${m.roi}%. Brier линии: ${m.brier}.</p>`;
     if ((s.byOdds || []).length) {
       html += `<ul class="cal">` + s.byOdds.map((b) => `
       <li>
@@ -178,7 +178,7 @@
   function sportMarketNote(rows) {
     const r = (rows || []).filter((s) => s.marketHit != null);
     if (!r.length) return "";
-    return `<p class="chart-note">Против линии по видам спорта: ` + r.map((s) => `${esc(sportName(s.sport, s.name))} — зашло ${s.marketHit}% при ожидании ${s.marketExpected}%, результат ${s.roi > 0 ? "+" : ""}${s.roi}%`).join("; ") + `.</p>`;
+    return `<p class="chart-note">Против линии по видам спорта: ` + r.map((s) => `${esc(sportName(s.sport, s.name))} (${s.mN} с кф) — зашло ${s.marketHit}% при ожидании ${s.marketExpected}%, результат ${s.roi > 0 ? "+" : ""}${s.roi}%`).join("; ") + `.</p>`;
   }
 
   function calibrationHTML(byConf, prob) {
