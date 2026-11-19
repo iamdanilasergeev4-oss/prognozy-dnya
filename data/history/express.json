@@ -579,6 +579,55 @@
       "published_at": "2026-11-19T16:21+03:00",
       "status": "pending",
       "settled_odds": null
+    },
+    {
+      "id": "x-20261119-bold1",
+      "tier": "bold",
+      "title": "Рисковый: оценка против линии",
+      "legs": [
+        {
+          "sport": "volleyball",
+          "match": "Норвид — Проект Варшава",
+          "bet": "П2 (победа Проекта)",
+          "odds": 1.46,
+          "start_iso": "2026-11-19T19:30+03:00",
+          "hid": "volleyball-20261119-3imkzz",
+          "status": "pending"
+        },
+        {
+          "sport": "football",
+          "match": "Молде — Будё-Глимт",
+          "bet": "П2 (победа Будё-Глимт)",
+          "odds": 1.8,
+          "start_iso": "2026-11-20T21:00+03:00",
+          "hid": "football-20261120-1q9wq2b",
+          "status": "pending"
+        },
+        {
+          "sport": "football",
+          "match": "Алмере Сити — НАК Бреда",
+          "bet": "П1 (победа Алмере Сити)",
+          "odds": 2.7,
+          "start_iso": "2026-11-20T22:00+03:00",
+          "hid": "football-20261120-x3dttn",
+          "status": "pending"
+        },
+        {
+          "sport": "football",
+          "match": "Хераклес — Йонг ПСВ",
+          "bet": "П1 (победа Хераклеса)",
+          "odds": 1.14,
+          "start_iso": "2026-11-20T22:00+03:00",
+          "hid": "football-20261120-pmen04",
+          "status": "pending"
+        }
+      ],
+      "total_odds": 8.09,
+      "reason": "Три события, где наша оценка выше рыночной (Проект, Будё, Алмере), плюс лидер Эрсте Дивизи Хераклес против резервистов ПСВ.",
+      "weak_link": "Алмере — П1 за 2.70: даже по нашей оценке ставка заходит лишь в 40% случаев.",
+      "published_at": "2026-11-19T16:59+03:00",
+      "status": "pending",
+      "settled_odds": null
     }
   ]
 }
