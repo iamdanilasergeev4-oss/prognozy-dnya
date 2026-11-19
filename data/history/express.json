@@ -387,6 +387,198 @@
       "published_at": "2026-11-19T13:35+03:00",
       "status": "pending",
       "settled_odds": null
+    },
+    {
+      "id": "x-20261119-bold",
+      "tier": "bold",
+      "title": "Рисковый: вечер и ночь",
+      "legs": [
+        {
+          "sport": "cs2",
+          "match": "Forze Reload — Ex Inox",
+          "bet": "П1 (победа Forze Reload)",
+          "odds": 1.48,
+          "start_iso": "2026-11-19T18:00+03:00",
+          "hid": "cs2-20261119-kg991",
+          "status": "pending"
+        },
+        {
+          "sport": "cs2",
+          "match": "Nexus Gaming — Aimclub",
+          "bet": "П1 (победа Nexus)",
+          "odds": 1.25,
+          "start_iso": "2026-11-19T21:00+03:00",
+          "hid": "cs2-20261119-1q57qgq",
+          "status": "pending"
+        },
+        {
+          "sport": "football",
+          "match": "Пеньяроль — Серро-Ларго",
+          "bet": "П1 (победа Пеньяроля)",
+          "odds": 1.41,
+          "start_iso": "2026-11-19T22:30+03:00",
+          "hid": "football-20261119-3yn212",
+          "status": "pending"
+        },
+        {
+          "sport": "football",
+          "match": "Прогресо — Монтевидео Сити Торке",
+          "bet": "П2 (победа Монтевидео Сити Торке)",
+          "odds": 1.54,
+          "start_iso": "2026-11-19T22:30+03:00",
+          "hid": "football-20261119-1ufke52",
+          "status": "pending"
+        },
+        {
+          "sport": "football",
+          "match": "Васко да Гама — Интернасьонал",
+          "bet": "П1 (победа Васко)",
+          "odds": 1.56,
+          "start_iso": "2026-11-20T01:30+03:00",
+          "hid": "football-20261120-2xcw9k",
+          "status": "pending"
+        },
+        {
+          "sport": "hockey",
+          "match": "Оттава — Филадельфия",
+          "bet": "Победа Оттавы (включая ОТ и буллиты)",
+          "odds": 1.56,
+          "start_iso": "2026-11-20T03:00+03:00",
+          "hid": "hockey-20261120-1f2t7v7",
+          "status": "pending"
+        }
+      ],
+      "total_odds": 9.78,
+      "reason": "Шесть фаворитов тир-2/3 с явным перевесом по таблице и форме: два матча CCT Europe, два уругвайских фаворита, Васко дома против Интера из зоны вылета и Оттава дома.",
+      "weak_link": "Васко да Гама — разница мячей у команд почти равна, а Интер борется за выживание.",
+      "published_at": "2026-11-19T16:21+03:00",
+      "status": "pending",
+      "settled_odds": null
+    },
+    {
+      "id": "x-20261120-bold1",
+      "tier": "bold",
+      "title": "Рисковый: Япония и киберспорт",
+      "legs": [
+        {
+          "sport": "football",
+          "match": "Касима Антлерс — Симидзу С-Палс",
+          "bet": "П1 (победа Касимы)",
+          "odds": 1.5,
+          "start_iso": "2026-11-20T13:00+03:00",
+          "hid": "football-20261120-mw7mdt",
+          "status": "pending"
+        },
+        {
+          "sport": "football",
+          "match": "Касива Рейсол — ДЖЕФ Юнайтед Чиба",
+          "bet": "П1 (победа Касивы)",
+          "odds": 1.5,
+          "start_iso": "2026-11-20T13:00+03:00",
+          "hid": "football-20261120-ejitpv",
+          "status": "pending"
+        },
+        {
+          "sport": "football",
+          "match": "Виссел Кобе — Мито Холлихок",
+          "bet": "П1 (победа Виссела)",
+          "odds": 1.42,
+          "start_iso": "2026-11-20T13:00+03:00",
+          "hid": "football-20261120-c2i1ew",
+          "status": "pending"
+        },
+        {
+          "sport": "cs2",
+          "match": "Baks — Nice Try",
+          "bet": "П1 (победа Baks)",
+          "odds": 1.38,
+          "start_iso": "2026-11-20T12:00+03:00",
+          "hid": "cs2-20261120-sz71o4",
+          "status": "pending"
+        },
+        {
+          "sport": "dota2",
+          "match": "OG — NAVI",
+          "bet": "П2 (победа NAVI)",
+          "odds": 1.28,
+          "start_iso": "2026-11-20T17:00+03:00",
+          "hid": "dota2-20261120-c5b9lo",
+          "status": "pending"
+        },
+        {
+          "sport": "dota2",
+          "match": "Do Konca — Team Liquid",
+          "bet": "П2 (победа Liquid)",
+          "odds": 1.28,
+          "start_iso": "2026-11-20T20:00+03:00",
+          "hid": "dota2-20261120-hevhpi",
+          "status": "pending"
+        }
+      ],
+      "total_odds": 7.22,
+      "reason": "Три фаворита J1 Лиги против команд из нижней части таблицы, Baks в CCT и два фаворита BLAST Slam 9 по Dota 2.",
+      "weak_link": "Касива — Чиба: дерби, в котором фаворит часто буксует.",
+      "published_at": "2026-11-19T16:21+03:00",
+      "status": "pending",
+      "settled_odds": null
+    },
+    {
+      "id": "x-20261120-bold2",
+      "tier": "bold",
+      "title": "Рисковый: вечер пятницы",
+      "legs": [
+        {
+          "sport": "hockey",
+          "match": "Сибирь — Автомобилист",
+          "bet": "П2 (победа Автомобилиста в основное время)",
+          "odds": 2.05,
+          "start_iso": "2026-11-20T15:30+03:00",
+          "hid": "hockey-20261120-goqzsy",
+          "status": "pending"
+        },
+        {
+          "sport": "hockey",
+          "match": "Шанхай Дрэгонс — ЦСКА",
+          "bet": "П2 (победа ЦСКА в основное время)",
+          "odds": 1.7,
+          "start_iso": "2026-11-20T19:30+03:00",
+          "hid": "hockey-20261120-by569",
+          "status": "pending"
+        },
+        {
+          "sport": "football",
+          "match": "Индепендьенте дель Валье — Макара",
+          "bet": "П1 (победа Индепендьенте)",
+          "odds": 1.48,
+          "start_iso": "2026-11-20T20:00+03:00",
+          "hid": "football-20261120-1b82yzm",
+          "status": "pending"
+        },
+        {
+          "sport": "cs2",
+          "match": "L&G — Genone",
+          "bet": "П1 (победа L&G)",
+          "odds": 1.48,
+          "start_iso": "2026-11-20T21:00+03:00",
+          "hid": "cs2-20261120-zomzgc",
+          "status": "pending"
+        },
+        {
+          "sport": "football",
+          "match": "Атлетик — Эспаньол",
+          "bet": "П1 (победа Атлетика)",
+          "odds": 1.48,
+          "start_iso": "2026-11-20T23:00+03:00",
+          "hid": "football-20261120-d2x0vn",
+          "status": "pending"
+        }
+      ],
+      "total_odds": 11.3,
+      "reason": "Два хоккейных исхода в основное время (Автомобилист и ЦСКА), лидер Эквадора дома, L&G против Genone и Атлетик дома.",
+      "weak_link": "Сибирь — Автомобилист: ставка на победу в основное время при коэффициенте 2.05.",
+      "published_at": "2026-11-19T16:21+03:00",
+      "status": "pending",
+      "settled_odds": null
     }
   ]
 }
