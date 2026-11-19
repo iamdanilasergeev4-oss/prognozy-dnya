@@ -151,6 +151,36 @@
     }).join("") + `</ul>`;
   }
 
+  /* Сравнение с базовым методом «ставка по линии» и калибровка — по коэффициентам и по нашим вероятностям */
+  function marketHTML(s) {
+    const m = s.market || {};
+    if (!m.n) return "";
+    const diff = Math.round((m.hit - m.implied) * 10) / 10;
+    const verdict = Math.abs(diff) < 3
+      ? "попадания совпадают с тем, что закладывала линия — перевеса над рынком нет"
+      : diff > 0 ? `прогнозы заходят на ${diff} п.п. чаще, чем ожидала линия` : `прогнозы заходят на ${-diff} п.п. реже, чем ожидала линия`;
+    let html = `<p class="chart-note"><b>Сравнение с рынком.</b> По ${m.n} ${plural(m.n, "прогнозу", "прогнозам", "прогнозам")} с коэффициентом линия ожидала ${m.expected} ${plural(Math.round(m.expected), "победу", "победы", "побед")} (${m.implied}%), фактически — ${m.won} (${m.hit}%): ${verdict}. Результат при одинаковой ставке на каждый прогноз: ${m.roi > 0 ? "+" : ""}${m.roi}%. Brier линии: ${m.brier}.</p>`;
+    if ((s.byOdds || []).length) {
+      html += `<ul class="cal">` + s.byOdds.map((b) => `
+      <li>
+        <span class="cal-bar"><span class="cal-fill" style="--h:${b.hit}%"></span></span>
+        <b>${b.hit}%</b>
+        <span class="cal-k">кф ${esc(b.range)}<small>линия ${b.implied}% · ${b.n}</small></span>
+      </li>`).join("") + `</ul><p class="chart-note">Столбики — доля зашедших прогнозов в диапазоне коэффициентов; «линия» — средняя вероятность по коэффициенту (1/кф).</p>`;
+    }
+    const e = s.estimate || {};
+    html += e.n
+      ? `<p class="chart-note"><b>Наши вероятности.</b> По ${e.n} ${plural(e.n, "прогнозу", "прогнозам", "прогнозам")}: в среднем ${e.avg}%, зашло ${e.hit}%; Brier ${e.brier} против ${m.brier} у линии (меньше — лучше).${(e.bins || []).map((b) => ` ${b.range}: зашло ${b.hit}% из ${b.n}.`).join("")}</p>`
+      : `<p class="chart-note"><b>Наши вероятности</b> начнут учитываться с прогнозов, опубликованных по новой методике (поле «Наша оценка» в карточке).</p>`;
+    return html;
+  }
+
+  function sportMarketNote(rows) {
+    const r = (rows || []).filter((s) => s.marketHit != null);
+    if (!r.length) return "";
+    return `<p class="chart-note">Против линии по видам спорта: ` + r.map((s) => `${esc(sportName(s.sport, s.name))} — зашло ${s.marketHit}% при ожидании ${s.marketExpected}%, результат ${s.roi > 0 ? "+" : ""}${s.roi}%`).join("; ") + `.</p>`;
+  }
+
   function calibrationHTML(byConf, prob) {
     const rows = byConf.filter((c) => c.n > 0);
     if (!rows.length) return emptyChart("Нет оценённых прогнозов за период");
@@ -264,8 +294,8 @@
       : "Точность = подтвердившиеся / (подтвердившиеся + неподтвердившиеся). Возвраты и отменённые матчи не учитываются.";
 
     $("#h-timeline").innerHTML = timelineSVG(s.timeline);
-    $("#h-sports").innerHTML = sportBarsHTML(s.bySport);
-    $("#h-cal").innerHTML = calibrationHTML(s.byConfidence, s.probability);
+    $("#h-sports").innerHTML = sportBarsHTML(s.bySport) + sportMarketNote(s.bySport);
+    $("#h-cal").innerHTML = calibrationHTML(s.byConfidence, s.probability) + marketHTML(s);
 
     const OPEN = new Set(["upcoming", "live", "awaiting", "review"]);
     const list = scope.slice().sort((a, b) => (H.startMs(b) || 0) - (H.startMs(a) || 0));
