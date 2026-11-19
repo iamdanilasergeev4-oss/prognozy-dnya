@@ -586,18 +586,32 @@
     const conf = Math.max(1, Math.min(5, Number(p.confidence) || 3));
     const facts = (Array.isArray(p.facts) ? p.facts : []).filter(Boolean);
     const against = (Array.isArray(p.against) ? p.against : []).filter(Boolean);
-    const v2 = facts.length > 0 || !!p.uncertainty;
+    const v2 = facts.length > 0 || !!p.uncertainty || (p.prob && p.prob.value > 0);
     const id = `pick-${sport.id}-${i}`;
     const dq = p.data_quality && p.data_quality.level;
     const preview = facts.slice(0, lead ? 3 : 2);
     const prob = p.model_prob && p.model_prob.value ? Math.round(p.model_prob.value * 100) : null;
+    const ownP = p.prob && Number(p.prob.value) > 0 && Number(p.prob.value) < 1 ? Math.round(p.prob.value * 100) : null;
+    const oddsN = parseFloat(String(p.odds ?? "").replace(",", "."));
+    const mktP = oddsN > 1 ? Math.round(100 / oddsN) : null;
+    const edge = ownP != null && mktP != null ? ownP - mktP : null;
+    const estimates = (Array.isArray(p.estimates) ? p.estimates : []).filter(Boolean);
+    const assumptions = (Array.isArray(p.assumptions) ? p.assumptions : []).filter(Boolean);
+    const asOf = p.data_as_of ? String(p.data_as_of).replace("T", " ").slice(0, 16) : "";
     const detail = v2 ? `
       <div class="more" id="${id}-more"><div><div class="pk-detail">
         <div class="pk-cols">
           <section class="pk-col pro"><h4>${I_PLUS}Факты в пользу вывода</h4><ul>${facts.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></section>
           ${against.length ? `<section class="pk-col con"><h4>${I_MINUS}Что говорит против</h4><ul>${against.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></section>` : ""}
         </div>
+        ${estimates.length || assumptions.length ? `<div class="pk-cols">
+          ${estimates.length ? `<section class="pk-col pro"><h4>${I_PLUS}Статистические оценки</h4><ul>${estimates.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></section>` : ""}
+          ${assumptions.length ? `<section class="pk-col con"><h4>${I_MINUS}Предположения (не подтверждены)</h4><ul>${assumptions.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></section>` : ""}
+        </div>` : ""}
         ${p.uncertainty ? `<div class="pk-unc">${I_FOG}<div><h4>Что неизвестно</h4><p>${esc(p.uncertainty)}</p></div></div>` : ""}
+        ${ownP != null ? `<div class="pk-prob"><span>Наша оценка${p.prob.method ? ` (${esc(p.prob.method)})` : ""}</span><span class="pk-prob-bar"><i style="--w:${ownP}%"></i></span><b>${ownP}%</b></div>` : ""}
+        ${ownP != null && mktP != null ? `<p class="pk-dqn">Рынок (1/кф): ${mktP}% · разница ${edge > 0 ? "+" : ""}${edge} п.п.${edge <= 0 ? " — перевеса над линией нет" : ""}</p>` : ""}
+        ${asOf ? `<p class="pk-dqn">Данные собраны: ${esc(asOf)} МСК</p>` : ""}
         ${prob != null ? `<div class="pk-prob"><span>Вероятность по модели ${esc(p.model_prob.source || "")}</span><span class="pk-prob-bar"><i style="--w:${prob}%"></i></span><b>${prob}%</b></div>` : ""}
         ${dq && p.data_quality.note ? `<p class="pk-dqn">Данные ${esc(DQ_LABEL[dq] || dq)}: ${esc(p.data_quality.note)}</p>` : ""}
         ${(p.sources || []).length ? `<h4 class="pk-srch">Источники</h4>${srcList(p.sources)}` : ""}
