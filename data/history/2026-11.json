@@ -9229,10 +9229,28 @@
         }
       ],
       "market_prob": 0.671,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "2:0",
+        "note": "Ремо выиграл 2:0 (ESPN).",
+        "sources": [
+          {
+            "title": "ESPN — Brasileirão scoreboard 18.11",
+            "url": "https://www.espn.com/soccer/scoreboard/_/league/bra.1/date/20261118"
+          }
+        ],
+        "checked_at": "2026-11-19T13:35+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-19T13:35+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": "Ремо выиграл 2:0 (ESPN)."
+        }
+      ],
+      "last_sync": "2026-11-19T13:35+03:00"
     },
     {
       "id": "football-20261119-a5ahjc",
@@ -9281,10 +9299,28 @@
         }
       ],
       "market_prob": 0.826,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "2:1",
+        "note": "Фламенго выиграл 2:1 (ESPN).",
+        "sources": [
+          {
+            "title": "ESPN — Brasileirão scoreboard 18.11",
+            "url": "https://www.espn.com/soccer/scoreboard/_/league/bra.1/date/20261118"
+          }
+        ],
+        "checked_at": "2026-11-19T13:35+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-19T13:35+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": "Фламенго выиграл 2:1 (ESPN)."
+        }
+      ],
+      "last_sync": "2026-11-19T13:35+03:00"
     },
     {
       "id": "basketball-20261119-11gmhdr",
@@ -9338,10 +9374,32 @@
         }
       ],
       "market_prob": 0.885,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "137:130",
+        "note": null,
+        "sources": [
+          {
+            "title": "ESPN — NBA scoreboard 18.11",
+            "url": "https://www.espn.com/nba/scoreboard/_/date/20261118"
+          },
+          {
+            "title": "Sports.ru — календарь НБА",
+            "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
+          }
+        ],
+        "checked_at": "2026-11-19T13:35+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-19T13:35+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-19T13:35+03:00"
     },
     {
       "id": "basketball-20261119-14h5y3y",
@@ -9395,10 +9453,32 @@
         }
       ],
       "market_prob": 0.746,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "104:119",
+        "note": null,
+        "sources": [
+          {
+            "title": "ESPN — NBA scoreboard 18.11",
+            "url": "https://www.espn.com/nba/scoreboard/_/date/20261118"
+          },
+          {
+            "title": "Sports.ru — календарь НБА",
+            "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
+          }
+        ],
+        "checked_at": "2026-11-19T13:35+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-19T13:35+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-19T13:35+03:00"
     },
     {
       "id": "basketball-20261119-t7dqch",
@@ -9451,10 +9531,32 @@
         }
       ],
       "market_prob": 0.575,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "116:121",
+        "note": null,
+        "sources": [
+          {
+            "title": "ESPN — NBA scoreboard 18.11",
+            "url": "https://www.espn.com/nba/scoreboard/_/date/20261118"
+          },
+          {
+            "title": "Sports.ru — календарь НБА",
+            "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
+          }
+        ],
+        "checked_at": "2026-11-19T13:35+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-19T13:35+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-19T13:35+03:00"
     },
     {
       "id": "basketball-20261119-1lr95em",
@@ -9507,10 +9609,32 @@
         }
       ],
       "market_prob": 0.714,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "99:103",
+        "note": null,
+        "sources": [
+          {
+            "title": "ESPN — NBA scoreboard 18.11",
+            "url": "https://www.espn.com/nba/scoreboard/_/date/20261118"
+          },
+          {
+            "title": "Sports.ru — календарь НБА",
+            "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
+          }
+        ],
+        "checked_at": "2026-11-19T13:35+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-19T13:35+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-19T13:35+03:00"
     },
     {
       "id": "basketball-20261119-19hbjac",
@@ -9564,10 +9688,32 @@
         }
       ],
       "market_prob": 0.741,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "112:117",
+        "note": null,
+        "sources": [
+          {
+            "title": "ESPN — NBA scoreboard 18.11",
+            "url": "https://www.espn.com/nba/scoreboard/_/date/20261118"
+          },
+          {
+            "title": "Sports.ru — календарь НБА",
+            "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
+          }
+        ],
+        "checked_at": "2026-11-19T13:35+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-19T13:35+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-19T13:35+03:00"
     },
     {
       "id": "basketball-20261119-jwmczl",
@@ -9621,10 +9767,32 @@
         }
       ],
       "market_prob": 0.735,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "109:122",
+        "note": null,
+        "sources": [
+          {
+            "title": "ESPN — NBA scoreboard 18.11",
+            "url": "https://www.espn.com/nba/scoreboard/_/date/20261118"
+          },
+          {
+            "title": "Sports.ru — календарь НБА",
+            "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
+          }
+        ],
+        "checked_at": "2026-11-19T13:35+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-19T13:35+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-19T13:35+03:00"
     },
     {
       "id": "basketball-20261119-o89ag8",
@@ -9678,10 +9846,32 @@
         }
       ],
       "market_prob": 0.69,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "116:94",
+        "note": null,
+        "sources": [
+          {
+            "title": "ESPN — NBA scoreboard 18.11",
+            "url": "https://www.espn.com/nba/scoreboard/_/date/20261118"
+          },
+          {
+            "title": "Sports.ru — календарь НБА",
+            "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
+          }
+        ],
+        "checked_at": "2026-11-19T13:35+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-19T13:35+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-19T13:35+03:00"
     },
     {
       "id": "basketball-20261119-1qvae3l",
@@ -9735,10 +9925,32 @@
         }
       ],
       "market_prob": 0.575,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "105:101",
+        "note": null,
+        "sources": [
+          {
+            "title": "ESPN — NBA scoreboard 18.11",
+            "url": "https://www.espn.com/nba/scoreboard/_/date/20261118"
+          },
+          {
+            "title": "Sports.ru — календарь НБА",
+            "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
+          }
+        ],
+        "checked_at": "2026-11-19T13:35+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-19T13:35+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-19T13:35+03:00"
     },
     {
       "id": "basketball-20261119-13k36sl",
@@ -9792,10 +10004,32 @@
         }
       ],
       "market_prob": 0.826,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "97:109",
+        "note": null,
+        "sources": [
+          {
+            "title": "ESPN — NBA scoreboard 18.11",
+            "url": "https://www.espn.com/nba/scoreboard/_/date/20261118"
+          },
+          {
+            "title": "Sports.ru — календарь НБА",
+            "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
+          }
+        ],
+        "checked_at": "2026-11-19T13:35+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-19T13:35+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-19T13:35+03:00"
     },
     {
       "id": "basketball-20261119-18dwgaq",
@@ -9849,10 +10083,32 @@
         }
       ],
       "market_prob": 0.73,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "107:128",
+        "note": null,
+        "sources": [
+          {
+            "title": "ESPN — NBA scoreboard 18.11",
+            "url": "https://www.espn.com/nba/scoreboard/_/date/20261118"
+          },
+          {
+            "title": "Sports.ru — календарь НБА",
+            "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
+          }
+        ],
+        "checked_at": "2026-11-19T13:35+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-19T13:35+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-19T13:35+03:00"
     },
     {
       "id": "cs2-20261119-14avhse",
@@ -10254,6 +10510,110 @@
       "status_log": []
     },
     {
+      "id": "hockey-20261120-1f2t7v7",
+      "sport": "hockey",
+      "sport_name": "Хоккей",
+      "home": "Оттава",
+      "away": "Филадельфия",
+      "event_date": "2026-11-20",
+      "start_iso": "2026-11-20T03:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-19T13:35+03:00",
+      "model_version": "v2",
+      "tournament": "НХЛ, регулярный чемпионат 2026/27",
+      "match": "Оттава — Филадельфия",
+      "start": "20.11, 03:00 МСК",
+      "bet": "Победа Оттавы (включая ОТ и буллиты)",
+      "odds": "1.56",
+      "confidence": 3,
+      "reason": "Оттава (14-6-2) дома 7-2-1 и набрала очки в 5 последних матчах, а Филадельфия на выезде 3-6-3 и с разницей −23.",
+      "facts": [
+        "Оттава: 14-6-2, дома 7-2-1 — ESPN",
+        "Филадельфия: 7-11-6, на выезде 3-6-3, разница −23 — ESPN, Sports.ru",
+        "Оттава набрала очки в 5 последних матчах (4 победы, 1 поражение в ОТ) — ESPN"
+      ],
+      "against": [
+        "Шабо, Казинс и Ходжсон под вопросом, Фоэгеле и Бураковский травмированы",
+        "Филадельфия выиграла 3 из 5 последних"
+      ],
+      "uncertainty": "Состав защиты Оттавы под вопросом.",
+      "data_quality": {
+        "level": "medium",
+        "note": "нет xG и вратарей"
+      },
+      "sources": [
+        {
+          "title": "ESPN — превью матча НХЛ (форма, травмы)",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892743"
+        },
+        {
+          "title": "ESPN — NHL scoreboard 19.11",
+          "url": "https://www.espn.com/nhl/scoreboard/_/date/20261119"
+        },
+        {
+          "title": "Sports.ru — таблица НХЛ",
+          "url": "https://www.sports.ru/hockey/tournament/nhl/table/"
+        }
+      ],
+      "market_prob": 0.641,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "hockey-20261120-4plhpg",
+      "sport": "hockey",
+      "sport_name": "Хоккей",
+      "home": "Каролина",
+      "away": "Монреаль",
+      "event_date": "2026-11-20",
+      "start_iso": "2026-11-20T03:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-19T13:35+03:00",
+      "model_version": "v2",
+      "tournament": "НХЛ, регулярный чемпионат 2026/27",
+      "match": "Каролина — Монреаль",
+      "start": "20.11, 03:00 МСК",
+      "bet": "Победа Каролины (включая ОТ и буллиты)",
+      "odds": "1.38",
+      "confidence": 4,
+      "reason": "Лидер НХЛ Каролина (16-3-2, разница +40) дома почти не проигрывает, а у Монреаля нет Матесона, Крайдера, Демидова и Андерсона.",
+      "facts": [
+        "Каролина: 16-3-2, дома 7-1-1, разница шайб +40 — ESPN, Sports.ru",
+        "Монреаль без Матесона, Крайдера, Демидова и Андерсона — ESPN",
+        "Каролина выиграла 4 из 5 последних, в т.ч. 9:2 над Чикаго — ESPN"
+      ],
+      "against": [
+        "Монреаль на выезде 8-2-1 — одна из лучших выездных команд",
+        "Каролина проиграла последний матч в Нэшвилле 1:4"
+      ],
+      "uncertainty": "Стартовые вратари не объявлены.",
+      "data_quality": {
+        "level": "medium",
+        "note": "нет xG и вратарей"
+      },
+      "sources": [
+        {
+          "title": "ESPN — превью матча НХЛ (форма, травмы)",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892747"
+        },
+        {
+          "title": "ESPN — NHL scoreboard 19.11",
+          "url": "https://www.espn.com/nhl/scoreboard/_/date/20261119"
+        },
+        {
+          "title": "Sports.ru — таблица НХЛ",
+          "url": "https://www.sports.ru/hockey/tournament/nhl/table/"
+        }
+      ],
+      "market_prob": 0.725,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
       "id": "basketball-20261120-1chbfgs",
       "sport": "basketball",
       "sport_name": "Баскетбол",
@@ -10264,10 +10624,63 @@
       "start_approx": false,
       "published_at": "2026-11-19T01:16+03:00",
       "model_version": "v2",
+      "market_prob": 0.926,
+      "status": "pending",
+      "result": null,
+      "versions": [
+        {
+          "at": "2026-11-19T01:16+03:00",
+          "replaced_at": "2026-11-19T13:35+03:00",
+          "reason": "плановое обновление",
+          "snapshot": {
+            "tournament": "НБА, регулярный сезон 2026/27",
+            "match": "Сан-Антонио — Клипперс",
+            "start": "20.11, 04:00 МСК",
+            "bet": "П1 (победа Сан-Антонио)",
+            "confidence": 4,
+            "model_prob": {
+              "value": 0.905,
+              "source": "ESPN BPI"
+            },
+            "reason": "Сан-Антонио (12-3) против Клипперс, которые не выиграли ни одного выездного матча (0-5) и играют без Ингрэма и Била.",
+            "facts": [
+              "Сан-Антонио: 12-3, 4 победы в 5 последних, в т.ч. 123:85 над Голден Стэйт — ESPN",
+              "Клипперс: 4-9, на выезде 0-5; не сыграют Ингрэм, Бил, Миллер — ESPN",
+              "17.11 Клипперс проиграли дома Юте 107:132 — ESPN, Sports.ru",
+              "Модель ESPN BPI даёт Сан-Антонио 90,5% — ESPN"
+            ],
+            "against": [
+              "Сан-Антонио дома лишь 5-3 и только что проиграл Детройту 93:105",
+              "Дилан Харпер под вопросом"
+            ],
+            "uncertainty": "Коэффициент ещё не выставлен.",
+            "data_quality": {
+              "level": "medium",
+              "note": "нет коэффициента и рейтингов атаки/защиты"
+            },
+            "sources": [
+              {
+                "title": "ESPN — превью матча (травмы, последние 5 игр, BPI)",
+                "url": "https://www.espn.com/nba/game/_/gameId/401910022"
+              },
+              {
+                "title": "ESPN — NBA scoreboard 19.11",
+                "url": "https://www.espn.com/nba/scoreboard/_/date/20261119"
+              },
+              {
+                "title": "Sports.ru — календарь НБА",
+                "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
+              }
+            ]
+          }
+        }
+      ],
+      "status_log": [],
       "tournament": "НБА, регулярный сезон 2026/27",
       "match": "Сан-Антонио — Клипперс",
       "start": "20.11, 04:00 МСК",
       "bet": "П1 (победа Сан-Антонио)",
+      "odds": "1.08",
       "confidence": 4,
       "model_prob": {
         "value": 0.905,
@@ -10303,11 +10716,7 @@
           "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
         }
       ],
-      "market_prob": null,
-      "status": "pending",
-      "result": null,
-      "versions": [],
-      "status_log": []
+      "updated_at": "2026-11-19T13:35+03:00"
     },
     {
       "id": "basketball-20261120-cxxjwz",
@@ -10320,10 +10729,62 @@
       "start_approx": false,
       "published_at": "2026-11-19T01:16+03:00",
       "model_version": "v2",
+      "market_prob": 0.806,
+      "status": "pending",
+      "result": null,
+      "versions": [
+        {
+          "at": "2026-11-19T01:16+03:00",
+          "replaced_at": "2026-11-19T13:35+03:00",
+          "reason": "плановое обновление",
+          "snapshot": {
+            "tournament": "НБА, регулярный сезон 2026/27",
+            "match": "Милуоки — Портленд",
+            "start": "20.11, 04:00 МСК",
+            "bet": "П2 (победа Портленда)",
+            "confidence": 4,
+            "model_prob": {
+              "value": 0.795,
+              "source": "ESPN BPI"
+            },
+            "reason": "Милуоки (1-13) проиграл 5 матчей подряд, а Портленд (9-5) на выезде 6-3.",
+            "facts": [
+              "Милуоки: 1-13, дома 1-7, 5 поражений подряд — ESPN",
+              "Портленд: 9-5, на выезде 6-3; дважды обыграл Оклахому — ESPN",
+              "Модель ESPN BPI даёт Портленду 79,5% — ESPN"
+            ],
+            "against": [
+              "У Портленда нет Моранта и Шарпа, Авдия под вопросом",
+              "Портленд проиграл 2 последних выездных матча в Миннесоте"
+            ],
+            "uncertainty": "Коэффициент ещё не выставлен; состав Портленда урезан.",
+            "data_quality": {
+              "level": "medium",
+              "note": "нет коэффициента"
+            },
+            "sources": [
+              {
+                "title": "ESPN — превью матча (травмы, последние 5 игр, BPI)",
+                "url": "https://www.espn.com/nba/game/_/gameId/401910020"
+              },
+              {
+                "title": "ESPN — NBA scoreboard 19.11",
+                "url": "https://www.espn.com/nba/scoreboard/_/date/20261119"
+              },
+              {
+                "title": "Sports.ru — календарь НБА",
+                "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
+              }
+            ]
+          }
+        }
+      ],
+      "status_log": [],
       "tournament": "НБА, регулярный сезон 2026/27",
       "match": "Милуоки — Портленд",
       "start": "20.11, 04:00 МСК",
       "bet": "П2 (победа Портленда)",
+      "odds": "1.24",
       "confidence": 4,
       "model_prob": {
         "value": 0.795,
@@ -10358,11 +10819,7 @@
           "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
         }
       ],
-      "market_prob": null,
-      "status": "pending",
-      "result": null,
-      "versions": [],
-      "status_log": []
+      "updated_at": "2026-11-19T13:35+03:00"
     },
     {
       "id": "basketball-20261120-jk3rbt",
@@ -10375,10 +10832,63 @@
       "start_approx": false,
       "published_at": "2026-11-19T01:16+03:00",
       "model_version": "v2",
+      "market_prob": 0.741,
+      "status": "pending",
+      "result": null,
+      "versions": [
+        {
+          "at": "2026-11-19T01:16+03:00",
+          "replaced_at": "2026-11-19T13:35+03:00",
+          "reason": "плановое обновление",
+          "snapshot": {
+            "tournament": "НБА, регулярный сезон 2026/27",
+            "match": "Мемфис — Голден Стэйт",
+            "start": "20.11, 04:00 МСК",
+            "bet": "П1 (победа Мемфиса)",
+            "confidence": 3,
+            "model_prob": {
+              "value": 0.662,
+              "source": "ESPN BPI"
+            },
+            "reason": "Голден Стэйт без Карри и Порзиньгиса играет второй матч за две ночи (накануне в Далласе) и на выезде лишь 2-5.",
+            "facts": [
+              "Мемфис: 10-4, выиграл 4 из 5 последних — ESPN",
+              "Голден Стэйт на выезде 2-5; не сыграют Карри и Порзиньгис, Грин и Хорфорд под вопросом — ESPN",
+              "19.11 Голден Стэйт играет в Далласе — второй матч подряд на выезде — ESPN",
+              "Модель ESPN BPI даёт Мемфису 66,2% — ESPN"
+            ],
+            "against": [
+              "Мемфис дома лишь 3-4",
+              "У Мемфиса не сыграют Стюарт, Джером, Пиппен-младший"
+            ],
+            "uncertainty": "Коэффициент ещё не выставлен.",
+            "data_quality": {
+              "level": "medium",
+              "note": "нет коэффициента"
+            },
+            "sources": [
+              {
+                "title": "ESPN — превью матча (травмы, последние 5 игр, BPI)",
+                "url": "https://www.espn.com/nba/game/_/gameId/401910019"
+              },
+              {
+                "title": "ESPN — NBA scoreboard 19.11",
+                "url": "https://www.espn.com/nba/scoreboard/_/date/20261119"
+              },
+              {
+                "title": "Sports.ru — календарь НБА",
+                "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
+              }
+            ]
+          }
+        }
+      ],
+      "status_log": [],
       "tournament": "НБА, регулярный сезон 2026/27",
       "match": "Мемфис — Голден Стэйт",
       "start": "20.11, 04:00 МСК",
       "bet": "П1 (победа Мемфиса)",
+      "odds": "1.35",
       "confidence": 3,
       "model_prob": {
         "value": 0.662,
@@ -10414,7 +10924,55 @@
           "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
         }
       ],
-      "market_prob": null,
+      "updated_at": "2026-11-19T13:35+03:00"
+    },
+    {
+      "id": "hockey-20261120-1u6v6bd",
+      "sport": "hockey",
+      "sport_name": "Хоккей",
+      "home": "Калгари",
+      "away": "Миннесота",
+      "event_date": "2026-11-20",
+      "start_iso": "2026-11-20T04:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-19T13:35+03:00",
+      "model_version": "v2",
+      "tournament": "НХЛ, регулярный чемпионат 2026/27",
+      "match": "Калгари — Миннесота",
+      "start": "20.11, 04:00 МСК",
+      "bet": "Победа Миннесоты (включая ОТ и буллиты)",
+      "odds": "1.46",
+      "confidence": 4,
+      "reason": "Миннесота (16-3-4, +32) на выезде 10-3-2, а Калгари (−20) без Юбердо и Баля.",
+      "facts": [
+        "Миннесота: 16-3-4, на выезде 10-3-2, разница +32 — ESPN, Sports.ru",
+        "Калгари: 10-11-1, разница −20; не сыграют Юбердо, Баль, Зари — ESPN, Sports.ru",
+        "Миннесота набрала очки в 5 последних матчах (3 победы в основное время, 1 в ОТ, 1 поражение в ОТ) — ESPN"
+      ],
+      "against": [
+        "У Миннесоты травмирован вратарь Густавссон",
+        "Калгари выиграл 3 из 5 последних"
+      ],
+      "uncertainty": "Стартовые вратари не объявлены.",
+      "data_quality": {
+        "level": "medium",
+        "note": "нет xG и вратарей"
+      },
+      "sources": [
+        {
+          "title": "ESPN — превью матча НХЛ (форма, травмы)",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892750"
+        },
+        {
+          "title": "ESPN — NHL scoreboard 19.11",
+          "url": "https://www.espn.com/nhl/scoreboard/_/date/20261119"
+        },
+        {
+          "title": "Sports.ru — таблица НХЛ",
+          "url": "https://www.sports.ru/hockey/tournament/nhl/table/"
+        }
+      ],
+      "market_prob": 0.685,
       "status": "pending",
       "result": null,
       "versions": [],
