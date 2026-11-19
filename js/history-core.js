@@ -126,7 +126,7 @@
   /* ---------------- Снимок прогноза ---------------- */
 
   const SNAP_FIELDS = ["tournament", "match", "start", "bet", "odds", "confidence", "model_prob", "reason",
-    "facts", "against", "uncertainty", "data_quality", "sources", "format"];
+    "facts", "against", "uncertainty", "data_quality", "sources", "format", "prob", "data_as_of", "estimates", "assumptions"];
 
   function snapshot(pick) {
     const o = {};
@@ -161,6 +161,8 @@
     if (facts.length && !nonMarket.length) issues.push("все факты — про коэффициенты");
     const reason = String(pick.reason || "");
     if (ODDS_ONLY.test(reason) && !/\d/.test(reason.replace(/\d+[.,]\d+/g, ""))) issues.push("вывод опирается только на рынок");
+    const pr = pick.prob;
+    if (pr != null && (typeof pr !== "object" || !(Number(pr.value) > 0 && Number(pr.value) < 1))) issues.push("prob без значения 0–1");
     const mp = pick.model_prob;
     if (mp != null && (typeof mp !== "object" || !(mp.value > 0 && mp.value < 1) || !mp.source)) issues.push("model_prob без значения 0–1 или без источника");
     return issues;
@@ -405,6 +407,12 @@
     const byConf = {};
     const byDay = {};
     let brierSum = 0, logSum = 0, probN = 0;
+    // сравнение с рынком: базовый метод «ставка на исход по линии» (вероятность = 1/кф)
+    const mk = { n: 0, won: 0, expected: 0, profit: 0, brier: 0 };
+    const own = { n: 0, brier: 0, logloss: 0, won: 0, sumP: 0 };
+    const BUCKETS = [[1, 1.3], [1.3, 1.5], [1.5, 1.8], [1.8, 2.5], [2.5, 1e9]];
+    const byOdds = BUCKETS.map(([lo, hi]) => ({ lo, hi, n: 0, won: 0, implied: 0 }));
+    const ownBins = [0.5, 0.6, 0.7, 0.8, 0.9].map((lo) => ({ lo, hi: lo + 0.1, n: 0, won: 0, sumP: 0 }));
     for (const e of list) {
       if (e.late) c.late++;
       const st = e.status in c ? e.status : "pending";
@@ -419,6 +427,22 @@
         const d = e.event_date || mskDateOf(e.start_iso) || "?";
         const db = (byDay[d] = byDay[d] || { date: d, won: 0, lost: 0 });
         db[st]++;
+        const y1 = st === "won" ? 1 : 0;
+        const odds = parseFloat(String(e.odds ?? "").replace(",", "."));
+        const m = Number(e.market_prob) || (odds > 1 ? 1 / odds : 0);
+        if (odds > 1 && m > 0) {
+          mk.n++; mk.won += y1; mk.expected += m; mk.profit += y1 ? odds - 1 : -1; mk.brier += (m - y1) ** 2;
+          sp.mN = (sp.mN || 0) + 1; sp.mExp = (sp.mExp || 0) + m; sp.mWon = (sp.mWon || 0) + y1; sp.profit = (sp.profit || 0) + (y1 ? odds - 1 : -1);
+          const b = byOdds.find((x) => odds >= x.lo && odds < x.hi);
+          if (b) { b.n++; b.won += y1; b.implied += m; }
+        }
+        const q = e.prob && Number(e.prob.value);
+        if (q > 0 && q < 1) {
+          own.n++; own.won += y1; own.sumP += q; own.brier += (q - y1) ** 2;
+          own.logloss += -(y1 * Math.log(Math.max(q, 1e-6)) + (1 - y1) * Math.log(Math.max(1 - q, 1e-6)));
+          const ob = ownBins.find((x) => q >= x.lo && q < x.hi) || (q >= 0.9 ? ownBins[4] : null);
+          if (ob) { ob.n++; ob.won += y1; ob.sumP += q; }
+        }
         const p = e.model_prob && Number(e.model_prob.value);
         if (p > 0 && p < 1) {
           const y = st === "won" ? 1 : 0;
@@ -439,7 +463,26 @@
       excluded: c.void + c.cancelled + c.postponed + c.withdrawn,
       unresolved: c.pending + c.review,
       accuracy: rate(c.won, c.lost),
-      bySport: Object.values(bySport).map((s) => ({ ...s, accuracy: rate(s.won, s.lost) })),
+      bySport: Object.values(bySport).map((s) => ({
+        ...s, accuracy: rate(s.won, s.lost),
+        marketExpected: s.mN ? Math.round((s.mExp / s.mN) * 1000) / 10 : null,
+        marketHit: s.mN ? Math.round((s.mWon / s.mN) * 1000) / 10 : null,
+        roi: s.mN ? Math.round((s.profit / s.mN) * 1000) / 10 : null,
+      })),
+      market: mk.n ? {
+        n: mk.n, won: mk.won,
+        expected: Math.round(mk.expected * 10) / 10,
+        hit: Math.round((mk.won / mk.n) * 1000) / 10,
+        implied: Math.round((mk.expected / mk.n) * 1000) / 10,
+        roi: Math.round((mk.profit / mk.n) * 1000) / 10,
+        brier: Math.round((mk.brier / mk.n) * 1000) / 1000,
+      } : { n: 0 },
+      byOdds: byOdds.filter((b) => b.n).map((b) => ({ range: b.hi > 100 ? `от ${b.lo}` : `${b.lo}–${b.hi}`, n: b.n, hit: Math.round((b.won / b.n) * 1000) / 10, implied: Math.round((b.implied / b.n) * 1000) / 10 })),
+      estimate: own.n ? {
+        n: own.n, avg: Math.round((own.sumP / own.n) * 1000) / 10, hit: Math.round((own.won / own.n) * 1000) / 10,
+        brier: Math.round((own.brier / own.n) * 1000) / 1000, logloss: Math.round((own.logloss / own.n) * 1000) / 1000,
+        bins: ownBins.filter((b) => b.n).map((b) => ({ range: `${Math.round(b.lo * 100)}–${Math.round(Math.min(b.hi, 1) * 100)}%`, n: b.n, hit: Math.round((b.won / b.n) * 1000) / 10, avg: Math.round((b.sumP / b.n) * 1000) / 10 })),
+      } : { n: 0 },
       byConfidence: [1, 2, 3, 4, 5].map((k) => {
         const b = byConf[k] || { confidence: k, won: 0, lost: 0 };
         return { ...b, n: b.won + b.lost, accuracy: rate(b.won, b.lost) };
