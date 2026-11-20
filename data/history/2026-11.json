@@ -10721,10 +10721,32 @@
       ],
       "format": "BO3, онлайн",
       "market_prob": 0.8,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "2:0",
+        "note": null,
+        "sources": [
+          {
+            "title": "Cyber.Sports.ru — CS2 19.11",
+            "url": "https://cyber.sports.ru/cs/match/2026-11-19/"
+          },
+          {
+            "title": "Sofascore — 2026-11-19",
+            "url": "https://www.sofascore.com/esports/2026-11-19"
+          }
+        ],
+        "checked_at": "2026-11-20T06:56+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-20T06:56+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-20T06:56+03:00"
     },
     {
       "id": "football-20261119-1ufke52",
@@ -10869,10 +10891,32 @@
         }
       ],
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "2:0",
+        "note": "Зверев выиграл 6:4, 7:6 (ESPN)",
+        "sources": [
+          {
+            "title": "ESPN — ATP Finals",
+            "url": "https://www.espn.com/tennis/scoreboard"
+          },
+          {
+            "title": "Sofascore — 2026-11-19",
+            "url": "https://www.sofascore.com/tennis/2026-11-19"
+          }
+        ],
+        "checked_at": "2026-11-20T06:56+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-20T06:56+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": "Зверев выиграл 6:4, 7:6 (ESPN)"
+        }
+      ],
+      "last_sync": "2026-11-20T06:56+03:00"
     },
     {
       "id": "volleyball-20261119-158im9k",
@@ -10971,10 +11015,32 @@
         }
       ],
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "92:87",
+        "note": null,
+        "sources": [
+          {
+            "title": "Flashscore — Евролига, результаты",
+            "url": "https://www.flashscore.com.ua/basketball/europe/euroleague/results/"
+          },
+          {
+            "title": "Sofascore — 2026-11-19",
+            "url": "https://www.sofascore.com/basketball/2026-11-19"
+          }
+        ],
+        "checked_at": "2026-11-20T06:56+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-20T06:56+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-20T06:56+03:00"
     },
     {
       "id": "football-20261120-2xcw9k",
@@ -11019,10 +11085,32 @@
         }
       ],
       "market_prob": 0.641,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "2:1",
+        "note": null,
+        "sources": [
+          {
+            "title": "ESPN — Brasileirão",
+            "url": "https://www.espn.com/soccer/scoreboard/_/league/bra.1"
+          },
+          {
+            "title": "Sofascore — 2026-11-20",
+            "url": "https://www.sofascore.com/football/2026-11-20"
+          }
+        ],
+        "checked_at": "2026-11-20T06:56+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-20T06:56+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-20T06:56+03:00"
     },
     {
       "id": "hockey-20261120-1f2t7v7",
@@ -11071,10 +11159,32 @@
         }
       ],
       "market_prob": 0.641,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "5:5",
+        "note": "Основное время 5:5, Филадельфия выиграла 6:5 в овертайме",
+        "sources": [
+          {
+            "title": "ESPN — NHL",
+            "url": "https://www.espn.com/nhl/scoreboard"
+          },
+          {
+            "title": "Flashscore — НХЛ, результаты",
+            "url": "https://www.flashscore.com.ua/hockey/usa/nhl/results/"
+          }
+        ],
+        "checked_at": "2026-11-20T06:56+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-20T06:56+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": "Основное время 5:5, Филадельфия выиграла 6:5 в овертайме"
+        }
+      ],
+      "last_sync": "2026-11-20T06:56+03:00"
     },
     {
       "id": "hockey-20261120-4plhpg",
@@ -11123,10 +11233,32 @@
         }
       ],
       "market_prob": 0.725,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "1:1",
+        "note": "Основное время 1:1, Монреаль выиграл 2:1 в овертайме",
+        "sources": [
+          {
+            "title": "ESPN — NHL",
+            "url": "https://www.espn.com/nhl/scoreboard"
+          },
+          {
+            "title": "Flashscore — НХЛ, результаты",
+            "url": "https://www.flashscore.com.ua/hockey/usa/nhl/results/"
+          }
+        ],
+        "checked_at": "2026-11-20T06:56+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-20T06:56+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": "Основное время 1:1, Монреаль выиграл 2:1 в овертайме"
+        }
+      ],
+      "last_sync": "2026-11-20T06:56+03:00"
     },
     {
       "id": "basketball-20261120-1chbfgs",
@@ -11140,8 +11272,22 @@
       "published_at": "2026-11-19T01:16+03:00",
       "model_version": "v2",
       "market_prob": 0.926,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "124:112",
+        "note": null,
+        "sources": [
+          {
+            "title": "ESPN — NBA",
+            "url": "https://www.espn.com/nba/scoreboard"
+          },
+          {
+            "title": "Sofascore — 2026-11-20",
+            "url": "https://www.sofascore.com/basketball/2026-11-20"
+          }
+        ],
+        "checked_at": "2026-11-20T06:56+03:00"
+      },
       "versions": [
         {
           "at": "2026-11-19T01:16+03:00",
@@ -11190,7 +11336,14 @@
           }
         }
       ],
-      "status_log": [],
+      "status_log": [
+        {
+          "at": "2026-11-20T06:56+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
       "tournament": "НБА, регулярный сезон 2026/27",
       "match": "Сан-Антонио — Клипперс",
       "start": "20.11, 04:00 МСК",
@@ -11231,7 +11384,8 @@
           "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
         }
       ],
-      "updated_at": "2026-11-19T13:35+03:00"
+      "updated_at": "2026-11-19T13:35+03:00",
+      "last_sync": "2026-11-20T06:56+03:00"
     },
     {
       "id": "basketball-20261120-cxxjwz",
@@ -11245,8 +11399,22 @@
       "published_at": "2026-11-19T01:16+03:00",
       "model_version": "v2",
       "market_prob": 0.806,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "114:124",
+        "note": null,
+        "sources": [
+          {
+            "title": "ESPN — NBA",
+            "url": "https://www.espn.com/nba/scoreboard"
+          },
+          {
+            "title": "Sofascore — 2026-11-20",
+            "url": "https://www.sofascore.com/basketball/2026-11-20"
+          }
+        ],
+        "checked_at": "2026-11-20T06:56+03:00"
+      },
       "versions": [
         {
           "at": "2026-11-19T01:16+03:00",
@@ -11294,7 +11462,14 @@
           }
         }
       ],
-      "status_log": [],
+      "status_log": [
+        {
+          "at": "2026-11-20T06:56+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
       "tournament": "НБА, регулярный сезон 2026/27",
       "match": "Милуоки — Портленд",
       "start": "20.11, 04:00 МСК",
@@ -11334,7 +11509,8 @@
           "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
         }
       ],
-      "updated_at": "2026-11-19T13:35+03:00"
+      "updated_at": "2026-11-19T13:35+03:00",
+      "last_sync": "2026-11-20T06:56+03:00"
     },
     {
       "id": "basketball-20261120-jk3rbt",
@@ -11348,8 +11524,22 @@
       "published_at": "2026-11-19T01:16+03:00",
       "model_version": "v2",
       "market_prob": 0.741,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "126:98",
+        "note": null,
+        "sources": [
+          {
+            "title": "ESPN — NBA",
+            "url": "https://www.espn.com/nba/scoreboard"
+          },
+          {
+            "title": "Sofascore — 2026-11-20",
+            "url": "https://www.sofascore.com/basketball/2026-11-20"
+          }
+        ],
+        "checked_at": "2026-11-20T06:56+03:00"
+      },
       "versions": [
         {
           "at": "2026-11-19T01:16+03:00",
@@ -11398,7 +11588,14 @@
           }
         }
       ],
-      "status_log": [],
+      "status_log": [
+        {
+          "at": "2026-11-20T06:56+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
       "tournament": "НБА, регулярный сезон 2026/27",
       "match": "Мемфис — Голден Стэйт",
       "start": "20.11, 04:00 МСК",
@@ -11439,7 +11636,8 @@
           "url": "https://www.sports.ru/basketball/tournament/nba/calendar/"
         }
       ],
-      "updated_at": "2026-11-19T13:35+03:00"
+      "updated_at": "2026-11-19T13:35+03:00",
+      "last_sync": "2026-11-20T06:56+03:00"
     },
     {
       "id": "hockey-20261120-1u6v6bd",
@@ -11488,10 +11686,32 @@
         }
       ],
       "market_prob": 0.685,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "1:4",
+        "note": "Миннесота выиграла в основное время 4:1",
+        "sources": [
+          {
+            "title": "ESPN — NHL",
+            "url": "https://www.espn.com/nhl/scoreboard"
+          },
+          {
+            "title": "Flashscore — НХЛ, результаты",
+            "url": "https://www.flashscore.com.ua/hockey/usa/nhl/results/"
+          }
+        ],
+        "checked_at": "2026-11-20T06:56+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-20T06:56+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": "Миннесота выиграла в основное время 4:1"
+        }
+      ],
+      "last_sync": "2026-11-20T06:56+03:00"
     },
     {
       "id": "cs2-20261120-sz71o4",
@@ -12480,6 +12700,54 @@
         }
       ],
       "market_prob": 0.676,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "basketball-20261121-r4owsx",
+      "sport": "basketball",
+      "sport_name": "Баскетбол",
+      "home": "Кливленд",
+      "away": "Индиана",
+      "event_date": "2026-11-21",
+      "start_iso": "2026-11-21T03:30+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-20T06:56+03:00",
+      "model_version": "v3",
+      "tournament": "НБА, регулярный чемпионат",
+      "match": "Кливленд — Индиана",
+      "start": "21.11, 03:30 МСК",
+      "bet": "П1 (победа Кливленда)",
+      "odds": "1.41",
+      "confidence": 3,
+      "model_prob": {
+        "value": 0.806,
+        "source": "ESPN BPI"
+      },
+      "reason": "BPI даёт Кливленду 81%, линия 1.41 — 71%. Мы усредняем BPI с рынком (BPI по нашей истории завышал фаворитов): 74%. Перевес около +3 п.п. — на границе порога.",
+      "facts": [
+        "Кливленд 8-8, дома 6-3 (ESPN)",
+        "Индиана 5-10, на выезде 3-6 (ESPN)",
+        "У Индианы не сыграет Тайриз Халибёртон, у Кливленда — Эван Мобли (ESPN, травмы)"
+      ],
+      "against": [
+        "Без Мобли защита Кливленда заметно слабее",
+        "BPI по истории сайта переоценивал фаворитов (72% против 59% факта)"
+      ],
+      "uncertainty": "Перевес минимальный; составы могут обновиться ближе к игре.",
+      "data_quality": {
+        "level": "medium",
+        "note": "записи, травмы, BPI и линия — ESPN"
+      },
+      "sources": [
+        {
+          "title": "ESPN — Pacers vs Cavaliers",
+          "url": "https://www.espn.com/nba/game/_/gameId/401909307"
+        }
+      ],
+      "market_prob": 0.709,
       "status": "pending",
       "result": null,
       "versions": [],
