@@ -12091,10 +12091,32 @@
       ],
       "format": "BO3, LAN",
       "market_prob": 0.962,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "2:0",
+        "note": null,
+        "sources": [
+          {
+            "title": "Cyber.Sports.ru — Dota 2, 20.11",
+            "url": "https://cyber.sports.ru/dota2/match/2026-11-20/"
+          },
+          {
+            "title": "OpenDota — матчи команд",
+            "url": "https://www.opendota.com/"
+          }
+        ],
+        "checked_at": "2026-11-21T00:29+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T00:29+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-21T00:29+03:00"
     },
     {
       "id": "hockey-20261120-goqzsy",
@@ -12139,10 +12161,32 @@
         }
       ],
       "market_prob": 0.488,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "1:0",
+        "note": null,
+        "sources": [
+          {
+            "title": "Flashscore — КХЛ, результаты",
+            "url": "https://www.flashscore.com.ua/hockey/russia/khl/results/"
+          },
+          {
+            "title": "Sports.ru — хоккей 20.11",
+            "url": "https://www.sports.ru/hockey/match/2026-11-20/"
+          }
+        ],
+        "checked_at": "2026-11-21T00:29+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T00:29+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-21T00:29+03:00"
     },
     {
       "id": "tennis-20261120-bre93n",
@@ -12185,10 +12229,32 @@
         }
       ],
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "0:2",
+        "note": null,
+        "sources": [
+          {
+            "title": "Flashscore — ATP Finals",
+            "url": "https://www.flashscore.com.ua/tennis/atp-singles/finals-turin/results/"
+          },
+          {
+            "title": "ESPN — ATP Finals, результаты",
+            "url": "https://www.espn.com/tennis/scoreboard/_/date/20261120"
+          }
+        ],
+        "checked_at": "2026-11-21T00:29+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T00:29+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-21T00:29+03:00"
     },
     {
       "id": "dota2-20261120-c5b9lo",
@@ -12229,10 +12295,32 @@
       ],
       "format": "BO3, LAN",
       "market_prob": 0.781,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "1:2",
+        "note": null,
+        "sources": [
+          {
+            "title": "Cyber.Sports.ru — Dota 2, 20.11",
+            "url": "https://cyber.sports.ru/dota2/match/2026-11-20/"
+          },
+          {
+            "title": "OpenDota — матчи команд",
+            "url": "https://www.opendota.com/"
+          }
+        ],
+        "checked_at": "2026-11-21T00:29+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T00:29+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-21T00:29+03:00"
     },
     {
       "id": "hockey-20261120-8jhvs4",
@@ -12277,10 +12365,32 @@
         }
       ],
       "market_prob": 0.741,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "2:2",
+        "note": "Основное время 2:2 (1:1, 0:1, 1:0), победа Северстали по буллитам 3:2 — ставка 1X в основное время сыграла",
+        "sources": [
+          {
+            "title": "Flashscore — КХЛ, результаты",
+            "url": "https://www.flashscore.com.ua/hockey/russia/khl/results/"
+          },
+          {
+            "title": "Sports.ru — хоккей 20.11",
+            "url": "https://www.sports.ru/hockey/match/2026-11-20/"
+          }
+        ],
+        "checked_at": "2026-11-21T00:29+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T00:29+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": "Основное время 2:2 (1:1, 0:1, 1:0), победа Северстали по буллитам 3:2 — ставка 1X в основное время сыграла"
+        }
+      ],
+      "last_sync": "2026-11-21T00:29+03:00"
     },
     {
       "id": "hockey-20261120-by569",
@@ -12324,10 +12434,32 @@
         }
       ],
       "market_prob": 0.588,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "0:5",
+        "note": null,
+        "sources": [
+          {
+            "title": "Flashscore — КХЛ, результаты",
+            "url": "https://www.flashscore.com.ua/hockey/russia/khl/results/"
+          },
+          {
+            "title": "Sports.ru — хоккей 20.11",
+            "url": "https://www.sports.ru/hockey/match/2026-11-20/"
+          }
+        ],
+        "checked_at": "2026-11-21T00:29+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T00:29+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-21T00:29+03:00"
     },
     {
       "id": "volleyball-20261120-2obu2e",
@@ -12376,10 +12508,32 @@
         }
       ],
       "market_prob": 0.329,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "2:3",
+        "note": null,
+        "sources": [
+          {
+            "title": "Flashscore — TAURON Liga",
+            "url": "https://www.flashscore.com.ua/volleyball/poland/plusliga/results/"
+          },
+          {
+            "title": "Sofascore — волейбол 20.11",
+            "url": "https://www.sofascore.com/volleyball/2026-11-20"
+          }
+        ],
+        "checked_at": "2026-11-21T00:29+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T00:29+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-21T00:29+03:00"
     },
     {
       "id": "dota2-20261120-hevhpi",
@@ -12420,10 +12574,32 @@
       ],
       "format": "BO3, LAN",
       "market_prob": 0.781,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "0:2",
+        "note": null,
+        "sources": [
+          {
+            "title": "Cyber.Sports.ru — Dota 2, 20.11",
+            "url": "https://cyber.sports.ru/dota2/match/2026-11-20/"
+          },
+          {
+            "title": "OpenDota — матчи команд",
+            "url": "https://www.opendota.com/"
+          }
+        ],
+        "checked_at": "2026-11-21T00:29+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T00:29+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-21T00:29+03:00"
     },
     {
       "id": "football-20261120-1b82yzm",
@@ -12467,10 +12643,32 @@
         }
       ],
       "market_prob": 0.676,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "0:1",
+        "note": null,
+        "sources": [
+          {
+            "title": "Flashscore — Лига Про Эквадора",
+            "url": "https://www.flashscore.com.ua/football/ecuador/liga-pro/results/"
+          },
+          {
+            "title": "ESPN — Liga Pro",
+            "url": "https://www.espn.com/soccer/scoreboard/_/date/20261120/league/ecu.1"
+          }
+        ],
+        "checked_at": "2026-11-21T00:29+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T00:29+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-21T00:29+03:00"
     },
     {
       "id": "basketball-20261120-1l4asdz",
@@ -12513,10 +12711,32 @@
         }
       ],
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "107:81",
+        "note": null,
+        "sources": [
+          {
+            "title": "Flashscore — Евролига",
+            "url": "https://www.flashscore.com.ua/basketball/europe/euroleague/results/"
+          },
+          {
+            "title": "Sports.ru — баскетбол 20.11",
+            "url": "https://www.sports.ru/basketball/match/2026-11-20/"
+          }
+        ],
+        "checked_at": "2026-11-21T00:29+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T00:29+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-21T00:29+03:00"
     },
     {
       "id": "cs2-20261120-zomzgc",
@@ -12609,10 +12829,32 @@
         }
       ],
       "market_prob": 0.556,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "2:4",
+        "note": null,
+        "sources": [
+          {
+            "title": "Flashscore — Элитсерия",
+            "url": "https://www.flashscore.com.ua/football/norway/eliteserien/results/"
+          },
+          {
+            "title": "ESPN — Eliteserien",
+            "url": "https://www.espn.com/soccer/scoreboard/_/date/20261120/league/nor.1"
+          }
+        ],
+        "checked_at": "2026-11-21T00:29+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T00:29+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-21T00:29+03:00"
     },
     {
       "id": "cs2-20261120-1auakgs",
@@ -13122,6 +13364,59 @@
       "status_log": []
     },
     {
+      "id": "football-20261121-14j0e4f",
+      "sport": "football",
+      "sport_name": "Футбол",
+      "home": "Генчлербирлиги",
+      "away": "Газиантеп",
+      "event_date": "2026-11-21",
+      "start_iso": "2026-11-21T13:30+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T00:29+03:00",
+      "model_version": "v3",
+      "tournament": "Суперлига Турции 2026/27",
+      "match": "Генчлербирлиги — Газиантеп",
+      "start": "21.11, 13:30 МСК",
+      "bet": "П1 (победа Генчлербирлиги)",
+      "odds": "2.35",
+      "confidence": 2,
+      "model_prob": {
+        "value": 0.529,
+        "source": "ClubElo"
+      },
+      "reason": "Газиантеп проиграл пять матчей подряд, а ClubElo даёт хозяевам 53% против 43% в линии — оценка 47% выше рыночных 43% (+4 п.п.).",
+      "facts": [
+        "Генчлербирлиги — 14-е место, 11 очков после 11 туров (3-2-6), разница −9 — ESPN, 21.11",
+        "Газиантеп — 16-е место, 8 очков (2-2-7), разница −10 — ESPN, 21.11",
+        "Газиантеп проиграл 5 последних матчей (форма LLLLL) — ESPN, 21.11",
+        "Матч на домашнем стадионе Генчлербирлиги «Эрьяман» — ESPN"
+      ],
+      "against": [
+        "Генчлербирлиги сам выиграл лишь 1 из 5 последних матчей (LWLLD)",
+        "Обе команды в зоне вылета — матч нервный, ничья вероятна"
+      ],
+      "uncertainty": "Нет подтверждённых данных о травмах и составах обеих команд.",
+      "data_quality": {
+        "level": "medium",
+        "note": "Таблица и форма — ESPN; составы не найдены"
+      },
+      "sources": [
+        {
+          "title": "ESPN — Суперлига, 21.11",
+          "url": "https://www.espn.com/soccer/scoreboard/_/date/20261121/league/tur.1"
+        },
+        {
+          "title": "ClubElo — прогнозы матчей",
+          "url": "https://clubelo.com/Fixtures"
+        }
+      ],
+      "market_prob": 0.426,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
       "id": "dota2-20261121-3l1df6",
       "sport": "dota2",
       "sport_name": "Dota 2",
@@ -13170,6 +13465,314 @@
       ],
       "format": "BO3 (по формату группы), онлайн-трансляция",
       "market_prob": 0.704,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "hockey-20261121-146zxsd",
+      "sport": "hockey",
+      "sport_name": "Хоккей",
+      "home": "Нефтехимик",
+      "away": "Спартак Москва",
+      "event_date": "2026-11-21",
+      "start_iso": "2026-11-21T14:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T00:29+03:00",
+      "model_version": "v3",
+      "tournament": "КХЛ, регулярный чемпионат 2026/27",
+      "match": "Нефтехимик — Спартак Москва",
+      "start": "21.11, 14:00 МСК",
+      "bet": "П2 (победа Спартака в основное время)",
+      "odds": "2.00",
+      "confidence": 2,
+      "reason": "Нефтехимик проиграл 4 из 5 последних матчей, у Спартака лучше разница шайб. Оценка 45% ниже рыночных 50% — перевеса нет.",
+      "facts": [
+        "Нефтехимик — 4-е место на Востоке, 32 очка в 29 матчах, шайбы 75:81, форма П-П-П-В-П — Flashscore, 21.11",
+        "Спартак — 4-е место на Западе, 35 очков в 29 матчах, шайбы 79:67, форма В-П-В-П-П — Flashscore",
+        "Коэффициенты на основное время 2.75 / 4.00 / 2.00 — Flashscore"
+      ],
+      "against": [
+        "Спартак проиграл 3 из 5 последних матчей",
+        "Нефтехимик дома"
+      ],
+      "uncertainty": "Нет данных о составах.",
+      "data_quality": {
+        "level": "medium",
+        "note": "Flashscore"
+      },
+      "sources": [
+        {
+          "title": "Flashscore — таблица КХЛ",
+          "url": "https://www.flashscore.com.ua/hockey/russia/khl/standings/"
+        },
+        {
+          "title": "Flashscore — календарь КХЛ и коэффициенты",
+          "url": "https://www.flashscore.com.ua/hockey/russia/khl/fixtures/"
+        }
+      ],
+      "market_prob": 0.5,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "cs2-20261121-10fzlkr",
+      "sport": "cs2",
+      "sport_name": "CS2",
+      "home": "Nice Try",
+      "away": "Virtus.pro",
+      "event_date": "2026-11-21",
+      "start_iso": "2026-11-21T15:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T00:29+03:00",
+      "model_version": "v3",
+      "tournament": "Nodwin Clutch 14, плей-офф, тир-3",
+      "match": "Nice Try — Virtus.pro",
+      "start": "21.11, 15:00 МСК",
+      "bet": "П2 (победа Virtus.pro)",
+      "odds": "1.13",
+      "confidence": 3,
+      "reason": "Virtus.pro заметно сильнее, но 1.13 уже закладывает 88% — оценка 86% ниже, перевеса нет.",
+      "facts": [
+        "Virtus.pro: 0:2 Private (16.11), 2:1 Black Phoenix (16.11), 2:0 Hype Tech (15.11), 2:0 Baks (14.11) — Cyber.Sports.ru",
+        "Nice Try: 0:2 Baks (20.11), 2:0 Ex Rustec (18.11), 2:1 Brute (16.11), 0:2 Forze Reload (14.11) — Cyber.Sports.ru",
+        "Формат BO3 — Cyber.Sports.ru"
+      ],
+      "against": [
+        "Virtus.pro недавно проиграл Private 0:2",
+        "Nice Try выиграл 2 из 4 последних серий"
+      ],
+      "uncertainty": "Нет данных о картах.",
+      "data_quality": {
+        "level": "low",
+        "note": "Один источник"
+      },
+      "sources": [
+        {
+          "title": "Cyber.Sports.ru — CS2, 21.11",
+          "url": "https://cyber.sports.ru/cs/match/2026-11-21/"
+        },
+        {
+          "title": "Cyber.Sports.ru — Nice Try vs Virtus.pro",
+          "url": "https://cyber.sports.ru/cs/match/virtuspro-nt-2026-11-20/"
+        }
+      ],
+      "format": "BO3, онлайн (киберспорт)",
+      "market_prob": 0.885,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "football-20261121-1jej52t",
+      "sport": "football",
+      "sport_name": "Футбол",
+      "home": "Манчестер Сити",
+      "away": "Фулхэм",
+      "event_date": "2026-11-21",
+      "start_iso": "2026-11-21T15:30+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T00:29+03:00",
+      "model_version": "v3",
+      "tournament": "АПЛ 2026/27, 11-й тур",
+      "match": "Манчестер Сити — Фулхэм",
+      "start": "21.11, 15:30 МСК",
+      "bet": "П1 (победа Манчестер Сити)",
+      "odds": "1.39",
+      "confidence": 3,
+      "model_prob": {
+        "value": 0.715,
+        "source": "ClubElo"
+      },
+      "reason": "Сити заметно сильнее, но линия это уже учитывает: оценка 70% против 72% в коэффициенте — перевеса над линией нет.",
+      "facts": [
+        "Манчестер Сити — 3-е место, 21 очко (7-0-3), разница +8 — ESPN",
+        "Фулхэм — 15-е место, 10 очков (2-4-4) — ESPN",
+        "Фулхэм выиграл 2 последних матча (форма DDLWW), Сити — DWLWL — ESPN, 21.11"
+      ],
+      "against": [
+        "Сити проиграл 2 из 5 последних матчей",
+        "Фулхэм на подъёме"
+      ],
+      "uncertainty": "Нет подтверждённых данных о составах.",
+      "data_quality": {
+        "level": "medium",
+        "note": "ESPN + ClubElo"
+      },
+      "sources": [
+        {
+          "title": "ESPN — АПЛ, 21.11",
+          "url": "https://www.espn.com/soccer/scoreboard/_/date/20261121/league/eng.1"
+        },
+        {
+          "title": "ClubElo — прогнозы матчей",
+          "url": "https://clubelo.com/Fixtures"
+        }
+      ],
+      "market_prob": 0.719,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "football-20261121-e4bv9i",
+      "sport": "football",
+      "sport_name": "Футбол",
+      "home": "Амед",
+      "away": "Ризеспор",
+      "event_date": "2026-11-21",
+      "start_iso": "2026-11-21T16:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T00:29+03:00",
+      "model_version": "v3",
+      "tournament": "Суперлига Турции 2026/27",
+      "match": "Амед — Ризеспор",
+      "start": "21.11, 16:00 МСК",
+      "bet": "П1 (победа Амеда)",
+      "odds": "1.69",
+      "confidence": 3,
+      "model_prob": {
+        "value": 0.664,
+        "source": "ClubElo"
+      },
+      "reason": "Третья команда лиги принимает Ризеспор, проигравший три последних матча. Оценка 61% против 59% в линии — перевес около +2 п.п., ниже порога.",
+      "facts": [
+        "Амед — 3-е место, 23 очка (7-2-2), разница +13 — ESPN",
+        "Ризеспор — 11-е место, 14 очков (4-2-5), разница −3 — ESPN",
+        "Ризеспор проиграл 3 последних матча (форма WDLLL), у Амеда LWWWD — ESPN, 21.11"
+      ],
+      "against": [
+        "Амед проиграл 1 из 5 последних матчей и один раз сыграл вничью (LWWWD)",
+        "Разница с линией меньше порога 3 п.п."
+      ],
+      "uncertainty": "Нет подтверждённых данных о составах.",
+      "data_quality": {
+        "level": "medium",
+        "note": "ESPN + ClubElo"
+      },
+      "sources": [
+        {
+          "title": "ESPN — Суперлига, 21.11",
+          "url": "https://www.espn.com/soccer/scoreboard/_/date/20261121/league/tur.1"
+        },
+        {
+          "title": "ClubElo — прогнозы матчей",
+          "url": "https://clubelo.com/Fixtures"
+        }
+      ],
+      "market_prob": 0.592,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "tennis-20261121-1drh2kn",
+      "sport": "tennis",
+      "sport_name": "Теннис",
+      "home": "Карлос Алькарас",
+      "away": "Бен Шелтон",
+      "event_date": "2026-11-21",
+      "start_iso": "2026-11-21T16:30+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T00:29+03:00",
+      "model_version": "v3",
+      "tournament": "Итоговый турнир ATP, Турин, полуфинал",
+      "match": "Карлос Алькарас — Бен Шелтон",
+      "start": "21.11, 16:30 МСК",
+      "bet": "П1 (победа Алькараса)",
+      "odds": "1.27",
+      "confidence": 3,
+      "model_prob": {
+        "value": 0.75,
+        "source": "Tennis Abstract hElo"
+      },
+      "reason": "Алькарас прошёл группу без поражений, по hElo он сильнее на 190 пунктов. Но 1.27 уже закладывает 79% — оценка 74% ниже, перевеса нет.",
+      "facts": [
+        "Алькарас выиграл все три матча группы: у Медведева, Тиафо и Коболли (6:4, 6:1 20.11) — ESPN, Flashscore",
+        "hElo: Алькарас 2142, Шелтон 1952 — Tennis Abstract, 16.11",
+        "Рейтинг ATP: Алькарас 3-й, Шелтон 4-й — Flashscore"
+      ],
+      "against": [
+        "Подача Шелтона опасна на быстром харде в зале",
+        "В матче из трёх сетов один тай-брейк решает многое"
+      ],
+      "uncertainty": "Нет данных о самочувствии игроков.",
+      "data_quality": {
+        "level": "high",
+        "note": "Три независимых источника"
+      },
+      "sources": [
+        {
+          "title": "Flashscore — ATP Finals, Турин",
+          "url": "https://www.flashscore.com.ua/tennis/atp-singles/finals-turin/fixtures/"
+        },
+        {
+          "title": "Tennis Abstract — ATP Elo (обновлено 16.11)",
+          "url": "https://www.tennisabstract.com/reports/atp_elo_ratings.html"
+        },
+        {
+          "title": "ESPN — ATP Finals, результаты",
+          "url": "https://www.espn.com/tennis/scoreboard/_/date/20261120"
+        }
+      ],
+      "format": "Best of 3, хард в помещении",
+      "market_prob": 0.787,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "dota2-20261121-1t19yia",
+      "sport": "dota2",
+      "sport_name": "Dota 2",
+      "home": "GamerLegion",
+      "away": "Team Nemesis",
+      "event_date": "2026-11-21",
+      "start_iso": "2026-11-21T17:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T00:29+03:00",
+      "model_version": "v3",
+      "tournament": "BLAST Slam 9, групповой этап, тир-1",
+      "match": "GamerLegion — Team Nemesis",
+      "start": "21.11, 17:00 МСК",
+      "bet": "П2 (победа Nemesis)",
+      "odds": "2.90",
+      "confidence": 2,
+      "reason": "Nemesis 20.11 обыграл Spirit 2:0. Оценка 36% против 34% в коэффициенте — перевес около +2 п.п., ниже порога.",
+      "facts": [
+        "Nemesis 20.11 обыграл Team Spirit 2:0 — Cyber.Sports.ru, OpenDota",
+        "GamerLegion 20.11 обыграл Xtreme 2:0 — Cyber.Sports.ru",
+        "Рейтинг OpenDota: GamerLegion 1343, Nemesis 1269 — OpenDota, 21.11",
+        "GamerLegion за 30 дней: 26 карт выиграно, 21 проиграно — OpenDota"
+      ],
+      "against": [
+        "У Nemesis мало сыгранных матчей — рейтинг ненадёжен",
+        "GamerLegion выше по рейтингу"
+      ],
+      "uncertainty": "Малая выборка у Nemesis.",
+      "data_quality": {
+        "level": "low",
+        "note": "Мало матчей у Nemesis"
+      },
+      "sources": [
+        {
+          "title": "Cyber.Sports.ru — Dota 2, 21.11",
+          "url": "https://cyber.sports.ru/dota2/match/2026-11-21/"
+        },
+        {
+          "title": "OpenDota — рейтинги команд",
+          "url": "https://www.opendota.com/teams"
+        }
+      ],
+      "format": "BO3, онлайн (киберспорт)",
+      "market_prob": 0.345,
       "status": "pending",
       "result": null,
       "versions": [],
@@ -13331,6 +13934,107 @@
       "status_log": []
     },
     {
+      "id": "cs2-20261121-z55ums",
+      "sport": "cs2",
+      "sport_name": "CS2",
+      "home": "Baks",
+      "away": "Infinite Gaming",
+      "event_date": "2026-11-21",
+      "start_iso": "2026-11-21T18:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T00:29+03:00",
+      "model_version": "v3",
+      "tournament": "Nodwin Clutch 14, плей-офф, тир-3",
+      "match": "Baks — Infinite Gaming",
+      "start": "21.11, 18:00 МСК",
+      "bet": "П1 (победа Baks)",
+      "odds": "1.38",
+      "confidence": 3,
+      "reason": "Baks выиграл 4 из 5 последних серий, Infinite проиграл 4 последние. Оценка 74% против 72% в коэффициенте — перевес около +2 п.п., ниже порога.",
+      "facts": [
+        "Baks 20.11: 2:0 Nice Try, 2:0 Just Players, 0:2 Forze Reload; 18.11 — 2:0 The Last Resort — Cyber.Sports.ru",
+        "Infinite Gaming: 1:2 Mouz Nxt (17.11), 0:2 Black Phoenix (14.11), 0:1 BBL (10.11), 0:2 Brute (25.10) — Cyber.Sports.ru",
+        "Формат BO3, плей-офф — Cyber.Sports.ru"
+      ],
+      "against": [
+        "Baks 20.11 сыграл три серии подряд",
+        "Тир-3: составы и форма меняются быстро"
+      ],
+      "uncertainty": "Нет данных о картах и пиках.",
+      "data_quality": {
+        "level": "low",
+        "note": "Тир-3, один источник формы"
+      },
+      "sources": [
+        {
+          "title": "Cyber.Sports.ru — CS2, 21.11",
+          "url": "https://cyber.sports.ru/cs/match/2026-11-21/"
+        },
+        {
+          "title": "Cyber.Sports.ru — Baks vs Infinite",
+          "url": "https://cyber.sports.ru/cs/match/infinite-gaming-baks-esports-2026-11-20/"
+        }
+      ],
+      "format": "BO3, онлайн (киберспорт)",
+      "market_prob": 0.725,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "football-20261121-bp59ke",
+      "sport": "football",
+      "sport_name": "Футбол",
+      "home": "Ковентри",
+      "away": "Кристал Пэлас",
+      "event_date": "2026-11-21",
+      "start_iso": "2026-11-21T18:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T00:29+03:00",
+      "model_version": "v3",
+      "tournament": "АПЛ 2026/27, 11-й тур",
+      "match": "Ковентри — Кристал Пэлас",
+      "start": "21.11, 18:00 МСК",
+      "bet": "П2 (победа Кристал Пэлас)",
+      "odds": "2.75",
+      "confidence": 2,
+      "model_prob": {
+        "value": 0.424,
+        "source": "ClubElo"
+      },
+      "reason": "Пэлас последний в таблице, но ClubElo по-прежнему считает его сильнее Ковентри. Оценка 39% против 36% в линии — перевес около +2 п.п., ниже порога 3 п.п.",
+      "facts": [
+        "Кристал Пэлас — 20-е место, 7 очков (2-1-7), разница −14 — ESPN",
+        "Ковентри — 17-е место, 9 очков (3-0-7), разница −9 — ESPN",
+        "Форма Ковентри — DWLLW, Пэлас — DDLWL — ESPN, 21.11"
+      ],
+      "against": [
+        "Пэлас набрал меньше всех в лиге и проиграл 7 матчей из 10",
+        "Ковентри играет дома"
+      ],
+      "uncertainty": "Нет подтверждённых данных о травмах.",
+      "data_quality": {
+        "level": "medium",
+        "note": "ESPN + ClubElo"
+      },
+      "sources": [
+        {
+          "title": "ESPN — АПЛ, 21.11",
+          "url": "https://www.espn.com/soccer/scoreboard/_/date/20261121/league/eng.1"
+        },
+        {
+          "title": "ClubElo — прогнозы матчей",
+          "url": "https://clubelo.com/Fixtures"
+        }
+      ],
+      "market_prob": 0.364,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
       "id": "football-20261121-bupsqt",
       "sport": "football",
       "sport_name": "Футбол",
@@ -13436,6 +14140,60 @@
       "status_log": []
     },
     {
+      "id": "dota2-20261121-1t9hd15",
+      "sport": "dota2",
+      "sport_name": "Dota 2",
+      "home": "Xtreme Gaming",
+      "away": "Team Spirit",
+      "event_date": "2026-11-21",
+      "start_iso": "2026-11-21T20:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T00:29+03:00",
+      "model_version": "v3",
+      "tournament": "BLAST Slam 9, групповой этап, тир-1",
+      "match": "Xtreme Gaming — Team Spirit",
+      "start": "21.11, 20:00 МСК",
+      "bet": "П2 (победа Spirit)",
+      "odds": "1.20",
+      "confidence": 3,
+      "reason": "Spirit выше по рейтингу OpenDota на 295 пунктов, но проиграл Nemesis 0:2 и PARIVISION 1:3. Оценка 76% против 83% в коэффициенте — перевеса нет.",
+      "facts": [
+        "Рейтинг OpenDota: Spirit 1522, Xtreme 1227 — OpenDota, 21.11",
+        "Spirit 20.11 проиграл Nemesis 0:2, 18.11 — PARIVISION 1:3 — Cyber.Sports.ru, OpenDota",
+        "Xtreme 20.11 проиграл GamerLegion 0:2 — Cyber.Sports.ru",
+        "В 14 последних очных сериях Spirit выиграл 8, Xtreme — 5, одна ничья — Cyber.Sports.ru"
+      ],
+      "against": [
+        "Spirit проиграл 2 из 3 последних серий",
+        "Xtreme исторически неудобен Spirit: 5 побед в 14 встречах"
+      ],
+      "uncertainty": "Нет данных о драфтах на новом патче.",
+      "data_quality": {
+        "level": "medium",
+        "note": "OpenDota + Cyber.Sports.ru"
+      },
+      "sources": [
+        {
+          "title": "Cyber.Sports.ru — Dota 2, 21.11",
+          "url": "https://cyber.sports.ru/dota2/match/2026-11-21/"
+        },
+        {
+          "title": "OpenDota — рейтинги команд",
+          "url": "https://www.opendota.com/teams"
+        },
+        {
+          "title": "Cyber.Sports.ru — Xtreme vs Spirit",
+          "url": "https://cyber.sports.ru/dota2/match/team-spirit-xtreme-gaming-2026-11-21/"
+        }
+      ],
+      "format": "BO3, онлайн (киберспорт)",
+      "market_prob": 0.833,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
       "id": "football-20261121-4bwv2l",
       "sport": "football",
       "sport_name": "Футбол",
@@ -13484,6 +14242,417 @@
       ],
       "format": "90 минут",
       "market_prob": 0.637,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "basketball-20261121-11nqnwh",
+      "sport": "basketball",
+      "sport_name": "Баскетбол",
+      "home": "Филадельфия",
+      "away": "Милуоки",
+      "event_date": "2026-11-21",
+      "start_iso": "2026-11-21T21:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T00:29+03:00",
+      "model_version": "v3",
+      "tournament": "НБА 2026/27, регулярный сезон",
+      "match": "Филадельфия — Милуоки",
+      "start": "21.11, 21:00 МСК",
+      "bet": "П1 (победа Филадельфии, с ОТ)",
+      "confidence": 3,
+      "model_prob": {
+        "value": 0.864,
+        "source": "ESPN BPI"
+      },
+      "reason": "Филадельфия 13-3, Милуоки 1-15 и 0-7 на выезде. BPI даёт 86%, наша оценка 80%. Линии пока нет, перевес над рынком оценить нельзя.",
+      "facts": [
+        "Филадельфия — 13-3, дома 6-2 — ESPN, 21.11",
+        "Милуоки — 1-15, на выезде 0-7 — ESPN",
+        "У Филадельфии не сыграют Джейлен Браун, Адем Бона, Доминик Барлоу, Ариэль Хукпорти; у Милуоки — Усман Дьенг — ESPN, травмы"
+      ],
+      "against": [
+        "Без Джейлена Брауна у Филадельфии меньше атакующих вариантов",
+        "Дневной матч — меньше времени на восстановление"
+      ],
+      "uncertainty": "Линии ещё нет; статус игроков может измениться до матча.",
+      "data_quality": {
+        "level": "medium",
+        "note": "ESPN; без коэффициента"
+      },
+      "sources": [
+        {
+          "title": "ESPN — расписание НБА и BPI",
+          "url": "https://www.espn.com/nba/scoreboard/_/date/20261121"
+        },
+        {
+          "title": "Flashscore — календарь НБА",
+          "url": "https://www.flashscore.com.ua/basketball/usa/nba/fixtures/"
+        }
+      ],
+      "market_prob": null,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "tennis-20261121-apcp3b",
+      "sport": "tennis",
+      "sport_name": "Теннис",
+      "home": "Александр Зверев",
+      "away": "Даниил Медведев",
+      "event_date": "2026-11-21",
+      "start_iso": "2026-11-21T22:30+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T00:29+03:00",
+      "model_version": "v3",
+      "tournament": "Итоговый турнир ATP, Турин, полуфинал",
+      "match": "Александр Зверев — Даниил Медведев",
+      "start": "21.11, 22:30 МСК",
+      "bet": "П1 (победа Зверева)",
+      "confidence": 2,
+      "model_prob": {
+        "value": 0.6,
+        "source": "Tennis Abstract hElo"
+      },
+      "reason": "По hElo Зверев сильнее на 70 пунктов (60%). Линии пока нет, перевес над рынком оценить нельзя.",
+      "facts": [
+        "hElo: Зверев 2030, Медведев 1961 — Tennis Abstract, 16.11",
+        "Рейтинг ATP: Зверев 1-й, Медведев 5-й — Flashscore",
+        "Медведев 20.11 обыграл Тиафо 6:3, 6:4 — Flashscore"
+      ],
+      "against": [
+        "Медведев на ходу после уверенной победы",
+        "Медведев хорошо играет на медленном харде в зале"
+      ],
+      "uncertainty": "Линии ещё нет.",
+      "data_quality": {
+        "level": "medium",
+        "note": "Без коэффициента"
+      },
+      "sources": [
+        {
+          "title": "Flashscore — ATP Finals, Турин",
+          "url": "https://www.flashscore.com.ua/tennis/atp-singles/finals-turin/fixtures/"
+        },
+        {
+          "title": "Tennis Abstract — ATP Elo (обновлено 16.11)",
+          "url": "https://www.tennisabstract.com/reports/atp_elo_ratings.html"
+        }
+      ],
+      "format": "Best of 3, хард в помещении",
+      "market_prob": null,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "football-20261121-1hfvi9w",
+      "sport": "football",
+      "sport_name": "Футбол",
+      "home": "Реал Мадрид",
+      "away": "Сельта",
+      "event_date": "2026-11-21",
+      "start_iso": "2026-11-21T23:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T00:29+03:00",
+      "model_version": "v3",
+      "tournament": "Ла Лига 2026/27, 13-й тур",
+      "match": "Реал Мадрид — Сельта",
+      "start": "21.11, 23:00 МСК",
+      "bet": "П1 (победа Реала)",
+      "odds": "1.17",
+      "confidence": 4,
+      "model_prob": {
+        "value": 0.79,
+        "source": "ClubElo"
+      },
+      "reason": "Реал выиграл пять матчей подряд, Сельта — одна победа в последних пяти. Но коэффициент 1.17 уже закладывает 86% — оценка 81% ниже, перевеса нет.",
+      "facts": [
+        "Реал — 2-е место, 30 очков (10-0-2), разница +21 — ESPN",
+        "Реал выиграл 5 последних матчей (WWWWW) — ESPN, 21.11",
+        "Сельта — 11-е место, 13 очков (2-7-3), форма WDLLD — ESPN"
+      ],
+      "against": [
+        "Сельта сыграла вничью 7 раз из 12 — умеет отбирать очки",
+        "Линия уже переоценивает фаворита относительно модели"
+      ],
+      "uncertainty": "Нет подтверждённых данных о составах.",
+      "data_quality": {
+        "level": "high",
+        "note": "ESPN + ClubElo, однозначная картина"
+      },
+      "sources": [
+        {
+          "title": "ESPN — Ла Лига, 21.11",
+          "url": "https://www.espn.com/soccer/scoreboard/_/date/20261121/league/esp.1"
+        },
+        {
+          "title": "ClubElo — прогнозы матчей",
+          "url": "https://clubelo.com/Fixtures"
+        }
+      ],
+      "market_prob": 0.855,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "football-20261121-b3flg9",
+      "sport": "football",
+      "sport_name": "Футбол",
+      "home": "Мотеруэлл",
+      "away": "Рейнджерс",
+      "event_date": "2026-11-21",
+      "start_iso": "2026-11-21T23:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T00:29+03:00",
+      "model_version": "v3",
+      "tournament": "Премьершип Шотландии 2026/27",
+      "match": "Мотеруэлл — Рейнджерс",
+      "start": "21.11, 23:00 МСК",
+      "bet": "Ничья (X)",
+      "odds": "4.70",
+      "confidence": 2,
+      "model_prob": {
+        "value": 0.287,
+        "source": "ClubElo"
+      },
+      "reason": "Рейнджерс сыграли вничью в 3 из 5 последних матчей; ClubElo оценивает ничью в 29%, линия — в 20%. Оценка 24% выше рыночных 21% (+3 п.п.), ставка рискованная.",
+      "facts": [
+        "Рейнджерс — 2-е место, 27 очков после 12 туров (8-3-1), разница +12 — ESPN",
+        "Мотеруэлл — 9-е место, 13 очков (3-4-6), разница −6 — ESPN",
+        "Форма Рейнджерс — DWDWD, Мотеруэлла — DWDLL — ESPN, 21.11"
+      ],
+      "against": [
+        "Рейнджерс заметно сильнее по таблице и разнице мячей",
+        "Ничья — редкий исход, даже 24% означает, что в 3 случаях из 4 она не сыграет"
+      ],
+      "uncertainty": "Нет подтверждённых данных о составах.",
+      "data_quality": {
+        "level": "medium",
+        "note": "ESPN + ClubElo"
+      },
+      "sources": [
+        {
+          "title": "ESPN — Премьершип, 21.11",
+          "url": "https://www.espn.com/soccer/scoreboard/_/date/20261121/league/sco.1"
+        },
+        {
+          "title": "ClubElo — прогнозы матчей",
+          "url": "https://clubelo.com/Fixtures"
+        }
+      ],
+      "market_prob": 0.213,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "basketball-20261122-1cmjg6",
+      "sport": "basketball",
+      "sport_name": "Баскетбол",
+      "home": "Сан-Антонио",
+      "away": "Нью-Орлеан",
+      "event_date": "2026-11-22",
+      "start_iso": "2026-11-22T04:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T00:29+03:00",
+      "model_version": "v3",
+      "tournament": "НБА 2026/27, регулярный сезон",
+      "match": "Сан-Антонио — Нью-Орлеан",
+      "start": "22.11, 04:00 МСК",
+      "bet": "П1 (победа Сан-Антонио, с ОТ)",
+      "confidence": 3,
+      "model_prob": {
+        "value": 0.916,
+        "source": "ESPN BPI"
+      },
+      "reason": "Сан-Антонио 13-3, у Нью-Орлеана 5-11 и пять игроков ротации вне игры. Линии пока нет, перевес не оценить.",
+      "facts": [
+        "Сан-Антонио — 13-3, дома 6-3 — ESPN, 21.11",
+        "Нью-Орлеан — 5-11, на выезде 1-4 — ESPN",
+        "У Нью-Орлеана не сыграют Трей Мерфи III, Деджонте Мюррей, Беннедикт Матурин, Трендон Уотфорд, Брайс Макгоуэнс — ESPN",
+        "У Сан-Антонио не сыграют Дилан Харпер, Тобиас Харрис, Джейден Куэйнтенс — ESPN"
+      ],
+      "against": [
+        "У Сан-Антонио тоже трое вне игры",
+        "Сан-Антонио дома проиграл уже 3 матча"
+      ],
+      "uncertainty": "Линии ещё нет.",
+      "data_quality": {
+        "level": "medium",
+        "note": "ESPN; без коэффициента"
+      },
+      "sources": [
+        {
+          "title": "ESPN — расписание НБА и BPI",
+          "url": "https://www.espn.com/nba/scoreboard/_/date/20261121"
+        },
+        {
+          "title": "Flashscore — календарь НБА",
+          "url": "https://www.flashscore.com.ua/basketball/usa/nba/fixtures/"
+        }
+      ],
+      "market_prob": null,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "basketball-20261122-csaeez",
+      "sport": "basketball",
+      "sport_name": "Баскетбол",
+      "home": "Сакраменто",
+      "away": "Бостон",
+      "event_date": "2026-11-22",
+      "start_iso": "2026-11-22T06:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T00:29+03:00",
+      "model_version": "v3",
+      "tournament": "НБА 2026/27, регулярный сезон",
+      "match": "Сакраменто — Бостон",
+      "start": "22.11, 06:00 МСК",
+      "bet": "П2 (победа Бостона, с ОТ)",
+      "confidence": 3,
+      "model_prob": {
+        "value": 0.904,
+        "source": "ESPN BPI"
+      },
+      "reason": "Сакраменто 1-13 и 0-9 дома, Бостон 11-4. Линии пока нет, перевес не оценить.",
+      "facts": [
+        "Сакраменто — 1-13, дома 0-9 — ESPN, 21.11",
+        "Бостон — 11-4, на выезде 5-3 — ESPN",
+        "У Сакраменто не сыграют Максим Рейно и Бен Симмонс; у Бостона потерь нет — ESPN"
+      ],
+      "against": [
+        "Поздний выезд на Запад — возможна усталость",
+        "Даже аутсайдеры НБА выигрывают у фаворитов примерно каждый пятый матч"
+      ],
+      "uncertainty": "Линии ещё нет.",
+      "data_quality": {
+        "level": "medium",
+        "note": "ESPN; без коэффициента"
+      },
+      "sources": [
+        {
+          "title": "ESPN — расписание НБА и BPI",
+          "url": "https://www.espn.com/nba/scoreboard/_/date/20261121"
+        },
+        {
+          "title": "Flashscore — календарь НБА",
+          "url": "https://www.flashscore.com.ua/basketball/usa/nba/fixtures/"
+        }
+      ],
+      "market_prob": null,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "hockey-20261122-hl60kk",
+      "sport": "hockey",
+      "sport_name": "Хоккей",
+      "home": "Барыс",
+      "away": "Динамо Минск",
+      "event_date": "2026-11-22",
+      "start_iso": "2026-11-22T14:30+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T00:29+03:00",
+      "model_version": "v3",
+      "tournament": "КХЛ, регулярный чемпионат 2026/27",
+      "match": "Барыс — Динамо Минск",
+      "start": "22.11, 14:30 МСК",
+      "bet": "П1 (победа Барыса в основное время)",
+      "odds": "2.45",
+      "confidence": 2,
+      "reason": "У Барыса разница шайб +9 против −11 у Минска и домашний лёд. Оценка 39% близка к рыночным 41% — перевеса нет.",
+      "facts": [
+        "Барыс — 29 очков в 28 матчах, 12 побед в основное время, шайбы 89:80 — Flashscore, 21.11",
+        "Динамо Минск — 29 очков в 28 матчах, 9 побед в основное время, 66:77 — Flashscore",
+        "Форма: Барыс П-П-В-В-П, Минск В-П-В-В-П — Flashscore"
+      ],
+      "against": [
+        "Линия считает фаворитом Минск",
+        "Обе команды нестабильны"
+      ],
+      "uncertainty": "Нет данных о составах.",
+      "data_quality": {
+        "level": "medium",
+        "note": "Flashscore"
+      },
+      "sources": [
+        {
+          "title": "Flashscore — таблица КХЛ",
+          "url": "https://www.flashscore.com.ua/hockey/russia/khl/standings/"
+        },
+        {
+          "title": "Flashscore — календарь КХЛ и коэффициенты",
+          "url": "https://www.flashscore.com.ua/hockey/russia/khl/fixtures/"
+        }
+      ],
+      "market_prob": 0.408,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "hockey-20261122-dvhp3c",
+      "sport": "hockey",
+      "sport_name": "Хоккей",
+      "home": "Динамо Москва",
+      "away": "ЦСКА",
+      "event_date": "2026-11-22",
+      "start_iso": "2026-11-22T19:46+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T00:29+03:00",
+      "model_version": "v3",
+      "tournament": "КХЛ, регулярный чемпионат 2026/27",
+      "match": "Динамо Москва — ЦСКА",
+      "start": "22.11, 19:46 МСК",
+      "bet": "П2 (победа ЦСКА в основное время)",
+      "odds": "2.00",
+      "confidence": 3,
+      "reason": "Лидер лиги ЦСКА выиграл в основное время 18 матчей из 28 и разгромил Шанхай 5:0. Но в линии уже 50% — оценка 47% ниже, перевеса нет.",
+      "facts": [
+        "ЦСКА — 1-е место, 44 очка в 28 матчах, 18 побед в основное время, шайбы 93:50 — Flashscore, 21.11",
+        "Динамо Москва — 7-е место на Западе, 31 очко в 29 матчах, 7 побед в основное время, 65:72 — Flashscore",
+        "Форма: ЦСКА В-В-П-В-В, Динамо В-В-В-П-В — Flashscore",
+        "ЦСКА 20.11 обыграл Шанхай 5:0 — Flashscore, Sports.ru"
+      ],
+      "against": [
+        "Динамо выиграло 4 из 5 последних матчей",
+        "В КХЛ около 22% матчей уходят в овертайм — ставка на основное время это не покрывает"
+      ],
+      "uncertainty": "Нет подтверждённых данных о составах и вратарях.",
+      "data_quality": {
+        "level": "medium",
+        "note": "Таблица и линия — Flashscore, время — Sports.ru"
+      },
+      "sources": [
+        {
+          "title": "Flashscore — таблица КХЛ",
+          "url": "https://www.flashscore.com.ua/hockey/russia/khl/standings/"
+        },
+        {
+          "title": "Flashscore — календарь КХЛ и коэффициенты",
+          "url": "https://www.flashscore.com.ua/hockey/russia/khl/fixtures/"
+        },
+        {
+          "title": "Sports.ru — матчи КХЛ 22.11",
+          "url": "https://www.sports.ru/hockey/match/2026-11-22/"
+        }
+      ],
+      "market_prob": 0.5,
       "status": "pending",
       "result": null,
       "versions": [],
