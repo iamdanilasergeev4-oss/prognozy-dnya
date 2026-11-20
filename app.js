@@ -128,6 +128,24 @@
     return parts.length === 2 ? parts.map((x) => x.trim()) : null;
   }
   const flag = (name) => (window.Crest ? Crest.crest(name) : "");
+  /* Окно времени для фильтра «Скоро / Сегодня / Завтра» */
+  let whenFilter = "all";
+  function bucketOf(p, now = Date.now()) {
+    const s = startOf(p);
+    if (isNaN(s.ms)) return { soon: false, day: "later" };
+    const soon = s.exact && s.ms - now <= 3 * 3600e3 && now - s.ms <= 2.5 * 3600e3;
+    const d = Math.round((Date.parse(dayKey(s.ms)) - Date.parse(dayKey(now))) / 864e5);
+    return { soon, day: d <= 0 ? "today" : d === 1 ? "tomorrow" : "later" };
+  }
+  /* Прогноз ↔ материал «Разбора дня» по совпадению обеих команд */
+  const teamKey = (t) => String(t || "").toLowerCase().replace(/ё/g, "е").replace(/[^\p{L}\p{N}]+/gu, "");
+  function storyIndexFor(match) {
+    if (!hasAnalysis()) return -1;
+    const t = splitTeams(match);
+    if (!t) return -1;
+    const k = t.map(teamKey).sort().join("|");
+    return data.analysis.findIndex((a) => { const u = splitTeams(a.match); return u && u.map(teamKey).sort().join("|") === k; });
+  }
 
   /* ---------- Шапка ---------- */
   const top = $("#top");
@@ -394,6 +412,10 @@
         </div>
         ${freshnessHTML()}
       </div>
+      <div class="bd-kpis">
+        <button type="button" class="bd-kpi" id="bd-next" hidden></button>
+        <a class="bd-kpi" id="bd-acc" href="#history" hidden></a>
+      </div>
       <div class="bd-chart">
         <div class="bd-title"><span>Когда начинаются матчи</span><small>чем крупнее точка, тем выше уверенность</small></div>
         <div id="bd-tl"></div>
@@ -413,6 +435,37 @@
       b.addEventListener("blur", () => highlightSport(null));
     });
     syncBoard();
+    fillKpis();
+  }
+  /* «Ближайший матч» и точность за 30 дней — главный аргумент доверия держим на виду */
+  let accCache = null;
+  async function fillKpis() {
+    const now = Date.now();
+    const next = allPicks().map((x) => ({ ...x, s: startOf(x.p) })).filter((x) => x.s.exact && x.s.ms > now).sort((a, b) => a.s.ms - b.s.ms)[0];
+    const nb = $("#bd-next");
+    if (nb && next) {
+      const rel = inRel(next.s.ms, now) || `${dayRel(next.s.ms, now)}, ${hhmm(next.s.ms)}`;
+      nb.innerHTML = `<small>Ближайший матч ${esc(rel)}</small><b>${esc(next.p.match)}</b>`;
+      nb.style.setProperty("--c", colorOf(next.sport));
+      nb.hidden = false;
+      nb.onclick = () => {
+        pendingFocus = `#pick-${next.sport}-${next.i}`;
+        if (current === next.sport) focusAfterPaint(); else select(next.sport, false);
+      };
+    }
+    const ab = $("#bd-acc");
+    if (!ab || !H) return;
+    try {
+      if (!accCache) {
+        const idx = await fetch("data/history/index.json?v=" + Date.now(), { cache: "no-store" }).then((r) => (r.ok ? r.json() : null));
+        const files = await Promise.all((idx?.months || []).map((m) => fetch(`data/history/${m}.json?v=${Date.now()}`, { cache: "no-store" }).then((r) => (r.ok ? r.json() : null)).catch(() => null)));
+        accCache = H.computeStats(H.mergeMonths(files.filter(Boolean)).predictions, { days: 30 });
+      }
+      const s = accCache;
+      if (s.accuracy == null || s.evaluated < 10) return;
+      ab.innerHTML = `<small>Точность за 30 дней</small><b>${String(s.accuracy).replace(".", ",")}%</b><span>сыграли ${s.won} из ${s.evaluated} ${plural(s.evaluated, "прогноза", "прогнозов", "прогнозов")}</span>`;
+      ab.hidden = false;
+    } catch { /* история недоступна — блок просто не показываем */ }
   }
   function highlightSport(id) {
     board.classList.toggle("focus", !!id);
@@ -591,6 +644,12 @@
     const dq = p.data_quality && p.data_quality.level;
     const preview = facts.slice(0, lead ? 3 : 2);
     const prob = p.model_prob && p.model_prob.value ? Math.round(p.model_prob.value * 100) : null;
+    const bk = bucketOf(p);
+    const si = storyIndexFor(p.match);
+    const nSrc = (p.sources || []).length;
+    const confWhy = `Это оценка того, насколько вывод подкреплён данными, а не вероятность исхода. ` +
+      (v2 ? `Под этим прогнозом: ${facts.length} ${plural(facts.length, "факт", "факта", "фактов")} «за», ${against.length} «против»` : `Подробного разбора у этого прогноза нет`) +
+      (dq ? `, данные ${DQ_LABEL[dq] || dq}` : "") + (nSrc ? `, ${nSrc} ${plural(nSrc, "источник", "источника", "источников")}` : "") + ".";
     const detail = v2 ? `
       <div class="more" id="${id}-more"><div><div class="pk-detail">
         <div class="pk-cols">
@@ -603,7 +662,7 @@
         ${(p.sources || []).length ? `<h4 class="pk-srch">Источники</h4>${srcList(p.sources)}` : ""}
       </div></div></div>` : "";
     return `
-      <article class="pick${lead ? " lead" : ""}${v2 ? "" : " v1"}" id="${id}" style="--i:${i}">
+      <article class="pick${lead ? " lead" : ""}${v2 ? "" : " v1"}" id="${id}" style="--i:${i}" data-day="${bk.day}"${bk.soon ? " data-soon" : ""}>
         <div class="pk-meta">
           <span class="pk-tour">${esc(p.tournament || "")}${p.format ? `<span class="pk-fmt">${esc(p.format)}</span>` : ""}</span>
           ${whenHTML(p, sport.id)}
@@ -618,12 +677,14 @@
         ${p.reason ? `<p class="pk-reason">${esc(p.reason)}</p>` : ""}
         ${preview.length ? `<ul class="pk-key">${preview.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
         <div class="pk-foot">
-          <span class="conf" title="Насколько вывод подкреплён фактами и согласием независимых источников">${gauge(conf)}<span>Уверенность <b>${CONF_LABEL[conf]}</b></span></span>
+          <span class="conf-wrap"><button type="button" class="conf" aria-expanded="false" aria-controls="${id}-why">${gauge(conf)}<span>Уверенность <b>${CONF_LABEL[conf]}</b></span><i class="conf-q" aria-hidden="true">?</i></button>
+            <span class="conf-pop" id="${id}-why" role="note" hidden>${esc(confWhy)}</span></span>
           ${dq ? `<span class="dq dq-${esc(dq)}" title="${esc(p.data_quality.note || "")}"><i></i>Данные: ${esc(DQ_LABEL[dq] || dq)}</span>` : `<span class="dq dq-old" title="Прогноз опубликован до появления разбора «за» и «против»"><i></i>Без разбора</span>`}
           ${v2 ? `<button class="pk-more" type="button" aria-expanded="false" aria-controls="${id}-more">
               <span>Полный разбор</span><small>${facts.length} ${plural(facts.length, "факт", "факта", "фактов")}${against.length ? ` · ${against.length} против` : ""}</small>${I_CHEV}</button>`
             : `<span class="srcs">${srcChips(p.sources)}</span>`}
         </div>
+        ${si >= 0 ? `<button type="button" class="pk-story" data-story="${si}">${icon("analysis")}<span>Подробный разбор этого матча</span></button>` : ""}
         ${detail}
       </article>`;
   }
@@ -651,7 +712,14 @@
         </div>`;
     }
     const topConf = Math.max(...picks.map((p) => Number(p.confidence) || 0));
-    html += `<div class="list">` + picks.map((p, i) => pickHTML(p, i, sport, i === 0 && topConf >= 4)).join("") + `</div>`;
+    const now = Date.now();
+    const bks = picks.map((p) => bucketOf(p, now));
+    const cnt = { all: picks.length, soon: bks.filter((b) => b.soon).length, today: bks.filter((b) => b.day === "today").length, tomorrow: bks.filter((b) => b.day === "tomorrow").length };
+    const chips = [["all", "Все"], ["soon", "Ближайшие 3 часа"], ["today", "Сегодня"], ["tomorrow", "Завтра"]]
+      .map(([k, l]) => `<button type="button" class="when-chip" data-when="${k}" aria-pressed="${whenFilter === k}"${cnt[k] || k === "all" ? "" : " disabled"}>${l}<b>${cnt[k]}</b></button>`).join("");
+    html += `<div class="when" role="group" aria-label="Когда начинается матч">${chips}</div>`;
+    html += `<div class="list" data-when="${whenFilter}">` + picks.map((p, i) => pickHTML(p, i, sport, i === 0 && topConf >= 4)).join("") + `</div>`;
+    html += `<div class="when-empty" hidden><p>В этом окне матчей нет.</p><button type="button" class="when-chip" data-when="all">Показать все</button></div>`;
     return html;
   }
 
@@ -780,7 +848,7 @@
       const when = !isNaN(st.ms) && st.exact ? `${dayRel(st.ms)}, ${hhmm(st.ms)}` : (a.start || "");
       const moreId = `story-${i}`;
       return `
-        <article class="story${i === 0 ? " lead" : ""}" style="--c:${colorOf(sid)};--i:${i}">
+        <article class="story${i === 0 ? " lead" : ""}" id="story-card-${i}" style="--c:${colorOf(sid)};--i:${i}">
           <p class="st-kicker">${icon(sid)}<span>${esc(sportName || "Матч")}</span><span class="st-dot"></span><span>${esc(a.tournament || "")}</span><span class="st-dot"></span><span>${esc(when)}</span></p>
           <h3 class="st-title">${title}</h3>
           <div class="st-grid">
@@ -806,7 +874,42 @@
     btn.setAttribute("aria-expanded", open);
     btn.querySelector("span").textContent = open ? labels[1] : labels[0];
   }
+  function applyWhen() {
+    const list = panel.querySelector(".list[data-when]");
+    if (!list) return;
+    list.dataset.when = whenFilter;
+    panel.querySelectorAll(".when .when-chip").forEach((c) => c.setAttribute("aria-pressed", c.dataset.when === whenFilter));
+    const sel = { all: ".pick", soon: ".pick[data-soon]", today: '.pick[data-day="today"]', tomorrow: '.pick[data-day="tomorrow"]' }[whenFilter];
+    const empty = !list.querySelector(sel);
+    panel.querySelector(".when-empty").hidden = !empty;
+  }
+  let pendingFocus = null; // элемент, к которому прокрутить после отрисовки панели
+  function focusAfterPaint() {
+    if (!pendingFocus) return;
+    const el = $(pendingFocus);
+    pendingFocus = null;
+    if (!el) return;
+    requestAnimationFrame(() => {
+      el.scrollIntoView({ behavior: calm() ? "auto" : "smooth", block: "start" });
+      el.classList.add("flash");
+      setTimeout(() => el.classList.remove("flash"), 1800);
+    });
+  }
+  function openStory(i) {
+    pendingFocus = "#story-card-" + i;
+    if (current === "analysis") focusAfterPaint(); else select("analysis", false);
+  }
   function bindPanel() {
+    panel.querySelectorAll(".when-chip").forEach((c) => c.addEventListener("click", () => { whenFilter = c.dataset.when; applyWhen(); }));
+    applyWhen();
+    panel.querySelectorAll(".pk-story").forEach((b) => b.addEventListener("click", () => openStory(+b.dataset.story)));
+    panel.querySelectorAll(".conf[aria-controls]").forEach((b) => b.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const pop = $("#" + b.getAttribute("aria-controls"));
+      const open = b.getAttribute("aria-expanded") !== "true";
+      panel.querySelectorAll('.conf[aria-expanded="true"]').forEach((x) => { x.setAttribute("aria-expanded", "false"); $("#" + x.getAttribute("aria-controls")).hidden = true; });
+      b.setAttribute("aria-expanded", open); pop.hidden = !open;
+    }));
     panel.querySelectorAll(".pk-more").forEach((btn) => btn.addEventListener("click", () => {
       const card = btn.closest(".pick");
       setOpen(card, btn, !card.classList.contains("open"), ["Полный разбор", "Свернуть разбор"]);
@@ -817,12 +920,22 @@
     }));
   }
 
+  document.addEventListener("click", (e) => {
+    if (e.target.closest(".conf-wrap")) return;
+    panel.querySelectorAll('.conf[aria-expanded="true"]').forEach((x) => { x.setAttribute("aria-expanded", "false"); $("#" + x.getAttribute("aria-controls")).hidden = true; });
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape") return;
+    panel.querySelectorAll('.conf[aria-expanded="true"]').forEach((x) => { x.setAttribute("aria-expanded", "false"); $("#" + x.getAttribute("aria-controls")).hidden = true; x.focus(); });
+  });
+
   function renderPanel(animated) {
     const html = current === "analysis" ? analysisHTML() : current === "express" ? expressHTML() : sportHTML(data.sports.find((s) => s.id === current));
     clearTimeout(rendering);
     const paint = () => {
       panel.innerHTML = html;
       bindPanel();
+      focusAfterPaint();
       if (current === "express") loadExpressPast();
       panel.classList.remove("leaving");
       if (!calm()) {
