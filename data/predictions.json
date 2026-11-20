@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-20T07:30+03:00",
+  "updated_at": "2026-11-20T17:26+03:00",
   "source": "claude",
   "sports": [
     {
@@ -7,105 +7,6 @@
       "name": "Футбол",
       "emoji": "⚽",
       "picks": [
-        {
-          "against": [
-            "Касима проиграла 5 матчей из 14"
-          ],
-          "data_quality": {
-            "level": "low",
-            "note": "нет xG, формы за последние туры и составов; данные — таблица ESPN"
-          },
-          "match": "Касима Антлерс — Симидзу С-Палс",
-          "tournament": "J1 Лига, специальный сезон 2026",
-          "start": "20.11, 13:00 МСК",
-          "start_iso": "2026-11-20T13:00+03:00",
-          "bet": "П1 (победа Касимы)",
-          "odds": "1.50",
-          "confidence": 3,
-          "reason": "Касима (6-е место, +5) дома против 15-й команды, проигравшей 8 матчей из 14.",
-          "facts": [
-            "Касима: 6-е место, 23 очка, 7 побед, разница +5 — ESPN",
-            "Симидзу: 15-е место, 14 очков, 8 поражений, разница −13 — ESPN",
-            "Симидзу выиграл лишь 4 матча из 14 — ESPN"
-          ],
-          "uncertainty": "Нет данных о составах.",
-          "sources": [
-            {
-              "title": "ESPN — Kashima vs Shimizu (таблица, линия)",
-              "url": "https://www.espn.com/soccer/match/_/gameId/401877534"
-            },
-            {
-              "title": "ESPN — J1 League scoreboard",
-              "url": "https://www.espn.com/soccer/scoreboard/_/league/jpn.1/date/20261120"
-            }
-          ]
-        },
-        {
-          "against": [
-            "Дерби префектуры Тиба — в дерби фаворит часто буксует"
-          ],
-          "data_quality": {
-            "level": "low",
-            "note": "нет xG, формы за последние туры и составов; данные — таблица ESPN"
-          },
-          "match": "Касива Рейсол — ДЖЕФ Юнайтед Чиба",
-          "tournament": "J1 Лига, специальный сезон 2026",
-          "start": "20.11, 13:00 МСК",
-          "start_iso": "2026-11-20T13:00+03:00",
-          "bet": "П1 (победа Касивы)",
-          "odds": "1.50",
-          "confidence": 4,
-          "reason": "Вторая команда лиги (10 побед в 14 турах) против 17-й.",
-          "facts": [
-            "Касива: 2-е место, 31 очко, 10-1-3, разница +11 — ESPN",
-            "ДЖЕФ Чиба: 17-е место, 13 очков, 3 победы, разница −8 — ESPN",
-            "Касива проиграла лишь 3 матча из 14 — ESPN"
-          ],
-          "uncertainty": "Нет данных о составах.",
-          "sources": [
-            {
-              "title": "ESPN — Kashiwa vs JEF Chiba (таблица, линия)",
-              "url": "https://www.espn.com/soccer/match/_/gameId/401877553"
-            },
-            {
-              "title": "ESPN — J1 League scoreboard",
-              "url": "https://www.espn.com/soccer/scoreboard/_/league/jpn.1/date/20261120"
-            }
-          ]
-        },
-        {
-          "against": [
-            "Мито борется за выживание"
-          ],
-          "data_quality": {
-            "level": "low",
-            "note": "нет xG, формы за последние туры и составов; данные — таблица ESPN"
-          },
-          "match": "Виссел Кобе — Мито Холлихок",
-          "tournament": "J1 Лига, специальный сезон 2026",
-          "start": "20.11, 13:00 МСК",
-          "start_iso": "2026-11-20T13:00+03:00",
-          "bet": "П1 (победа Виссела)",
-          "odds": "1.42",
-          "confidence": 4,
-          "reason": "Виссел (5-е место, 3 поражения) принимает предпоследнюю команду, выигравшую 2 матча из 14.",
-          "facts": [
-            "Виссел: 5-е место, 27 очков, 8-3-3, разница +9 — ESPN",
-            "Мито: 19-е из 20, 9 очков, 2 победы и 9 поражений, разница −14 — ESPN",
-            "Виссел проиграл 3 матча из 14 — ESPN"
-          ],
-          "uncertainty": "Нет данных о составах.",
-          "sources": [
-            {
-              "title": "ESPN — Vissel vs Mito (таблица, линия)",
-              "url": "https://www.espn.com/soccer/match/_/gameId/401877548"
-            },
-            {
-              "title": "ESPN — J1 League scoreboard",
-              "url": "https://www.espn.com/soccer/scoreboard/_/league/jpn.1/date/20261120"
-            }
-          ]
-        },
         {
           "against": [
             "Макара — второй по силе соперник чемпионата"
@@ -140,6 +41,56 @@
           ]
         },
         {
+          "match": "Молде — Будё-Глимт",
+          "tournament": "Элитсерия (Норвегия), 27-й тур",
+          "start": "20.11, 21:00 МСК",
+          "start_iso": "2026-11-20T21:00+03:00",
+          "bet": "П2 (победа Будё-Глимт)",
+          "odds": "1.80",
+          "confidence": 3,
+          "prob": {
+            "value": 0.58,
+            "method": "ClubElo + таблица и форма"
+          },
+          "data_as_of": "2026-11-19T16:55+03:00",
+          "reason": "ClubElo даёт Будё 60% на победу, линия 1.80 закладывает 56%. Наша оценка 58% (смещена к рынку из-за выезда и двух поражений Будё в последних пяти): перевес +2 п.п. — ниже порога в 3 п.п., поэтому это прогноз на исход, а не ставка с перевесом над линией.",
+          "facts": [
+            "Будё — 2-е место: 62 очка за 26 игр (20-2-4), разница мячей +40 (ESPN)",
+            "Молде — 5-е место: 44 очка (13-5-8), разница +20 (ESPN)",
+            "Последние 5 матчей (ESPN): у Будё 2 победы, 1 ничья, 2 поражения; у Молде 2 победы, 2 ничьи, 1 поражение"
+          ],
+          "estimates": [
+            "ClubElo: Молде 17% / ничья 23% / Будё 60%",
+            "Рынок (1/кф): 56% на Будё"
+          ],
+          "assumptions": [
+            "Будё сыграет основным составом — данные о составах на момент сбора не опубликованы"
+          ],
+          "against": [
+            "Будё проиграл 2 из последних 5 матчей",
+            "Молде дома: 2 победы и 2 ничьи в последних 5 матчах (ESPN)"
+          ],
+          "uncertainty": "Нет подтверждённых составов и данных о травмах; перевес над линией в пределах погрешности.",
+          "data_quality": {
+            "level": "medium",
+            "note": "таблица и форма — ESPN, вероятность — ClubElo; составов нет"
+          },
+          "model_prob": {
+            "value": 0.6,
+            "source": "ClubElo"
+          },
+          "sources": [
+            {
+              "title": "ESPN — Molde vs Bodø/Glimt",
+              "url": "https://www.espn.com/soccer/match/_/gameId/401843486"
+            },
+            {
+              "title": "ClubElo — прогнозы по Elo",
+              "url": "http://clubelo.com/"
+            }
+          ]
+        },
+        {
           "against": [
             "Молодёжные команды непредсказуемы, могут усилиться игроками основы"
           ],
@@ -169,6 +120,60 @@
             {
               "title": "ESPN — Eerste Divisie scoreboard",
               "url": "https://www.espn.com/soccer/scoreboard/_/league/ned.2/date/20261120"
+            }
+          ]
+        },
+        {
+          "match": "Алмере Сити — НАК Бреда",
+          "tournament": "Эрсте Дивизи (Нидерланды), 16-й тур",
+          "start": "20.11, 22:00 МСК",
+          "start_iso": "2026-11-20T22:00+03:00",
+          "bet": "П1 (победа Алмере Сити)",
+          "odds": "2.70",
+          "confidence": 3,
+          "prob": {
+            "value": 0.4,
+            "method": "ClubElo + таблица и форма"
+          },
+          "data_as_of": "2026-11-19T16:55+03:00",
+          "reason": "Ставка на хозяев, которых линия недооценивает: ClubElo даёт Алмере 41%, коэффициент 2.70 — только 37%. Оценка 40%, перевес около +3 п.п. Это не фаворит рынка: вероятность проигрыша ставки — около 60%.",
+          "facts": [
+            "Алмере — 2-е место: 31 очко за 15 игр (10-1-4), разница +21 (ESPN)",
+            "НАК — 4-е место: 28 очков (8-4-3), разница +7 (ESPN)",
+            "Алмере — 4 победы в последних 5 матчах (ESPN), 3 победы подряд в лиге (Sofascore)"
+          ],
+          "estimates": [
+            "ClubElo: Алмере 41% / ничья 29% / НАК 29%",
+            "Рынок (1/кф): Алмере 37%, НАК 45%"
+          ],
+          "assumptions": [
+            "Серия Алмере отражает реальный уровень, а не календарь"
+          ],
+          "against": [
+            "НАК без поражений в последних 5 матчах (В Н В Н В)",
+            "Линия видит фаворитом НАК (2.20)"
+          ],
+          "uncertainty": "Нет данных о составах; источники расходятся в оценке фаворита — ClubElo за Алмере, рынок за НАК.",
+          "data_quality": {
+            "level": "medium",
+            "note": "таблица и форма — ESPN и Sofascore, вероятность — ClubElo"
+          },
+          "model_prob": {
+            "value": 0.41,
+            "source": "ClubElo"
+          },
+          "sources": [
+            {
+              "title": "ESPN — Almere City vs NAC Breda",
+              "url": "https://www.espn.com/soccer/match/_/gameId/401875846"
+            },
+            {
+              "title": "ClubElo — прогнозы по Elo",
+              "url": "http://clubelo.com/"
+            },
+            {
+              "title": "Sofascore — Almere City vs NAC Breda",
+              "url": "https://www.sofascore.com/football/match/almere-city-fc-nac-breda/XibsPjb#id:16317492"
             }
           ]
         },
@@ -240,106 +245,52 @@
           ]
         },
         {
-          "match": "Молде — Будё-Глимт",
-          "tournament": "Элитсерия (Норвегия), 27-й тур",
-          "start": "20.11, 21:00 МСК",
-          "start_iso": "2026-11-20T21:00+03:00",
-          "bet": "П2 (победа Будё-Глимт)",
-          "odds": "1.80",
-          "confidence": 3,
+          "match": "Лацио — Лечче",
+          "tournament": "Серия А (Италия), тир-1",
+          "start": "21.11, 17:00 МСК",
+          "start_iso": "2026-11-21T17:00+03:00",
+          "format": "90 минут",
+          "bet": "П1 (победа Лацио)",
+          "odds": "1.36",
+          "confidence": 4,
           "prob": {
-            "value": 0.58,
-            "method": "ClubElo + таблица и форма"
+            "value": 0.69,
+            "method": "ClubElo 50/50 с рынком"
           },
-          "data_as_of": "2026-11-19T16:55+03:00",
-          "reason": "ClubElo даёт Будё 60% на победу, линия 1.80 закладывает 56%. Наша оценка 58% (смещена к рынку из-за выезда и двух поражений Будё в последних пяти): перевес +2 п.п. — ниже порога в 3 п.п., поэтому это прогноз на исход, а не ставка с перевесом над линией.",
+          "data_as_of": "2026-11-20T18:00+03:00",
+          "reason": "Лацио без поражений (9-2-0), Лечче — 3-1-7 и в зоне вылета по ClubElo. ClubElo 70%, рынок без маржи 68%: наша оценка 69% против 74% в линии 1.36 — перевеса нет.",
           "facts": [
-            "Будё — 2-е место: 62 очка за 26 игр (20-2-4), разница мячей +40 (ESPN)",
-            "Молде — 5-е место: 44 очка (13-5-8), разница +20 (ESPN)",
-            "Последние 5 матчей (ESPN): у Будё 2 победы, 1 ничья, 2 поражения; у Молде 2 победы, 2 ничьи, 1 поражение"
+            "Лацио: 9 побед, 2 ничьи, 0 поражений (ESPN)",
+            "Лечче: 3-1-7 (ESPN)",
+            "Линия ESPN: −280 / +380 / +650"
           ],
           "estimates": [
-            "ClubElo: Молде 17% / ничья 23% / Будё 60%",
-            "Рынок (1/кф): 56% на Будё"
+            "ClubElo: Лацио 70% / ничья 21% / Лечче 9%; шанс вылета Лечче 48%"
           ],
           "assumptions": [
-            "Будё сыграет основным составом — данные о составах на момент сбора не опубликованы"
+            "Составы не объявлены"
           ],
           "against": [
-            "Будё проиграл 2 из последних 5 матчей",
-            "Молде дома: 2 победы и 2 ничьи в последних 5 матчах (ESPN)"
+            "Линия уже ниже 1.40 — фаворит переоценён рынком относительно модели",
+            "Лечче, борясь за выживание, может играть от обороны"
           ],
-          "uncertainty": "Нет подтверждённых составов и данных о травмах; перевес над линией в пределах погрешности.",
+          "uncertainty": "Нет данных о составах.",
           "data_quality": {
             "level": "medium",
-            "note": "таблица и форма — ESPN, вероятность — ClubElo; составов нет"
+            "note": "ESPN + ClubElo"
           },
           "model_prob": {
-            "value": 0.6,
+            "value": 0.7,
             "source": "ClubElo"
           },
           "sources": [
             {
-              "title": "ESPN — Molde vs Bodø/Glimt",
-              "url": "https://www.espn.com/soccer/match/_/gameId/401843486"
+              "title": "ESPN — Lazio vs Lecce",
+              "url": "https://www.espn.com/soccer/match/_/gameId/401874981"
             },
             {
-              "title": "ClubElo — прогнозы по Elo",
-              "url": "http://clubelo.com/"
-            }
-          ]
-        },
-        {
-          "match": "Алмере Сити — НАК Бреда",
-          "tournament": "Эрсте Дивизи (Нидерланды), 16-й тур",
-          "start": "20.11, 22:00 МСК",
-          "start_iso": "2026-11-20T22:00+03:00",
-          "bet": "П1 (победа Алмере Сити)",
-          "odds": "2.70",
-          "confidence": 3,
-          "prob": {
-            "value": 0.4,
-            "method": "ClubElo + таблица и форма"
-          },
-          "data_as_of": "2026-11-19T16:55+03:00",
-          "reason": "Ставка на хозяев, которых линия недооценивает: ClubElo даёт Алмере 41%, коэффициент 2.70 — только 37%. Оценка 40%, перевес около +3 п.п. Это не фаворит рынка: вероятность проигрыша ставки — около 60%.",
-          "facts": [
-            "Алмере — 2-е место: 31 очко за 15 игр (10-1-4), разница +21 (ESPN)",
-            "НАК — 4-е место: 28 очков (8-4-3), разница +7 (ESPN)",
-            "Алмере — 4 победы в последних 5 матчах (ESPN), 3 победы подряд в лиге (Sofascore)"
-          ],
-          "estimates": [
-            "ClubElo: Алмере 41% / ничья 29% / НАК 29%",
-            "Рынок (1/кф): Алмере 37%, НАК 45%"
-          ],
-          "assumptions": [
-            "Серия Алмере отражает реальный уровень, а не календарь"
-          ],
-          "against": [
-            "НАК без поражений в последних 5 матчах (В Н В Н В)",
-            "Линия видит фаворитом НАК (2.20)"
-          ],
-          "uncertainty": "Нет данных о составах; источники расходятся в оценке фаворита — ClubElo за Алмере, рынок за НАК.",
-          "data_quality": {
-            "level": "medium",
-            "note": "таблица и форма — ESPN и Sofascore, вероятность — ClubElo"
-          },
-          "model_prob": {
-            "value": 0.41,
-            "source": "ClubElo"
-          },
-          "sources": [
-            {
-              "title": "ESPN — Almere City vs NAC Breda",
-              "url": "https://www.espn.com/soccer/match/_/gameId/401875846"
-            },
-            {
-              "title": "ClubElo — прогнозы по Elo",
-              "url": "http://clubelo.com/"
-            },
-            {
-              "title": "Sofascore — Almere City vs NAC Breda",
-              "url": "https://www.sofascore.com/football/match/almere-city-fc-nac-breda/XibsPjb#id:16317492"
+              "title": "ClubElo — Lazio",
+              "url": "http://clubelo.com/Lazio"
             }
           ]
         },
@@ -390,6 +341,108 @@
             {
               "title": "ClubElo — Aston Villa",
               "url": "http://clubelo.com/AstonVilla"
+            }
+          ]
+        },
+        {
+          "match": "Ницца — ПСЖ",
+          "tournament": "Лига 1 (Франция), тир-1",
+          "start": "21.11, 19:15 МСК",
+          "start_iso": "2026-11-21T19:15+03:00",
+          "format": "90 минут",
+          "bet": "П2 (победа ПСЖ)",
+          "odds": "1.45",
+          "confidence": 4,
+          "prob": {
+            "value": 0.69,
+            "method": "ClubElo 50/50 с рынком"
+          },
+          "data_as_of": "2026-11-20T18:00+03:00",
+          "reason": "ClubElo даёт ПСЖ 72%, рынок без маржи ~65%; наша оценка 69% против 69% в линии 1.45. Перевеса над линией нет — прогноз на более вероятный исход.",
+          "facts": [
+            "ПСЖ: 7 побед, 2 ничьи, 1 поражение в 10 турах (ESPN)",
+            "Ницца: 5-2-3 (ESPN)",
+            "Линия ESPN: +500 / +400 / −220, тотал 3.5"
+          ],
+          "estimates": [
+            "ClubElo: Ницца 9% / ничья 19% / ПСЖ 72%",
+            "Рынок без маржи: ПСЖ ~65%"
+          ],
+          "assumptions": [
+            "Составы не объявлены; ротация ПСЖ перед еврокубками возможна"
+          ],
+          "against": [
+            "Ницца дома набирает очки (5 побед в 10 турах)",
+            "Рынок оценивает ПСЖ ниже, чем Elo"
+          ],
+          "uncertainty": "Нет подтверждённых составов и сведений о травмах на момент сбора.",
+          "data_quality": {
+            "level": "medium",
+            "note": "ESPN (таблица, линия) + ClubElo; составов нет"
+          },
+          "model_prob": {
+            "value": 0.72,
+            "source": "ClubElo"
+          },
+          "sources": [
+            {
+              "title": "ESPN — Nice vs PSG",
+              "url": "https://www.espn.com/soccer/match/_/gameId/401876398"
+            },
+            {
+              "title": "ClubElo — Paris SG",
+              "url": "http://clubelo.com/ParisSG"
+            }
+          ]
+        },
+        {
+          "match": "Ньюкасл — Арсенал",
+          "tournament": "Премьер-лига (Англия), тир-1",
+          "start": "21.11, 20:30 МСК",
+          "start_iso": "2026-11-21T20:30+03:00",
+          "format": "90 минут",
+          "bet": "П2 (победа Арсенала)",
+          "odds": "1.57",
+          "confidence": 3,
+          "prob": {
+            "value": 0.58,
+            "method": "ClubElo 50/50 с рынком"
+          },
+          "data_as_of": "2026-11-20T18:00+03:00",
+          "reason": "Арсенал лидирует (9 побед в 10 турах), но выезд в Ньюкасл тяжёлый: ClubElo — 56%, рынок без маржи — 61%. Наша оценка 58% против 64% в линии 1.57 — перевеса над линией нет.",
+          "facts": [
+            "Арсенал: 9-0-1 в АПЛ, единственное поражение — 0:3 у Брайтона (19.09) — ESPN, ClubElo",
+            "Ньюкасл: 3-3-4 (ESPN)",
+            "Последние матчи Арсенала: 1:0 с Халлом (07.11), 2:1 у Сандерленда (04.11), 1:0 у Ливерпуля (01.11) — ClubElo",
+            "Линия ESPN: +450 / +330 / −175"
+          ],
+          "estimates": [
+            "ClubElo: Ньюкасл 17% / ничья 27% / Арсенал 56%"
+          ],
+          "assumptions": [
+            "Составы не объявлены"
+          ],
+          "against": [
+            "Три последние победы Арсенала — с разницей в один мяч",
+            "Через три дня у Арсенала матч ЛЧ с Дортмундом — возможна ротация"
+          ],
+          "uncertainty": "Составы и травмы на момент сбора не подтверждены.",
+          "data_quality": {
+            "level": "medium",
+            "note": "ESPN + ClubElo"
+          },
+          "model_prob": {
+            "value": 0.56,
+            "source": "ClubElo"
+          },
+          "sources": [
+            {
+              "title": "ESPN — Newcastle vs Arsenal",
+              "url": "https://www.espn.com/soccer/match/_/gameId/401879232"
+            },
+            {
+              "title": "ClubElo — Arsenal",
+              "url": "http://clubelo.com/Arsenal"
             }
           ]
         }
@@ -469,6 +522,57 @@
           ]
         },
         {
+          "match": "Атланта — Шарлотт",
+          "tournament": "НБА, регулярный сезон, тир-1",
+          "start": "21.11, 03:00 МСК",
+          "start_iso": "2026-11-21T03:00+03:00",
+          "format": "4 четверти, с ОТ",
+          "bet": "П1 (победа Атланты, с ОТ)",
+          "odds": "1.43",
+          "confidence": 3,
+          "prob": {
+            "value": 0.71,
+            "method": "ESPN BPI 50/50 с рынком + травмы"
+          },
+          "data_as_of": "2026-11-20T18:00+03:00",
+          "reason": "BPI даёт Атланте 75%, рынок без маржи — около 67%; усреднение даёт 71% против 70% в линии 1.43. Перевеса над линией практически нет — прогноз на исход.",
+          "facts": [
+            "Атланта 9-6, Шарлотт 4-10 (ESPN)",
+            "Последние 5: Атланта 3-2, Шарлотт 1-4 (ESPN)",
+            "Не сыграют (ESPN injury report): у Шарлотт — Кон Кнюппель, Деннис Шрёдер, Грэйсон Аллен, Грант Уильямс; у Атланты — СиДжей Макколлум, Джок Лэндейл, Аса Ньюэлл, Мухамед Гей"
+          ],
+          "estimates": [
+            "ESPN BPI: Атланта 74.9%",
+            "Рынок: ML −230 / +191, фора ATL −6.5, тотал 219.5 (ESPN)"
+          ],
+          "assumptions": [
+            "Статусы травм не изменятся до игры"
+          ],
+          "against": [
+            "У Атланты тоже нет Макколлума и ещё трёх игроков",
+            "BPI исторически переоценивал фаворитов (по истории сайта)"
+          ],
+          "uncertainty": "Финальные injury reports выходят за ~30 минут до игры.",
+          "data_quality": {
+            "level": "medium",
+            "note": "ESPN summary (BPI, травмы, линия); второй независимой модели нет"
+          },
+          "model_prob": {
+            "value": 0.749,
+            "source": "ESPN BPI"
+          },
+          "sources": [
+            {
+              "title": "ESPN — Hornets @ Hawks",
+              "url": "https://www.espn.com/nba/game/_/gameId/401909305"
+            },
+            {
+              "title": "ESPN API — summary",
+              "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=401909305"
+            }
+          ]
+        },
+        {
           "match": "Кливленд — Индиана",
           "tournament": "НБА, регулярный чемпионат",
           "start": "21.11, 03:30 МСК",
@@ -513,6 +617,57 @@
               "url": "https://www.espn.com/nba/game/_/gameId/401909307"
             }
           ]
+        },
+        {
+          "match": "Детройт — Торонто",
+          "tournament": "НБА, регулярный сезон, тир-1",
+          "start": "21.11, 03:30 МСК",
+          "start_iso": "2026-11-21T03:30+03:00",
+          "format": "4 четверти, с ОТ",
+          "bet": "П1 (победа Детройта, с ОТ)",
+          "odds": "1.34",
+          "confidence": 4,
+          "prob": {
+            "value": 0.72,
+            "method": "ESPN BPI 50/50 с рынком + травмы"
+          },
+          "data_as_of": "2026-11-20T18:00+03:00",
+          "reason": "Детройт 10-4 дома против Торонто без Кавая Леонарда и Ар Джея Барретта, у «Рэпторс» пять поражений подряд. BPI 70.5%, рынок без маржи ~72%: наша оценка 72% против 75% в линии 1.34 — перевеса над линией нет.",
+          "facts": [
+            "Детройт 10-4, Торонто 5-10 (ESPN)",
+            "Последние 5: Детройт 4-1, Торонто 0-5 (ESPN)",
+            "Не сыграют у Торонто: Кавай Леонард, Ар Джей Барретт, Коллин Мюррей-Бойлз, Нейт Биттл; у Детройта — Тауриан Принс, Рональд Холланд II, Эбука Окорие (ESPN)"
+          ],
+          "estimates": [
+            "ESPN BPI: Детройт 70.5%",
+            "Рынок: ML −291 / +237, фора DET −7.5 (ESPN)"
+          ],
+          "assumptions": [
+            "Состав Детройта без новых потерь"
+          ],
+          "against": [
+            "Линия уже учитывает потери Торонто",
+            "BPI ниже рынка"
+          ],
+          "uncertainty": "Возможные поздние изменения статусов игроков.",
+          "data_quality": {
+            "level": "medium",
+            "note": "ESPN (BPI, травмы, форма, линия)"
+          },
+          "model_prob": {
+            "value": 0.705,
+            "source": "ESPN BPI"
+          },
+          "sources": [
+            {
+              "title": "ESPN — Raptors @ Pistons",
+              "url": "https://www.espn.com/nba/game/_/gameId/401909308"
+            },
+            {
+              "title": "ESPN API — summary",
+              "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=401909308"
+            }
+          ]
         }
       ],
       "updated_at": "2026-11-19T16:21+03:00"
@@ -523,35 +678,58 @@
       "emoji": "🎾",
       "picks": [
         {
-          "match": "Флавио Коболли — Карлос Алькарас",
-          "tournament": "Итоговый турнир ATP, группа Ивана Лендла, 3-й тур",
-          "start": "20.11, 16:00 МСК",
-          "start_iso": "2026-11-20T16:00+03:00",
-          "bet": "П2 (победа Алькараса)",
-          "odds": "",
-          "confidence": 4,
-          "reason": "Алькарас выиграл оба матча, не отдав ни сета, а Коболли проиграл оба и последний сет Тиафу — 0:6.",
+          "match": "Даниил Медведев — Фрэнсис Тиафо",
+          "tournament": "ATP Finals (Турин), группа B, 3-й тур, хард (в помещении), тир-1",
+          "start": "20.11, 22:30 МСК",
+          "start_iso": "2026-11-20T22:30+03:00",
+          "format": "best of 3, хард в помещении",
+          "bet": "П1 (победа Медведева)",
+          "odds": "1.40",
+          "confidence": 3,
+          "prob": {
+            "value": 0.66,
+            "method": "Tennis Abstract hElo + линия 50/50 + форма в группе"
+          },
+          "data_as_of": "2026-11-20T18:00+03:00",
+          "reason": "Модель Tennis Abstract (hElo) даёт Медведеву около 62%, рынок без маржи — около 70%; наша оценка 66%, а линия 1.40 закладывает 71%. Перевеса над линией нет: это прогноз на более вероятный исход, а не ставка с перевесом.",
           "facts": [
-            "Алькарас: 6:2, 6:2 Тиафу и 6:2, 6:4 Медведеву — ESPN",
-            "Коболли: проиграл Медведеву и Тиафу (6:7, 0:6) — ESPN",
-            "Алькарас приехал в Турин после двух титулов подряд в зале (Вена, Париж) — Tennisnerd"
+            "В группе B у обоих по 1 победе и 1 поражению: Медведев обыграл Коболли 7:6, 6:3 (16.11) и уступил Алькарасу 2:6, 4:6 (18.11); Тиафо уступил Алькарасу 2:6, 2:6 (16.11) и обыграл Коболли 7:6, 6:0 (18.11) — ESPN, Flashscore",
+            "Победитель матча выходит в полуфинал (Алькарас 3-0 уже первый в группе) — таблица Flashscore на 20.11",
+            "Очные встречи: Тиафо 3:0 на US Open (06.09.2026), Медведев 2:0 в Брисбене (07.01.2026), Тиафо 2:1 на Кубке Лейвера (21.09.2024) — Flashscore",
+            "Медведев — 5-й в рейтинге ATP, Тиафо — 8-й (Flashscore)"
+          ],
+          "estimates": [
+            "Tennis Abstract Elo на хардe (обновление 16.11): Медведев 1960.6, Тиафо 1875.6 → около 62% у Медведева",
+            "Рынок (Flashscore, 1/кф): 71% у Медведева, без маржи ~70%"
+          ],
+          "assumptions": [
+            "Оба игрока здоровы — сообщений о травмах в открытых источниках нет"
           ],
           "against": [
-            "Если Алькарас уже обеспечит выход из группы, возможна экономия сил"
+            "Тиафо выиграл последнюю очную встречу 3:0 на US Open 2026",
+            "Тиафо разгромил Коболли 6:0 во втором сете — свежая форма в Турине"
           ],
-          "uncertainty": "Коэффициент не нашёлся.",
+          "uncertainty": "Нет статистики подачи/приёма за турнир; H2H противоречивые (2:1 в пользу Тиафо за 2 года).",
           "data_quality": {
             "level": "medium",
-            "note": "нет коэффициента"
+            "note": "Elo — Tennis Abstract (16.11), результаты — ESPN и Flashscore; статистики розыгрышей нет"
+          },
+          "model_prob": {
+            "value": 0.62,
+            "source": "Tennis Abstract hElo"
           },
           "sources": [
             {
-              "title": "ESPN — ATP scoreboard",
+              "title": "Flashscore — Медведев — Тиафо",
+              "url": "https://www.flashscore.com.ua/match/tennis/medvedev-daniil-O8qG0Nhb/tiafoe-frances-AHDLJaph/?mid=Gt7o64lQ"
+            },
+            {
+              "title": "ESPN — ATP Finals",
               "url": "https://www.espn.com/tennis/scoreboard"
             },
             {
-              "title": "Tennisnerd — ATP Finals 2026 preview",
-              "url": "https://www.tennisnerd.net/news/atp-finals-2026-preview-predictions-odds-my-pick-to-win-in-turin/70638"
+              "title": "Tennis Abstract — ATP Elo",
+              "url": "https://www.tennisabstract.com/reports/atp_elo_ratings.html"
             }
           ]
         }
@@ -671,40 +849,6 @@
       "emoji": "🏒",
       "picks": [
         {
-          "match": "Сибирь — Автомобилист",
-          "tournament": "КХЛ, регулярный чемпионат 2026/27",
-          "start": "20.11, 15:30 МСК",
-          "start_iso": "2026-11-20T15:30+03:00",
-          "bet": "П2 (победа Автомобилиста в основное время)",
-          "odds": "2.05",
-          "confidence": 3,
-          "reason": "Автомобилист выиграл 6 последних очных матчей и забивает в 17 матчах подряд, а Сибирь — последняя на Востоке.",
-          "facts": [
-            "Автомобилист побеждает в 6 последних матчах с Сибирью: 5:2, 2:0, 5:0 — Sports.ru",
-            "Сибирь: 11-е место на Востоке, 24 очка — Sports.ru",
-            "Автомобилист забивает в 17 матчах подряд — Sports.ru"
-          ],
-          "against": [
-            "Сибирь 17.11 обыграла Трактор 4:1",
-            "Ничья после 60 минут — частый исход"
-          ],
-          "uncertainty": "Вратари не объявлены.",
-          "data_quality": {
-            "level": "medium",
-            "note": "нет бросков и вратарей"
-          },
-          "sources": [
-            {
-              "title": "Sports.ru — avtomobilist-vs-sibir",
-              "url": "https://www.sports.ru/hockey/match/avtomobilist-vs-sibir/"
-            },
-            {
-              "title": "Sports.ru — таблица КХЛ",
-              "url": "https://www.sports.ru/hockey/tournament/khl/table/"
-            }
-          ]
-        },
-        {
           "match": "Северсталь — Амур",
           "tournament": "КХЛ, регулярный чемпионат 2026/27",
           "start": "20.11, 19:00 МСК",
@@ -770,6 +914,53 @@
               "url": "https://www.sports.ru/hockey/tournament/khl/table/"
             }
           ]
+        },
+        {
+          "match": "Сочи — СКА",
+          "tournament": "КХЛ, регулярный чемпионат, тир-1",
+          "start": "21.11, 17:00 МСК",
+          "start_iso": "2026-11-21T17:00+03:00",
+          "format": "3 периода; ставка — основное время",
+          "bet": "П2 (победа СКА в основное время)",
+          "odds": "1.61",
+          "confidence": 3,
+          "prob": {
+            "value": 0.57,
+            "method": "таблица и разница шайб + линия"
+          },
+          "data_as_of": "2026-11-20T18:00+03:00",
+          "reason": "Сочи — 10-е место на Западе с разницей шайб 47:94 и 5 победами в основное время за 28 игр; СКА — 9-е место, 78:81. Наша оценка победы СКА в основное время 57% против 62% в линии 1.61 — перевеса над линией нет (в хоккее ничья в основное время частая).",
+          "facts": [
+            "Сочи: 28 игр, 5 побед в основное время, 19 поражений, шайбы 47:94, 17 очков (Flashscore, 20.11)",
+            "СКА: 27 игр, 10 побед в основное время, 12 поражений, шайбы 78:81, 28 очков (Flashscore)",
+            "Очные: 12.09.26 Сочи — СКА 0:1; 16.01.26 СКА — Сочи 1:2; 28.12.25 Сочи — СКА 8:4 (Flashscore)",
+            "Коэффициенты 1Х2: 5.11 / 4.70 / 1.61 (Flashscore)"
+          ],
+          "estimates": [
+            "Рынок (1/кф): СКА ~62% в основное время"
+          ],
+          "assumptions": [
+            "Вратари не объявлены"
+          ],
+          "against": [
+            "СКА выиграл лишь 1 из последних 4 (форма П П П В, Flashscore)",
+            "Ничья в основное время в КХЛ — около каждого пятого матча"
+          ],
+          "uncertainty": "Нет подтверждённых вратарей и данных о травмах.",
+          "data_quality": {
+            "level": "medium",
+            "note": "Flashscore (таблица, очные, линия); статистики 5 на 5 нет"
+          },
+          "sources": [
+            {
+              "title": "Flashscore — Сочи — СКА",
+              "url": "https://www.flashscore.com.ua/match/hockey/ska-st-petersburg-zVJwe4ER/sochi-zu1IGfCr/?mid=bsIwmUHj"
+            },
+            {
+              "title": "Flashscore — КХЛ",
+              "url": "https://www.flashscore.com.ua/hockey/russia/khl/"
+            }
+          ]
         }
       ],
       "updated_at": "2026-11-19T16:21+03:00"
@@ -779,36 +970,6 @@
       "name": "CS2",
       "emoji": "🔫",
       "picks": [
-        {
-          "match": "Baks — Nice Try",
-          "tournament": "CCT Europe 2026 Series 14, плей-офф, тир-3",
-          "start": "20.11, 12:00 МСК",
-          "start_iso": "2026-11-20T12:00+03:00",
-          "format": "BO3, онлайн",
-          "bet": "П1 (победа Baks)",
-          "odds": "1.38",
-          "confidence": 3,
-          "reason": "Baks выиграл 4 из 5 последних матчей, в т.ч. 2:0 The Last Resort и Masonic, а Nice Try проиграл Forze 0:2.",
-          "facts": [
-            "Baks: 2:0 The Last Resort (18.11), 2:0 Masonic (16.11), 2:0 Butterfly (15.11) — Cyber.Sports.ru",
-            "Nice Try: 0:2 Forze Reload (14.11), ничья с Ex Zero Tenacity — Cyber.Sports.ru",
-            "Nice Try 18.11 обыграл Ex Rustec 2:0 — Cyber.Sports.ru"
-          ],
-          "against": [
-            "Nice Try в хорошей серии — 2 победы подряд"
-          ],
-          "uncertainty": "Нет статистики карт.",
-          "data_quality": {
-            "level": "low",
-            "note": "тир-3: нет статистики карт"
-          },
-          "sources": [
-            {
-              "title": "Cyber.Sports.ru — baks-esports-nt-2026-11-20",
-              "url": "https://cyber.sports.ru/cs/match/baks-esports-nt-2026-11-20/"
-            }
-          ]
-        },
         {
           "match": "L&G — Genone",
           "tournament": "CCT Europe 2026 Series 14, плей-офф, тир-3",
@@ -838,6 +999,53 @@
               "url": "https://cyber.sports.ru/cs/match/genone-lg-2026-11-20/"
             }
           ]
+        },
+        {
+          "match": "Phantom — WBT",
+          "tournament": "NODWIN Clutch Series 14, плей-офф, тир-3",
+          "start": "20.11, 21:10 МСК",
+          "start_iso": "2026-11-20T21:10+03:00",
+          "format": "BO3, онлайн (киберспорт)",
+          "bet": "П2 (победа WBT)",
+          "odds": "2.50",
+          "confidence": 2,
+          "prob": {
+            "value": 0.45,
+            "method": "форма с учётом уровня соперников + линия"
+          },
+          "data_as_of": "2026-11-20T18:00+03:00",
+          "reason": "WBT на этой неделе обыграл MOUZ NXT 2:1 и Ex-ENCE 2:0, а Phantom проиграл обе серии на RUSH Brno (Metizport 1:2, BBL 1:2) и выигрывал только у слабых соперников. Наша оценка WBT 45% против 40% в линии 2.50 — перевес +5 п.п., но данных мало (тир-3).",
+          "facts": [
+            "WBT: 2:1 с MOUZ NXT (19.11) и 2:0 с Ex-ENCE (17.11) в European Pro League 11 — cyber.sports.ru",
+            "Phantom: 1:2 с Metizport (18.11) и 1:2 с BBL (17.11) на RUSH Brno; 2:1 с Ex Zero Tenacity, 2:0 с Illyrians и 2:0 с Drama в NODWIN Clutch 14 — cyber.sports.ru",
+            "Формат — BO3, очных встреч не было (cyber.sports.ru); коэффициенты 1.48 / 2.50 (bo3.gg, cyber.sports.ru)",
+            "У WBT сегодня днём была ещё одна серия против Ex-INOX (bo3.gg, cyber.sports.ru)"
+          ],
+          "estimates": [
+            "Рынок (1/кф): Phantom ~68%, WBT ~40%"
+          ],
+          "assumptions": [
+            "Составы прежние — замен на страницах матчей не отмечено"
+          ],
+          "against": [
+            "Линия заметно за Phantom",
+            "У WBT это вторая серия за день — возможна усталость"
+          ],
+          "uncertainty": "Нет статистики по картам и вето; выборка небольшая, тир-3.",
+          "data_quality": {
+            "level": "low",
+            "note": "только результаты серий (cyber.sports.ru, bo3.gg), без карт и рейтингов"
+          },
+          "sources": [
+            {
+              "title": "cyber.sports.ru — Phantom — WBT",
+              "url": "https://cyber.sports.ru/cs/match/phantom-wbt-2026-11-20/"
+            },
+            {
+              "title": "bo3.gg — матчи CS2",
+              "url": "https://bo3.gg/matches/current"
+            }
+          ]
         }
       ],
       "updated_at": "2026-11-19T16:21+03:00"
@@ -847,66 +1055,6 @@
       "name": "Dota 2",
       "emoji": "🐉",
       "picks": [
-        {
-          "match": "Nemesis — Team Spirit",
-          "tournament": "BLAST Slam 9, групповой этап, тир-1",
-          "start": "20.11, 14:00 МСК",
-          "start_iso": "2026-11-20T14:00+03:00",
-          "format": "BO3, LAN",
-          "bet": "П2 (победа Spirit)",
-          "odds": "1.04",
-          "confidence": 4,
-          "reason": "Spirit дошёл до финала Essence 3, а Nemesis с начала октября не играл и проиграл Spirit оба последних матча.",
-          "facts": [
-            "Spirit в Essence 3: 2:0 PARIVISION, 2:0 LGD, 2:0 Aurora, финал 1:3 PARIVISION (18.11) — Cyber.Sports.ru",
-            "Nemesis: последний матч 02.10 — 0:2 1w — Cyber.Sports.ru",
-            "Очные: Spirit 2:1 (29.09) и 2:0 (08.07) — Cyber.Sports.ru"
-          ],
-          "against": [
-            "Spirit вчера сыграл финал BO5 — возможна усталость"
-          ],
-          "uncertainty": "Перелёт на LAN после финала.",
-          "data_quality": {
-            "level": "medium",
-            "note": "нет данных о патче"
-          },
-          "sources": [
-            {
-              "title": "Cyber.Sports.ru — team-spirit-team-nemesis-2026-11-20",
-              "url": "https://cyber.sports.ru/dota2/match/team-spirit-team-nemesis-2026-11-20/"
-            }
-          ]
-        },
-        {
-          "match": "OG — NAVI",
-          "tournament": "BLAST Slam 9, групповой этап, тир-1",
-          "start": "20.11, 17:00 МСК",
-          "start_iso": "2026-11-20T17:00+03:00",
-          "format": "BO3, LAN",
-          "bet": "П2 (победа NAVI)",
-          "odds": "1.28",
-          "confidence": 4,
-          "reason": "NAVI выиграл 4 последних матча на EPL Masters III, а OG проиграл 4 из 5 последних.",
-          "facts": [
-            "NAVI: 3:1 GamerLegion, 2:0 GamerLegion, 2:0 Yellow Submarine, 2:0 Nemiga (2–5.11) — Cyber.Sports.ru",
-            "OG: 0:2 GamerLegion, 0:2 Yellow Submarine, 0:2 Liquid, 0:2 GamerLegion — Cyber.Sports.ru",
-            "Последняя очная встреча (02.2026) — победа NAVI — Cyber.Sports.ru"
-          ],
-          "against": [
-            "Личные встречи за всё время равны: 5-5"
-          ],
-          "uncertainty": "NAVI не играл с 5.11.",
-          "data_quality": {
-            "level": "medium",
-            "note": "нет данных о патче"
-          },
-          "sources": [
-            {
-              "title": "Cyber.Sports.ru — natus-vincere-og-2026-11-20",
-              "url": "https://cyber.sports.ru/dota2/match/natus-vincere-og-2026-11-20/"
-            }
-          ]
-        },
         {
           "match": "Do Konca — Team Liquid",
           "tournament": "BLAST Slam 9, групповой этап, тир-1",
@@ -936,108 +1084,63 @@
               "url": "https://cyber.sports.ru/dota2/match/team-liquid-do-konca-2026-11-20/"
             }
           ]
+        },
+        {
+          "match": "Astra Invicta — Aurora",
+          "tournament": "BLAST Slam 9, групповой этап, тир-1",
+          "start": "21.11, 14:00 МСК",
+          "start_iso": "2026-11-21T14:00+03:00",
+          "format": "BO3 (по формату группы), онлайн-трансляция",
+          "bet": "П2 (победа Aurora)",
+          "odds": "1.42",
+          "confidence": 2,
+          "prob": {
+            "value": 0.66,
+            "method": "рейтинг OpenDota + форма + линия"
+          },
+          "data_as_of": "2026-11-20T18:00+03:00",
+          "reason": "Aurora — команда с более высоким рейтингом OpenDota и опытом топ-турниров; линия 1.42 закладывает 70%. Наша оценка 66% из-за свежего патча 7.42 (вышел 18.11): перевеса над линией нет.",
+          "facts": [
+            "Патч 7.42 вышел 18.11.2026 — OpenDota /constants/patch",
+            "Aurora Gaming: рейтинг OpenDota 1406.7; в 1win Essence III — 2:0 с Do Konca (15.11), 2:1 с LEGION (16.11), 0:2 со Spirit (17.11), 1:2 с PARIVISION (18.11) — OpenDota",
+            "Astra Invicta уступила Liquid 0:2 на PARI Universe (29.10) — cyber.sports.ru",
+            "Коэффициенты 2.90 / 1.42 (cyber.sports.ru)"
+          ],
+          "estimates": [
+            "Рынок (1/кф): Aurora ~70%"
+          ],
+          "assumptions": [
+            "Aurora играет основным составом"
+          ],
+          "against": [
+            "Новый патч 7.42 — опыт прошлых матчей переносится хуже",
+            "Aurora проиграла 2 последние серии"
+          ],
+          "uncertainty": "Мало данных об Astra Invicta; формат серии в источниках не указан явно.",
+          "data_quality": {
+            "level": "low",
+            "note": "OpenDota и cyber.sports.ru; по Astra Invicta почти нет данных"
+          },
+          "sources": [
+            {
+              "title": "cyber.sports.ru — Dota 2, 21.11",
+              "url": "https://cyber.sports.ru/dota2/match/2026-11-21/"
+            },
+            {
+              "title": "OpenDota — Aurora Gaming",
+              "url": "https://www.opendota.com/teams/9467224"
+            },
+            {
+              "title": "OpenDota — патчи",
+              "url": "https://api.opendota.com/api/constants/patch"
+            }
+          ]
         }
       ],
       "updated_at": "2026-11-19T16:21+03:00"
     }
   ],
   "analysis": [
-    {
-      "sport": "🎾 Теннис",
-      "match": "Флавио Коболли — Карлос Алькарас",
-      "tournament": "Итоговый турнир ATP, группа Ивана Лендла, 3-й тур, хард в зале (Турин)",
-      "start": "20.11, 16:00 МСК",
-      "text": "Подтверждённые факты (ESPN, Sofascore, Tennis Abstract; данные на 20.11, 07:40 МСК). Алькарас выиграл оба матча в группе: 6:2, 6:2 у Тиафо (16.11) и 6:2, 6:4 у Медведева (18.11). Коболли проиграл оба: 6:7, 3:6 Медведеву (16.11) и 6:7, 0:6 Тиафо (18.11). В рейтинге ATP Алькарас 3-й, Коболли 6-й (Sofascore). Статистика турнира по Sofascore: первая подача 67% у Алькараса против 63,8% у Коболли; брейк-пойнтов спасено 3 из 3 против 10 из 16.\nВ пользу Алькараса: результаты на этом турнире и покрытии. Рейтинг Эло на харде по Tennis Abstract — 2142 (2-е место) против 1797 (31-е) у Коболли. Это рейтинговая модель, а не факт исхода.\nВ пользу Коболли: в обоих поражениях первый сет дошёл до тай-брейка. Интерпретация: на старте матчей он держался на равных, но выборка из двух матчей мала.\nНеизвестно: турнирная мотивация — по итогам двух туров Коболли без побед, Алькарас с двумя. Как это повлияет на подход к матчу, подтвердить нельзя. Личные встречи не проверялись. Данных о физическом состоянии нет.\nИтог аналитики.\nНаиболее вероятный исход: победа Алькараса. Формат — до двух выигранных сетов (best of 3), хард в зале.\nОсновные аргументы: 2 победы в группе против 0 у Коболли, причём без потерянных сетов (ESPN); эло на харде 2142 против 1797 (Tennis Abstract, модель); лучшая статистика подачи и брейк-пойнтов на турнире (Sofascore).\nЧто может изменить результат: турнирная мотивация в третьем туре; в формате best of 3 один тай-брейк заметно меняет ход матча — оба поражения Коболли начались с тай-брейков.\nУровень уверенности: средний.\nНедостающие данные: личные встречи, физическое состояние, установка игроков на последний матч группы. Мотивация — главный пробел, поэтому уверенность средняя, а не высокая.",
-      "key_factors": [
-        "Алькарас 2-0, Коболли 0-2 в группе (ESPN)",
-        "Эло на харде: 2142 против 1797 (Tennis Abstract)",
-        "Спасённые брейк-пойнты: 3/3 против 10/16 (Sofascore)",
-        "Турнирная мотивация не подтверждена"
-      ],
-      "verdict": "Итог аналитики: победа Алькараса. Формат — до двух выигранных сетов (best of 3), хард в зале. Уверенность — средняя. Это аналитическая оценка, а не прогноз ставки.",
-      "sources": [
-        {
-          "title": "ESPN — ATP Finals",
-          "url": "https://www.espn.com/tennis/scoreboard"
-        },
-        {
-          "title": "Sofascore — Alcaraz vs Cobolli",
-          "url": "https://www.sofascore.com/tennis/match/carlos-alcaraz-flavio-cobolli/Fyjcsytkc#id:17545045"
-        },
-        {
-          "title": "Tennis Abstract — Эло ATP",
-          "url": "https://www.tennisabstract.com/reports/atp_elo_ratings.html"
-        },
-        {
-          "title": "Sofascore — теннис 20.11",
-          "url": "https://www.sofascore.com/tennis/2026-11-20"
-        }
-      ]
-    },
-    {
-      "sport": "🎮 CS2",
-      "match": "BIG — Luminosity",
-      "tournament": "Stake Ranked Episode 6, плей-офф, BO3",
-      "start": "20.11, 16:00 МСК",
-      "text": "Подтверждённые факты (Cyber.Sports.ru, Sofascore; данные на 20.11, 07:40 МСК). Матчи BIG на этом турнире: 0:2 с Sangal (17.11), 2:0 с Apogee (18.11), 2:1 с Ninjas in Pyjamas и 2:1 с GamerLegion (19.11). Матчи Luminosity: 2:1 с GamerLegion (17.11), 2:0 с NIP (18.11), 0:2 с Sangal (19.11). Результаты 19.11 подтверждает и Sofascore. Единственная очная встреча — 2:1 в пользу Luminosity (Stake Ranked 4, 02.10).\nВ пользу BIG: три победы подряд, в том числе над GamerLegion и NIP — общими соперниками. Интерпретация: форма по ходу турнира растёт.\nВ пользу Luminosity: тоже обыграла GamerLegion и NIP, причём NIP — со счётом 2:0. Последняя очная встреча — за ней.\nНеизвестно: вето карт ещё не прошло — какие карты будут сыграны, неизвестно. Статистику по картам и составы я не проверял. Формат площадки (онлайн или LAN) по источникам не подтверждён.\nИтог аналитики.\nНаиболее вероятный исход: явного фаворита по доступной статистике нет. Формат — BO3: побеждает команда, выигравшая две карты.\nОсновные аргументы: у BIG три победы подряд на турнире; у Luminosity лучше результат против NIP (2:0) и победа в последней очной встрече.\nЧто может изменить результат: выбор карт: в BO3 каждая команда выбирает свою карту, поэтому решить может десайдер; форма по ходу плей-офф.\nУровень уверенности: низкий.\nНедостающие данные: вето и статистика по картам, проверенные составы. Без них вывод почти целиком держится на нескольких сериях одного турнира — влияние на достоверность высокое.",
-      "key_factors": [
-        "BIG — 3 победы подряд на турнире (Cyber.Sports.ru)",
-        "Luminosity — 2:0 с NIP и 2:1 с GamerLegion (Cyber.Sports.ru)",
-        "Обе проиграли Sangal 0:2",
-        "Вето карт неизвестно"
-      ],
-      "verdict": "Итог аналитики: явного фаворита по доступной статистике нет. Формат — BO3: побеждает команда, выигравшая две карты. Уверенность — низкая. Это аналитическая оценка, а не прогноз ставки.",
-      "sources": [
-        {
-          "title": "Cyber.Sports.ru — BIG vs Luminosity",
-          "url": "https://cyber.sports.ru/cs/match/luminosity-gaming-big-2026-11-20/"
-        },
-        {
-          "title": "Cyber.Sports.ru — CS2 20.11",
-          "url": "https://cyber.sports.ru/cs/match/2026-11-20/"
-        },
-        {
-          "title": "Sofascore — киберспорт 19.11",
-          "url": "https://www.sofascore.com/esports/2026-11-19"
-        },
-        {
-          "title": "Cyber.Sports.ru — CS2 19.11",
-          "url": "https://cyber.sports.ru/cs/match/2026-11-19/"
-        }
-      ]
-    },
-    {
-      "sport": "🎮 Dota 2",
-      "match": "OG — NAVI",
-      "tournament": "BLAST Slam 9, групповой этап, BO3",
-      "start": "20.11, 17:00 МСК",
-      "text": "Подтверждённые факты (Cyber.Sports.ru, OpenDota; данные на 20.11, 07:40 МСК). 18.11 вышел патч 7.42 (OpenDota): все последние матчи обеих команд сыграны на 7.41. NAVI на EPL Masters III выиграла четыре серии подряд, включая 3:1 с GamerLegion (05.11). OG в пяти последних сериях проиграла четыре: 0:2 GamerLegion (04.11), 0:2 Yellow Submarine (02.11), 0:2 Liquid (30.10), 0:2 GamerLegion (29.10); выиграла 2:1 у Legion (03.11). Последние очные: 1:0 NAVI (04.02.26) и 1:0 OG (28.11.25) — Cyber.Sports.ru.\nВ пользу NAVI: серия побед и выигранный турнир в начале ноября. Рейтинг команд OpenDota — 1424 против 1227 у OG; это расчётная оценка, а не факт.\nВ пользу OG: две последние очные встречи поделены. Новый патч может уравнять шансы. Интерпретация: преимущество NAVI в форме относится к старой версии игры.\nНеизвестно: ни одна из команд ещё не играла официальных матчей на 7.42. Составы на турнир я не проверял. Драфты заранее неизвестны.\nИтог аналитики.\nНаиболее вероятный исход: победа NAVI в серии BO3.\nОсновные аргументы: 4 победы подряд и титул на EPL Masters III; у OG 4 поражения в 5 последних сериях (Cyber.Sports.ru); рейтинг OpenDota 1424 против 1227 (модель).\nЧто может изменить результат: патч 7.42 от 18.11 — команды ещё не играли на нём официальных матчей; последние очные встречи поделены 1:1.\nУровень уверенности: средний.\nНедостающие данные: игры на новом патче, проверенные составы, драфты. Смена патча снижает вес всей прошлой формы — влияние существенное.",
-      "key_factors": [
-        "Патч 7.42 вышел 18.11 — данных на новом патче нет (OpenDota)",
-        "NAVI — 4 победы подряд на EPL Masters III (Cyber.Sports.ru)",
-        "OG — 4 поражения в 5 последних сериях (Cyber.Sports.ru, OpenDota)",
-        "Рейтинг OpenDota 1424 против 1227"
-      ],
-      "verdict": "Итог аналитики: победа NAVI в серии BO3. Уверенность — средняя. Это аналитическая оценка, а не прогноз ставки.",
-      "sources": [
-        {
-          "title": "Cyber.Sports.ru — OG vs NAVI",
-          "url": "https://cyber.sports.ru/dota2/match/natus-vincere-og-2026-11-20/"
-        },
-        {
-          "title": "OpenDota — NAVI",
-          "url": "https://www.opendota.com/teams/36"
-        },
-        {
-          "title": "OpenDota — OG",
-          "url": "https://www.opendota.com/teams/2586976"
-        },
-        {
-          "title": "OpenDota — патчи",
-          "url": "https://api.opendota.com/api/constants/patch"
-        }
-      ]
-    },
     {
       "sport": "🏒 Хоккей",
       "match": "Шанхайские Драконы — ЦСКА",
@@ -1067,6 +1170,70 @@
         {
           "title": "Sofascore — хоккей 20.11",
           "url": "https://www.sofascore.com/ice-hockey/2026-11-20"
+        }
+      ]
+    },
+    {
+      "sport": "🎮 Dota 2",
+      "match": "Do Konca — Team Liquid",
+      "tournament": "BLAST Slam 9, групповой этап",
+      "start": "20.11, 20:00 МСК",
+      "text": "Подтверждённые факты (cyber.sports.ru, OpenDota; данные на 20.11, 18:00 МСК). Формат — BO3. Патч 7.42 вышел 18.11 — это одни из первых официальных матчей на нём (OpenDota). Do Konca на 1win Essence III: 1:2 с Froglings (16.11), 0:2 с Aurora (15.11), 2:1 с Yellow Submarine (14.11), 0:2 с PARIVISION (12.11). Liquid: 1:2 с LEGION (14.11), 1:2 с LGD (13.11), 1:2 со Spirit и 2:0 с OG (30.10). Очных встреч не было.\nВ пользу Liquid: рейтинг OpenDota 1313 против 1036 у Do Konca; опыт топ-турниров и победа над OG 30.10. Интерпретация: класс выше, даже с учётом трёх проигранных серий подряд.\nВ пользу Do Konca: Liquid проиграл три серии подряд, все 1:2; у Do Konca стабильный состав (Kiritych, Save, Kiyotaka, Miero, Kataomi по cyber.sports.ru).\nНеизвестно: как команды адаптировались к патчу 7.42; актуальный состав Liquid на странице матча не указан.\nИтог аналитики.\nНаиболее вероятный исход: победа Liquid в серии.\nОсновные аргументы: разница рейтингов OpenDota и уровень соперников в последних сериях (OpenDota, cyber.sports.ru).\nЧто может изменить результат: новый патч сглаживает разницу в опыте; серия поражений Liquid.\nУровень уверенности: средний.\nНедостающие данные: игры на патче 7.42, подтверждённый состав Liquid. Влияние на достоверность — умеренное.",
+      "key_factors": [
+        "Рейтинг OpenDota: 1313 против 1036",
+        "Патч 7.42 вышел 18.11 (OpenDota)",
+        "Liquid — 3 серии подряд 1:2 (cyber.sports.ru)",
+        "BO3, очных встреч не было"
+      ],
+      "verdict": "Итог аналитики: победа Liquid в серии. Уверенность — средняя. Это аналитическая оценка, а не прогноз ставки.",
+      "sources": [
+        {
+          "title": "cyber.sports.ru — Do Konca — Liquid",
+          "url": "https://cyber.sports.ru/dota2/match/team-liquid-do-konca-2026-11-20/"
+        },
+        {
+          "title": "OpenDota — Team Liquid",
+          "url": "https://www.opendota.com/teams/2163"
+        },
+        {
+          "title": "OpenDota — Do Konca",
+          "url": "https://www.opendota.com/teams/10331139"
+        },
+        {
+          "title": "OpenDota — патчи",
+          "url": "https://api.opendota.com/api/constants/patch"
+        }
+      ]
+    },
+    {
+      "sport": "🎮 CS2",
+      "match": "L&G — Genone",
+      "tournament": "CCT Europe 2026 Series 14, плей-офф, тир-3",
+      "start": "20.11, 21:10 МСК",
+      "text": "Подтверждённые факты (cyber.sports.ru, bo3.gg; данные на 20.11, 18:00 МСК). Формат — BO3, онлайн. L&G: 2:1 с Walczaki (18.11), 0:2 с The Last Resort (15.11), 0:2 с Apogee и 0:2 с Butterfly (13.11). Genone: 0:2 с 33 (14.11), 1:2 с Balkan Outlaws (14.11), 0:2 с ACES (13.11), 1:2 с L&G (12.11), 0:2 с Inner Circle Academy (11.11). Очные за последние 13 серий — 8:5 в пользу L&G, последняя — 2:1 L&G (12.11).\nВ пользу L&G: выиграл последнюю очную серию неделю назад и в целом ведёт по очным 8:5; последняя серия (против Walczaki) — победа. Интерпретация: у L&G небольшое, но устойчивое преимущество в этом противостоянии.\nВ пользу Genone: состав с опытом (Brooxsy, bL4SEZ, SIXER, Keoz, Djoko); две из трёх последних очных до ноября выигрывал Genone (05.2026, 03.2026).\nНеизвестно: вето карт и статистика по картам; у Genone пять поражений подряд в сериях, причины (замены, онлайн-условия) не подтверждены.\nИтог аналитики.\nНаиболее вероятный исход: победа L&G в серии, но картина близкая к равной.\nОсновные аргументы: очные 8:5 и победа 12.11 (cyber.sports.ru); серия поражений Genone (cyber.sports.ru).\nЧто может изменить результат: выбор карт — при BO3 одна сильная карта меняет серию; изменения составов.\nУровень уверенности: низкий.\nНедостающие данные: статистика по картам, рейтинги, вето. Влияние на достоверность — заметное.",
+      "key_factors": [
+        "Очные 8:5 в пользу L&G, последняя 2:1 (cyber.sports.ru)",
+        "Genone — 5 поражений в сериях подряд (cyber.sports.ru)",
+        "L&G проиграл 3 из 4 последних серий",
+        "BO3, тир-3 — высокая дисперсия"
+      ],
+      "verdict": "Итог аналитики: небольшое преимущество L&G в серии. Уверенность — низкая. Это аналитическая оценка, а не прогноз ставки.",
+      "sources": [
+        {
+          "title": "cyber.sports.ru — L&G — Genone",
+          "url": "https://cyber.sports.ru/cs/match/genone-lg-2026-11-20/"
+        },
+        {
+          "title": "cyber.sports.ru — CS2, 20.11",
+          "url": "https://cyber.sports.ru/cs/match/2026-11-20/"
+        },
+        {
+          "title": "bo3.gg — матчи CS2",
+          "url": "https://bo3.gg/matches/current"
+        },
+        {
+          "title": "bo3.gg — результаты",
+          "url": "https://bo3.gg/matches/finished"
         }
       ]
     },
@@ -1162,6 +1329,42 @@
         {
           "title": "Sports.ru — Бундеслига",
           "url": "https://www.sports.ru/football/tournament/bundesliga/"
+        }
+      ]
+    },
+    {
+      "sport": "🎾 Теннис",
+      "match": "Даниил Медведев — Фрэнсис Тиафо",
+      "tournament": "ATP Finals (Турин), группа B, 3-й тур, хард в помещении",
+      "start": "20.11, 22:30 МСК",
+      "text": "Подтверждённые факты (ESPN, Flashscore, Tennis Abstract; данные на 20.11, 18:00 МСК). Формат — best of 3, хард в помещении (Inalpi Arena). В группе B Алькарас выиграл все три матча; у Медведева и Тиафо по 1-1 и сеты 2:2, победитель выходит в полуфинал. Медведев обыграл Коболли 7:6, 6:3 и уступил Алькарасу 2:6, 4:6; Тиафо уступил Алькарасу 2:6, 2:6 и обыграл Коболли 7:6, 6:0. Очные: Тиафо 3:0 на US Open (06.09.2026), Медведев 2:0 в Брисбене (07.01.2026), Тиафо 2:1 на Кубке Лейвера (2024).\nВ пользу Медведева: выше Elo на харде по Tennis Abstract (1960.6 против 1875.6, обновление 16.11). Интерпретация: модель видит в нём фаворита, а медленный хард в помещении исторически подходит его игре от задней линии.\nВ пользу Тиафо: выиграл две из трёх последних очных встреч, включая US Open-2026 в трёх сетах. Сет 6:0 против Коболли — признак хорошей формы на этом корте.\nНеизвестно: статистика подачи и приёма в Турине в открытых источниках не собрана; сведений о проблемах со здоровьем нет.\nИтог аналитики.\nНаиболее вероятный исход: победа Медведева, но без большого запаса. Модель Tennis Abstract Elo оценивает его шансы примерно в 62%.\nОсновные аргументы: преимущество в Elo на харде (Tennis Abstract), один и тот же результат в группе (ESPN, Flashscore), противоречивые очные встречи (Flashscore).\nЧто может изменить результат: уровень первой подачи Тиафо, тай-брейки (оба уже играли 7:6 в Турине), физическое состояние Медведева после поражения Алькарасу.\nУровень уверенности: средний.\nНедостающие данные: статистика подачи/приёма за турнир, данные о физическом состоянии. Влияние на достоверность — умеренное.",
+      "key_factors": [
+        "Победитель выходит в полуфинал (Flashscore, ESPN)",
+        "Elo на харде: 1960.6 против 1875.6 (Tennis Abstract)",
+        "Очные: 2-1 в пользу Тиафо за 2 года (Flashscore)",
+        "Best of 3, хард в помещении"
+      ],
+      "verdict": "Итог аналитики: победа Медведева без большого запаса. Уверенность — средняя. Это аналитическая оценка, а не прогноз ставки.",
+      "sources": [
+        {
+          "title": "Flashscore — Медведев — Тиафо",
+          "url": "https://www.flashscore.com.ua/match/tennis/medvedev-daniil-O8qG0Nhb/tiafoe-frances-AHDLJaph/?mid=Gt7o64lQ"
+        },
+        {
+          "title": "Flashscore — ATP Finals, таблица",
+          "url": "https://www.flashscore.com.ua/tennis/atp-singles/finals-turin/"
+        },
+        {
+          "title": "ESPN — ATP scoreboard",
+          "url": "https://www.espn.com/tennis/scoreboard"
+        },
+        {
+          "title": "Tennis Abstract — ATP Elo",
+          "url": "https://www.tennisabstract.com/reports/atp_elo_ratings.html"
+        },
+        {
+          "title": "Sofascore — теннис 20.11",
+          "url": "https://www.sofascore.com/tennis/2026-11-20"
         }
       ]
     },
@@ -1265,82 +1468,85 @@
   "model_version": "v3",
   "express": [
     {
-      "id": "x-20261120-bold1",
-      "tier": "bold",
-      "title": "Рисковый: Япония и киберспорт",
+      "id": "x-20261121-safe",
+      "tier": "safe",
+      "title": "Надёжный: Детройт и топ-фавориты субботы",
       "legs": [
         {
-          "sport": "football",
-          "match": "Касима Антлерс — Симидзу С-Палс",
-          "bet": "П1 (победа Касимы)",
-          "odds": 1.5,
-          "start_iso": "2026-11-20T13:00+03:00"
+          "sport": "basketball",
+          "match": "Детройт — Торонто",
+          "bet": "П1 (победа Детройта, с ОТ)",
+          "odds": 1.34,
+          "start_iso": "2026-11-21T03:30+03:00"
         },
         {
           "sport": "football",
-          "match": "Касива Рейсол — ДЖЕФ Юнайтед Чиба",
-          "bet": "П1 (победа Касивы)",
-          "odds": 1.5,
-          "start_iso": "2026-11-20T13:00+03:00"
+          "match": "Лацио — Лечче",
+          "bet": "П1 (победа Лацио)",
+          "odds": 1.36,
+          "start_iso": "2026-11-21T17:00+03:00"
         },
         {
           "sport": "football",
-          "match": "Виссел Кобе — Мито Холлихок",
-          "bet": "П1 (победа Виссела)",
-          "odds": 1.42,
-          "start_iso": "2026-11-20T13:00+03:00"
-        },
-        {
-          "sport": "cs2",
-          "match": "Baks — Nice Try",
-          "bet": "П1 (победа Baks)",
-          "odds": 1.38,
-          "start_iso": "2026-11-20T12:00+03:00"
-        },
-        {
-          "sport": "dota2",
-          "match": "OG — NAVI",
-          "bet": "П2 (победа NAVI)",
-          "odds": 1.28,
-          "start_iso": "2026-11-20T17:00+03:00"
-        },
-        {
-          "sport": "dota2",
-          "match": "Do Konca — Team Liquid",
-          "bet": "П2 (победа Liquid)",
-          "odds": 1.28,
-          "start_iso": "2026-11-20T20:00+03:00"
+          "match": "Ницца — ПСЖ",
+          "bet": "П2 (победа ПСЖ)",
+          "odds": 1.45,
+          "start_iso": "2026-11-21T19:15+03:00"
         }
       ],
-      "total_odds": 7.22,
-      "reason": "Три фаворита J1 Лиги против команд из нижней части таблицы, Baks в CCT и два фаворита BLAST Slam 9 по Dota 2.",
-      "weak_link": "Касива — Чиба: дерби, в котором фаворит часто буксует."
+      "total_odds": 2.64,
+      "reason": "Три фаворита с уверенностью 4: Детройт дома против Торонто без Леонарда и Барретта, непобеждённый Лацио против Лечче и ПСЖ с 72% по ClubElo.",
+      "weak_link": "Ницца — ПСЖ: рынок оценивает ПСЖ заметно ниже, чем ClubElo."
     },
     {
-      "id": "x-20261120-bold2",
-      "tier": "bold",
-      "title": "Рисковый: вечер пятницы",
+      "id": "x-20261121-mid",
+      "tier": "mid",
+      "title": "Средний: Кливленд и АПЛ",
       "legs": [
         {
-          "sport": "hockey",
-          "match": "Сибирь — Автомобилист",
-          "bet": "П2 (победа Автомобилиста в основное время)",
-          "odds": 2.05,
-          "start_iso": "2026-11-20T15:30+03:00"
+          "sport": "basketball",
+          "match": "Кливленд — Индиана",
+          "bet": "П1 (победа Кливленда)",
+          "odds": 1.41,
+          "start_iso": "2026-11-21T03:30+03:00"
         },
         {
-          "sport": "hockey",
-          "match": "Шанхай Дрэгонс — ЦСКА",
-          "bet": "П2 (победа ЦСКА в основное время)",
-          "odds": 1.7,
-          "start_iso": "2026-11-20T19:30+03:00"
+          "sport": "football",
+          "match": "Астон Вилла — Сандерленд",
+          "bet": "П1 (победа Астон Виллы)",
+          "odds": 1.8,
+          "start_iso": "2026-11-21T18:00+03:00"
         },
+        {
+          "sport": "football",
+          "match": "Ньюкасл — Арсенал",
+          "bet": "П2 (победа Арсенала)",
+          "odds": 1.57,
+          "start_iso": "2026-11-21T20:30+03:00"
+        }
+      ],
+      "total_odds": 3.98,
+      "reason": "Домашний фаворит НБА и два матча АПЛ, где модель и таблица поддерживают одну сторону.",
+      "weak_link": "Астон Вилла — Сандерленд: кэф 1.80, ничья вполне вероятна."
+    },
+    {
+      "id": "x-20261120-bold",
+      "tier": "bold",
+      "title": "Рисковый: мультиспорт вечер",
+      "legs": [
         {
           "sport": "football",
           "match": "Индепендьенте дель Валье — Макара",
           "bet": "П1 (победа Индепендьенте)",
           "odds": 1.48,
           "start_iso": "2026-11-20T20:00+03:00"
+        },
+        {
+          "sport": "football",
+          "match": "Молде — Будё-Глимт",
+          "bet": "П2 (победа Будё-Глимт)",
+          "odds": 1.8,
+          "start_iso": "2026-11-20T21:00+03:00"
         },
         {
           "sport": "cs2",
@@ -1350,16 +1556,68 @@
           "start_iso": "2026-11-20T21:00+03:00"
         },
         {
-          "sport": "football",
-          "match": "Атлетик — Эспаньол",
-          "bet": "П1 (победа Атлетика)",
-          "odds": 1.48,
-          "start_iso": "2026-11-20T23:00+03:00"
+          "sport": "basketball",
+          "match": "Атланта — Шарлотт",
+          "bet": "П1 (победа Атланты, с ОТ)",
+          "odds": 1.43,
+          "start_iso": "2026-11-21T03:00+03:00"
+        },
+        {
+          "sport": "hockey",
+          "match": "Сочи — СКА",
+          "bet": "П2 (победа СКА в основное время)",
+          "odds": 1.61,
+          "start_iso": "2026-11-21T17:00+03:00"
         }
       ],
-      "total_odds": 11.3,
-      "reason": "Два хоккейных исхода в основное время (Автомобилист и ЦСКА), лидер Эквадора дома, L&G против Genone и Атлетик дома.",
-      "weak_link": "Сибирь — Автомобилист: ставка на победу в основное время при коэффициенте 2.05."
+      "total_odds": 9.08,
+      "reason": "Пять событий в пяти разных турнирах: Эквадор, Норвегия, CS2 тир-3, НБА и КХЛ; везде прогноз на сторону, которую поддерживают модель или таблица.",
+      "weak_link": "L&G — Genone: тир-3 CS2, BO3 и низкая уверенность аналитики."
+    },
+    {
+      "id": "x-20261121-bold",
+      "tier": "bold",
+      "title": "Рисковый: ночь НБА и суббота",
+      "legs": [
+        {
+          "sport": "basketball",
+          "match": "Кливленд — Индиана",
+          "bet": "П1 (победа Кливленда)",
+          "odds": 1.41,
+          "start_iso": "2026-11-21T03:30+03:00"
+        },
+        {
+          "sport": "basketball",
+          "match": "Детройт — Торонто",
+          "bet": "П1 (победа Детройта, с ОТ)",
+          "odds": 1.34,
+          "start_iso": "2026-11-21T03:30+03:00"
+        },
+        {
+          "sport": "football",
+          "match": "Лацио — Лечче",
+          "bet": "П1 (победа Лацио)",
+          "odds": 1.36,
+          "start_iso": "2026-11-21T17:00+03:00"
+        },
+        {
+          "sport": "football",
+          "match": "Астон Вилла — Сандерленд",
+          "bet": "П1 (победа Астон Виллы)",
+          "odds": 1.8,
+          "start_iso": "2026-11-21T18:00+03:00"
+        },
+        {
+          "sport": "football",
+          "match": "Ньюкасл — Арсенал",
+          "bet": "П2 (победа Арсенала)",
+          "odds": 1.57,
+          "start_iso": "2026-11-21T20:30+03:00"
+        }
+      ],
+      "total_odds": 7.26,
+      "reason": "Два домашних фаворита НБА ночью и три фаворита в субботних матчах АПЛ и Серии А.",
+      "weak_link": "Астон Вилла — Сандерленд: кэф 1.80, ничья вполне вероятна."
     }
   ]
 }
