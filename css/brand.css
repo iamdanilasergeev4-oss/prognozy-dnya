@@ -219,6 +219,45 @@ body[data-zone="history"] .scene-shade {
 .st-side { border-radius: var(--r-l); }
 .verdict { border-color: color-mix(in srgb, var(--c) 40%, transparent); }
 
+/* «Итог аналитики» — карточка вывода */
+.st-sum {
+  margin: 16px 0 6px; padding: 16px 18px 14px; border-radius: var(--r-l);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--c) 9%, rgba(28, 26, 46, .96)), rgba(18, 17, 30, .96));
+  border: 1px solid color-mix(in srgb, var(--c) 34%, transparent);
+}
+.sum-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; }
+.sum-head h4 { margin: 0; font: 600 13px/1.2 var(--f-body); color: var(--c); letter-spacing: .01em; }
+.conf-lvl { display: inline-flex; align-items: center; gap: 7px; padding: 4px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 600; color: var(--text);
+  background: color-mix(in srgb, var(--lv) 16%, transparent); border: 1px solid color-mix(in srgb, var(--lv) 45%, transparent); }
+.conf-lvl i { width: 8px; height: 8px; border-radius: 50%; background: var(--lv); }
+.conf-lvl.lvl-high { --lv: #5be3b0; }
+.conf-lvl.lvl-mid { --lv: #67c6ff; }
+.conf-lvl.lvl-low { --lv: #ffb22e; }
+.sum-out { margin: 10px 0 0; font: 600 clamp(16px, 1.6vw, 18px)/1.4 var(--f-body); color: var(--text); text-wrap: pretty; }
+.sum-list { margin: 12px 0 0; display: grid; gap: 10px; }
+.sum-list div { display: grid; grid-template-columns: minmax(0, 168px) minmax(0, 1fr); gap: 4px 14px; }
+.sum-list dt { color: var(--muted); font-size: 13px; }
+.sum-list dd { margin: 0; color: var(--text-2); font-size: 14px; line-height: 1.5; }
+.story.has-sum .verdict { display: none; } /* вывод уже в карточке */
+@media (max-width: 640px) { .sum-list div { grid-template-columns: 1fr; } }
+
+/* Аватар персонажа в заголовке вида спорта */
+body[data-sport] .sport-head .sh-ico { background-repeat: no-repeat; background-size: 300%; }
+body[data-sport="football"] .sport-head .sh-ico { background-image: url("../assets/art/football-540.webp"); background-position: 73% 27%; }
+body[data-sport="volleyball"] .sport-head .sh-ico { background-image: url("../assets/art/volleyball-540.webp"); background-position: 68% 23%; }
+body[data-sport="basketball"] .sport-head .sh-ico { background-image: url("../assets/art/basketball-540.webp"); background-position: 70% 19%; }
+body[data-sport="hockey"] .sport-head .sh-ico { background-image: url("../assets/art/hockey-540.webp"); background-position: 73% 21%; }
+body[data-sport="tennis"] .sport-head .sh-ico { background-image: url("../assets/art/tennis-540.webp"); background-position: 68% 22%; }
+body[data-sport="cs2"] .sport-head .sh-ico { background-image: url("../assets/art/cs2-540.webp"); background-position: 76% 17%; }
+body[data-sport="dota2"] .sport-head .sh-ico { background-image: url("../assets/art/dota2-540.webp"); background-position: 73% 25%; }
+body:is([data-sport="football"], [data-sport="volleyball"], [data-sport="basketball"], [data-sport="hockey"], [data-sport="tennis"], [data-sport="cs2"], [data-sport="dota2"]) .sport-head .sh-ico {
+  width: 64px; height: 64px; border: 2px solid var(--sport); box-shadow: 0 0 0 4px color-mix(in srgb, var(--sport) 18%, transparent);
+}
+body:is([data-sport="football"], [data-sport="volleyball"], [data-sport="basketball"], [data-sport="hockey"], [data-sport="tennis"], [data-sport="cs2"], [data-sport="dota2"]) .sport-head .sh-ico .big-ico { display: none; }
+
+/* Цифры одинаковой ширины — коэффициенты и счётчики не «прыгают» */
+.odds b, .xl-odds, .xp-total b, .kpi b, .hb-val b, .bd-num, .tab .n { font-variant-numeric: tabular-nums; }
+
 /* ===== История ===== */
 .history { --h-accent: var(--accent-2); --accent: var(--won); } /* «подтвердилось» — всегда зелёный */
 .history .h-head h2 { background: linear-gradient(90deg, #fff, #cbb9ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
