@@ -34,10 +34,10 @@
 
   /* Цвет каждого вида спорта внутри общей системы */
   const COLORS = {
-    football: "#72F5BB", basketball: "#FF9F5A", tennis: "#D9F36A", volleyball: "#FFD166",
-    cs2: "#65B9FF", dota2: "#FF6B7A", hockey: "#E3ECF7", express: "#FF8FB8", analysis: "#B9A2FF",
+    football: "#F0386E", basketball: "#FF8A1F", tennis: "#8BE04E", volleyball: "#FF7A5C",
+    cs2: "#FFB22E", dota2: "#B5489F", hockey: "#67C6FF", express: "#FF4FB0", analysis: "#9B7BFF",
   };
-  const colorOf = (id) => COLORS[id] || "#72F5BB";
+  const colorOf = (id) => COLORS[id] || "#FF4FB0";
 
   const CONF_LABEL = ["", "очень низкая", "низкая", "средняя", "высокая", "очень высокая"];
   const DQ_LABEL = { high: "полные", medium: "частичные", low: "скудные" };
@@ -848,7 +848,7 @@
   const inView = { suggest: false, history: false };
   function syncNav() {
     document.querySelectorAll(".nav a").forEach((a) => a.removeAttribute("aria-current"));
-    const key = inView.suggest ? "suggest" : inView.history ? "history" : current === "analysis" ? "analysis" : "board";
+    const key = inView.suggest ? "suggest" : inView.history ? "history" : current === "analysis" ? "analysis" : current === "express" ? "express" : "board";
     $(`[data-nav="${key}"]`)?.setAttribute("aria-current", "true");
   }
   if ("IntersectionObserver" in window) {

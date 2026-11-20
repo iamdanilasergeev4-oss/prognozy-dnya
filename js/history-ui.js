@@ -15,10 +15,10 @@
   const I_CHEV = SVGI('<path d="M6 9l6 6 6-6"/>');
 
   const SPORT = {
-    football: { name: "Футбол", c: "#72F5BB" }, basketball: { name: "Баскетбол", c: "#FF9F5A" },
-    tennis: { name: "Теннис", c: "#D9F36A" }, volleyball: { name: "Волейбол", c: "#FFD166" },
-    cs2: { name: "CS2", c: "#65B9FF" }, dota2: { name: "Dota 2", c: "#FF6B7A" },
-    hockey: { name: "Хоккей", c: "#E3ECF7" },
+    football: { name: "Футбол", c: "#F0386E" }, basketball: { name: "Баскетбол", c: "#FF8A1F" },
+    tennis: { name: "Теннис", c: "#8BE04E" }, volleyball: { name: "Волейбол", c: "#FF7A5C" },
+    cs2: { name: "CS2", c: "#FFB22E" }, dota2: { name: "Dota 2", c: "#B5489F" },
+    hockey: { name: "Хоккей", c: "#67C6FF" },
   };
   const sportName = (id, fb) => (SPORT[id] && SPORT[id].name) || fb || id;
   const sportColor = (id) => (SPORT[id] && SPORT[id].c) || "#8d99aa";
