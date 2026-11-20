@@ -418,7 +418,7 @@
           "odds": 1.41,
           "start_iso": "2026-11-19T22:30+03:00",
           "hid": "football-20261119-3yn212",
-          "status": "pending"
+          "status": "won"
         },
         {
           "sport": "football",
@@ -427,7 +427,7 @@
           "odds": 1.54,
           "start_iso": "2026-11-19T22:30+03:00",
           "hid": "football-20261119-1ufke52",
-          "status": "pending"
+          "status": "lost"
         },
         {
           "sport": "football",
@@ -467,7 +467,7 @@
           "odds": 1.5,
           "start_iso": "2026-11-20T13:00+03:00",
           "hid": "football-20261120-mw7mdt",
-          "status": "pending"
+          "status": "lost"
         },
         {
           "sport": "football",
@@ -476,7 +476,7 @@
           "odds": 1.5,
           "start_iso": "2026-11-20T13:00+03:00",
           "hid": "football-20261120-ejitpv",
-          "status": "pending"
+          "status": "lost"
         },
         {
           "sport": "football",
@@ -485,7 +485,7 @@
           "odds": 1.42,
           "start_iso": "2026-11-20T13:00+03:00",
           "hid": "football-20261120-c2i1ew",
-          "status": "pending"
+          "status": "lost"
         },
         {
           "sport": "cs2",
@@ -494,7 +494,7 @@
           "odds": 1.38,
           "start_iso": "2026-11-20T12:00+03:00",
           "hid": "cs2-20261120-sz71o4",
-          "status": "pending"
+          "status": "won"
         },
         {
           "sport": "dota2",
@@ -519,7 +519,7 @@
       "reason": "Три фаворита J1 Лиги против команд из нижней части таблицы, Baks в CCT и два фаворита BLAST Slam 9 по Dota 2.",
       "weak_link": "Касива — Чиба: дерби, в котором фаворит часто буксует.",
       "published_at": "2026-11-19T16:21+03:00",
-      "status": "pending",
+      "status": "lost",
       "settled_odds": null
     },
     {
@@ -626,6 +626,202 @@
       "reason": "Три события, где наша оценка выше рыночной (Проект, Будё, Алмере), плюс лидер Эрсте Дивизи Хераклес против резервистов ПСВ.",
       "weak_link": "Алмере — П1 за 2.70: даже по нашей оценке ставка заходит лишь в 40% случаев.",
       "published_at": "2026-11-19T16:59+03:00",
+      "status": "pending",
+      "settled_odds": null
+    },
+    {
+      "id": "x-20261120-bold",
+      "tier": "bold",
+      "title": "Рисковый: мультиспорт вечер",
+      "legs": [
+        {
+          "sport": "football",
+          "match": "Индепендьенте дель Валье — Макара",
+          "bet": "П1 (победа Индепендьенте)",
+          "odds": 1.48,
+          "start_iso": "2026-11-20T20:00+03:00",
+          "hid": "football-20261120-1b82yzm",
+          "status": "pending"
+        },
+        {
+          "sport": "football",
+          "match": "Молде — Будё-Глимт",
+          "bet": "П2 (победа Будё-Глимт)",
+          "odds": 1.8,
+          "start_iso": "2026-11-20T21:00+03:00",
+          "hid": "football-20261120-1q9wq2b",
+          "status": "pending"
+        },
+        {
+          "sport": "cs2",
+          "match": "L&G — Genone",
+          "bet": "П1 (победа L&G)",
+          "odds": 1.48,
+          "start_iso": "2026-11-20T21:00+03:00",
+          "hid": "cs2-20261120-zomzgc",
+          "status": "pending"
+        },
+        {
+          "sport": "basketball",
+          "match": "Атланта — Шарлотт",
+          "bet": "П1 (победа Атланты, с ОТ)",
+          "odds": 1.43,
+          "start_iso": "2026-11-21T03:00+03:00",
+          "hid": "basketball-20261121-14g93jq",
+          "status": "pending"
+        },
+        {
+          "sport": "hockey",
+          "match": "Сочи — СКА",
+          "bet": "П2 (победа СКА в основное время)",
+          "odds": 1.61,
+          "start_iso": "2026-11-21T17:00+03:00",
+          "hid": "hockey-20261121-qc77qp",
+          "status": "pending"
+        }
+      ],
+      "total_odds": 9.08,
+      "reason": "Пять событий в пяти разных турнирах: Эквадор, Норвегия, CS2 тир-3, НБА и КХЛ; везде прогноз на сторону, которую поддерживают модель или таблица.",
+      "weak_link": "L&G — Genone: тир-3 CS2, BO3 и низкая уверенность аналитики.",
+      "published_at": "2026-11-20T17:26+03:00",
+      "status": "pending",
+      "settled_odds": null
+    },
+    {
+      "id": "x-20261121-bold",
+      "tier": "bold",
+      "title": "Рисковый: ночь НБА и суббота",
+      "legs": [
+        {
+          "sport": "basketball",
+          "match": "Кливленд — Индиана",
+          "bet": "П1 (победа Кливленда)",
+          "odds": 1.41,
+          "start_iso": "2026-11-21T03:30+03:00",
+          "hid": "basketball-20261121-r4owsx",
+          "status": "pending"
+        },
+        {
+          "sport": "basketball",
+          "match": "Детройт — Торонто",
+          "bet": "П1 (победа Детройта, с ОТ)",
+          "odds": 1.34,
+          "start_iso": "2026-11-21T03:30+03:00",
+          "hid": "basketball-20261121-1r8ndu2",
+          "status": "pending"
+        },
+        {
+          "sport": "football",
+          "match": "Лацио — Лечче",
+          "bet": "П1 (победа Лацио)",
+          "odds": 1.36,
+          "start_iso": "2026-11-21T17:00+03:00",
+          "hid": "football-20261121-15g1tvt",
+          "status": "pending"
+        },
+        {
+          "sport": "football",
+          "match": "Астон Вилла — Сандерленд",
+          "bet": "П1 (победа Астон Виллы)",
+          "odds": 1.8,
+          "start_iso": "2026-11-21T18:00+03:00",
+          "hid": "football-20261121-bupsqt",
+          "status": "pending"
+        },
+        {
+          "sport": "football",
+          "match": "Ньюкасл — Арсенал",
+          "bet": "П2 (победа Арсенала)",
+          "odds": 1.57,
+          "start_iso": "2026-11-21T20:30+03:00",
+          "hid": "football-20261121-4bwv2l",
+          "status": "pending"
+        }
+      ],
+      "total_odds": 7.26,
+      "reason": "Два домашних фаворита НБА ночью и три фаворита в субботних матчах АПЛ и Серии А.",
+      "weak_link": "Астон Вилла — Сандерленд: кэф 1.80, ничья вполне вероятна.",
+      "published_at": "2026-11-20T17:26+03:00",
+      "status": "pending",
+      "settled_odds": null
+    },
+    {
+      "id": "x-20261121-mid",
+      "tier": "mid",
+      "title": "Средний: Кливленд и АПЛ",
+      "legs": [
+        {
+          "sport": "basketball",
+          "match": "Кливленд — Индиана",
+          "bet": "П1 (победа Кливленда)",
+          "odds": 1.41,
+          "start_iso": "2026-11-21T03:30+03:00",
+          "hid": "basketball-20261121-r4owsx",
+          "status": "pending"
+        },
+        {
+          "sport": "football",
+          "match": "Астон Вилла — Сандерленд",
+          "bet": "П1 (победа Астон Виллы)",
+          "odds": 1.8,
+          "start_iso": "2026-11-21T18:00+03:00",
+          "hid": "football-20261121-bupsqt",
+          "status": "pending"
+        },
+        {
+          "sport": "football",
+          "match": "Ньюкасл — Арсенал",
+          "bet": "П2 (победа Арсенала)",
+          "odds": 1.57,
+          "start_iso": "2026-11-21T20:30+03:00",
+          "hid": "football-20261121-4bwv2l",
+          "status": "pending"
+        }
+      ],
+      "total_odds": 3.98,
+      "reason": "Домашний фаворит НБА и два матча АПЛ, где модель и таблица поддерживают одну сторону.",
+      "weak_link": "Астон Вилла — Сандерленд: кэф 1.80, ничья вполне вероятна.",
+      "published_at": "2026-11-20T17:26+03:00",
+      "status": "pending",
+      "settled_odds": null
+    },
+    {
+      "id": "x-20261121-safe",
+      "tier": "safe",
+      "title": "Надёжный: Детройт и топ-фавориты субботы",
+      "legs": [
+        {
+          "sport": "basketball",
+          "match": "Детройт — Торонто",
+          "bet": "П1 (победа Детройта, с ОТ)",
+          "odds": 1.34,
+          "start_iso": "2026-11-21T03:30+03:00",
+          "hid": "basketball-20261121-1r8ndu2",
+          "status": "pending"
+        },
+        {
+          "sport": "football",
+          "match": "Лацио — Лечче",
+          "bet": "П1 (победа Лацио)",
+          "odds": 1.36,
+          "start_iso": "2026-11-21T17:00+03:00",
+          "hid": "football-20261121-15g1tvt",
+          "status": "pending"
+        },
+        {
+          "sport": "football",
+          "match": "Ницца — ПСЖ",
+          "bet": "П2 (победа ПСЖ)",
+          "odds": 1.45,
+          "start_iso": "2026-11-21T19:15+03:00",
+          "hid": "football-20261121-1quv8yz",
+          "status": "pending"
+        }
+      ],
+      "total_odds": 2.64,
+      "reason": "Три фаворита с уверенностью 4: Детройт дома против Торонто без Леонарда и Барретта, непобеждённый Лацио против Лечче и ПСЖ с 72% по ClubElo.",
+      "weak_link": "Ницца — ПСЖ: рынок оценивает ПСЖ заметно ниже, чем ClubElo.",
+      "published_at": "2026-11-20T17:26+03:00",
       "status": "pending",
       "settled_odds": null
     }
