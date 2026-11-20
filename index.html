@@ -5,12 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Прогнозы дня — футбол, баскетбол, теннис, волейбол, хоккей, CS2 и Dota 2</title>
   <meta name="description" content="Дважды в день: прогнозы на футбол, баскетбол, теннис, волейбол, хоккей, CS2 и Dota 2, собранные из открытых источников, со ссылками на оригиналы.">
-  <meta name="theme-color" content="#080B10">
+  <meta name="theme-color" content="#0F172A">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23080B10'/%3E%3Cpath d='M4 18h6l3-8 5 14 3-6h7' fill='none' stroke='%2372F5BB' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" media="print" onload="this.media='all'">
+  <link rel="preload" as="image" href="assets/art/poster-1600.avif" imagesrcset="assets/art/poster-900.avif 900w, assets/art/poster-1600.avif 1600w" imagesizes="(max-width: 1180px) 100vw, 1180px" type="image/avif" fetchpriority="high">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/brand.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Fira+Sans:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="css/skin-skill.css">
 </head>
 <body>
   <svg class="bg" id="bg" aria-hidden="true" focusable="false"></svg>
@@ -23,7 +27,9 @@
         <span>Прогнозы дня</span>
       </a>
       <nav class="nav" aria-label="Разделы">
+        <a href="#top" data-nav="home">Главная</a>
         <a href="#board" data-nav="board">Прогнозы</a>
+        <a href="#express" data-nav="express">Экспрессы</a>
         <a href="#analysis" data-nav="analysis" hidden>Разбор дня</a>
         <a href="#history" data-nav="history">История</a>
         <a href="#suggest" data-nav="suggest">Предложить идею</a>
@@ -34,9 +40,26 @@
 
   <main id="main">
     <section class="hero wrap" aria-labelledby="hero-title">
+      <figure class="hero-art">
+        <picture>
+          <source type="image/avif" srcset="assets/art/poster-900.avif 900w, assets/art/poster-1600.avif 1600w" sizes="(max-width: 1180px) 100vw, 1180px">
+          <source type="image/webp" srcset="assets/art/poster-900.webp 900w, assets/art/poster-1600.webp 1600w" sizes="(max-width: 1180px) 100vw, 1180px">
+          <img src="assets/art/poster-1600.webp" width="1671" height="941" fetchpriority="high" decoding="async"
+            alt="PROEBALI KAZHETSYA — постер: персонаж в образах футбола, баскетбола, хоккея, CS2, Dota 2, тенниса и волейбола">
+        </picture>
+        <nav class="hero-chips" aria-label="Виды спорта на постере">
+          <a href="#football" data-sport="football" style="--x:1.8%"><span class="vh">Футбол</span></a>
+          <a href="#basketball" data-sport="basketball" style="--x:16.0%"><span class="vh">Баскетбол</span></a>
+          <a href="#hockey" data-sport="hockey" style="--x:30.7%"><span class="vh">Хоккей</span></a>
+          <a href="#cs2" data-sport="cs2" style="--x:44.2%"><span class="vh">CS2</span></a>
+          <a href="#dota2" data-sport="dota2" style="--x:57.3%"><span class="vh">Dota 2</span></a>
+          <a href="#tennis" data-sport="tennis" style="--x:70.6%"><span class="vh">Теннис</span></a>
+          <a href="#volleyball" data-sport="volleyball" style="--x:84.0%"><span class="vh">Волейбол</span></a>
+        </nav>
+      </figure>
       <div class="hero-copy">
-        <h1 id="hero-title"><span class="ln"><span>Прогнозы на сегодня</span></span><span class="ln"><span>из десятков источников</span></span></h1>
-        <p class="lede">Дважды в день нейросеть собирает статистику по матчам — форму, составы, личные встречи, показатели игроков — и делает вывод только там, где хватает данных. У каждого прогноза есть факты «за» и «против» и ссылки на источники, а все прогнозы вместе с результатами хранятся в истории.</p>
+        <h1 id="hero-title"><span class="ln"><span>Прогнозы и разборы</span></span><span class="ln"><span>на сегодня и завтра</span></span></h1>
+        <p class="lede">Дважды в день собираем статистику из открытых источников — ESPN, Flashscore, Sofascore и других: форму, таблицы, составы и травмы. Сначала оцениваем шансы сами и только потом сравниваем с линией. У каждого прогноза есть факты «за» и «против» и ссылки, а все результаты — и удачные, и нет — хранятся в истории.</p>
       </div>
       <div class="pulse" id="pulse" role="region" aria-label="Сводка прогнозов">
         <div class="bd-loading" aria-hidden="true">
@@ -131,5 +154,6 @@
   <script src="js/history-core.js"></script>
   <script src="app.js"></script>
   <script src="js/history-ui.js"></script>
+  <script src="js/brand.js" defer></script>
 </body>
 </html>

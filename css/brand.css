@@ -1,0 +1,282 @@
+/* ===== PROEBALI KAZHETSYA — визуальная тема поверх дизайн-системы 2.0 =====
+   Только оформление: разметку прогнозов, расчёты и данные не трогает.
+   Слои: .scene (фон-иллюстрация вида спорта) → .bg (сеть) → контент на тёмных панелях. */
+
+:root {
+  --bg: #0b0b14;
+  --bg-2: #10101b;
+  --surface: #151522;
+  --surface-2: #1c1c2c;
+  --surface-3: #242437;
+  --line: rgba(255, 255, 255, .075);
+  --line-2: rgba(255, 255, 255, .13);
+  --line-3: rgba(255, 255, 255, .2);
+  --text: #f4f2fb;
+  --text-2: #cdc8dc;
+  --muted: #9a94ae;
+  --faint: #645e78;
+  --accent: #ff4fb0;      /* неон с постера */
+  --accent-2: #9b7bff;    /* мягкий фиолетовый — история, служебные разделы */
+  --won: #5be3b0;
+  --panel: rgba(21, 21, 34, .9);
+  --panel-2: rgba(16, 16, 27, .88);
+  --scene-fade: 560ms;
+}
+
+body {
+  background:
+    radial-gradient(1100px 640px at 92% -10%, rgba(255, 79, 176, .09), transparent 62%),
+    radial-gradient(900px 560px at -10% 6%, rgba(155, 123, 255, .08), transparent 60%),
+    var(--bg);
+}
+:focus-visible { outline-color: var(--accent); }
+.skip { background: var(--accent); color: #1a0010; }
+
+/* сеть-фон тише, чтобы не спорить с иллюстрациями */
+.bg.on { opacity: .55; }
+
+/* ===== Сцена вида спорта ===== */
+.scene { position: fixed; inset: 0; z-index: -2; pointer-events: none; overflow: hidden; contain: strict; }
+.scene-l {
+  position: absolute; top: 0; right: 0; width: min(60vw, 980px); height: 100vh; height: 100lvh;
+  background: center / cover no-repeat; background-position: var(--fp, 68% 18%);
+  opacity: 0; transition: opacity var(--scene-fade) cubic-bezier(.4, 0, .2, 1);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, rgba(0, 0, 0, .55) 26%, #000 58%), linear-gradient(180deg, #000 58%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(90deg, transparent 0, rgba(0, 0, 0, .55) 26%, #000 58%), linear-gradient(180deg, #000 58%, transparent 100%);
+  mask-composite: intersect;
+  will-change: opacity;
+}
+.scene-l.on { opacity: var(--scene-o, .5); }
+/* затемнение для читаемости + тон раздела */
+.scene-shade {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(90deg, rgba(11, 11, 20, .92) 0%, rgba(11, 11, 20, .62) 46%, rgba(11, 11, 20, .18) 100%),
+    radial-gradient(900px 600px at 85% 30%, color-mix(in srgb, var(--sport) 14%, transparent), transparent 70%);
+  opacity: 0; transition: opacity var(--scene-fade) ease;
+}
+body[data-zone="board"] .scene-shade, body[data-zone="history"] .scene-shade { opacity: 1; }
+body[data-zone="history"] .scene-shade {
+  background:
+    radial-gradient(1000px 640px at 88% 18%, rgba(155, 123, 255, .14), transparent 66%),
+    radial-gradient(800px 520px at 6% 70%, rgba(255, 79, 176, .06), transparent 70%);
+}
+
+/* собственная иллюстрация каждого вида спорта; AVIF → WebP → градиент */
+.scene-l.s-football { --fp: 72% 16%; background-image: image-set(url("../assets/art/football-900.avif") type("image/avif"), url("../assets/art/football-900.webp") type("image/webp")); }
+.scene-l.s-volleyball { --fp: 66% 18%; background-image: image-set(url("../assets/art/volleyball-900.avif") type("image/avif"), url("../assets/art/volleyball-900.webp") type("image/webp")); }
+.scene-l.s-basketball { --fp: 70% 16%; background-image: image-set(url("../assets/art/basketball-900.avif") type("image/avif"), url("../assets/art/basketball-900.webp") type("image/webp")); }
+.scene-l.s-hockey { --fp: 66% 14%; background-image: image-set(url("../assets/art/hockey-900.avif") type("image/avif"), url("../assets/art/hockey-900.webp") type("image/webp")); }
+.scene-l.s-tennis { --fp: 62% 12%; background-image: image-set(url("../assets/art/tennis-900.avif") type("image/avif"), url("../assets/art/tennis-900.webp") type("image/webp")); }
+.scene-l.s-cs2 { --fp: 72% 14%; background-image: image-set(url("../assets/art/cs2-900.avif") type("image/avif"), url("../assets/art/cs2-900.webp") type("image/webp")); }
+.scene-l.s-dota2 { --fp: 70% 18%; background-image: image-set(url("../assets/art/dota2-900.avif") type("image/avif"), url("../assets/art/dota2-900.webp") type("image/webp")); }
+/* экспрессы — приглушённый постер как акцент; разбор — чистый градиент (своего арта нет) */
+.scene-l.s-express {
+  --fp: 60% 40%; --scene-o: .2; filter: blur(6px) saturate(.9);
+  background-image: image-set(url("../assets/art/poster-900.avif") type("image/avif"), url("../assets/art/poster-900.webp") type("image/webp"));
+}
+.scene-l.s-analysis { --scene-o: 1; background-image: radial-gradient(700px 520px at 70% 26%, rgba(155, 123, 255, .2), transparent 70%), radial-gradient(520px 420px at 92% 78%, rgba(255, 79, 176, .1), transparent 70%); }
+
+@media (max-width: 1080px) {
+  .scene-l { width: 78vw; }
+  .scene-l.on { opacity: calc(var(--scene-o, .5) * .8); }
+}
+@media (max-width: 640px) {
+  .scene-l { width: 100vw; height: 58vh; height: 58svh; }
+  .scene-l.on { opacity: calc(var(--scene-o, .5) * .55); }
+  .scene-l.s-football, .scene-l.s-volleyball, .scene-l.s-basketball, .scene-l.s-hockey, .scene-l.s-tennis, .scene-l.s-cs2, .scene-l.s-dota2 { --fp: 70% 8%; }
+  .scene-l.s-football { background-image: image-set(url("../assets/art/football-540.avif") type("image/avif"), url("../assets/art/football-540.webp") type("image/webp")); }
+  .scene-l.s-volleyball { background-image: image-set(url("../assets/art/volleyball-540.avif") type("image/avif"), url("../assets/art/volleyball-540.webp") type("image/webp")); }
+  .scene-l.s-basketball { background-image: image-set(url("../assets/art/basketball-540.avif") type("image/avif"), url("../assets/art/basketball-540.webp") type("image/webp")); }
+  .scene-l.s-hockey { background-image: image-set(url("../assets/art/hockey-540.avif") type("image/avif"), url("../assets/art/hockey-540.webp") type("image/webp")); }
+  .scene-l.s-tennis { background-image: image-set(url("../assets/art/tennis-540.avif") type("image/avif"), url("../assets/art/tennis-540.webp") type("image/webp")); }
+  .scene-l.s-cs2 { background-image: image-set(url("../assets/art/cs2-540.avif") type("image/avif"), url("../assets/art/cs2-540.webp") type("image/webp")); }
+  .scene-l.s-dota2 { background-image: image-set(url("../assets/art/dota2-540.avif") type("image/avif"), url("../assets/art/dota2-540.webp") type("image/webp")); }
+  .scene-l.s-express { background-image: image-set(url("../assets/art/poster-900.avif") type("image/avif"), url("../assets/art/poster-900.webp") type("image/webp")); }
+  .scene-shade { background: linear-gradient(180deg, rgba(11, 11, 20, .35) 0%, rgba(11, 11, 20, .9) 52%, var(--bg) 70%); }
+}
+
+/* ===== Шапка и навигация ===== */
+.top.scrolled { background: rgba(11, 11, 20, .82); }
+.logo-mark rect { fill: var(--surface-2); stroke: color-mix(in srgb, var(--accent) 40%, transparent); }
+.logo-mark path { stroke: var(--accent); }
+.nav a::after { background: var(--sport, var(--accent)); height: 2px; border-radius: 2px; }
+.nav a[data-nav="home"][aria-current="true"]::after, .nav a[data-nav="history"][aria-current="true"]::after,
+.nav a[data-nav="suggest"][aria-current="true"]::after { background: var(--accent); }
+.nav a[data-nav="analysis"][aria-current="true"]::after { background: var(--accent-2); }
+.nav a[aria-current="true"] { background: rgba(255, 255, 255, .04); }
+.updated.fresh .dot { background: var(--won); }
+.updated.fresh .dot::after { border-color: var(--won); }
+@media (max-width: 1180px) { .nav a { padding: 8px 9px; font-size: 13.5px; } }
+@media (max-width: 1020px) { .nav a[data-nav="home"], .nav a[data-nav="suggest"] { display: none; } }
+
+/* нижняя панель на телефонах и планшетах */
+.mnav { display: none; }
+@media (max-width: 860px) {
+  .nav { display: none; }
+  .mnav {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; display: flex; justify-content: space-around; gap: 2px;
+    padding: 6px 6px calc(6px + env(safe-area-inset-bottom));
+    background: rgba(11, 11, 20, .94); border-top: 1px solid var(--line-2);
+    backdrop-filter: saturate(140%) blur(12px); -webkit-backdrop-filter: saturate(140%) blur(12px);
+  }
+  .mnav a {
+    flex: 1 1 0; min-width: 0; display: grid; justify-items: center; gap: 3px; padding: 6px 2px 4px; border-radius: 10px;
+    color: var(--muted); text-decoration: none; font-size: 10.5px; font-weight: 600; letter-spacing: .01em; text-align: center;
+  }
+  .mnav a[hidden] { display: none; }
+  .mnav svg { width: 20px; height: 20px; }
+  .mnav a[aria-current="true"] { color: var(--text); background: rgba(255, 255, 255, .06); }
+  .mnav a[aria-current="true"] svg { color: var(--sport, var(--accent)); }
+  body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
+}
+
+/* ===== Первый экран: постер ===== */
+.hero-art { grid-column: 1 / -1; position: relative; margin: 0; border-radius: var(--r-xl); overflow: hidden;
+  background: linear-gradient(135deg, #2a1240, #0b0b14 60%); /* резерв, пока грузится арт */
+  aspect-ratio: 1671 / 941; box-shadow: 0 40px 90px -50px rgba(255, 79, 176, .55), 0 0 0 1px rgba(255, 255, 255, .06); }
+.hero-art img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.hero-art::after { content: ""; position: absolute; inset: auto 0 0 0; height: 18%; pointer-events: none;
+  background: linear-gradient(180deg, transparent, rgba(11, 11, 20, .25)); }
+.hero-chips a {
+  position: absolute; left: var(--x); top: 86.9%; width: 14%; height: 8.7%; z-index: 1; border-radius: 1.4vw;
+  transition: box-shadow .3s ease, background .3s ease;
+}
+.hero-chips a:hover { background: rgba(255, 255, 255, .06); box-shadow: 0 0 0 2px rgba(255, 255, 255, .5); }
+.hero-chips a:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.hero { padding-top: clamp(18px, 3vw, 36px); row-gap: clamp(26px, 3.6vw, 48px); }
+.hero h1 .ln + .ln { color: #a59ec0; }
+@media (max-width: 640px) {
+  .hero-art { border-radius: var(--r-l); margin: 0 calc(-1 * var(--gutter) + 6px); }
+  .hero-chips { display: none; } /* слишком мелкие цели — на телефоне есть вкладки ниже */
+}
+
+/* ===== Табло на главной ===== */
+.pulse { background: linear-gradient(180deg, rgba(28, 28, 44, .88), rgba(16, 16, 27, .84)); }
+.pulse::before { background: linear-gradient(140deg, rgba(255, 79, 176, .45), transparent 32%, transparent 68%, rgba(155, 123, 255, .38)); }
+
+/* ===== Вкладки видов спорта ===== */
+.tabs-shell { background: linear-gradient(rgba(11, 11, 20, .96) 76%, rgba(11, 11, 20, 0));
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent); }
+.tabs-shell::before { background: linear-gradient(90deg, rgba(21, 21, 34, 1), rgba(21, 21, 34, 0)); }
+.tabs-shell::after { background: linear-gradient(270deg, rgba(21, 21, 34, 1), rgba(21, 21, 34, 0)); }
+.tabs { background: rgba(21, 21, 34, .95); }
+.tab-ind {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--sport) 20%, var(--surface-2)), color-mix(in srgb, var(--sport) 9%, var(--surface-2)));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--sport) 55%, transparent), 0 6px 22px -10px var(--sport);
+}
+.tab:hover { background: rgba(255, 255, 255, .03); }
+.tab .n { background: rgba(255, 255, 255, .06); }
+.tab[aria-selected="true"] .n { color: #12060d; }
+
+/* ===== Панель вида спорта и карточки ===== */
+.sport-head h2 { text-shadow: 0 2px 24px rgba(11, 11, 20, .8); }
+.sh-ico { background: radial-gradient(circle, color-mix(in srgb, var(--sport) 22%, transparent), rgba(11, 11, 20, .6) 72%); border-color: color-mix(in srgb, var(--sport) 45%, transparent); }
+.pick, .story, .xp, .acc-card, .chart-box, .h-filters, .h-card, .kpis {
+  background: linear-gradient(180deg, var(--panel), var(--panel-2));
+}
+.pick { border-color: var(--line); }
+.pick::after { /* тонкая неоновая кромка цвета вида спорта */
+  content: ""; position: absolute; left: 18px; right: 18px; top: -1px; height: 1px; pointer-events: none;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--sport) 70%, transparent), transparent); opacity: .55;
+}
+.pick.lead {
+  background:
+    radial-gradient(640px 240px at 100% 0%, color-mix(in srgb, var(--sport) 14%, transparent), transparent 70%),
+    linear-gradient(180deg, rgba(26, 26, 41, .94), rgba(16, 16, 27, .92));
+}
+.pk-bet strong { background: color-mix(in srgb, var(--sport) 10%, rgba(255, 255, 255, .03)); }
+.note { color: var(--text-2); }
+
+/* ===== Экспрессы дня ===== */
+.xp-list { gap: 16px; }
+.xp { --t: #5be3b0; padding: 22px 24px 18px; border-radius: var(--r-xl);
+  background:
+    radial-gradient(560px 220px at 100% 0%, color-mix(in srgb, var(--t) 13%, transparent), transparent 70%),
+    linear-gradient(180deg, rgba(26, 26, 41, .95), rgba(16, 16, 27, .93));
+  border: 1px solid color-mix(in srgb, var(--t) 34%, transparent);
+  box-shadow: 0 30px 60px -44px color-mix(in srgb, var(--t) 70%, transparent);
+}
+.xp.tier-mid { --t: #ffb22e; }
+.xp.tier-bold { --t: #ff4fb0; }
+.xp-tier { padding: 4px 10px; border-radius: 999px; background: color-mix(in srgb, var(--t) 14%, transparent); }
+.xp-head { border-bottom: 1px solid var(--line-2); }
+.xp-total b { font-family: var(--f-display); font-weight: 600; color: var(--t); text-shadow: 0 0 24px color-mix(in srgb, var(--t) 40%, transparent); }
+.xl { padding: 13px 0; }
+.xl + .xl { border-top: 1px dashed var(--line-2); }
+.xl-n { border-color: color-mix(in srgb, var(--c) 45%, transparent); color: var(--text-2); }
+.xl-odds { background: rgba(255, 255, 255, .05); }
+.xp-reason { padding-top: 12px; border-top: 1px solid var(--line); }
+
+/* ===== Разбор дня — редакционная подача ===== */
+.stories { gap: 18px; }
+.story { padding: clamp(22px, 3vw, 34px) clamp(20px, 3vw, 36px) clamp(20px, 2.6vw, 30px); border-radius: var(--r-xl);
+  background: linear-gradient(180deg, rgba(24, 22, 40, .95), rgba(15, 14, 26, .93)); border-color: rgba(155, 123, 255, .16); }
+.story::before { left: clamp(20px, 3vw, 36px); width: 72px; height: 3px; }
+.st-title { letter-spacing: -.04em; }
+.st-side { border-radius: var(--r-l); }
+.verdict { border-color: color-mix(in srgb, var(--c) 40%, transparent); }
+
+/* «Итог аналитики» — карточка вывода */
+.st-sum {
+  margin: 16px 0 6px; padding: 16px 18px 14px; border-radius: var(--r-l);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--c) 9%, rgba(28, 26, 46, .96)), rgba(18, 17, 30, .96));
+  border: 1px solid color-mix(in srgb, var(--c) 34%, transparent);
+}
+.sum-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; }
+.sum-head h4 { margin: 0; font: 600 13px/1.2 var(--f-body); color: var(--c); letter-spacing: .01em; }
+.conf-lvl { display: inline-flex; align-items: center; gap: 7px; padding: 4px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 600; color: var(--text);
+  background: color-mix(in srgb, var(--lv) 16%, transparent); border: 1px solid color-mix(in srgb, var(--lv) 45%, transparent); }
+.conf-lvl i { width: 8px; height: 8px; border-radius: 50%; background: var(--lv); }
+.conf-lvl.lvl-high { --lv: #5be3b0; }
+.conf-lvl.lvl-mid { --lv: #67c6ff; }
+.conf-lvl.lvl-low { --lv: #ffb22e; }
+.sum-out { margin: 10px 0 0; font: 600 clamp(16px, 1.6vw, 18px)/1.4 var(--f-body); color: var(--text); text-wrap: pretty; }
+.sum-list { margin: 12px 0 0; display: grid; gap: 10px; }
+.sum-list div { display: grid; grid-template-columns: minmax(0, 168px) minmax(0, 1fr); gap: 4px 14px; }
+.sum-list dt { color: var(--muted); font-size: 13px; }
+.sum-list dd { margin: 0; color: var(--text-2); font-size: 14px; line-height: 1.5; }
+.story.has-sum .verdict { display: none; } /* вывод уже в карточке */
+@media (max-width: 640px) { .sum-list div { grid-template-columns: 1fr; } }
+
+/* Аватар персонажа в заголовке вида спорта */
+body[data-sport] .sport-head .sh-ico { background-repeat: no-repeat; background-size: 300%; }
+body[data-sport="football"] .sport-head .sh-ico { background-image: url("../assets/art/football-540.webp"); background-position: 73% 27%; }
+body[data-sport="volleyball"] .sport-head .sh-ico { background-image: url("../assets/art/volleyball-540.webp"); background-position: 68% 23%; }
+body[data-sport="basketball"] .sport-head .sh-ico { background-image: url("../assets/art/basketball-540.webp"); background-position: 70% 19%; }
+body[data-sport="hockey"] .sport-head .sh-ico { background-image: url("../assets/art/hockey-540.webp"); background-position: 73% 21%; }
+body[data-sport="tennis"] .sport-head .sh-ico { background-image: url("../assets/art/tennis-540.webp"); background-position: 68% 22%; }
+body[data-sport="cs2"] .sport-head .sh-ico { background-image: url("../assets/art/cs2-540.webp"); background-position: 76% 17%; }
+body[data-sport="dota2"] .sport-head .sh-ico { background-image: url("../assets/art/dota2-540.webp"); background-position: 73% 25%; }
+body:is([data-sport="football"], [data-sport="volleyball"], [data-sport="basketball"], [data-sport="hockey"], [data-sport="tennis"], [data-sport="cs2"], [data-sport="dota2"]) .sport-head .sh-ico {
+  width: 64px; height: 64px; border: 2px solid var(--sport); box-shadow: 0 0 0 4px color-mix(in srgb, var(--sport) 18%, transparent);
+}
+body:is([data-sport="football"], [data-sport="volleyball"], [data-sport="basketball"], [data-sport="hockey"], [data-sport="tennis"], [data-sport="cs2"], [data-sport="dota2"]) .sport-head .sh-ico .big-ico { display: none; }
+
+/* Цифры одинаковой ширины — коэффициенты и счётчики не «прыгают» */
+.odds b, .xl-odds, .xp-total b, .kpi b, .hb-val b, .bd-num, .tab .n { font-variant-numeric: tabular-nums; }
+
+/* ===== История ===== */
+.history { --h-accent: var(--accent-2); --accent: var(--won); } /* «подтвердилось» — всегда зелёный */
+.history .h-head h2 { background: linear-gradient(90deg, #fff, #cbb9ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.history .seg { background: rgba(21, 21, 34, .95); }
+.history .seg button[aria-pressed="true"] { background: color-mix(in srgb, var(--h-accent) 18%, var(--surface-2)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--h-accent) 50%, transparent); }
+.history .donut .d-won { stroke: var(--won); }
+.history .h-filters select:focus, .history .h-filters input:focus { border-color: var(--h-accent); box-shadow: 0 0 0 3px rgba(155, 123, 255, .18); }
+.history .chart-box figcaption { color: #e7e0ff; }
+.history .h-date::before { background: var(--bg); border-color: var(--h-accent); }
+.history .kpis { border-radius: var(--r-l); }
+.suggest::before, .foot::before, .history::before { background: linear-gradient(90deg, transparent, rgba(155, 123, 255, .35), transparent); }
+
+/* ===== Форма и подвал ===== */
+.btn { background: var(--accent); color: #1a0010; }
+.btn:hover { background: #ff6cbf; }
+textarea:focus, input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255, 79, 176, .16); }
+
+/* ===== Движение ===== */
+@media (prefers-reduced-motion: reduce) {
+  .scene-l, .scene-shade { transition: none; }
+  .hero-chips a { transition: none; }
+}
