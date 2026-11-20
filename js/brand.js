@@ -70,7 +70,8 @@
     if (z !== zone) { zone = z; document.body.dataset.zone = z; paint(); syncHome(); }
   }
   let ticking = false;
-  window.addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(() => { ticking = false; readZone(); }); } }, { passive: true });
+  // таймер, а не rAF: в фоновой вкладке rAF замирает, и зона не обновлялась бы
+  window.addEventListener("scroll", () => { if (!ticking) { ticking = true; setTimeout(() => { ticking = false; readZone(); }, 60); } }, { passive: true });
   window.addEventListener("resize", readZone, { passive: true });
 
   /* ---------- Навигация ---------- */
@@ -154,8 +155,59 @@
     mirror();
   }).observe($(".nav"), { subtree: true, attributes: true, attributeFilter: ["aria-current", "hidden"] });
 
+  /* ---------- «Итог аналитики» — отдельная карточка ----------
+     Данные разбора не меняются: абзацы блока «Итог аналитики» из текста
+     собираются в карточку, видимую без раскрытия. */
+  const LVL = { high: "высокая", mid: "средняя", low: "низкая" };
+  function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function enhanceStories() {
+    document.querySelectorAll("#panel .story:not([data-sum])").forEach((st) => {
+      st.dataset.sum = "1";
+      const ps = [...st.querySelectorAll(".st-text p")];
+      const i = ps.findIndex((p) => p.textContent.trim().replace(/[.:]$/, "") === "Итог аналитики");
+      if (i < 0) return;
+      const items = ps.slice(i + 1);
+      const take = (pref) => {
+        const p = items.find((x) => x.textContent.trim().startsWith(pref));
+        return p ? p.textContent.trim().slice(pref.length).trim().replace(/\.$/, "") : "";
+      };
+      const out = take("Наиболее вероятный исход:");
+      if (!out) return;
+      const arg = take("Основные аргументы:"), chg = take("Что может изменить результат:");
+      const lvlRaw = take("Уровень уверенности:").toLowerCase(), miss = take("Недостающие данные:");
+      const lvl = /высок/.test(lvlRaw) ? "high" : /средн/.test(lvlRaw) ? "mid" : "low";
+
+      const card = el("section", "st-sum");
+      card.setAttribute("aria-label", "Итог аналитики");
+      const head = el("header", "sum-head");
+      head.append(el("h4", null, "Итог аналитики"));
+      const badge = el("span", "conf-lvl lvl-" + lvl);
+      badge.append(el("i"), document.createTextNode("Уверенность: " + LVL[lvl]));
+      head.append(badge);
+      card.append(head, el("p", "sum-out", out.charAt(0).toUpperCase() + out.slice(1)));
+      const dl = el("dl", "sum-list");
+      [["Аргументы", arg], ["Что может изменить итог", chg], ["Каких данных нет", miss]].forEach(([k, v]) => {
+        if (!v) return;
+        const row = el("div"); row.append(el("dt", null, k), el("dd", null, v)); dl.append(row);
+      });
+      card.append(dl);
+
+      [ps[i], ...items].forEach((p) => p.remove());
+      const text = st.querySelector(".st-text");
+      const lead = text.querySelector(".st-lead");
+      lead ? lead.after(card) : text.prepend(card);
+      // если в раскрывающемся блоке ничего не осталось — убираем кнопку
+      const more = text.querySelector(".more");
+      if (more && !more.querySelector("p")) { more.remove(); text.querySelector(".toggle")?.remove(); }
+      st.classList.add("has-sum");
+    });
+  }
+  const panelEl = $("#panel");
+  if (panelEl) new MutationObserver(enhanceStories).observe(panelEl, { childList: true, subtree: true });
+
   /* ---------- Старт ---------- */
   readTab();
+  enhanceStories();
   syncExpressLink();
   readZone();
   document.body.dataset.zone = zone;
