@@ -320,7 +320,7 @@
           "odds": 1.35,
           "start_iso": "2026-11-20T04:00+03:00",
           "hid": "basketball-20261120-jk3rbt",
-          "status": "pending"
+          "status": "won"
         },
         {
           "sport": "hockey",
@@ -329,7 +329,7 @@
           "odds": 1.56,
           "start_iso": "2026-11-20T03:00+03:00",
           "hid": "hockey-20261120-1f2t7v7",
-          "status": "pending"
+          "status": "lost"
         },
         {
           "sport": "football",
@@ -345,7 +345,7 @@
       "reason": "Мемфис против Голден Стэйт без Карри во втором матче за две ночи, Оттава дома против Филадельфии и Атлетик дома против Эспаньола.",
       "weak_link": "Атлетик — выиграл лишь 4 из 11 матчей сезона.",
       "published_at": "2026-11-19T13:35+03:00",
-      "status": "pending",
+      "status": "lost",
       "settled_odds": null
     },
     {
@@ -360,7 +360,7 @@
           "odds": 1.24,
           "start_iso": "2026-11-20T04:00+03:00",
           "hid": "basketball-20261120-cxxjwz",
-          "status": "pending"
+          "status": "won"
         },
         {
           "sport": "hockey",
@@ -369,7 +369,7 @@
           "odds": 1.38,
           "start_iso": "2026-11-20T03:00+03:00",
           "hid": "hockey-20261120-4plhpg",
-          "status": "pending"
+          "status": "lost"
         },
         {
           "sport": "hockey",
@@ -378,14 +378,14 @@
           "odds": 1.46,
           "start_iso": "2026-11-20T04:00+03:00",
           "hid": "hockey-20261120-1u6v6bd",
-          "status": "pending"
+          "status": "won"
         }
       ],
       "total_odds": 2.5,
       "reason": "Три фаворита против слабых или ослабленных соперников: Портленд против Милуоки (1-14), лидер НХЛ Каролина дома и Миннесота против Калгари с разницей −20.",
       "weak_link": "Портленд — без Моранта и Шарпа; Миннесота — без вратаря Густавссона.",
       "published_at": "2026-11-19T13:35+03:00",
-      "status": "pending",
+      "status": "lost",
       "settled_odds": null
     },
     {
@@ -409,7 +409,7 @@
           "odds": 1.25,
           "start_iso": "2026-11-19T21:00+03:00",
           "hid": "cs2-20261119-1q57qgq",
-          "status": "pending"
+          "status": "won"
         },
         {
           "sport": "football",
@@ -436,7 +436,7 @@
           "odds": 1.56,
           "start_iso": "2026-11-20T01:30+03:00",
           "hid": "football-20261120-2xcw9k",
-          "status": "pending"
+          "status": "won"
         },
         {
           "sport": "hockey",
@@ -445,14 +445,14 @@
           "odds": 1.56,
           "start_iso": "2026-11-20T03:00+03:00",
           "hid": "hockey-20261120-1f2t7v7",
-          "status": "pending"
+          "status": "lost"
         }
       ],
       "total_odds": 9.78,
       "reason": "Шесть фаворитов тир-2/3 с явным перевесом по таблице и форме: два матча CCT Europe, два уругвайских фаворита, Васко дома против Интера из зоны вылета и Оттава дома.",
       "weak_link": "Васко да Гама — разница мячей у команд почти равна, а Интер борется за выживание.",
       "published_at": "2026-11-19T16:21+03:00",
-      "status": "pending",
+      "status": "lost",
       "settled_odds": null
     },
     {
