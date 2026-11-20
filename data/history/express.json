@@ -503,7 +503,7 @@
           "odds": 1.28,
           "start_iso": "2026-11-20T17:00+03:00",
           "hid": "dota2-20261120-c5b9lo",
-          "status": "pending"
+          "status": "won"
         },
         {
           "sport": "dota2",
@@ -512,7 +512,7 @@
           "odds": 1.28,
           "start_iso": "2026-11-20T20:00+03:00",
           "hid": "dota2-20261120-hevhpi",
-          "status": "pending"
+          "status": "won"
         }
       ],
       "total_odds": 7.22,
@@ -534,7 +534,7 @@
           "odds": 2.05,
           "start_iso": "2026-11-20T15:30+03:00",
           "hid": "hockey-20261120-goqzsy",
-          "status": "pending"
+          "status": "lost"
         },
         {
           "sport": "hockey",
@@ -543,7 +543,7 @@
           "odds": 1.7,
           "start_iso": "2026-11-20T19:30+03:00",
           "hid": "hockey-20261120-by569",
-          "status": "pending"
+          "status": "won"
         },
         {
           "sport": "football",
@@ -552,7 +552,7 @@
           "odds": 1.48,
           "start_iso": "2026-11-20T20:00+03:00",
           "hid": "football-20261120-1b82yzm",
-          "status": "pending"
+          "status": "lost"
         },
         {
           "sport": "cs2",
@@ -577,7 +577,7 @@
       "reason": "Два хоккейных исхода в основное время (Автомобилист и ЦСКА), лидер Эквадора дома, L&G против Genone и Атлетик дома.",
       "weak_link": "Сибирь — Автомобилист: ставка на победу в основное время при коэффициенте 2.05.",
       "published_at": "2026-11-19T16:21+03:00",
-      "status": "pending",
+      "status": "lost",
       "settled_odds": null
     },
     {
@@ -601,7 +601,7 @@
           "odds": 1.8,
           "start_iso": "2026-11-20T21:00+03:00",
           "hid": "football-20261120-1q9wq2b",
-          "status": "pending"
+          "status": "won"
         },
         {
           "sport": "football",
@@ -641,7 +641,7 @@
           "odds": 1.48,
           "start_iso": "2026-11-20T20:00+03:00",
           "hid": "football-20261120-1b82yzm",
-          "status": "pending"
+          "status": "lost"
         },
         {
           "sport": "football",
@@ -650,7 +650,7 @@
           "odds": 1.8,
           "start_iso": "2026-11-20T21:00+03:00",
           "hid": "football-20261120-1q9wq2b",
-          "status": "pending"
+          "status": "won"
         },
         {
           "sport": "cs2",
@@ -684,7 +684,7 @@
       "reason": "Пять событий в пяти разных турнирах: Эквадор, Норвегия, CS2 тир-3, НБА и КХЛ; везде прогноз на сторону, которую поддерживают модель или таблица.",
       "weak_link": "L&G — Genone: тир-3 CS2, BO3 и низкая уверенность аналитики.",
       "published_at": "2026-11-20T17:26+03:00",
-      "status": "pending",
+      "status": "lost",
       "settled_odds": null
     },
     {
