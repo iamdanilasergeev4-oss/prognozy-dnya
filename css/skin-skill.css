@@ -1,4 +1,5 @@
-/* ===== Вариант по дизайн-системе ui-ux-pro-max =====
+/* ===== Дизайн v3: смесь «по скиллу» и бренда =====
+   Из ui-ux-pro-max — стекло, Fira, статусные цвета, доступность; из бренда — арт и цвета видов спорта.
    Стиль: Glassmorphism (размытие 12–16px, рамка 1px белая с прозрачностью).
    Палитра: тёмный slate + статусный зелёный #22C55E. Шрифты: Fira Code (заголовки, цифры) / Fira Sans (текст).
    Подключается последним и меняет только оформление. */
@@ -31,7 +32,6 @@
   --f-display: "Fira Code", ui-monospace, Menlo, Consolas, monospace;
   --f-body: "Fira Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --f-mono: "Fira Code", ui-monospace, Menlo, Consolas, monospace;
-  --sport: #22c55e !important; /* один акцент вместо семи — цвет вида спорта остаётся только в метках */
 }
 
 body {
@@ -75,19 +75,22 @@ button, a, [role="tab"] { touch-action: manipulation; }
 .pick { transition: border-color .2s ease, background-color .2s ease, transform .2s ease; }
 .pick:hover { transform: none; border-color: rgba(255, 255, 255, .24) !important; background: var(--glass-strong) !important; }
 .pick.lead { background: var(--glass-strong) !important; }
-.pk-bet strong { background: rgba(34, 197, 94, .1); border: 1px solid rgba(34, 197, 94, .35); color: var(--text); }
-.pick:hover .pk-bet strong { background: rgba(34, 197, 94, .16); }
+.pk-bet strong { background: color-mix(in srgb, var(--sport) 12%, transparent); border: 1px solid color-mix(in srgb, var(--sport) 40%, transparent); color: var(--text); }
+.pick:hover .pk-bet strong { background: color-mix(in srgb, var(--sport) 18%, transparent); }
+.pick { border-top: 2px solid color-mix(in srgb, var(--sport) 70%, transparent) !important; }
+.pick.flash, .story.flash { animation: v3-flash 1.6s ease; }
+@keyframes v3-flash { 0%, 100% { outline: 2px solid transparent; outline-offset: 4px; } 20%, 60% { outline: 2px solid var(--sport, var(--accent)); outline-offset: 4px; } }
 
 /* ===== Навигация ===== */
-.logo-mark rect { fill: var(--surface); stroke: rgba(34, 197, 94, .45); }
-.logo-mark path { stroke: var(--accent); }
-.nav a::after, .nav a[aria-current="true"]::after { background: var(--accent) !important; }
+.logo-mark rect { fill: var(--surface); stroke: rgba(255, 79, 176, .45); }
+.logo-mark path { stroke: #ff4fb0; } /* знак бренда остаётся неоновым */
+.nav a::after { background: var(--sport, var(--accent)) !important; }
 .nav a[aria-current="true"] { background: rgba(255, 255, 255, .06); }
 @media (max-width: 860px) {
   .mnav { background: rgba(15, 23, 42, .78); border-top: 1px solid var(--glass-line); backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur); }
   .mnav a { min-height: 48px; }
-  .mnav a[aria-current="true"] { background: rgba(34, 197, 94, .12); }
-  .mnav a[aria-current="true"] svg { color: var(--accent); }
+  .mnav a[aria-current="true"] { background: rgba(255, 255, 255, .08); }
+  .mnav a[aria-current="true"] svg { color: var(--sport, var(--accent)); }
 }
 
 /* ===== Первый экран ===== */
@@ -98,15 +101,13 @@ button, a, [role="tab"] { touch-action: manipulation; }
 .tabs-shell::before { background: linear-gradient(90deg, rgba(27, 35, 54, 1), rgba(27, 35, 54, 0)); }
 .tabs-shell::after { background: linear-gradient(270deg, rgba(27, 35, 54, 1), rgba(27, 35, 54, 0)); }
 .tab { min-height: 44px; }
-.tab-ind { background: rgba(255, 255, 255, .08) !important; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .2) !important; }
-.tab-ind::after { background: var(--accent) !important; }
-.tab .ico { color: var(--c); } /* цвет вида спорта — только как метка */
-.tab[aria-selected="true"] .n { background: var(--accent); color: #0f172a; }
+.tab-ind { background: color-mix(in srgb, var(--sport) 12%, rgba(255, 255, 255, .05)) !important; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--sport) 50%, transparent) !important; }
+.tab .ico { color: var(--c); }
 
 /* ===== Шапка вида спорта ===== */
 .sport-head h2 { text-shadow: none; }
 .sh-ico { background: var(--glass); border-color: var(--glass-line); }
-body[data-sport] .sport-head .sh-ico { border-color: rgba(255, 255, 255, .3) !important; box-shadow: 0 0 0 4px rgba(255, 255, 255, .05) !important; }
+
 
 /* ===== Экспрессы: статусные цвета ===== */
 .xp { --t: #22c55e; }
@@ -118,7 +119,7 @@ body[data-sport] .sport-head .sh-ico { border-color: rgba(255, 255, 255, .3) !im
 /* ===== Разбор дня ===== */
 .story::before { background: var(--c); opacity: .9; }
 .st-sum { background: rgba(15, 23, 42, .55); border: 1px solid var(--glass-line); }
-.sum-head h4 { color: var(--text); font-family: var(--f-display); font-weight: 500; }
+.sum-head h4 { color: var(--c); font-family: var(--f-display); font-weight: 500; }
 .conf-lvl.lvl-high { --lv: #22c55e; }
 .conf-lvl.lvl-mid { --lv: #38bdf8; }
 .conf-lvl.lvl-low { --lv: #f59e0b; }
@@ -146,4 +147,63 @@ body[data-sport] .sport-head .sh-ico { border-color: rgba(255, 255, 255, .3) !im
 
 @media (prefers-reduced-motion: reduce) {
   .pick, .story, .xp, .h-card { animation: none !important; }
+}
+
+/* ===== v3: сводка дня — ближайший матч и точность ===== */
+.bd-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin: 14px 0 4px; }
+.bd-kpis:not(:has(.bd-kpi:not([hidden]))) { display: none; }
+.bd-kpi { display: grid; gap: 2px; padding: 12px 14px; border-radius: var(--r-m, 12px); text-align: left; text-decoration: none; color: var(--text);
+  background: rgba(15, 23, 42, .5); border: 1px solid var(--glass-line); font: inherit; transition: border-color .2s ease, background-color .2s ease; }
+.bd-kpi:hover { border-color: rgba(255, 255, 255, .28); background: rgba(15, 23, 42, .7); }
+.bd-kpi small { color: var(--muted); font-size: 12.5px; }
+.bd-kpi b { font: 600 17px/1.3 var(--f-body); }
+#bd-next { border-left: 3px solid var(--c, var(--accent)); }
+#bd-acc b { font: 600 26px/1.1 var(--f-display); color: var(--won); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+#bd-acc span { color: var(--text-2); font-size: 13px; }
+
+/* ===== v3: фильтр по времени ===== */
+.when { display: flex; flex-wrap: wrap; gap: 8px; margin: -6px 0 16px; }
+.when-chip { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 8px 14px; border-radius: 999px;
+  border: 1px solid var(--glass-line); background: rgba(15, 23, 42, .55); color: var(--text-2); font: 500 14px/1 var(--f-body);
+  backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur); transition: background-color .15s ease, border-color .15s ease, color .15s ease; }
+.when-chip b { font: 600 12px/1 var(--f-mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.when-chip:hover:not(:disabled) { border-color: rgba(255, 255, 255, .3); color: var(--text); }
+.when-chip[aria-pressed="true"] { background: color-mix(in srgb, var(--sport) 18%, rgba(15, 23, 42, .6)); border-color: color-mix(in srgb, var(--sport) 60%, transparent); color: var(--text); }
+.when-chip[aria-pressed="true"] b { color: var(--text); }
+.when-chip:disabled { opacity: .45; cursor: not-allowed; }
+.list[data-when="soon"] .pick:not([data-soon]),
+.list[data-when="today"] .pick:not([data-day="today"]),
+.list[data-when="tomorrow"] .pick:not([data-day="tomorrow"]) { display: none; }
+.when-empty { padding: 22px; text-align: center; color: var(--muted); border: 1px dashed var(--glass-line); border-radius: var(--r-l); }
+.when-empty p { margin: 0 0 12px; }
+
+/* ===== v3: уверенность с пояснением ===== */
+.conf-wrap { position: relative; display: inline-flex; }
+button.conf { min-height: 32px; padding: 4px 8px 4px 4px; margin-left: -4px; border: 0; border-radius: 8px; background: none; font: inherit; font-size: 12.5px; color: var(--muted); }
+button.conf:hover { background: rgba(255, 255, 255, .05); }
+.conf-q { display: inline-grid; place-items: center; width: 16px; height: 16px; border-radius: 50%; border: 1px solid var(--line-3); font: 600 10px/1 var(--f-body); font-style: normal; color: var(--muted); }
+.conf-pop { position: absolute; left: 0; bottom: calc(100% + 8px); z-index: 5; width: min(320px, 78vw); padding: 12px 14px; border-radius: 12px;
+  background: rgba(15, 23, 42, .96); border: 1px solid var(--line-3); color: var(--text-2); font-size: 13px; line-height: 1.5;
+  box-shadow: 0 18px 40px -16px rgba(0, 0, 0, .8); }
+.conf-pop[hidden] { display: none; }
+
+/* ===== v3: ссылка на «Разбор дня» ===== */
+.pk-story { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; margin-top: 12px; padding: 8px 14px; border-radius: 10px;
+  border: 1px solid rgba(155, 123, 255, .4); background: rgba(155, 123, 255, .1); color: var(--text); font: 500 14px/1.2 var(--f-body); }
+.pk-story svg { width: 16px; height: 16px; color: #b9a4ff; }
+.pk-story:hover { background: rgba(155, 123, 255, .18); }
+.pick.open .pk-story { margin-bottom: 4px; }
+
+/* ===== v3: компактные карточки на телефоне ===== */
+@media (max-width: 640px) {
+  .pick .pk-key { display: none; } /* те же факты есть в «Полном разборе» */
+  .pick:not(.open) .pk-reason { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .pk-reason { font-size: 15px; margin-top: 10px; }
+  .pk-teams { font-size: 17px; }
+  .pk-bet strong { font-size: 14.5px; padding: 8px 12px; }
+  .pk-foot { margin-top: 10px; padding-top: 10px; }
+  .when { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-right: calc(-1 * var(--gutter)); padding-right: var(--gutter); }
+  .when::-webkit-scrollbar { display: none; }
+  .when-chip { flex: none; }
+  .pk-story { width: 100%; justify-content: center; }
 }
