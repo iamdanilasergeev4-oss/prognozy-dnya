@@ -10790,10 +10790,32 @@
         }
       ],
       "market_prob": 0.649,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "1:1",
+        "note": null,
+        "sources": [
+          {
+            "title": "ESPN",
+            "url": "https://www.espn.com/soccer/match/_/gameId/401934703"
+          },
+          {
+            "title": "Flashscore — Liga AUF Uruguaya",
+            "url": "https://www.flashscore.com.ua/football/uruguay/liga-auf-uruguaya/results/"
+          }
+        ],
+        "checked_at": "2026-11-20T17:26+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-20T17:26+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-20T17:26+03:00"
     },
     {
       "id": "football-20261119-3yn212",
@@ -10838,10 +10860,32 @@
         }
       ],
       "market_prob": 0.709,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "3:0",
+        "note": null,
+        "sources": [
+          {
+            "title": "ESPN",
+            "url": "https://www.espn.com/soccer/match/_/gameId/401934686"
+          },
+          {
+            "title": "Flashscore — Liga AUF Uruguaya",
+            "url": "https://www.flashscore.com.ua/football/uruguay/liga-auf-uruguaya/results/"
+          }
+        ],
+        "checked_at": "2026-11-20T17:26+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-20T17:26+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-20T17:26+03:00"
     },
     {
       "id": "tennis-20261119-pzf1pr",
@@ -10965,10 +11009,32 @@
         }
       ],
       "market_prob": 0.23,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "3:1",
+        "note": null,
+        "sources": [
+          {
+            "title": "Flashscore — TAURON Liga",
+            "url": "https://www.flashscore.com.ua/volleyball/poland/tauron-liga/results/"
+          },
+          {
+            "title": "Sofascore — волейбол 19.11",
+            "url": "https://www.sofascore.com/volleyball/2026-11-19"
+          }
+        ],
+        "checked_at": "2026-11-20T17:26+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-20T17:26+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-20T17:26+03:00"
     },
     {
       "id": "basketball-20261119-xxqov7",
@@ -11752,10 +11818,32 @@
       ],
       "format": "BO3, онлайн",
       "market_prob": 0.725,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "2:0",
+        "note": null,
+        "sources": [
+          {
+            "title": "cyber.sports.ru — CS2 20.11",
+            "url": "https://cyber.sports.ru/cs/match/2026-11-20/"
+          },
+          {
+            "title": "bo3.gg — результаты",
+            "url": "https://bo3.gg/matches/finished"
+          }
+        ],
+        "checked_at": "2026-11-20T17:26+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-20T17:26+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-20T17:26+03:00"
     },
     {
       "id": "football-20261120-c2i1ew",
@@ -11799,10 +11887,32 @@
         }
       ],
       "market_prob": 0.704,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "1:2",
+        "note": null,
+        "sources": [
+          {
+            "title": "ESPN",
+            "url": "https://www.espn.com/soccer/match/_/gameId/401877548"
+          },
+          {
+            "title": "Flashscore — J1 League",
+            "url": "https://www.flashscore.com.ua/football/japan/j1-league/results/"
+          }
+        ],
+        "checked_at": "2026-11-20T17:26+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-20T17:26+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-20T17:26+03:00"
     },
     {
       "id": "football-20261120-ejitpv",
@@ -11846,10 +11956,32 @@
         }
       ],
       "market_prob": 0.667,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "0:1",
+        "note": null,
+        "sources": [
+          {
+            "title": "ESPN",
+            "url": "https://www.espn.com/soccer/match/_/gameId/401877553"
+          },
+          {
+            "title": "Flashscore — J1 League",
+            "url": "https://www.flashscore.com.ua/football/japan/j1-league/results/"
+          }
+        ],
+        "checked_at": "2026-11-20T17:26+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-20T17:26+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-20T17:26+03:00"
     },
     {
       "id": "football-20261120-mw7mdt",
@@ -11893,10 +12025,32 @@
         }
       ],
       "market_prob": 0.667,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "1:1",
+        "note": null,
+        "sources": [
+          {
+            "title": "ESPN",
+            "url": "https://www.espn.com/soccer/match/_/gameId/401877534"
+          },
+          {
+            "title": "Flashscore — J1 League",
+            "url": "https://www.flashscore.com.ua/football/japan/j1-league/results/"
+          }
+        ],
+        "checked_at": "2026-11-20T17:26+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-20T17:26+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-20T17:26+03:00"
     },
     {
       "id": "dota2-20261120-1f7efco",
@@ -12461,6 +12615,56 @@
       "status_log": []
     },
     {
+      "id": "cs2-20261120-1auakgs",
+      "sport": "cs2",
+      "sport_name": "CS2",
+      "home": "Phantom",
+      "away": "WBT",
+      "event_date": "2026-11-20",
+      "start_iso": "2026-11-20T21:10+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-20T17:26+03:00",
+      "model_version": "v3",
+      "tournament": "NODWIN Clutch Series 14, плей-офф, тир-3",
+      "match": "Phantom — WBT",
+      "start": "20.11, 21:10 МСК",
+      "bet": "П2 (победа WBT)",
+      "odds": "2.50",
+      "confidence": 2,
+      "reason": "WBT на этой неделе обыграл MOUZ NXT 2:1 и Ex-ENCE 2:0, а Phantom проиграл обе серии на RUSH Brno (Metizport 1:2, BBL 1:2) и выигрывал только у слабых соперников. Наша оценка WBT 45% против 40% в линии 2.50 — перевес +5 п.п., но данных мало (тир-3).",
+      "facts": [
+        "WBT: 2:1 с MOUZ NXT (19.11) и 2:0 с Ex-ENCE (17.11) в European Pro League 11 — cyber.sports.ru",
+        "Phantom: 1:2 с Metizport (18.11) и 1:2 с BBL (17.11) на RUSH Brno; 2:1 с Ex Zero Tenacity, 2:0 с Illyrians и 2:0 с Drama в NODWIN Clutch 14 — cyber.sports.ru",
+        "Формат — BO3, очных встреч не было (cyber.sports.ru); коэффициенты 1.48 / 2.50 (bo3.gg, cyber.sports.ru)",
+        "У WBT сегодня днём была ещё одна серия против Ex-INOX (bo3.gg, cyber.sports.ru)"
+      ],
+      "against": [
+        "Линия заметно за Phantom",
+        "У WBT это вторая серия за день — возможна усталость"
+      ],
+      "uncertainty": "Нет статистики по картам и вето; выборка небольшая, тир-3.",
+      "data_quality": {
+        "level": "low",
+        "note": "только результаты серий (cyber.sports.ru, bo3.gg), без карт и рейтингов"
+      },
+      "sources": [
+        {
+          "title": "cyber.sports.ru — Phantom — WBT",
+          "url": "https://cyber.sports.ru/cs/match/phantom-wbt-2026-11-20/"
+        },
+        {
+          "title": "bo3.gg — матчи CS2",
+          "url": "https://bo3.gg/matches/current"
+        }
+      ],
+      "format": "BO3, онлайн (киберспорт)",
+      "market_prob": 0.4,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
       "id": "football-20261120-pmen04",
       "sport": "football",
       "sport_name": "Футбол",
@@ -12659,6 +12863,64 @@
       "status_log": []
     },
     {
+      "id": "tennis-20261120-1ju6qi1",
+      "sport": "tennis",
+      "sport_name": "Теннис",
+      "home": "Даниил Медведев",
+      "away": "Фрэнсис Тиафо",
+      "event_date": "2026-11-20",
+      "start_iso": "2026-11-20T22:30+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-20T17:26+03:00",
+      "model_version": "v3",
+      "tournament": "ATP Finals (Турин), группа B, 3-й тур, хард (в помещении), тир-1",
+      "match": "Даниил Медведев — Фрэнсис Тиафо",
+      "start": "20.11, 22:30 МСК",
+      "bet": "П1 (победа Медведева)",
+      "odds": "1.40",
+      "confidence": 3,
+      "model_prob": {
+        "value": 0.62,
+        "source": "Tennis Abstract hElo"
+      },
+      "reason": "Модель Tennis Abstract (hElo) даёт Медведеву около 62%, рынок без маржи — около 70%; наша оценка 66%, а линия 1.40 закладывает 71%. Перевеса над линией нет: это прогноз на более вероятный исход, а не ставка с перевесом.",
+      "facts": [
+        "В группе B у обоих по 1 победе и 1 поражению: Медведев обыграл Коболли 7:6, 6:3 (16.11) и уступил Алькарасу 2:6, 4:6 (18.11); Тиафо уступил Алькарасу 2:6, 2:6 (16.11) и обыграл Коболли 7:6, 6:0 (18.11) — ESPN, Flashscore",
+        "Победитель матча выходит в полуфинал (Алькарас 3-0 уже первый в группе) — таблица Flashscore на 20.11",
+        "Очные встречи: Тиафо 3:0 на US Open (06.09.2026), Медведев 2:0 в Брисбене (07.01.2026), Тиафо 2:1 на Кубке Лейвера (21.09.2024) — Flashscore",
+        "Медведев — 5-й в рейтинге ATP, Тиафо — 8-й (Flashscore)"
+      ],
+      "against": [
+        "Тиафо выиграл последнюю очную встречу 3:0 на US Open 2026",
+        "Тиафо разгромил Коболли 6:0 во втором сете — свежая форма в Турине"
+      ],
+      "uncertainty": "Нет статистики подачи/приёма за турнир; H2H противоречивые (2:1 в пользу Тиафо за 2 года).",
+      "data_quality": {
+        "level": "medium",
+        "note": "Elo — Tennis Abstract (16.11), результаты — ESPN и Flashscore; статистики розыгрышей нет"
+      },
+      "sources": [
+        {
+          "title": "Flashscore — Медведев — Тиафо",
+          "url": "https://www.flashscore.com.ua/match/tennis/medvedev-daniil-O8qG0Nhb/tiafoe-frances-AHDLJaph/?mid=Gt7o64lQ"
+        },
+        {
+          "title": "ESPN — ATP Finals",
+          "url": "https://www.espn.com/tennis/scoreboard"
+        },
+        {
+          "title": "Tennis Abstract — ATP Elo",
+          "url": "https://www.tennisabstract.com/reports/atp_elo_ratings.html"
+        }
+      ],
+      "format": "best of 3, хард в помещении",
+      "market_prob": 0.714,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
       "id": "football-20261120-d2x0vn",
       "sport": "football",
       "sport_name": "Футбол",
@@ -12700,6 +12962,112 @@
         }
       ],
       "market_prob": 0.676,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "basketball-20261121-14g93jq",
+      "sport": "basketball",
+      "sport_name": "Баскетбол",
+      "home": "Атланта",
+      "away": "Шарлотт",
+      "event_date": "2026-11-21",
+      "start_iso": "2026-11-21T03:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-20T17:26+03:00",
+      "model_version": "v3",
+      "tournament": "НБА, регулярный сезон, тир-1",
+      "match": "Атланта — Шарлотт",
+      "start": "21.11, 03:00 МСК",
+      "bet": "П1 (победа Атланты, с ОТ)",
+      "odds": "1.43",
+      "confidence": 3,
+      "model_prob": {
+        "value": 0.749,
+        "source": "ESPN BPI"
+      },
+      "reason": "BPI даёт Атланте 75%, рынок без маржи — около 67%; усреднение даёт 71% против 70% в линии 1.43. Перевеса над линией практически нет — прогноз на исход.",
+      "facts": [
+        "Атланта 9-6, Шарлотт 4-10 (ESPN)",
+        "Последние 5: Атланта 3-2, Шарлотт 1-4 (ESPN)",
+        "Не сыграют (ESPN injury report): у Шарлотт — Кон Кнюппель, Деннис Шрёдер, Грэйсон Аллен, Грант Уильямс; у Атланты — СиДжей Макколлум, Джок Лэндейл, Аса Ньюэлл, Мухамед Гей"
+      ],
+      "against": [
+        "У Атланты тоже нет Макколлума и ещё трёх игроков",
+        "BPI исторически переоценивал фаворитов (по истории сайта)"
+      ],
+      "uncertainty": "Финальные injury reports выходят за ~30 минут до игры.",
+      "data_quality": {
+        "level": "medium",
+        "note": "ESPN summary (BPI, травмы, линия); второй независимой модели нет"
+      },
+      "sources": [
+        {
+          "title": "ESPN — Hornets @ Hawks",
+          "url": "https://www.espn.com/nba/game/_/gameId/401909305"
+        },
+        {
+          "title": "ESPN API — summary",
+          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=401909305"
+        }
+      ],
+      "format": "4 четверти, с ОТ",
+      "market_prob": 0.699,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "basketball-20261121-1r8ndu2",
+      "sport": "basketball",
+      "sport_name": "Баскетбол",
+      "home": "Детройт",
+      "away": "Торонто",
+      "event_date": "2026-11-21",
+      "start_iso": "2026-11-21T03:30+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-20T17:26+03:00",
+      "model_version": "v3",
+      "tournament": "НБА, регулярный сезон, тир-1",
+      "match": "Детройт — Торонто",
+      "start": "21.11, 03:30 МСК",
+      "bet": "П1 (победа Детройта, с ОТ)",
+      "odds": "1.34",
+      "confidence": 4,
+      "model_prob": {
+        "value": 0.705,
+        "source": "ESPN BPI"
+      },
+      "reason": "Детройт 10-4 дома против Торонто без Кавая Леонарда и Ар Джея Барретта, у «Рэпторс» пять поражений подряд. BPI 70.5%, рынок без маржи ~72%: наша оценка 72% против 75% в линии 1.34 — перевеса над линией нет.",
+      "facts": [
+        "Детройт 10-4, Торонто 5-10 (ESPN)",
+        "Последние 5: Детройт 4-1, Торонто 0-5 (ESPN)",
+        "Не сыграют у Торонто: Кавай Леонард, Ар Джей Барретт, Коллин Мюррей-Бойлз, Нейт Биттл; у Детройта — Тауриан Принс, Рональд Холланд II, Эбука Окорие (ESPN)"
+      ],
+      "against": [
+        "Линия уже учитывает потери Торонто",
+        "BPI ниже рынка"
+      ],
+      "uncertainty": "Возможные поздние изменения статусов игроков.",
+      "data_quality": {
+        "level": "medium",
+        "note": "ESPN (BPI, травмы, форма, линия)"
+      },
+      "sources": [
+        {
+          "title": "ESPN — Raptors @ Pistons",
+          "url": "https://www.espn.com/nba/game/_/gameId/401909308"
+        },
+        {
+          "title": "ESPN API — summary",
+          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=401909308"
+        }
+      ],
+      "format": "4 четверти, с ОТ",
+      "market_prob": 0.746,
       "status": "pending",
       "result": null,
       "versions": [],
@@ -12748,6 +13116,163 @@
         }
       ],
       "market_prob": 0.709,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "dota2-20261121-3l1df6",
+      "sport": "dota2",
+      "sport_name": "Dota 2",
+      "home": "Astra Invicta",
+      "away": "Aurora",
+      "event_date": "2026-11-21",
+      "start_iso": "2026-11-21T14:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-20T17:26+03:00",
+      "model_version": "v3",
+      "tournament": "BLAST Slam 9, групповой этап, тир-1",
+      "match": "Astra Invicta — Aurora",
+      "start": "21.11, 14:00 МСК",
+      "bet": "П2 (победа Aurora)",
+      "odds": "1.42",
+      "confidence": 2,
+      "reason": "Aurora — команда с более высоким рейтингом OpenDota и опытом топ-турниров; линия 1.42 закладывает 70%. Наша оценка 66% из-за свежего патча 7.42 (вышел 18.11): перевеса над линией нет.",
+      "facts": [
+        "Патч 7.42 вышел 18.11.2026 — OpenDota /constants/patch",
+        "Aurora Gaming: рейтинг OpenDota 1406.7; в 1win Essence III — 2:0 с Do Konca (15.11), 2:1 с LEGION (16.11), 0:2 со Spirit (17.11), 1:2 с PARIVISION (18.11) — OpenDota",
+        "Astra Invicta уступила Liquid 0:2 на PARI Universe (29.10) — cyber.sports.ru",
+        "Коэффициенты 2.90 / 1.42 (cyber.sports.ru)"
+      ],
+      "against": [
+        "Новый патч 7.42 — опыт прошлых матчей переносится хуже",
+        "Aurora проиграла 2 последние серии"
+      ],
+      "uncertainty": "Мало данных об Astra Invicta; формат серии в источниках не указан явно.",
+      "data_quality": {
+        "level": "low",
+        "note": "OpenDota и cyber.sports.ru; по Astra Invicta почти нет данных"
+      },
+      "sources": [
+        {
+          "title": "cyber.sports.ru — Dota 2, 21.11",
+          "url": "https://cyber.sports.ru/dota2/match/2026-11-21/"
+        },
+        {
+          "title": "OpenDota — Aurora Gaming",
+          "url": "https://www.opendota.com/teams/9467224"
+        },
+        {
+          "title": "OpenDota — патчи",
+          "url": "https://api.opendota.com/api/constants/patch"
+        }
+      ],
+      "format": "BO3 (по формату группы), онлайн-трансляция",
+      "market_prob": 0.704,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "football-20261121-15g1tvt",
+      "sport": "football",
+      "sport_name": "Футбол",
+      "home": "Лацио",
+      "away": "Лечче",
+      "event_date": "2026-11-21",
+      "start_iso": "2026-11-21T17:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-20T17:26+03:00",
+      "model_version": "v3",
+      "tournament": "Серия А (Италия), тир-1",
+      "match": "Лацио — Лечче",
+      "start": "21.11, 17:00 МСК",
+      "bet": "П1 (победа Лацио)",
+      "odds": "1.36",
+      "confidence": 4,
+      "model_prob": {
+        "value": 0.7,
+        "source": "ClubElo"
+      },
+      "reason": "Лацио без поражений (9-2-0), Лечче — 3-1-7 и в зоне вылета по ClubElo. ClubElo 70%, рынок без маржи 68%: наша оценка 69% против 74% в линии 1.36 — перевеса нет.",
+      "facts": [
+        "Лацио: 9 побед, 2 ничьи, 0 поражений (ESPN)",
+        "Лечче: 3-1-7 (ESPN)",
+        "Линия ESPN: −280 / +380 / +650"
+      ],
+      "against": [
+        "Линия уже ниже 1.40 — фаворит переоценён рынком относительно модели",
+        "Лечче, борясь за выживание, может играть от обороны"
+      ],
+      "uncertainty": "Нет данных о составах.",
+      "data_quality": {
+        "level": "medium",
+        "note": "ESPN + ClubElo"
+      },
+      "sources": [
+        {
+          "title": "ESPN — Lazio vs Lecce",
+          "url": "https://www.espn.com/soccer/match/_/gameId/401874981"
+        },
+        {
+          "title": "ClubElo — Lazio",
+          "url": "http://clubelo.com/Lazio"
+        }
+      ],
+      "format": "90 минут",
+      "market_prob": 0.735,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "hockey-20261121-qc77qp",
+      "sport": "hockey",
+      "sport_name": "Хоккей",
+      "home": "Сочи",
+      "away": "СКА",
+      "event_date": "2026-11-21",
+      "start_iso": "2026-11-21T17:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-20T17:26+03:00",
+      "model_version": "v3",
+      "tournament": "КХЛ, регулярный чемпионат, тир-1",
+      "match": "Сочи — СКА",
+      "start": "21.11, 17:00 МСК",
+      "bet": "П2 (победа СКА в основное время)",
+      "odds": "1.61",
+      "confidence": 3,
+      "reason": "Сочи — 10-е место на Западе с разницей шайб 47:94 и 5 победами в основное время за 28 игр; СКА — 9-е место, 78:81. Наша оценка победы СКА в основное время 57% против 62% в линии 1.61 — перевеса над линией нет (в хоккее ничья в основное время частая).",
+      "facts": [
+        "Сочи: 28 игр, 5 побед в основное время, 19 поражений, шайбы 47:94, 17 очков (Flashscore, 20.11)",
+        "СКА: 27 игр, 10 побед в основное время, 12 поражений, шайбы 78:81, 28 очков (Flashscore)",
+        "Очные: 12.09.26 Сочи — СКА 0:1; 16.01.26 СКА — Сочи 1:2; 28.12.25 Сочи — СКА 8:4 (Flashscore)",
+        "Коэффициенты 1Х2: 5.11 / 4.70 / 1.61 (Flashscore)"
+      ],
+      "against": [
+        "СКА выиграл лишь 1 из последних 4 (форма П П П В, Flashscore)",
+        "Ничья в основное время в КХЛ — около каждого пятого матча"
+      ],
+      "uncertainty": "Нет подтверждённых вратарей и данных о травмах.",
+      "data_quality": {
+        "level": "medium",
+        "note": "Flashscore (таблица, очные, линия); статистики 5 на 5 нет"
+      },
+      "sources": [
+        {
+          "title": "Flashscore — Сочи — СКА",
+          "url": "https://www.flashscore.com.ua/match/hockey/ska-st-petersburg-zVJwe4ER/sochi-zu1IGfCr/?mid=bsIwmUHj"
+        },
+        {
+          "title": "Flashscore — КХЛ",
+          "url": "https://www.flashscore.com.ua/hockey/russia/khl/"
+        }
+      ],
+      "format": "3 периода; ставка — основное время",
+      "market_prob": 0.621,
       "status": "pending",
       "result": null,
       "versions": [],
@@ -12852,6 +13377,113 @@
         }
       ],
       "market_prob": 0.556,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "football-20261121-1quv8yz",
+      "sport": "football",
+      "sport_name": "Футбол",
+      "home": "Ницца",
+      "away": "ПСЖ",
+      "event_date": "2026-11-21",
+      "start_iso": "2026-11-21T19:15+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-20T17:26+03:00",
+      "model_version": "v3",
+      "tournament": "Лига 1 (Франция), тир-1",
+      "match": "Ницца — ПСЖ",
+      "start": "21.11, 19:15 МСК",
+      "bet": "П2 (победа ПСЖ)",
+      "odds": "1.45",
+      "confidence": 4,
+      "model_prob": {
+        "value": 0.72,
+        "source": "ClubElo"
+      },
+      "reason": "ClubElo даёт ПСЖ 72%, рынок без маржи ~65%; наша оценка 69% против 69% в линии 1.45. Перевеса над линией нет — прогноз на более вероятный исход.",
+      "facts": [
+        "ПСЖ: 7 побед, 2 ничьи, 1 поражение в 10 турах (ESPN)",
+        "Ницца: 5-2-3 (ESPN)",
+        "Линия ESPN: +500 / +400 / −220, тотал 3.5"
+      ],
+      "against": [
+        "Ницца дома набирает очки (5 побед в 10 турах)",
+        "Рынок оценивает ПСЖ ниже, чем Elo"
+      ],
+      "uncertainty": "Нет подтверждённых составов и сведений о травмах на момент сбора.",
+      "data_quality": {
+        "level": "medium",
+        "note": "ESPN (таблица, линия) + ClubElo; составов нет"
+      },
+      "sources": [
+        {
+          "title": "ESPN — Nice vs PSG",
+          "url": "https://www.espn.com/soccer/match/_/gameId/401876398"
+        },
+        {
+          "title": "ClubElo — Paris SG",
+          "url": "http://clubelo.com/ParisSG"
+        }
+      ],
+      "format": "90 минут",
+      "market_prob": 0.69,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "football-20261121-4bwv2l",
+      "sport": "football",
+      "sport_name": "Футбол",
+      "home": "Ньюкасл",
+      "away": "Арсенал",
+      "event_date": "2026-11-21",
+      "start_iso": "2026-11-21T20:30+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-20T17:26+03:00",
+      "model_version": "v3",
+      "tournament": "Премьер-лига (Англия), тир-1",
+      "match": "Ньюкасл — Арсенал",
+      "start": "21.11, 20:30 МСК",
+      "bet": "П2 (победа Арсенала)",
+      "odds": "1.57",
+      "confidence": 3,
+      "model_prob": {
+        "value": 0.56,
+        "source": "ClubElo"
+      },
+      "reason": "Арсенал лидирует (9 побед в 10 турах), но выезд в Ньюкасл тяжёлый: ClubElo — 56%, рынок без маржи — 61%. Наша оценка 58% против 64% в линии 1.57 — перевеса над линией нет.",
+      "facts": [
+        "Арсенал: 9-0-1 в АПЛ, единственное поражение — 0:3 у Брайтона (19.09) — ESPN, ClubElo",
+        "Ньюкасл: 3-3-4 (ESPN)",
+        "Последние матчи Арсенала: 1:0 с Халлом (07.11), 2:1 у Сандерленда (04.11), 1:0 у Ливерпуля (01.11) — ClubElo",
+        "Линия ESPN: +450 / +330 / −175"
+      ],
+      "against": [
+        "Три последние победы Арсенала — с разницей в один мяч",
+        "Через три дня у Арсенала матч ЛЧ с Дортмундом — возможна ротация"
+      ],
+      "uncertainty": "Составы и травмы на момент сбора не подтверждены.",
+      "data_quality": {
+        "level": "medium",
+        "note": "ESPN + ClubElo"
+      },
+      "sources": [
+        {
+          "title": "ESPN — Newcastle vs Arsenal",
+          "url": "https://www.espn.com/soccer/match/_/gameId/401879232"
+        },
+        {
+          "title": "ClubElo — Arsenal",
+          "url": "http://clubelo.com/Arsenal"
+        }
+      ],
+      "format": "90 минут",
+      "market_prob": 0.637,
       "status": "pending",
       "result": null,
       "versions": [],
