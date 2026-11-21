@@ -277,6 +277,12 @@ button { font: inherit; color: inherit; }
 .panel.entering .sport-head h2 { animation: title-in .6s var(--ease-out) both; }
 @keyframes title-in { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: none; } }
 .sport-head p { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
+.sport-schedule { margin: 24px 0; }
+.sport-schedule h3 { margin: 0 0 14px; }
+.sport-schedule ul { display: grid; gap: 10px; padding: 0; margin: 0; list-style: none; }
+.schedule-match { display: grid; gap: 9px; padding: 14px 16px; border: 1px solid color-mix(in srgb, var(--text) 15%, transparent); border-radius: 14px; }
+.schedule-meta { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 14px; color: var(--muted); font-size: 13px; }
+.schedule-match .pk-story { margin: 0; }
 
 .note { margin: 0 0 16px; color: var(--muted); font-size: 14px; max-width: 70ch; }
 .note.warn { color: var(--warn); }

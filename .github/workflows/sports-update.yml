@@ -1,0 +1,75 @@
+name: Сверка спортивных событий
+on:
+  workflow_dispatch:
+  # Расписание подготовлено. Раскомментировать после согласования запуска.
+  # schedule:
+  #   - cron: "0 4,14 * * *" # 07:00 и 17:00 МСК (UTC+3)
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sports-update-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Проверить код и собрать пробные данные
+        run: |
+          node --test tests/*.test.mjs
+          node scripts/update-sports.mjs --preview
+      - name: Сохранить отчёт и пробные файлы
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sports-update
+          path: .sports-update/candidate/
+          include-hidden-files: true
+
+  publish:
+    needs: check
+    if: github.event_name == 'schedule' && github.ref == 'refs/heads/main' && vars.SPORTS_AUTO_PUBLISH == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: sports-production
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.SPORTS_PUBLISH_TOKEN || github.token }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - uses: actions/download-artifact@v4
+        with:
+          name: sports-update
+          path: .sports-update/candidate/
+      - name: Сохранить проверенные данные одним коммитом
+        env:
+          PREDICTIONS_PUBLISH_APPROVED: "true"
+          PUBLISH_AUTHOR: ${{ vars.SPORTS_PUBLISH_AUTHOR || 'github-actions[bot]' }}
+          PUBLISH_EMAIL: ${{ vars.SPORTS_PUBLISH_EMAIL || '41898282+github-actions[bot]@users.noreply.github.com' }}
+        run: |
+          git fetch origin main
+          if [[ "$(git rev-parse FETCH_HEAD)" != "$(git rev-parse HEAD)" ]]; then
+            echo "::error::В main появились изменения во время сбора данных"
+            exit 1
+          fi
+          node scripts/update-sports.mjs --apply
+          git add -- data/predictions.json data/history/
+          git diff --cached --check
+          if git diff --cached --quiet; then exit 0; fi
+          git -c user.name="$PUBLISH_AUTHOR" -c user.email="$PUBLISH_EMAIL" commit -m "Обновить спортивные события"
+          git push origin HEAD:refs/heads/main
+      - name: Сверить опубликованные файлы Vercel
+        run: node scripts/update-sports.mjs --verify-deployment

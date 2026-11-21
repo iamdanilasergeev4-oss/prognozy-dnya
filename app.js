@@ -121,8 +121,13 @@
     try { return new URL(url).hostname.replace(/^www\./, ""); } catch { return "источник"; }
   }
   const hasAnalysis = () => Array.isArray(data?.analysis) && data.analysis.length > 0;
-  const hasExpress = () => Array.isArray(data?.express) && data.express.length > 0;
+  const hasExpress = () => Array.isArray(data?.express) && (data.express.length > 0 || data.source === "sports-update");
   const allPicks = () => data.sports.flatMap((s) => (s.picks || []).map((p, i) => ({ p, i, sport: s.id, name: s.name })));
+  const pickCount = (sport) => sport.picks?.length ?? 0;
+  const firstForecastSport = () => (data.sports.find(pickCount) || data.sports[0]).id;
+  const countLabel = (n) => plural(n, "прогноз", "прогноза", "прогнозов");
+  const ru = (value, sport) => window.SportsRu?.text(value, sport) ?? value;
+  const ruTournament = (value, sport) => window.SportsRu?.tournament(value, sport) ?? value;
   function splitTeams(match) {
     const parts = String(match || "").split(/\s+[—–-]\s+|\s+vs\.?\s+/i);
     return parts.length === 2 ? parts.map((x) => x.trim()) : null;
@@ -139,12 +144,16 @@
   }
   /* Прогноз ↔ материал «Разбора дня» по совпадению обеих команд */
   const teamKey = (t) => String(t || "").toLowerCase().replace(/ё/g, "е").replace(/[^\p{L}\p{N}]+/gu, "");
-  function storyIndexFor(match) {
+  function storyIndexFor(match, sport, start) {
     if (!hasAnalysis()) return -1;
     const t = splitTeams(match);
     if (!t) return -1;
     const k = t.map(teamKey).sort().join("|");
-    return data.analysis.findIndex((a) => { const u = splitTeams(a.match); return u && u.map(teamKey).sort().join("|") === k; });
+    return data.analysis.findIndex((a) => {
+      const u = splitTeams(a.match);
+      return u && u.map(teamKey).sort().join("|") === k &&
+        (!a.sport_id || a.sport_id === sport && Math.abs(Date.parse(a.start_iso) - Date.parse(start)) <= 5 * 60e3);
+    });
   }
 
   /* ---------- Шапка ---------- */
@@ -309,9 +318,9 @@
 
   function timelineData() {
     const now = Date.now();
-    const rows = data.sports.filter((s) => (s.picks || []).length);
+    const rows = data.sports.filter(pickCount);
     const items = [];
-    rows.forEach((s, lane) => (s.picks || []).forEach((p, i) => {
+    rows.forEach((s, lane) => s.picks.forEach((p, i) => {
       const st = startOf(p);
       if (!isNaN(st.ms)) items.push({ p, i, sport: s.id, name: s.name, lane, ms: st.ms, exact: st.exact, conf: Math.max(1, Math.min(5, Number(p.confidence) || 3)) });
     }));
@@ -383,24 +392,24 @@
   let timelineGroups = new Map();
 
   function renderBoard() {
-    const picks = allPicks();
-    const total = picks.length;
+    const cards = allPicks();
+    const total = cards.length;
     const hosts = new Set();
-    data.sports.forEach((s) => (s.picks || []).forEach((p) => (p.sources || []).forEach((x) => hosts.add(host(x.url)))));
+    cards.forEach(({ p }) => (p.sources || []).forEach((x) => hosts.add(host(x.url))));
     (data.analysis || []).forEach((a) => (a.sources || []).forEach((x) => hosts.add(host(x.url))));
-    const withWhy = picks.filter(({ p }) => Array.isArray(p.facts) && p.facts.length).length;
-    const ms = picks.map(({ p }) => startOf(p).ms).filter((t) => !isNaN(t));
+    const withWhy = cards.filter(({ p }) => Array.isArray(p.facts) && p.facts.length).length;
+    const ms = cards.map(({ p }) => startOf(p).ms).filter((t) => !isNaN(t));
     const days = [...new Set(ms.map(dayKey))].sort();
     const range = days.length > 1
       ? (() => { const a = mskD(Date.parse(days[0])), b = mskD(Date.parse(days[days.length - 1])); return a.getUTCMonth() === b.getUTCMonth() ? `${a.getUTCDate()}–${b.getUTCDate()} ${MONTHS_FULL[b.getUTCMonth()]}` : `${dayShort(Date.parse(days[0]))} – ${dayShort(Date.parse(days[days.length - 1]))}`; })()
       : days.length ? (() => { const a = mskD(Date.parse(days[0])); return `${a.getUTCDate()} ${MONTHS_FULL[a.getUTCMonth()]}`; })() : "";
-    const sports = data.sports.filter((s) => (s.picks || []).length);
+    const sports = data.sports.filter(pickCount);
     const dist = sports.map((s) => {
-      const n = s.picks.length;
-      return `<button type="button" class="bd-seg" data-id="${esc(s.id)}" style="--c:${colorOf(s.id)};flex-grow:${n}" aria-label="${esc(s.name)}: ${n} ${plural(n, "прогноз", "прогноза", "прогнозов")}"></button>`;
+      const n = pickCount(s);
+      return `<button type="button" class="bd-seg" data-id="${esc(s.id)}" style="--c:${colorOf(s.id)};flex-grow:${n}" aria-label="${esc(s.name)}: ${n} ${countLabel(n)}"></button>`;
     }).join("");
     const legend = data.sports.map((s) => {
-      const n = (s.picks || []).length;
+      const n = pickCount(s);
       return `<button type="button" class="bd-leg${n ? "" : " zero"}" data-id="${esc(s.id)}" style="--c:${colorOf(s.id)}"${n ? "" : " disabled"}>
         ${icon(s.id)}<span>${esc(s.name)}</span><b>${n}</b></button>`;
     }).join("");
@@ -408,7 +417,7 @@
       <div class="bd-top">
         <div class="bd-total">
           <b class="bd-num">${total}</b>
-          <span>${plural(total, "прогноз", "прогноза", "прогнозов")}${range ? `<br>на ${esc(range)}` : ""}</span>
+          <span>${countLabel(total)}${range ? `<br>на ${esc(range)}` : ""}</span>
         </div>
         ${freshnessHTML()}
       </div>
@@ -417,14 +426,14 @@
         <a class="bd-kpi" id="bd-acc" href="#history" hidden></a>
       </div>
       <div class="bd-chart">
-        <div class="bd-title"><span>Когда начинаются матчи</span><small>чем крупнее точка, тем выше уверенность</small></div>
+        <div class="bd-title"><span>Когда начинаются матчи</span>${data.source === "sports-update" ? "" : "<small>чем крупнее точка, тем выше уверенность</small>"}</div>
         <div id="bd-tl"></div>
       </div>
-      <div class="bd-dist" role="group" aria-label="Прогнозы по видам спорта">
+      <div class="bd-dist" role="group" aria-label="Сводка по видам спорта">
         <div class="bd-bar">${dist}</div>
         <div class="bd-legend">${legend}</div>
       </div>
-      <p class="bd-cap">${withWhy} из ${total} — с разбором «за» и «против» · ${hosts.size} ${plural(hosts.size, "источник", "источника", "источников")}</p>`;
+      ${total ? `<p class="bd-cap">${withWhy} из ${total} — с разбором «за» и «против» · ${hosts.size} ${plural(hosts.size, "источник", "источника", "источников")}</p>` : ""}`;
     board.appendChild(tip);
     drawTimeline();
     board.querySelectorAll(".bd-seg, .bd-leg").forEach((b) => {
@@ -445,7 +454,7 @@
     const nb = $("#bd-next");
     if (nb && next) {
       const rel = inRel(next.s.ms, now) || `${dayRel(next.s.ms, now)}, ${hhmm(next.s.ms)}`;
-      nb.innerHTML = `<small>Ближайший матч ${esc(rel)}</small><b>${esc(next.p.match)}</b>`;
+      nb.innerHTML = `<small>Ближайший матч с прогнозом ${esc(rel)}</small><b>${esc(ru(next.p.match, next.sport))}</b>`;
       nb.style.setProperty("--c", colorOf(next.sport));
       nb.hidden = false;
       nb.onclick = () => {
@@ -477,7 +486,10 @@
     const box = $("#bd-tl");
     if (!box) return;
     const td = timelineData();
-    if (!td) { box.innerHTML = `<div class="bd-empty">Время начала матчей пока не указано</div>`; return; }
+    if (!td) {
+      box.innerHTML = `<div class="bd-empty">${allPicks().length ? "Время начала матчей пока не указано" : "Готовых прогнозов пока нет"}</div>`;
+      return;
+    }
     const W = Math.max(260, Math.round(box.clientWidth || 480));
     lastTlW = W;
     box.innerHTML = timelineSVG(td, W);
@@ -497,9 +509,9 @@
     if (!list.length) return;
     const a = list[0];
     tip.innerHTML = `<div class="tt-h" style="--c:${colorOf(a.sport)}">${icon(a.sport)}<span>${esc(a.name)} · ${esc(dayRel(a.ms))}${a.exact ? ", " + hhmm(a.ms) : ""}</span></div>` +
-      list.slice(0, 6).map((it) => `<div class="tt-r"><b>${esc(it.p.match)}</b><span>${esc(it.p.bet)} · уверенность ${esc(CONF_LABEL[it.conf])}</span></div>`).join("") +
+      list.slice(0, 6).map((it) => `<div class="tt-r"><b>${esc(ru(it.p.match, it.sport))}</b><span>${esc(ru(it.p.bet, it.sport))} · уверенность ${esc(CONF_LABEL[it.conf])}</span></div>`).join("") +
       (list.length > 6 ? `<div class="tt-more">и ещё ${list.length - 6}</div>` : "") +
-      `<div class="tt-go">Нажмите, чтобы перейти к прогнозу</div>`;
+      `<div class="tt-go">Нажмите, чтобы перейти к матчу</div>`;
     tip.hidden = false;
     const br = board.getBoundingClientRect(), dr = g.querySelector(".dot").getBoundingClientRect();
     const tw = tip.offsetWidth, th = tip.offsetHeight;
@@ -530,7 +542,11 @@
   const panel = $("#panel");
 
   function tabList() {
-    const list = data.sports.map((s) => ({ id: s.id, name: s.name, n: (s.picks || []).length }));
+    const list = data.sports.map((s) => {
+      const confirmed = s.events?.filter((event) => Date.parse(event.start_iso) > Date.now()).length || 0;
+      const count = pickCount(s);
+      return { id: s.id, name: s.name, n: count || confirmed, scheduled: !count && confirmed > 0 };
+    });
     if (hasExpress()) list.push({ id: "express", name: "Экспрессы", n: data.express.length });
     if (hasAnalysis()) list.push({ id: "analysis", name: "Разбор дня", n: data.analysis.length });
     return list;
@@ -540,7 +556,8 @@
     tabsEl.querySelectorAll(".tab").forEach((t) => t.remove());
     const html = tabList().map((t) => `
       <button class="tab${t.n ? "" : " zero"}" role="tab" id="tab-${esc(t.id)}" data-id="${esc(t.id)}" aria-controls="panel"
-        aria-selected="${t.id === current}" tabindex="${t.id === current ? 0 : -1}" style="--c:${colorOf(t.id)}">
+        aria-selected="${t.id === current}" tabindex="${t.id === current ? 0 : -1}" style="--c:${colorOf(t.id)}"
+        ${t.scheduled ? `aria-label="${esc(t.name)}. В расписании: ${t.n}"` : ""}>
         ${icon(t.id)}<span class="tn">${esc(t.name)}</span><span class="n">${t.n}</span>
       </button>`).join("");
     tabsEl.insertAdjacentHTML("beforeend", html);
@@ -628,14 +645,17 @@
     }).join("");
     return `<svg class="gauge" viewBox="0 0 24.4 16" aria-hidden="true">${bars}</svg>`;
   }
-  function teamsHTML(match) {
+  function teamsHTML(match, sport) {
     const t = splitTeams(match);
-    if (!t) return `<h3 class="pk-teams single"><span class="team"><span class="tm">${esc(match)}</span></span></h3>`;
-    return `<h3 class="pk-teams"><span class="team">${flag(t[0])}<span class="tm">${esc(t[0])}</span></span>` +
+    if (!t) return `<h3 class="pk-teams single"><span class="team"><span class="tm">${esc(ru(match, sport))}</span></span></h3>`;
+    return `<h3 class="pk-teams"><span class="team">${flag(t[0])}<span class="tm" title="${esc(t[0])}">${esc(ru(t[0], sport))}</span></span>` +
       `<span class="sep"><span class="vh">против</span></span>` +
-      `<span class="team">${flag(t[1])}<span class="tm">${esc(t[1])}</span></span></h3>`;
+      `<span class="team">${flag(t[1])}<span class="tm" title="${esc(t[1])}">${esc(ru(t[1], sport))}</span></span></h3>`;
   }
   function pickHTML(p, i, sport, lead) {
+    const shown = (value) => esc(ru(value, sport.id));
+    const market = { total: "Тотал", "team-total": "Индивидуальный тотал", handicap: "Фора",
+      "both-score": "Обе забьют", "double-chance": "Двойной шанс" }[p.market?.kind];
     const conf = Math.max(1, Math.min(5, Number(p.confidence) || 3));
     const facts = (Array.isArray(p.facts) ? p.facts : []).filter(Boolean);
     const against = (Array.isArray(p.against) ? p.against : []).filter(Boolean);
@@ -645,7 +665,7 @@
     const preview = facts.slice(0, lead ? 3 : 2);
     const prob = p.model_prob && p.model_prob.value ? Math.round(p.model_prob.value * 100) : null;
     const bk = bucketOf(p);
-    const si = storyIndexFor(p.match);
+    const si = storyIndexFor(p.match, sport.id, p.start_iso);
     const nSrc = (p.sources || []).length;
     const confWhy = `Это оценка того, насколько вывод подкреплён данными, а не вероятность исхода. ` +
       (v2 ? `Под этим прогнозом: ${facts.length} ${plural(facts.length, "факт", "факта", "фактов")} «за», ${against.length} «против»` : `Подробного разбора у этого прогноза нет`) +
@@ -653,29 +673,29 @@
     const detail = v2 ? `
       <div class="more" id="${id}-more"><div><div class="pk-detail">
         <div class="pk-cols">
-          <section class="pk-col pro"><h4>${I_PLUS}Факты в пользу вывода</h4><ul>${facts.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></section>
-          ${against.length ? `<section class="pk-col con"><h4>${I_MINUS}Что говорит против</h4><ul>${against.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></section>` : ""}
+          <section class="pk-col pro"><h4>${I_PLUS}Факты в пользу вывода</h4><ul>${facts.map((x) => `<li>${shown(x)}</li>`).join("")}</ul></section>
+          ${against.length ? `<section class="pk-col con"><h4>${I_MINUS}Что говорит против</h4><ul>${against.map((x) => `<li>${shown(x)}</li>`).join("")}</ul></section>` : ""}
         </div>
-        ${p.uncertainty ? `<div class="pk-unc">${I_FOG}<div><h4>Что неизвестно</h4><p>${esc(p.uncertainty)}</p></div></div>` : ""}
+        ${p.uncertainty ? `<div class="pk-unc">${I_FOG}<div><h4>Что неизвестно</h4><p>${shown(p.uncertainty)}</p></div></div>` : ""}
         ${prob != null ? `<div class="pk-prob"><span>Вероятность по модели ${esc(p.model_prob.source || "")}</span><span class="pk-prob-bar"><i style="--w:${prob}%"></i></span><b>${prob}%</b></div>` : ""}
-        ${dq && p.data_quality.note ? `<p class="pk-dqn">Данные ${esc(DQ_LABEL[dq] || dq)}: ${esc(p.data_quality.note)}</p>` : ""}
+        ${dq && p.data_quality.note ? `<p class="pk-dqn">Данные ${esc(DQ_LABEL[dq] || dq)}: ${shown(p.data_quality.note)}</p>` : ""}
         ${(p.sources || []).length ? `<h4 class="pk-srch">Источники</h4>${srcList(p.sources)}` : ""}
       </div></div></div>` : "";
     return `
       <article class="pick${lead ? " lead" : ""}${v2 ? "" : " v1"}" id="${id}" style="--i:${i}" data-day="${bk.day}"${bk.soon ? " data-soon" : ""}>
         <div class="pk-meta">
-          <span class="pk-tour">${esc(p.tournament || "")}${p.format ? `<span class="pk-fmt">${esc(p.format)}</span>` : ""}</span>
+          <span class="pk-tour">${esc(ruTournament(p.tournament, sport.id))}${p.format ? `<span class="pk-fmt">${esc(p.format)}</span>` : ""}</span>
           ${whenHTML(p, sport.id)}
         </div>
         <div class="pk-main">
-          ${teamsHTML(p.match)}
+          ${teamsHTML(p.match, sport.id)}
           <div class="pk-bet">
-            <span class="pk-label"><span class="pl">Прогноз</span>${p.odds ? `<span class="odds">кф <b>${esc(p.odds)}</b></span>` : ""}</span>
-            <strong>${esc(p.bet)}</strong>
+            <span class="pk-label"><span class="pl">${market || "Прогноз"}</span>${p.odds ? `<span class="odds">кф <b>${esc(p.odds)}</b></span>` : ""}</span>
+            <strong>${shown(p.bet)}</strong>
           </div>
         </div>
-        ${p.reason ? `<p class="pk-reason">${esc(p.reason)}</p>` : ""}
-        ${preview.length ? `<ul class="pk-key">${preview.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
+        ${p.reason ? `<p class="pk-reason">${shown(p.reason)}</p>` : ""}
+        ${preview.length ? `<ul class="pk-key">${preview.map((x) => `<li>${shown(x)}</li>`).join("")}</ul>` : ""}
         <div class="pk-foot">
           <span class="conf-wrap"><button type="button" class="conf" aria-expanded="false" aria-controls="${id}-why">${gauge(conf)}<span>Уверенность <b>${CONF_LABEL[conf]}</b></span><i class="conf-q" aria-hidden="true">?</i></button>
             <span class="conf-pop" id="${id}-why" role="note" hidden>${esc(confWhy)}</span></span>
@@ -689,38 +709,67 @@
       </article>`;
   }
 
+  function scheduleHTML(sport) {
+    const events = (sport.events || []).filter((event) => !event.has_pick && Date.parse(event.start_iso) > Date.now());
+    if (!events.length) return "";
+    events.sort((a, b) => Date.parse(a.start_iso) - Date.parse(b.start_iso));
+    return `<section class="sport-schedule"><h3>Расписание</h3><ul>${events.map((event) => {
+      const story = storyIndexFor(event.match, sport.id, event.start_iso);
+      return `<li class="schedule-match">
+        <div class="schedule-meta"><span>${esc(ruTournament(event.tournament, sport.id))}${event.format ? " · " + esc(event.format) : ""}</span>${whenHTML(event, sport.id)}</div>
+        <strong>${esc(ru(event.match, sport.id))}</strong>
+        <div class="schedule-meta"><span class="srcs">${srcChips(event.sources)}</span>
+        ${story < 0 ? "" : `<button type="button" class="pk-story" data-story="${story}">${icon("analysis")}<span>Разбор</span></button>`}</div>
+      </li>`;
+    }).join("")}</ul></section>`;
+  }
+
   function sportHTML(sport) {
-    const picks = sport.picks || [];
-    const tours = new Set(picks.map((p) => String(p.tournament || "").split(",")[0].trim()).filter(Boolean));
-    const sub = picks.length
-      ? `${picks.length} ${plural(picks.length, "прогноз", "прогноза", "прогнозов")} · ${tours.size} ${plural(tours.size, "турнир", "турнира", "турниров")}`
-      : "Прогнозов пока нет";
+    const cards = sport.picks || [];
+    const count = cards.length;
+    const tours = new Set(cards.map((p) => String(p.tournament || "").split(",")[0].trim()).filter(Boolean));
+    const sub = count
+      ? `${count} ${countLabel(count)} · ${tours.size} ${plural(tours.size, "турнир", "турнира", "турниров")}`
+      : "";
     let html = `
       <div class="sport-head">
         <span class="sh-ico">${icon(sport.id, "big-ico")}</span>
-        <div><h2>${esc(sport.name)}</h2><p>${sub}</p></div>
+        <div><h2>${esc(sport.name)}</h2>${sub ? `<p>${sub}</p>` : ""}</div>
       </div>`;
     if (sport.stale && sport.updated_at) {
       html += `<p class="note warn">Сегодня обновить не удалось — показаны прогнозы от ${esc(fmtDate(sport.updated_at))}.</p>`;
     }
-    if (!picks.length) {
+    const schedule = !cards.length || ["tennis", "volleyball", "dota2"].includes(sport.id) ? scheduleHTML(sport) : "";
+    if (!cards.length && schedule) return html + schedule;
+    if (!cards.length) {
+      const story = (data.analysis || []).findIndex((a) => a.sport_id === sport.id);
+      const emptyMessage = {
+        unavailable: "Часть источников недоступна. Сверить расписание пока не удалось.",
+        unconfirmed: "В доступных расписаниях есть события, но для публикации нужно совпадение двух источников.",
+        insufficient_quality: sport.id === "cs2" ? "В расписании есть серии, но два источника пока не подтвердили их формат." :
+          "Расписание сверено, но для отбора нужно минимум по два подтверждённых недавних результата на каждую команду.",
+        empty: "В проверенных расписаниях нет предстоящих матчей до конца завтрашнего дня по Москве.",
+      };
       return html + `
         <div class="empty">
           ${svg('<path class="e-line" d="M4 30h40l8-14 10 22 8-12h46"/><circle class="e-dot" cx="116" cy="30" r="3"/>', "e-svg", "0 0 124 44")}
-          <strong>Сегодня подходящих прогнозов нет</strong>
-          <p>Прогноз публикуется, только когда под ним есть хотя бы три подтверждённых факта. Сводка обновляется утром и вечером.</p>
+          <strong>Готовых прогнозов нет</strong>
+          <p>${esc(story >= 0 ? "Подтверждённые матчи и данные по ним доступны в «Разборе дня»." :
+            emptyMessage[sport.availability] || "Новые прогнозы появятся, когда будет достаточно подтверждённых данных.")}</p>
+          ${story < 0 ? "" : `<button type="button" class="pk-story" data-story="${story}">${icon("analysis")}<span>Открыть разборы</span></button>`}
         </div>`;
     }
-    const topConf = Math.max(...picks.map((p) => Number(p.confidence) || 0));
+    const topConf = Math.max(...cards.map((p) => Number(p.confidence) || 0));
     const now = Date.now();
-    const bks = picks.map((p) => bucketOf(p, now));
-    const cnt = { all: picks.length, soon: bks.filter((b) => b.soon).length, today: bks.filter((b) => b.day === "today").length, tomorrow: bks.filter((b) => b.day === "tomorrow").length };
+    const bks = cards.map((p) => bucketOf(p, now));
+    const cnt = { all: cards.length, soon: bks.filter((b) => b.soon).length, today: bks.filter((b) => b.day === "today").length, tomorrow: bks.filter((b) => b.day === "tomorrow").length };
     const chips = [["all", "Все"], ["soon", "Ближайшие 3 часа"], ["today", "Сегодня"], ["tomorrow", "Завтра"]]
       .map(([k, l]) => `<button type="button" class="when-chip" data-when="${k}" aria-pressed="${whenFilter === k}"${cnt[k] || k === "all" ? "" : " disabled"}>${l}<b>${cnt[k]}</b></button>`).join("");
     html += `<div class="when" role="group" aria-label="Когда начинается матч">${chips}</div>`;
-    html += `<div class="list" data-when="${whenFilter}">` + picks.map((p, i) => pickHTML(p, i, sport, i === 0 && topConf >= 4)).join("") + `</div>`;
+    html += `<div class="list" data-when="${whenFilter}">` + cards.map((p, i) =>
+      pickHTML(p, i, sport, i === 0 && topConf >= 4)).join("") + `</div>`;
     html += `<div class="when-empty" hidden><p>В этом окне матчей нет.</p><button type="button" class="when-chip" data-when="all">Показать все</button></div>`;
-    return html;
+    return html + schedule;
   }
 
 
@@ -751,16 +800,21 @@
         <span class="xl-ico">${icon(l.sport)}</span>
         <div class="xl-body">
           <div class="xl-top"><span class="xl-sport">${esc(s ? s.name : l.sport)}</span>${legWhen(l)}</div>
-          <div class="xl-match">${esc(l.match)}</div>
-          <div class="xl-bet"><span>${esc(l.bet)}</span>${conf ? `<span class="xl-conf" title="Уверенность в прогнозе">${gauge(conf)}</span>` : ""}</div>
+          <div class="xl-match">${esc(ru(l.match, l.sport))}</div>
+          <div class="xl-bet"><span>${esc(ru(l.bet, l.sport))}</span>${conf ? `<span class="xl-conf" title="Уверенность в прогнозе">${gauge(conf)}</span>` : ""}</div>
         </div>
-        <span class="xl-odds">${fmtOdds(l.odds)}</span>
+        ${l.odds ? `<span class="xl-odds">${fmtOdds(l.odds)}</span>` : ""}
       </li>`;
   }
   function expressCard(x, i) {
     const total = Number(x.total_odds) || (x.legs || []).reduce((a, l) => a * (Number(l.odds) || 1), 1);
     const market = Math.round(100 / total);
     const tier = x.tier || "mid";
+    const verified = data.source === "sports-update";
+    const seasonSources = verified && x.legs?.every((leg) => leg.basis === "season") ? [
+      { title: "Таблица NHL", url: "https://www.nhl.com/standings/" },
+      { title: "Таблица NHL на ESPN", url: "https://www.espn.com/nhl/standings" },
+    ] : [];
     return `
       <article class="xp tier-${esc(tier)}" style="--i:${i}">
         <header class="xp-head">
@@ -768,14 +822,14 @@
             <span class="xp-tier">${esc(x.title || TIER[tier] || "Экспресс")}</span>
             <h3>${(x.legs || []).length} ${plural((x.legs || []).length, "событие", "события", "событий")}</h3>
           </div>
-          <div class="xp-total"><small>Общий коэффициент</small><b>${fmtOdds(total)}</b></div>
+          <div class="xp-total">${x.forecast_only ? "<small>Без коэффициента</small>" :
+            `<small>${verified ? "Кф из публикаций" : "Общий коэффициент"}</small><b>${fmtOdds(total)}</b>`}</div>
         </header>
         <ol class="xp-legs">${(x.legs || []).map(legHTML).join("")}</ol>
         ${x.reason ? `<p class="xp-reason">${esc(x.reason)}</p>` : ""}
-        ${x.weak_link ? `<p class="xp-weak"><b>Слабое звено.</b> ${esc(x.weak_link)}</p>` : ""}
-        <footer class="xp-foot">
-          <span class="xp-mkt" title="Обратная величина общего коэффициента — оценка букмекера с учётом маржи, а не наша вероятность">Шанс по линии ≈ ${market}%</span>
-        </footer>
+        ${x.weak_link ? `<p class="xp-weak"><b>${verified ? "Что может повлиять." : "Слабое звено."}</b> ${esc(x.weak_link)}</p>` : ""}
+        ${seasonSources.length ? `<footer class="xp-foot"><span class="srcs">${srcChips(seasonSources)}</span></footer>` : verified ? "" :
+          `<footer class="xp-foot"><span class="xp-mkt" title="Обратная величина общего коэффициента — оценка букмекера с учётом маржи, а не наша вероятность">Шанс по линии ≈ ${market}%</span></footer>`}
       </article>`;
   }
   function expressHTML() {
@@ -783,9 +837,9 @@
     return `
       <div class="sport-head">
         <span class="sh-ico">${icon("express", "big-ico")}</span>
-        <div><h2>Экспрессы дня</h2><p>Собраны только из прогнозов с сайта. Общий коэффициент — от 2. Если не зайдёт хотя бы одно событие, проигран весь экспресс.</p></div>
+        <div><h2>Экспрессы дня</h2><p>Собраны из прогнозов сайта. Общий коэффициент указан для подборок, в которых есть коэффициенты всех событий.</p></div>
       </div>
-      <div class="xp-list">${list.map(expressCard).join("")}</div>
+      <div class="xp-list">${list.length ? list.map(expressCard).join("") : '<p class="note">Пока нет двух действующих прогнозов, для которых сверенная форма подтверждает выбранный исход.</p>'}</div>
       <section class="xp-past" id="xp-past" hidden></section>`;
   }
   let expressPast = null;
@@ -802,7 +856,8 @@
     const settled = all.filter((x) => x.status === "won" || x.status === "lost");
     if (!all.length || !$("#xp-past")) return;
     const won = settled.filter((x) => x.status === "won");
-    const profit = settled.reduce((a, x) => a + (x.status === "won" ? 1000 * ((Number(x.settled_odds) || Number(x.total_odds)) - 1) : -1000), 0);
+    const profit = settled.filter((x) => !x.forecast_only).reduce((a, x) =>
+      a + (x.status === "won" ? 1000 * ((Number(x.settled_odds) || Number(x.total_odds)) - 1) : -1000), 0);
     const LBL = { won: "Зашёл", lost: "Не зашёл", pending: "Ждёт результата", void: "Возврат" };
     box.hidden = false;
     box.innerHTML = `
@@ -810,14 +865,14 @@
       <div class="xp-kpis">
         <div><b>${settled.length}</b><span>${plural(settled.length, "рассчитан", "рассчитано", "рассчитано")}</span></div>
         <div><b>${won.length}</b><span>${plural(won.length, "зашёл", "зашло", "зашло")}</span></div>
-        <div class="${profit >= 0 ? "pos" : "neg"}"><b>${profit >= 0 ? "+" : "−"}${rub(Math.abs(profit))}</b><span>при ставке 1 000 ₽ на каждый</span></div>
+        <div class="${profit >= 0 ? "pos" : "neg"}"><b>${profit >= 0 ? "+" : "−"}${rub(Math.abs(profit))}</b><span>при ставке 1 000 ₽ на каждый экспресс с коэффициентом</span></div>
       </div>
       <ul class="xp-rows">${all.slice(0, 30).map((x) => `
         <li class="xr st-${esc(x.status)}">
           <span class="xr-d">${esc(dayShort(Date.parse(x.published_at)))}</span>
           <span class="xr-t">${esc(x.title || TIER[x.tier] || "Экспресс")}</span>
           <span class="xr-l">${(x.legs || []).map((l) => `<i class="lg-${esc(l.status || "pending")}" title="${esc(l.match + " — " + l.bet)}"></i>`).join("")}</span>
-          <span class="xr-o">${fmtOdds(x.settled_odds || x.total_odds)}</span>
+          <span class="xr-o">${x.forecast_only ? "—" : fmtOdds(x.settled_odds || x.total_odds)}</span>
           <span class="xr-s">${LBL[x.status] || x.status}</span>
         </li>`).join("")}</ul>`;
   }
@@ -833,35 +888,37 @@
     let html = `
       <div class="sport-head">
         <span class="sh-ico">${icon("analysis", "big-ico")}</span>
-        <div><h2>Разбор дня</h2><p>Главные матчи подробнее: форма, составы, личные встречи и мнения аналитиков. Это мнение, а не гарантия.</p></div>
+        <div><h2>Разбор дня</h2><p>${data.source === "sports-update" ? "Проверенное расписание, результаты последних матчей и факторы, которые пока не удалось сверить." : "Главные матчи подробнее: форма, составы, личные встречи и мнения аналитиков. Это мнение, а не гарантия."}</p></div>
       </div>`;
     html += `<div class="stories">` + data.analysis.map((a, i) => {
-      const sid = sportIdByLabel(a.sport);
+      const sid = a.sport_id || sportIdByLabel(a.sport);
+      const shown = (value) => esc(ru(value, sid));
       const sportName = String(a.sport || "").replace(/^[^\p{L}]+/u, "").trim();
       const paras = String(a.text || "").split(/\n+/).map((t) => t.trim()).filter(Boolean);
       const first = paras.shift();
+      const factors = (a.key_factors || []).filter((item) => !a.automated || item !== first);
       const t = splitTeams(a.match);
       const title = t
-        ? `<span class="team">${flag(t[0])}<span class="tm">${esc(t[0])}</span></span><span class="sep"><span class="vh">против</span></span><span class="team">${flag(t[1])}<span class="tm">${esc(t[1])}</span></span>`
-        : `<span class="tm">${esc(a.match)}</span>`;
+        ? `<span class="team">${flag(t[0])}<span class="tm" title="${esc(t[0])}">${shown(t[0])}</span></span><span class="sep"><span class="vh">против</span></span><span class="team">${flag(t[1])}<span class="tm" title="${esc(t[1])}">${shown(t[1])}</span></span>`
+        : `<span class="tm">${shown(a.match)}</span>`;
       const st = startOf(a);
       const when = !isNaN(st.ms) && st.exact ? `${dayRel(st.ms)}, ${hhmm(st.ms)}` : (a.start || "");
       const moreId = `story-${i}`;
       return `
         <article class="story${i === 0 ? " lead" : ""}" id="story-card-${i}" style="--c:${colorOf(sid)};--i:${i}">
-          <p class="st-kicker">${icon(sid)}<span>${esc(sportName || "Матч")}</span><span class="st-dot"></span><span>${esc(a.tournament || "")}</span><span class="st-dot"></span><span>${esc(when)}</span></p>
+          <p class="st-kicker">${icon(sid)}<span>${esc(sportName || "Матч")}</span><span class="st-dot"></span><span>${esc(ruTournament(a.tournament, sid))}</span><span class="st-dot"></span><span>${esc(when)}</span></p>
           <h3 class="st-title">${title}</h3>
           <div class="st-grid">
             <div class="st-text">
-              ${first ? `<p class="st-lead">${esc(first)}</p>` : ""}
+              ${first ? `<p class="st-lead">${shown(first)}</p>` : ""}
               ${paras.length ? `
-                <div class="more" id="${moreId}"><div>${paras.map((x) => `<p>${esc(x)}</p>`).join("")}</div></div>
+                <div class="more" id="${moreId}"><div>${paras.map((x) => `<p>${shown(x)}</p>`).join("")}</div></div>
                 <button class="toggle" type="button" aria-expanded="false" aria-controls="${moreId}"><span>Читать разбор полностью</span>${I_CHEV}</button>` : ""}
               ${(a.sources || []).length ? `<div class="st-src"><h4>Источники</h4>${srcList(a.sources)}</div>` : ""}
             </div>
             <aside class="st-side">
-              ${a.verdict ? `<div class="verdict"><small>Вывод</small><p>${esc(a.verdict)}</p></div>` : ""}
-              ${(a.key_factors || []).length ? `<div class="st-factors"><h4>Ключевые факторы</h4><ul>${a.key_factors.map((f) => `<li>${esc(f)}</li>`).join("")}</ul></div>` : ""}
+              ${a.verdict ? `<div class="verdict"><small>${a.automated ? "Итог аналитики" : "Вывод"}</small><p>${shown(a.verdict)}</p></div>` : ""}
+              ${factors.length ? `<div class="st-factors"><h4>Ключевые факторы</h4><ul>${factors.map((f) => `<li>${shown(f)}</li>`).join("")}</ul></div>` : ""}
             </aside>
           </div>
         </article>`;
@@ -955,7 +1012,7 @@
   navAnalysis.addEventListener("click", (e) => { e.preventDefault(); select("analysis", true); });
   $('[data-nav="board"]').addEventListener("click", (e) => {
     e.preventDefault();
-    if (current === "analysis" && data) select(data.sports[0].id);
+    if (current === "analysis" && data) select(firstForecastSport());
     $("#board").scrollIntoView({ behavior: calm() ? "auto" : "smooth" });
   });
   const inView = { suggest: false, history: false };
@@ -1011,7 +1068,7 @@
     navAnalysis.hidden = !hasAnalysis();
 
     const fromHash = location.hash.slice(1);
-    current = tabList().some((t) => t.id === fromHash) ? fromHash : data.sports[0].id;
+    current = tabList().some((t) => t.id === fromHash) ? fromHash : firstForecastSport();
     document.documentElement.style.setProperty("--sport", colorOf(current));
     renderBoard();
     renderTabs();
@@ -1083,7 +1140,7 @@
     panel.querySelectorAll(".pick").forEach((card) => {
       const m = card.id.match(/^pick-(.+)-(\d+)$/);
       const s = m && data.sports.find((x) => x.id === m[1]);
-      const p = s && s.picks[Number(m[2])];
+      const p = s?.picks?.[Number(m[2])];
       const el = card.querySelector(".when");
       if (p && el) el.outerHTML = whenHTML(p, s.id);
     });

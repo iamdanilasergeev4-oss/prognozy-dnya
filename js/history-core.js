@@ -126,7 +126,7 @@
   /* ---------------- Снимок прогноза ---------------- */
 
   const SNAP_FIELDS = ["tournament", "match", "start", "bet", "odds", "confidence", "model_prob", "reason",
-    "facts", "against", "uncertainty", "data_quality", "sources", "format"];
+    "facts", "against", "uncertainty", "data_quality", "sources", "format", "market"];
 
   function snapshot(pick) {
     const o = {};
@@ -287,7 +287,7 @@
     let m;
     if (/^(п1|w1|победа хозяев)\b/.test(s)) return a > b ? "won" : "lost";
     if (/^(п2|w2|победа гостей)\b/.test(s)) return b > a ? "won" : "lost";
-    if (/^(1х|1x)\b/.test(s)) return a >= b ? "won" : "lost";
+    if (/^(1х|1x)(?=\s|$)/.test(s)) return a >= b ? "won" : "lost";
     if (/^(х2|x2)\b/.test(s)) return b >= a ? "won" : "lost";
     if (/^12\b/.test(s)) return a !== b ? "won" : "lost";
     if (/^(х|x|ничья)$/.test(s)) return a === b ? "won" : "lost";
@@ -308,6 +308,29 @@
       return diff > 0 ? "won" : diff < 0 ? "lost" : "void";
     }
     return null;
+  }
+
+  function evaluateMarket(market, score) {
+    const sc = parseScore(score);
+    if (!sc || !market) return null;
+    const { a, b } = sc;
+    const { kind, line, side, direction } = market;
+    const sideScore = side === "home" ? a : b;
+    const opponentScore = side === "home" ? b : a;
+    const validSide = side === "home" || side === "away";
+    if (kind === "both-score" && ["yes", "no"].includes(direction)) {
+      return (a > 0 && b > 0) === (direction === "yes") ? "won" : "lost";
+    }
+    if (kind === "double-chance" && validSide) return sideScore >= opponentScore ? "won" : "lost";
+    if (kind === "handicap" && validSide && Number.isFinite(line) && Number.isInteger(line * 2)) {
+      const margin = sideScore - opponentScore + line;
+      return margin === 0 ? "void" : margin > 0 ? "won" : "lost";
+    }
+    if (!["total", "team-total"].includes(kind) || !Number.isFinite(line) || line < 0 ||
+        !Number.isInteger(line * 2) || !["over", "under"].includes(direction) || kind === "team-total" && !validSide) return null;
+    const actual = kind === "total" ? a + b : sideScore;
+    if (actual === line) return "void";
+    return (direction === "over" ? actual > line : actual < line) ? "won" : "lost";
   }
 
   /**
@@ -339,7 +362,7 @@
       if (!next) {
         if ([STATUS.cancelled, STATUS.postponed, STATUS.void].includes(r.status)) next = r.status;
         else if (score) {
-          const auto = evaluateBet(e.bet, score);
+          const auto = e.market ? evaluateMarket(e.market, score) : evaluateBet(e.bet, score);
           if (auto && r.status && r.status !== auto && [STATUS.won, STATUS.lost].includes(r.status)) {
             next = STATUS.review;
             note = `автоматическая оценка (${auto}) не совпала с ручной (${r.status})` + (note ? "; " + note : "");
@@ -476,7 +499,7 @@
     }
     const prev = x.status;
     x.status = anyLost ? "lost" : anyPending ? "pending" : allVoid ? "void" : "won";
-    x.settled_odds = x.status === "won" ? Math.round(odds * 100) / 100 : null;
+    x.settled_odds = x.status === "won" && !x.forecast_only ? Math.round(odds * 100) / 100 : null;
     return prev !== x.status;
   }
 
@@ -498,8 +521,9 @@
         if (!src || !src.id || !(src.legs || []).length) continue;
         seen.add(src.id);
         const legs = src.legs.map((l) => ({ sport: l.sport, match: l.match, bet: l.bet, odds: Number(l.odds) || null, start_iso: l.start_iso || null }));
-        const total = Math.round(legs.reduce((a, l) => a * (l.odds || 1), 1) * 100) / 100;
+        const total = src.forecast_only ? null : Math.round(legs.reduce((a, l) => a * (l.odds || 1), 1) * 100) / 100;
         const item = { id: src.id, tier: src.tier || "mid", title: src.title || "", legs, total_odds: total, reason: src.reason || "", weak_link: src.weak_link || "", published_at: at, status: "pending" };
+        if (src.forecast_only) item.forecast_only = true;
         const old = byId.get(src.id);
         if (!old) { store.expresses.push(item); byId.set(item.id, item); report.added.push(item.id); continue; }
         if (old.status === "withdrawn" && atMs < firstStart(old)) { old.status = "pending"; report.added.push(old.id); }
@@ -526,7 +550,8 @@
   function expressStats(store) {
     const list = (store && store.expresses) || [];
     const won = list.filter((x) => x.status === "won"), lost = list.filter((x) => x.status === "lost");
-    const profit = won.reduce((a, x) => a + 1000 * ((x.settled_odds || x.total_odds) - 1), 0) - 1000 * lost.length;
+    const profit = won.filter((x) => !x.forecast_only).reduce((a, x) => a + 1000 * ((x.settled_odds || x.total_odds) - 1), 0) -
+      1000 * lost.filter((x) => !x.forecast_only).length;
     return { total: list.length, won: won.length, lost: lost.length, pending: list.filter((x) => x.status === "pending").length, profit: Math.round(profit) };
   }
 
@@ -558,7 +583,7 @@
     SCHEMA_VERSION, STATUS, FINAL, EXCLUDED,
     norm, normBet, splitTeams, makeId, parseStart, startMs, toMskIso, mskDateOf,
     snapshot, marketProb, qualityIssues,
-    emptyHistory, archive, evaluateBet, parseScore, applyResults,
+    emptyHistory, archive, evaluateBet, evaluateMarket, parseScore, applyResults,
     displayStatus, dueForCheck, computeStats, splitByMonth, mergeMonths, monthOf,
     syncExpress, settleExpress, expressStats,
   };

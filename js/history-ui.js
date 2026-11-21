@@ -8,6 +8,8 @@
   const $ = (s, r = root) => r.querySelector(s);
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => (
     { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const ru = (value, sport) => window.SportsRu?.text(value, sport) ?? value;
+  const ruTournament = (value, sport) => window.SportsRu?.tournament(value, sport) ?? value;
   const calm = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const host = (url) => { try { return new URL(url).hostname.replace(/^www\./, ""); } catch { return "источник"; } };
   const SVGI = (inner) => `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${inner}</svg>`;
@@ -96,7 +98,7 @@
       if (from != null && !(s >= from)) return false;
       if (state.sport && e.sport !== state.sport) return false;
       if (state.date && e.event_date !== state.date) return false;
-      if (q && !(`${e.tournament} ${e.match}`.toLowerCase().includes(q))) return false;
+      if (q && !(`${e.tournament} ${e.match} ${ruTournament(e.tournament, e.sport)} ${ru(e.match, e.sport)}`.toLowerCase().includes(q))) return false;
       if (state.status) {
         const d = H.displayStatus(e, nowMs);
         if (state.status === "won" && d !== "won") return false;
@@ -224,8 +226,8 @@
       <article class="h-card st-${st.k}${open ? " open" : ""}" style="--c:${sportColor(e.sport)};--i:${Math.min(i, 10)}" data-id="${esc(e.id)}">
         <div class="h-main">
           <span class="h-sport">${esc(sportName(e.sport, e.sport_name))}</span>
-          <h3>${esc(e.match)}</h3>
-          <p class="h-tour">${esc(e.tournament || "")}${e.tournament ? " · " : ""}${esc(fmtWhen(e))}</p>
+          <h3>${esc(ru(e.match, e.sport))}</h3>
+          <p class="h-tour">${esc(ruTournament(e.tournament, e.sport) || "")}${e.tournament ? " · " : ""}${esc(fmtWhen(e))}</p>
         </div>
         <dl class="h-out">
           <div><dt>Прогноз</dt><dd>${esc(e.bet)}${e.odds ? ` <small>кф ${esc(e.odds)}</small>` : ""}</dd></div>

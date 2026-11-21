@@ -15064,6 +15064,94 @@
       ]
     },
     {
+      "id": "tennis-20261121-efcj7h",
+      "sport": "tennis",
+      "sport_name": "Теннис",
+      "home": "Alexander Zverev",
+      "away": "Daniil Medvedev",
+      "event_date": "2026-11-21",
+      "start_iso": "2026-11-21T22:30+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T21:33+03:00",
+      "model_version": "v6-markets",
+      "tournament": "Nitto ATP Finals",
+      "match": "Alexander Zverev — Daniil Medvedev",
+      "start": "21.11, 22:30 МСК",
+      "bet": "ТМ 2,5 сета",
+      "confidence": 2,
+      "reason": "ТМ 2,5 сета: условие выполнялось в 6 из 6 разных сверенных матчей. Расчёт: полный матч.",
+      "facts": [
+        "Начало 21.11, 22:30 МСК подтверждено ESPN и 365Scores.",
+        "Alexander Zverev: условие выполнено в 3 из 3 сверенных матчей. Суммарные результаты: 2, 2, 2.",
+        "Daniil Medvedev: условие выполнено в 3 из 3 сверенных матчей. Суммарные результаты: 2, 2, 2.",
+        "Порог соответствует формату BO3. Коэффициент для него не проверен."
+      ],
+      "against": [
+        "Короткая выборка. Уровень соперников в ней различается."
+      ],
+      "uncertainty": "До матча не сверены покрытие, состояние игроков и формат матча.",
+      "data_quality": {
+        "level": "low",
+        "note": "Сверены счёт и условия расчёта; выборка короткая."
+      },
+      "sources": [
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/tennis/scoreboard/tournament/_/eventId/339-2026/competitionType/3"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=21%2F11%2F2026&endDate=21%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=19%2F11%2F2026&endDate=19%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=17%2F11%2F2026&endDate=17%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=15%2F11%2F2026&endDate=15%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=20%2F11%2F2026&endDate=20%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=18%2F11%2F2026&endDate=18%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=16%2F11%2F2026&endDate=16%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/rankings"
+        },
+        {
+          "title": "Итоговый турнир ATP",
+          "url": "https://www.nittoatpfinals.com/en/news/zverev-medvedev-nitto-atp-finals-2026-sf-preview"
+        }
+      ],
+      "format": "BO3",
+      "market": {
+        "kind": "total",
+        "line": 2.5,
+        "direction": "under",
+        "unit": "сеты",
+        "scope": "final",
+        "bestOf": 3
+      },
+      "market_prob": null,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
       "id": "football-20261121-1c28e9q",
       "sport": "football",
       "sport_name": "Футбол",
@@ -15286,6 +15374,132 @@
       "updated_at": "2026-11-21T16:28+03:00"
     },
     {
+      "id": "hockey-20261121-fnlre9",
+      "sport": "hockey",
+      "sport_name": "Хоккей",
+      "home": "Calgary Flames",
+      "away": "Chicago Blackhawks",
+      "event_date": "2026-11-21",
+      "start_iso": "2026-11-21T23:30+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T21:33+03:00",
+      "model_version": "v6-markets",
+      "tournament": "NHL",
+      "match": "Calgary Flames — Chicago Blackhawks",
+      "start": "21.11, 23:30 МСК",
+      "bet": "ТБ 5,5 шайбы (с ОТ)",
+      "confidence": 2,
+      "reason": "ТБ 5,5 шайбы: условие выполнялось в 5 из 6 разных сверенных матчей. Расчёт: итог с учётом овертайма и буллитов.",
+      "facts": [
+        "Начало 21.11, 23:30 МСК подтверждено 365Scores и ESPN и NHL.",
+        "Calgary Flames: условие выполнено в 2 из 3 сверенных матчей. Суммарные результаты: 5, 7, 7.",
+        "Chicago Blackhawks: условие выполнено в 3 из 3 сверенных матчей. Суммарные результаты: 6, 9, 9.",
+        "Предматчевый порог опубликован источником «DraftKings через ESPN»."
+      ],
+      "against": [
+        "В части сверенных матчей условие не выполнялось. Уровень соперников в выборке различается."
+      ],
+      "uncertainty": "До матча не сверены стартовые вратари, составы и игра в большинстве.",
+      "data_quality": {
+        "level": "low",
+        "note": "Сверены счёт и условия расчёта; выборка короткая."
+      },
+      "sources": [
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=21%2F11%2F2026&endDate=21%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "DraftKings через ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892755/blackhawks-flames"
+        },
+        {
+          "title": "NHL",
+          "url": "https://www.nhl.com/gamecenter/chi-vs-cgy/2026/11/21/2026020360"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892750/wild-flames"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=20%2F11%2F2026&endDate=20%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892738/flames-sharks"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=18%2F11%2F2026&endDate=18%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "NHL",
+          "url": "https://www.nhl.com/gamecenter/cgy-vs-sjs/2026/11/17/2026020343"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892723/flames-ducks"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=16%2F11%2F2026&endDate=16%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "NHL",
+          "url": "https://www.nhl.com/gamecenter/cgy-vs-ana/2026/11/15/2026020328"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892748/blue-jackets-blackhawks"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892733/maple-leafs-blackhawks"
+        },
+        {
+          "title": "NHL",
+          "url": "https://www.nhl.com/gamecenter/tor-vs-chi/2026/11/17/2026020338"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=14%2F11%2F2026&endDate=14%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892708/jets-blackhawks"
+        },
+        {
+          "title": "NHL",
+          "url": "https://www.nhl.com/gamecenter/wpg-vs-chi/2026/11/14/2026020312"
+        },
+        {
+          "title": "NHL",
+          "url": "https://api-web.nhle.com/v1/standings/now"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://site.api.espn.com/apis/v2/sports/hockey/nhl/standings"
+        }
+      ],
+      "market": {
+        "kind": "total",
+        "line": 5.5,
+        "direction": "over",
+        "unit": "шайбы",
+        "scope": "final",
+        "line_source": {
+          "title": "DraftKings через ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892755/blackhawks-flames"
+        }
+      },
+      "market_prob": null,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
       "id": "hockey-20261122-ovt2hh",
       "sport": "hockey",
       "sport_name": "Хоккей",
@@ -15335,6 +15549,86 @@
       "status_log": []
     },
     {
+      "id": "football-20261122-4rief6",
+      "sport": "football",
+      "sport_name": "Футбол",
+      "home": "Chapecoense",
+      "away": "Cruzeiro",
+      "event_date": "2026-11-22",
+      "start_iso": "2026-11-22T03:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T21:33+03:00",
+      "model_version": "v5-form",
+      "tournament": "Brazil Serie A",
+      "match": "Chapecoense — Cruzeiro",
+      "start": "22.11, 03:00 МСК",
+      "bet": "П2 (победа «Cruzeiro»)",
+      "confidence": 2,
+      "reason": "По сверенной форме преимущество на стороне «Cruzeiro». Уверенность низкая.",
+      "facts": [
+        "Начало 22.11, 03:00 МСК подтверждено ESPN и 365Scores.",
+        "Chapecoense: побед 0 из 3 сверенных матчей.",
+        "Cruzeiro: побед 2 из 2 сверенных матчей."
+      ],
+      "against": [],
+      "uncertainty": "До матча не сверены составы, травмы и контекст турнира.",
+      "data_quality": {
+        "level": "low",
+        "note": "Оценка основана на короткой выборке подтверждённых результатов."
+      },
+      "sources": [
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/soccer/match/_/gameId/401841325/cruzeiro-chapecoense"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=22%2F11%2F2026&endDate=22%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=18%2F11%2F2026&endDate=18%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/soccer/match/_/gameId/401841310/chapecoense-remo"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=14%2F11%2F2026&endDate=14%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/soccer/match/_/gameId/401841175/vasco-da-gama-chapecoense"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=03%2F11%2F2026&endDate=03%2F11%2F2026&sports=1%2C8"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/soccer/match/_/gameId/401841304/mirassol-chapecoense"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/soccer/match/_/gameId/401841314/palmeiras-cruzeiro"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/soccer/match/_/gameId/401841303/bahia-cruzeiro"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=06%2F11%2F2026&endDate=06%2F11%2F2026&sports=1%2C8"
+        }
+      ],
+      "market_prob": null,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
       "id": "hockey-20261122-1931to9",
       "sport": "hockey",
       "sport_name": "Хоккей",
@@ -15378,6 +15672,132 @@
       ],
       "format": "Хоккей, с овертаймом и буллитами",
       "market_prob": 0.625,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "hockey-20261122-1w086gx",
+      "sport": "hockey",
+      "sport_name": "Хоккей",
+      "home": "Winnipeg Jets",
+      "away": "Vegas Golden Knights",
+      "event_date": "2026-11-22",
+      "start_iso": "2026-11-22T03:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T21:33+03:00",
+      "model_version": "v6-markets",
+      "tournament": "NHL",
+      "match": "Winnipeg Jets — Vegas Golden Knights",
+      "start": "22.11, 03:00 МСК",
+      "bet": "Ф1 (+1,5) (с ОТ)",
+      "confidence": 2,
+      "reason": "Ф1 (+1,5): условие выполнялось в 6 из 6 разных сверенных матчей. Расчёт: итог с учётом овертайма и буллитов.",
+      "facts": [
+        "Начало 22.11, 03:00 МСК подтверждено ESPN и 365Scores и NHL.",
+        "Winnipeg Jets: условие выполнено в 3 из 3 сверенных матчей.",
+        "Vegas Golden Knights: условие выполнено в 3 из 3 сверенных матчей.",
+        "Предматчевый порог опубликован источником «DraftKings через ESPN»."
+      ],
+      "against": [
+        "Короткая выборка. Уровень соперников в ней различается."
+      ],
+      "uncertainty": "До матча не сверены стартовые вратари, составы и игра в большинстве.",
+      "data_quality": {
+        "level": "low",
+        "note": "Сверены счёт и условия расчёта; выборка короткая."
+      },
+      "sources": [
+        {
+          "title": "DraftKings через ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892764/golden-knights-jets"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=22%2F11%2F2026&endDate=22%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "NHL",
+          "url": "https://www.nhl.com/gamecenter/vgk-vs-wpg/2026/11/21/2026020369"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892749/islanders-jets"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=20%2F11%2F2026&endDate=20%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892736/senators-jets"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=18%2F11%2F2026&endDate=18%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "NHL",
+          "url": "https://www.nhl.com/gamecenter/ott-vs-wpg/2026/11/17/2026020341"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=14%2F11%2F2026&endDate=14%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892708/jets-blackhawks"
+        },
+        {
+          "title": "NHL",
+          "url": "https://www.nhl.com/gamecenter/wpg-vs-chi/2026/11/14/2026020312"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892753/stars-golden-knights"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892737/stars-golden-knights"
+        },
+        {
+          "title": "NHL",
+          "url": "https://www.nhl.com/gamecenter/dal-vs-vgk/2026/11/17/2026020342"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892724/canucks-golden-knights"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=16%2F11%2F2026&endDate=16%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "NHL",
+          "url": "https://www.nhl.com/gamecenter/van-vs-vgk/2026/11/15/2026020329"
+        },
+        {
+          "title": "NHL",
+          "url": "https://api-web.nhle.com/v1/standings/now"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://site.api.espn.com/apis/v2/sports/hockey/nhl/standings"
+        }
+      ],
+      "market": {
+        "kind": "handicap",
+        "line": 1.5,
+        "side": "home",
+        "unit": "шайбы",
+        "scope": "final",
+        "line_source": {
+          "title": "DraftKings через ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892764/golden-knights-jets"
+        }
+      },
+      "market_prob": null,
       "status": "pending",
       "result": null,
       "versions": [],
@@ -15531,6 +15951,208 @@
       "status_log": []
     },
     {
+      "id": "hockey-20261122-im8avc",
+      "sport": "hockey",
+      "sport_name": "Хоккей",
+      "home": "Toronto Maple Leafs",
+      "away": "Columbus Blue Jackets",
+      "event_date": "2026-11-22",
+      "start_iso": "2026-11-22T03:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T21:33+03:00",
+      "model_version": "v6-markets",
+      "tournament": "NHL",
+      "match": "Toronto Maple Leafs — Columbus Blue Jackets",
+      "start": "22.11, 03:00 МСК",
+      "bet": "Ф2 (+1,5) (с ОТ)",
+      "confidence": 2,
+      "reason": "Ф2 (+1,5): условие выполнялось в 5 из 6 разных сверенных матчей. Расчёт: итог с учётом овертайма и буллитов.",
+      "facts": [
+        "Начало 22.11, 03:00 МСК подтверждено ESPN и 365Scores и NHL.",
+        "Toronto Maple Leafs: условие выполнено в 3 из 3 сверенных матчей.",
+        "Columbus Blue Jackets: условие выполнено в 2 из 3 сверенных матчей.",
+        "Предматчевый порог опубликован источником «DraftKings через ESPN»."
+      ],
+      "against": [
+        "В части сверенных матчей условие не выполнялось. Уровень соперников в выборке различается."
+      ],
+      "uncertainty": "До матча не сверены стартовые вратари, составы и игра в большинстве.",
+      "data_quality": {
+        "level": "low",
+        "note": "Сверены счёт и условия расчёта; выборка короткая."
+      },
+      "sources": [
+        {
+          "title": "DraftKings через ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892759/blue-jackets-maple-leafs"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=22%2F11%2F2026&endDate=22%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "NHL",
+          "url": "https://www.nhl.com/gamecenter/cbj-vs-tor/2026/11/21/2026020364"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892742/kings-maple-leafs"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=20%2F11%2F2026&endDate=20%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892733/maple-leafs-blackhawks"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=18%2F11%2F2026&endDate=18%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "NHL",
+          "url": "https://www.nhl.com/gamecenter/tor-vs-chi/2026/11/17/2026020338"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892710/oilers-maple-leafs"
+        },
+        {
+          "title": "NHL",
+          "url": "https://www.nhl.com/gamecenter/edm-vs-tor/2026/11/14/2026020314"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892748/blue-jackets-blackhawks"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892731/blue-jackets-islanders"
+        },
+        {
+          "title": "NHL",
+          "url": "https://www.nhl.com/gamecenter/cbj-vs-nyi/2026/11/17/2026020336"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892715/flyers-blue-jackets"
+        },
+        {
+          "title": "NHL",
+          "url": "https://www.nhl.com/gamecenter/phi-vs-cbj/2026/11/14/2026020319"
+        },
+        {
+          "title": "NHL",
+          "url": "https://api-web.nhle.com/v1/standings/now"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://site.api.espn.com/apis/v2/sports/hockey/nhl/standings"
+        }
+      ],
+      "market": {
+        "kind": "handicap",
+        "line": 1.5,
+        "side": "away",
+        "unit": "шайбы",
+        "scope": "final",
+        "line_source": {
+          "title": "DraftKings через ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892759/blue-jackets-maple-leafs"
+        }
+      },
+      "market_prob": null,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "basketball-20261122-jrovyv",
+      "sport": "basketball",
+      "sport_name": "Баскетбол",
+      "home": "New York Knicks",
+      "away": "Portland Trail Blazers",
+      "event_date": "2026-11-22",
+      "start_iso": "2026-11-22T03:30+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T21:33+03:00",
+      "model_version": "v5-form",
+      "tournament": "National Basketball Association",
+      "match": "New York Knicks — Portland Trail Blazers",
+      "start": "22.11, 03:30 МСК",
+      "bet": "П1 (победа «New York Knicks»)",
+      "confidence": 2,
+      "reason": "По сверенной форме преимущество на стороне «New York Knicks». Уверенность низкая.",
+      "facts": [
+        "Начало 22.11, 03:30 МСК подтверждено ESPN и 365Scores.",
+        "New York Knicks: побед 3 из 3 сверенных матчей.",
+        "Portland Trail Blazers: побед 1 из 3 сверенных матчей."
+      ],
+      "against": [],
+      "uncertainty": "До матча не сверены составы, игровое время лидеров и темп.",
+      "data_quality": {
+        "level": "low",
+        "note": "Оценка основана на короткой выборке подтверждённых результатов."
+      },
+      "sources": [
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nba/game/_/gameId/401910024/trail-blazers-knicks"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=22%2F11%2F2026&endDate=22%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nba/game/_/gameId/401910021/knicks-timberwolves"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=20%2F11%2F2026&endDate=20%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nba/game/_/gameId/401910002/knicks-raptors"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=18%2F11%2F2026&endDate=18%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=15%2F11%2F2026&endDate=15%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nba/game/_/gameId/401909990/knicks-raptors"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nba/game/_/gameId/401910020/trail-blazers-bucks"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nba/game/_/gameId/401910003/trail-blazers-timberwolves"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nba/game/_/gameId/401909999/trail-blazers-timberwolves"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=17%2F11%2F2026&endDate=17%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        }
+      ],
+      "market_prob": null,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
       "id": "basketball-20261122-1cmjg6",
       "sport": "basketball",
       "sport_name": "Баскетбол",
@@ -15588,6 +16210,206 @@
           "note": "снят с публикации до начала события"
         }
       ]
+    },
+    {
+      "id": "basketball-20261122-c6ai74",
+      "sport": "basketball",
+      "sport_name": "Баскетбол",
+      "home": "Minnesota Timberwolves",
+      "away": "Memphis Grizzlies",
+      "event_date": "2026-11-22",
+      "start_iso": "2026-11-22T04:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T21:33+03:00",
+      "model_version": "v6-markets",
+      "tournament": "National Basketball Association",
+      "match": "Minnesota Timberwolves — Memphis Grizzlies",
+      "start": "22.11, 04:00 МСК",
+      "bet": "Ф2 (+6,5) (с ОТ)",
+      "confidence": 2,
+      "reason": "Ф2 (+6,5): условие выполнялось в 5 из 6 разных сверенных матчей. Расчёт: итог с учётом овертайма.",
+      "facts": [
+        "Начало 22.11, 04:00 МСК подтверждено ESPN и 365Scores.",
+        "Minnesota Timberwolves: условие выполнено в 2 из 3 сверенных матчей.",
+        "Memphis Grizzlies: условие выполнено в 3 из 3 сверенных матчей.",
+        "Предматчевый порог опубликован источником «DraftKings через ESPN»."
+      ],
+      "against": [
+        "В части сверенных матчей условие не выполнялось. Уровень соперников в выборке различается."
+      ],
+      "uncertainty": "До матча не сверены составы, игровое время лидеров и темп.",
+      "data_quality": {
+        "level": "low",
+        "note": "Сверены счёт и условия расчёта; выборка короткая."
+      },
+      "sources": [
+        {
+          "title": "DraftKings через ESPN",
+          "url": "https://www.espn.com/nba/game/_/gameId/401910026/grizzlies-timberwolves"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=22%2F11%2F2026&endDate=22%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nba/game/_/gameId/401910021/knicks-timberwolves"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=20%2F11%2F2026&endDate=20%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nba/game/_/gameId/401910003/trail-blazers-timberwolves"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=18%2F11%2F2026&endDate=18%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nba/game/_/gameId/401909999/trail-blazers-timberwolves"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=17%2F11%2F2026&endDate=17%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nba/game/_/gameId/401910019/warriors-grizzlies"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nba/game/_/gameId/401910007/grizzlies-cavaliers"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=19%2F11%2F2026&endDate=19%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nba/game/_/gameId/401909996/grizzlies-wizards"
+        }
+      ],
+      "market": {
+        "kind": "handicap",
+        "line": 6.5,
+        "side": "away",
+        "unit": "очки",
+        "scope": "final",
+        "line_source": {
+          "title": "DraftKings через ESPN",
+          "url": "https://www.espn.com/nba/game/_/gameId/401910026/grizzlies-timberwolves"
+        }
+      },
+      "market_prob": null,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "basketball-20261122-zthbuk",
+      "sport": "basketball",
+      "sport_name": "Баскетбол",
+      "home": "San Antonio Spurs",
+      "away": "New Orleans Pelicans",
+      "event_date": "2026-11-22",
+      "start_iso": "2026-11-22T04:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T21:33+03:00",
+      "model_version": "v6-markets",
+      "tournament": "National Basketball Association",
+      "match": "San Antonio Spurs — New Orleans Pelicans",
+      "start": "22.11, 04:00 МСК",
+      "bet": "Ф2 (+18,5) (с ОТ)",
+      "confidence": 2,
+      "reason": "Ф2 (+18,5): условие выполнялось в 5 из 6 разных сверенных матчей. Расчёт: итог с учётом овертайма.",
+      "facts": [
+        "Начало 22.11, 04:00 МСК подтверждено ESPN и 365Scores.",
+        "San Antonio Spurs: условие выполнено в 3 из 3 сверенных матчей.",
+        "New Orleans Pelicans: условие выполнено в 2 из 3 сверенных матчей.",
+        "Предматчевый порог опубликован источником «DraftKings через ESPN»."
+      ],
+      "against": [
+        "В части сверенных матчей условие не выполнялось. Уровень соперников в выборке различается."
+      ],
+      "uncertainty": "До матча не сверены составы, игровое время лидеров и темп.",
+      "data_quality": {
+        "level": "low",
+        "note": "Сверены счёт и условия расчёта; выборка короткая."
+      },
+      "sources": [
+        {
+          "title": "DraftKings через ESPN",
+          "url": "https://www.espn.com/nba/game/_/gameId/401910027/pelicans-spurs"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=22%2F11%2F2026&endDate=22%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nba/game/_/gameId/401910004/pistons-spurs"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=18%2F11%2F2026&endDate=18%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=15%2F11%2F2026&endDate=15%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nba/game/_/gameId/401909988/spurs-jazz"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nba/game/_/gameId/401909969/spurs-bulls"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=12%2F11%2F2026&endDate=12%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nba/game/_/gameId/401910013/pistons-pelicans"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=19%2F11%2F2026&endDate=19%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nba/game/_/gameId/401910000/warriors-pelicans"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=17%2F11%2F2026&endDate=17%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nba/game/_/gameId/401909972/nets-pelicans"
+        }
+      ],
+      "market": {
+        "kind": "handicap",
+        "line": 18.5,
+        "side": "away",
+        "unit": "очки",
+        "scope": "final",
+        "line_source": {
+          "title": "DraftKings через ESPN",
+          "url": "https://www.espn.com/nba/game/_/gameId/401910027/pelicans-spurs"
+        }
+      },
+      "market_prob": null,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
     },
     {
       "id": "basketball-20261122-csaeez",
@@ -15911,6 +16733,146 @@
       "status_log": []
     },
     {
+      "id": "dota2-20261122-1y9ocqs",
+      "sport": "dota2",
+      "sport_name": "Dota 2",
+      "home": "LEGION",
+      "away": "DO KONCA",
+      "event_date": "2026-11-22",
+      "start_iso": "2026-11-22T17:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T21:33+03:00",
+      "model_version": "v5-form",
+      "tournament": "BLAST Slam Season 9 2026",
+      "match": "LEGION — DO KONCA",
+      "start": "22.11, 17:00 МСК",
+      "bet": "П1 (победа «LEGION»)",
+      "confidence": 2,
+      "reason": "По сверенной форме преимущество на стороне «LEGION». Уверенность низкая.",
+      "facts": [
+        "Начало 22.11, 17:00 МСК подтверждено GosuGamers и Strafe и Ensigame.",
+        "Формат BO3 указан в расписании Strafe и Ensigame.",
+        "LEGION: побед 2 из 3 сверенных матчей.",
+        "DO KONCA: побед 0 из 2 сверенных матчей."
+      ],
+      "against": [],
+      "uncertainty": "До матча не сверены составы, патч и драфты.",
+      "data_quality": {
+        "level": "low",
+        "note": "Оценка основана на короткой выборке подтверждённых результатов."
+      },
+      "sources": [
+        {
+          "title": "GosuGamers",
+          "url": "https://www.gosugamers.net/dota2/tournaments/63160-blast-slam-ix/matches/661575-legion-vs-do-konca"
+        },
+        {
+          "title": "Strafe",
+          "url": "https://www.strafe.com/match/legion-vs-do-konca-group-c-blast-slam-season-9-2026-059c9d/"
+        },
+        {
+          "title": "Ensigame",
+          "url": "https://ensigame.com/matches/dota-2/2058169-legion-legion-vs-do-konca-dko-bs-22-11-26"
+        },
+        {
+          "title": "Ensigame",
+          "url": "https://ensigame.com/matches/dota-2/2058157-parivision-parivision-vs-legion-legion-bs-20-11-26"
+        },
+        {
+          "title": "Ensigame",
+          "url": "https://ensigame.com/matches/dota-2/2249785-froglings-frog-vs-legion-legion-1win-15-11-26"
+        },
+        {
+          "title": "Ensigame",
+          "url": "https://ensigame.com/matches/dota-2/2249775-team-liquid-liquid-vs-legion-legion-1win-14-11-26"
+        },
+        {
+          "title": "Ensigame",
+          "url": "https://ensigame.com/matches/dota-2/2058161-team-liquid-liquid-vs-do-konca-dko-bs-20-11-26"
+        },
+        {
+          "title": "Ensigame",
+          "url": "https://ensigame.com/matches/dota-2/2249789-do-konca-dko-vs-froglings-frog-1win-16-11-26"
+        }
+      ],
+      "format": "BO3",
+      "market_prob": null,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "dota2-20261122-lqkgj0",
+      "sport": "dota2",
+      "sport_name": "Dota 2",
+      "home": "PARIVISION",
+      "away": "Team Liquid",
+      "event_date": "2026-11-22",
+      "start_iso": "2026-11-22T17:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T21:33+03:00",
+      "model_version": "v5-form",
+      "tournament": "BLAST Slam Season 9 2026",
+      "match": "PARIVISION — Team Liquid",
+      "start": "22.11, 17:00 МСК",
+      "bet": "П1 (победа «PARIVISION»)",
+      "confidence": 2,
+      "reason": "По сверенной форме преимущество на стороне «PARIVISION». Уверенность низкая.",
+      "facts": [
+        "Начало 22.11, 17:00 МСК подтверждено GosuGamers и Strafe и Ensigame.",
+        "Формат BO3 указан в расписании Strafe и Ensigame.",
+        "PARIVISION: побед 3 из 3 сверенных матчей.",
+        "Team Liquid: побед 1 из 2 сверенных матчей."
+      ],
+      "against": [],
+      "uncertainty": "До матча не сверены составы, патч и драфты.",
+      "data_quality": {
+        "level": "low",
+        "note": "Оценка основана на короткой выборке подтверждённых результатов."
+      },
+      "sources": [
+        {
+          "title": "GosuGamers",
+          "url": "https://www.gosugamers.net/dota2/tournaments/63160-blast-slam-ix/matches/661574-parivision-vs-team-liquid"
+        },
+        {
+          "title": "Strafe",
+          "url": "https://www.strafe.com/match/parivision-vs-team-liquid-group-c-blast-slam-season-9-2026-e03b16/"
+        },
+        {
+          "title": "Ensigame",
+          "url": "https://ensigame.com/matches/dota-2/2058165-parivision-parivision-vs-team-liquid-liquid-bs-22-11-26"
+        },
+        {
+          "title": "Ensigame",
+          "url": "https://ensigame.com/matches/dota-2/2058157-parivision-parivision-vs-legion-legion-bs-20-11-26"
+        },
+        {
+          "title": "Ensigame",
+          "url": "https://ensigame.com/matches/dota-2/2249792-lgd-gaming-lgd-vs-parivision-parivision-1win-17-11-26"
+        },
+        {
+          "title": "Ensigame",
+          "url": "https://ensigame.com/matches/dota-2/2249791-parivision-parivision-vs-froglings-frog-1win-17-11-26"
+        },
+        {
+          "title": "Ensigame",
+          "url": "https://ensigame.com/matches/dota-2/2058161-team-liquid-liquid-vs-do-konca-dko-bs-20-11-26"
+        },
+        {
+          "title": "Ensigame",
+          "url": "https://ensigame.com/matches/dota-2/2249775-team-liquid-liquid-vs-legion-legion-1win-14-11-26"
+        }
+      ],
+      "format": "BO3",
+      "market_prob": null,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
       "id": "football-20261122-1pkptv5",
       "sport": "football",
       "sport_name": "Футбол",
@@ -16075,6 +17037,195 @@
           "note": "снят с публикации до начала события"
         }
       ]
+    },
+    {
+      "id": "volleyball-20261122-1g3vsvl",
+      "sport": "volleyball",
+      "sport_name": "Волейбол",
+      "home": "Cucine Lube Civitanova",
+      "away": "Tinet Prata di Pordenone",
+      "event_date": "2026-11-22",
+      "start_iso": "2026-11-22T20:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T21:33+03:00",
+      "model_version": "v5-form",
+      "tournament": "SuperLega",
+      "match": "Cucine Lube Civitanova — Tinet Prata di Pordenone",
+      "start": "22.11, 20:00 МСК",
+      "bet": "П1 (победа «Cucine Lube Civitanova»)",
+      "confidence": 2,
+      "reason": "По таблице Суперлиги преимущество на стороне «Cucine Lube Civitanova». Уверенность низкая.",
+      "facts": [
+        "Начало 22.11, 20:00 МСК подтверждено 365Scores и Lega Pallavolo.",
+        "Формат BO5 указан в расписании Lega Pallavolo.",
+        "Tinet Prata di Pordenone: побед 0 из 1 сверенных матчей.",
+        "Cucine Lube Civitanova: 5 побед из 5 матчей в таблице Суперлиги.",
+        "Tinet Prata di Pordenone: 2 побед из 5 матчей в таблице Суперлиги."
+      ],
+      "against": [],
+      "uncertainty": "До матча не сверены составы, подача, приём и формат матча.",
+      "data_quality": {
+        "level": "low",
+        "note": "Оценка основана на короткой выборке подтверждённых результатов."
+      },
+      "sources": [
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=22%2F11%2F2026&endDate=22%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "Lega Pallavolo",
+          "url": "https://www.legavolley.it/calendario/?lang=en"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=16%2F11%2F2026&endDate=16%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "Lega Pallavolo",
+          "url": "https://www.legavolley.it/classifica/?lang=en"
+        },
+        {
+          "title": "Volleyball World",
+          "url": "https://it.volleyballworld.com/volleyball/competitions/superlega/standings/"
+        }
+      ],
+      "format": "BO5",
+      "market_prob": null,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "hockey-20261122-10v3ua4",
+      "sport": "hockey",
+      "sport_name": "Хоккей",
+      "home": "New York Rangers",
+      "away": "Carolina Hurricanes",
+      "event_date": "2026-11-22",
+      "start_iso": "2026-11-22T20:30+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T21:33+03:00",
+      "model_version": "v6-markets",
+      "tournament": "NHL",
+      "match": "New York Rangers — Carolina Hurricanes",
+      "start": "22.11, 20:30 МСК",
+      "bet": "ТМ 6,5 шайбы (с ОТ)",
+      "confidence": 2,
+      "reason": "ТМ 6,5 шайбы: условие выполнялось в 6 из 6 разных сверенных матчей. Расчёт: итог с учётом овертайма и буллитов.",
+      "facts": [
+        "Начало 22.11, 20:30 МСК подтверждено 365Scores и ESPN и NHL.",
+        "New York Rangers: условие выполнено в 3 из 3 сверенных матчей. Суммарные результаты: 4, 6, 4.",
+        "Carolina Hurricanes: условие выполнено в 3 из 3 сверенных матчей. Суммарные результаты: 3, 6, 5.",
+        "Предматчевый порог опубликован источником «DraftKings через ESPN»."
+      ],
+      "against": [
+        "Короткая выборка. Уровень соперников в ней различается."
+      ],
+      "uncertainty": "До матча не сверены стартовые вратари, составы и игра в большинстве.",
+      "data_quality": {
+        "level": "low",
+        "note": "Сверены счёт и условия расчёта; выборка короткая."
+      },
+      "sources": [
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=22%2F11%2F2026&endDate=22%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "DraftKings через ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892768/hurricanes-rangers"
+        },
+        {
+          "title": "NHL",
+          "url": "https://www.nhl.com/gamecenter/car-vs-nyr/2026/11/22/2026020373"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892726/canadiens-rangers"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=17%2F11%2F2026&endDate=17%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "NHL",
+          "url": "https://www.nhl.com/gamecenter/mtl-vs-nyr/2026/11/16/2026020331"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892706/rangers-canucks"
+        },
+        {
+          "title": "NHL",
+          "url": "https://www.nhl.com/gamecenter/nyr-vs-van/2026/11/13/2026020310"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892691/rangers-flames"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=12%2F11%2F2026&endDate=12%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "NHL",
+          "url": "https://www.nhl.com/gamecenter/nyr-vs-cgy/2026/11/11/2026020294"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892747/canadiens-hurricanes"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=20%2F11%2F2026&endDate=20%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=14%2F11%2F2026&endDate=14%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401891809/kraken-hurricanes"
+        },
+        {
+          "title": "NHL",
+          "url": "https://www.nhl.com/gamecenter/sea-vs-car/2026/11/14/2026020321"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401891808/hurricanes-kraken"
+        },
+        {
+          "title": "NHL",
+          "url": "https://www.nhl.com/gamecenter/car-vs-sea/2026/11/12/2026020309"
+        },
+        {
+          "title": "NHL",
+          "url": "https://api-web.nhle.com/v1/standings/now"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://site.api.espn.com/apis/v2/sports/hockey/nhl/standings"
+        }
+      ],
+      "market": {
+        "kind": "total",
+        "line": 6.5,
+        "direction": "under",
+        "unit": "шайбы",
+        "scope": "final",
+        "line_source": {
+          "title": "DraftKings через ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892768/hurricanes-rangers"
+        }
+      },
+      "market_prob": null,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
     },
     {
       "id": "football-20261122-1eocmu9",

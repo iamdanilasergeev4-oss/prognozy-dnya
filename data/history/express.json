@@ -895,6 +895,132 @@
       "published_at": "2026-11-21T16:28+03:00",
       "status": "pending",
       "settled_odds": null
+    },
+    {
+      "id": "mixed-8b06e11c0ce3155f",
+      "tier": "mid",
+      "title": "Экспресс из разных видов спорта",
+      "legs": [
+        {
+          "sport": "basketball",
+          "match": "New York Knicks — Portland Trail Blazers",
+          "bet": "П1 (победа «New York Knicks»)",
+          "odds": null,
+          "start_iso": "2026-11-22T03:30+03:00",
+          "hid": "basketball-20261122-jrovyv",
+          "status": "pending"
+        },
+        {
+          "sport": "dota2",
+          "match": "PARIVISION — Team Liquid",
+          "bet": "П1 (победа «PARIVISION»)",
+          "odds": null,
+          "start_iso": "2026-11-22T17:00+03:00",
+          "hid": "dota2-20261122-lqkgj0",
+          "status": "pending"
+        }
+      ],
+      "total_odds": null,
+      "reason": "В каждом событии есть прогноз на исход, основанный на сверенных результатах. Обоснование доступно в карточке прогноза.",
+      "weak_link": "",
+      "published_at": "2026-11-21T21:33+03:00",
+      "status": "pending",
+      "forecast_only": true,
+      "settled_odds": null
+    },
+    {
+      "id": "mixed-ce13ad100ac1c0a0",
+      "tier": "mid",
+      "title": "Экспресс из разных видов спорта",
+      "legs": [
+        {
+          "sport": "tennis",
+          "match": "Alexander Zverev — Daniil Medvedev",
+          "bet": "ТМ 2,5 сета",
+          "odds": null,
+          "start_iso": "2026-11-21T22:30+03:00",
+          "hid": "tennis-20261121-efcj7h",
+          "status": "pending"
+        },
+        {
+          "sport": "football",
+          "match": "Chapecoense — Cruzeiro",
+          "bet": "П2 (победа «Cruzeiro»)",
+          "odds": null,
+          "start_iso": "2026-11-22T03:00+03:00",
+          "hid": "football-20261122-4rief6",
+          "status": "pending"
+        }
+      ],
+      "total_odds": null,
+      "reason": "В каждом событии есть прогноз на исход, основанный на сверенных результатах. Обоснование доступно в карточке прогноза.",
+      "weak_link": "",
+      "published_at": "2026-11-21T21:33+03:00",
+      "status": "pending",
+      "forecast_only": true,
+      "settled_odds": null
+    },
+    {
+      "id": "verified-5f91c2675a82a148",
+      "tier": "mid",
+      "title": "По подтверждённой форме",
+      "legs": [
+        {
+          "sport": "hockey",
+          "match": "Бостон — Вашингтон",
+          "bet": "П1 (победа Бостона, с ОТ)",
+          "odds": 1.83,
+          "start_iso": "2026-11-22T03:00+03:00",
+          "hid": "hockey-20261122-hnfszy",
+          "status": "pending"
+        },
+        {
+          "sport": "hockey",
+          "match": "Детройт — Айлендерс",
+          "bet": "П2 (победа Айлендерс, с ОТ)",
+          "odds": 1.82,
+          "start_iso": "2026-11-22T03:00+03:00",
+          "hid": "hockey-20261122-4mb73r",
+          "status": "pending"
+        }
+      ],
+      "total_odds": 3.33,
+      "reason": "NHL и ESPN подтверждают перевес обеих выбранных команд по доле очков за сезон. В трёх последних сверенных играх каждая выиграла не меньше соперника.",
+      "weak_link": "Выборка короткая. Составы перед стартом и актуальность ранее опубликованных коэффициентов отдельно не подтверждены.",
+      "published_at": "2026-11-21T21:33+03:00",
+      "status": "pending",
+      "settled_odds": null
+    },
+    {
+      "id": "verified-770e05fb3b2d3151",
+      "tier": "mid",
+      "title": "По подтверждённой форме",
+      "legs": [
+        {
+          "sport": "hockey",
+          "match": "Оттава — Лос-Анджелес",
+          "bet": "П1 (победа Оттавы, с ОТ)",
+          "odds": 1.57,
+          "start_iso": "2026-11-22T03:00+03:00",
+          "hid": "hockey-20261122-59ag0i",
+          "status": "pending"
+        },
+        {
+          "sport": "hockey",
+          "match": "Ванкувер — Миннесота",
+          "bet": "П2 (победа Миннесоты, с ОТ)",
+          "odds": 1.34,
+          "start_iso": "2026-11-22T06:00+03:00",
+          "hid": "hockey-20261122-514jy8",
+          "status": "pending"
+        }
+      ],
+      "total_odds": 2.1,
+      "reason": "NHL и ESPN подтверждают перевес обеих выбранных команд по доле очков за сезон. В трёх последних сверенных играх каждая выиграла не меньше соперника.",
+      "weak_link": "Выборка короткая. Составы перед стартом и актуальность ранее опубликованных коэффициентов отдельно не подтверждены.",
+      "published_at": "2026-11-21T21:33+03:00",
+      "status": "pending",
+      "settled_odds": null
     }
   ]
 }
