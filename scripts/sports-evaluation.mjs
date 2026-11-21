@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
 import { createOutcomeModel, MODEL_VERSION } from "./sports-models.mjs";
+import { createFootballScoreModel } from "./sports-score-model.mjs";
 
 const DAY = 86_400_000;
 const outcomes = ["home", "draw", "away"];
@@ -35,6 +36,7 @@ export function evaluateProbabilities(rows) {
 
 export function walkForward(events, testFrom) {
   const model = createOutcomeModel();
+  const scores = createFootballScoreModel();
   const sorted = [...events].sort((a, b) => a.start - b.start);
   const rows = [];
   const recentByTeam = new Map();
@@ -46,6 +48,7 @@ export function walkForward(events, testFrom) {
     while (cursor < sorted.length && sorted[cursor].start + 2 * DAY <= event.start) {
       const past = sorted[cursor++];
       if (!model.observe(past)) continue;
+      scores.observe(past);
       for (const [i, team] of [past.home, past.away].entries()) {
         const key = formKey(past, team);
         recentByTeam.set(key, [...(recentByTeam.get(key) || []).slice(-2),
@@ -62,7 +65,8 @@ export function walkForward(events, testFrom) {
     const sample = Math.min(...recent.map((games) => games.length));
     const formPick = sample >= 2 && recent[side].filter((game) => game.won).length >= 2 &&
       rates[side] - rates[1 - side] >= (sample === 2 ? 0.5 : 2 / 3) ? ["home", "away"][side] : null;
-    rows.push({ actual, formPick, model: modelPrediction?.probabilities, market: event.market || null, sport: event.sport,
+    rows.push({ id: event.id, start: event.start, actual, formPick, model: modelPrediction?.probabilities,
+      scoreModel: scores.predict(event), market: event.market || null, sport: event.sport,
       competition: event.competition, level: event.level, period: event.season });
   }
   return rows;
@@ -104,8 +108,9 @@ export function parseOpenFootballSeason(json, competition, level, season) {
   if (!Array.isArray(json.matches)) throw new Error("Неизвестный формат openfootball");
   const ids = new Set();
   return json.matches.flatMap((match) => {
-    if (!match.score?.ft) return [];
-    const { date, team1: home, team2: away, score: { ft: score } } = match;
+    const score = Array.isArray(match.score) ? match.score : match.score?.ft;
+    if (!score) return [];
+    const { date, team1: home, team2: away } = match;
     const start = Date.parse(date);
     const id = JSON.stringify([competition, season, date, home, away]);
     if (!/^\d{4}-\d{2}-\d{2}$/.test(date || "") || !Number.isFinite(start) ||

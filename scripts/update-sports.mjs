@@ -5,6 +5,7 @@ import { buildUpdate, DAY, esportsFormLinks, esportsResultLinks, FOOTBALL_FORM_D
   tennisPreviewLinks, verifiedEsportsForm } from "./sports-update-core.mjs";
 import { parseAtpHeadToHead, parseEnsiForm, parseEnsiResult, parseStrafeForm, sourceJobs } from "./sports-sources.mjs";
 import { buildShadowReport } from "./sports-shadow.mjs";
+import { loadResearchSources } from "./sports-research-sources.mjs";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const H = globalThis.HistoryCore;
@@ -45,7 +46,7 @@ async function fetchData(url, html = false) {
   }
 }
 
-async function collect(jobs, scheduleDays, now) {
+async function collect(jobs, scheduleDays, now, includeTennisPreviews = true) {
   const errors = [];
   const outcomes = new Array(jobs.length);
   let cursor = 0;
@@ -101,7 +102,8 @@ async function collect(jobs, scheduleDays, now) {
   }));
   let previewsTried = 0;
   let previewsReceived = 0;
-  const tennisPreviews = await Promise.all(tennisPreviewLinks(rows, now).map(async ({ row, urls }) => {
+  const previewLinks = includeTennisPreviews ? tennisPreviewLinks(rows, now) : [];
+  const tennisPreviews = await Promise.all(previewLinks.map(async ({ row, urls }) => {
     for (const url of urls) {
       previewsTried++;
       try {
@@ -235,7 +237,7 @@ async function preview(shadow = false) {
   const footballDays = Array.from({ length: FOOTBALL_FORM_DAYS - FORM_DAYS }, (_, i) => dateKey(now - (FOOTBALL_FORM_DAYS - i) * DAY));
   const jobs = sourceJobs(days, scheduleDays, footballDays);
   log("info", "Начата проверка источников", { dates: days, requests: jobs.length });
-  const data = await collect(jobs, scheduleDays, now);
+  const data = await collect(jobs, scheduleDays, now, !shadow);
   const output = buildUpdate({ ...input, ...data, now });
   const issues = blockers(output, now, Date.parse(input.current.updated_at));
   try { validate(input, output, Date.now()); } catch (e) { issues.push(e.message); }
@@ -248,8 +250,9 @@ async function preview(shadow = false) {
   await saveCandidate(path, output);
   if (shadow) {
     const until = Date.parse(`${H.mskDateOf(new Date(now + DAY).toISOString())}T00:00:00+03:00`) + DAY;
+    const supplemental = await loadResearchSources({ cacheDir: join(root, ".sports-update", "source-cache-v2"), now, until });
     const diagnostics = await buildShadowReport({ rows: data.rows, now, until, checkedAt: output.report.checkedAt,
-      fetchData, legacyReport: output.report.sports, requestErrors: data.errors, clock: Date.now });
+      fetchData, legacyReport: output.report.sports, requestErrors: data.errors, clock: Date.now, supplemental, improve: true });
     await writeFile(join(path, "diagnostics.json"), json(diagnostics), { flag: "wx" });
     log("info", "Диагностика нового движка сохранена", { coverage: diagnostics.coverage,
       predictions: diagnostics.forecastCount, trainingResults: diagnostics.trainingResults });

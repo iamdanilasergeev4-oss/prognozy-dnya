@@ -58,6 +58,7 @@ export function parseScores(data, day, feedUrl = SCORES) {
         extra: /\/OT|\/SO|after extra time|penalt/i.test(g.statusText || ""),
         league: g.sportId === 4 && g.competitionDisplayName === "NHL" ? "nhl" : null,
         country: g.sportId === 1 ? countryCodes[competitions.get(g.competitionId)] || null : null,
+        sourceCountry: g.sportId === 1 ? competitions.get(g.competitionId) || null : null,
         sourceCompetitionId: g.competitionId,
         participantIds: [home?.id, away?.id],
       });

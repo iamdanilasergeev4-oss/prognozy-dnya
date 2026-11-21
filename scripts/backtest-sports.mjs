@@ -4,23 +4,38 @@ import { fileURLToPath } from "node:url";
 import { join } from "node:path";
 import { historicalLeagues, parseEnglishSeason, parseOpenFootballSeason, summarizeEvaluation, walkForward } from "./sports-evaluation.mjs";
 import { MODEL_VERSION } from "./sports-models.mjs";
+import { compareFootballModels } from "./sports-model-comparison.mjs";
+import { indexedOpenFootballUrl } from "./sports-openfootball.mjs";
 
 const root = fileURLToPath(new URL("../.sports-update", import.meta.url));
-const provider = process.argv[2] || "--football-data";
-if (!["--football-data", "--openfootball"].includes(provider)) throw new Error("Выберите --football-data или --openfootball");
+const provider = process.argv[2] || "--openfootball";
+if (!["--market-dir", "--openfootball"].includes(provider) || provider === "--market-dir" && !process.argv[3]) {
+  throw new Error("Выберите --openfootball или --market-dir <каталог с разрешёнными CSV>");
+}
 const open = provider === "--openfootball";
-const cache = join(root, open ? "openfootball" : "football-data");
+const cache = join(root, "openfootball-v2");
 const openLeagues = { "en.1": "professional_major", "en.2": "professional_mid", "en.3": "lower_division", "en.4": "lower_division",
-  "de.2": "professional_mid", "de.3": "lower_division", "es.2": "professional_mid" };
+  "en.5": "lower_division", "de.2": "professional_mid", "de.3": "lower_division", "es.2": "professional_mid",
+  "de.4b": "regional", "de.4n": "regional", "de.4e": "regional", "de.4s": "regional", "de.4w": "regional" };
 const divisions = Object.keys(open ? openLeagues : historicalLeagues);
 const seasons = ["2223", "2324", "2425", "2526"];
 const testFrom = Date.parse("2024-07-01");
+const holdoutFrom = Date.parse("2025-07-01");
 
 async function loadSeason(division, season) {
-  const path = join(cache, `${season}-${division}.${open ? "json" : "csv"}`);
+  if (!open) {
+    const file = `${season}-${division}.csv`;
+    try {
+      return { ...parseEnglishSeason(await readFile(join(process.argv[3], file), "utf8"), division, season), division, season, file };
+    } catch (error) {
+      if (error.code !== "ENOENT") throw error;
+      return { division, season, file, status: "local_file_missing", events: [] };
+    }
+  }
+  if (division.startsWith("de.4") && season !== "2425") return { division, season, status: "not_in_publisher_index", events: [] };
+  const path = join(cache, `${season}-${division}.json`);
   const formatted = `20${season.slice(0, 2)}-${season.slice(2)}`;
-  const url = open ? `https://raw.githubusercontent.com/openfootball/football.json/master/${formatted}/${division}.json` :
-    `https://www.football-data.co.uk/mmz4281/${season}/${division}.csv`;
+  const url = indexedOpenFootballUrl(division, formatted);
   let data;
   try {
     data = await readFile(path, "utf8");
@@ -34,8 +49,8 @@ async function loadSeason(division, season) {
       return { division, season, url, status: "unavailable", error: networkError.message, events: [] };
     }
   }
-  const parsed = open ? { events: parseOpenFootballSeason(JSON.parse(data), division, openLeagues[division], season),
-    sha256: createHash("sha256").update(data).digest("hex") } : parseEnglishSeason(data, division, season);
+  const parsed = { events: parseOpenFootballSeason(JSON.parse(data), division, openLeagues[division], season),
+    sha256: createHash("sha256").update(data).digest("hex") };
   if (!parsed.events.length) throw new Error(`Нет результатов: ${season} ${division}`);
   await writeFile(path, data, { flag: "wx" }).catch((error) => {
     if (error.code !== "EEXIST") throw error;
@@ -54,16 +69,18 @@ const grouped = (key) => Object.fromEntries([...Map.groupBy(evaluation, (row) =>
 const report = {
   model: MODEL_VERSION,
   testFrom: new Date(testFrom).toISOString(),
-  input: sources.map(({ division, season, url, sha256, status, error, events }) =>
-    ({ division, season, url, sha256, status, error, matches: events.length })),
+  input: sources.map(({ division, season, url, file, sha256, status, error, events }) =>
+    ({ division, season, url, file, sha256, status, error, matches: events.length })),
   summary: summarizeEvaluation(evaluation), bySport: grouped("sport"), byDivision: grouped("competition"),
   byLevel: grouped("level"), bySeason: grouped("period"),
+  modelComparison: compareFootballModels(evaluation.filter((row) => row.level !== "regional"), holdoutFrom),
+  regionalComparison: compareFootballModels(evaluation.filter((row) => row.level === "regional"), Date.parse("2025-01-01")),
   method: {
     scores: `${provider.slice(2)} published final scores on historical calendar dates with a two-calendar-day embargo. Historical feed snapshots are unavailable.`,
     benchmark: open ? "Market prices unavailable; fixed comparison is 45% home / 25% draw / 30% away." :
       "Average pre-match bookmaker odds converted to implied probabilities and normalized across all three outcomes.",
     legacy: "Reconstructed winner form rule on the last two or three eligible results, not a replay of the full publishing pipeline.",
-    missing: "Other sports and regional or amateur cohorts have no test dataset in this run.",
+    missing: "Other sports and amateur cohorts have no test dataset in this run. Regional results have a separate single-season split.",
   },
 };
 const run = join(root, `backtest-${new Date().toISOString().replace(/[:.]/g, "-")}`);
