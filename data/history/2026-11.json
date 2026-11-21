@@ -13617,8 +13617,22 @@
       "published_at": "2026-11-21T00:29+03:00",
       "model_version": "v3",
       "market_prob": 0.412,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "1:0",
+        "note": null,
+        "sources": [
+          {
+            "title": "ESPN — Суперлига Турции, 21.11",
+            "url": "https://www.espn.com/soccer/scoreboard/_/date/20261121/league/tur.1"
+          },
+          {
+            "title": "Flashscore — Суперлига, результаты",
+            "url": "https://www.flashscore.com.ua/football/turkey/super-lig/results/"
+          }
+        ],
+        "checked_at": "2026-11-21T16:28+03:00"
+      },
       "versions": [
         {
           "at": "2026-11-21T00:29+03:00",
@@ -13664,7 +13678,14 @@
           }
         }
       ],
-      "status_log": [],
+      "status_log": [
+        {
+          "at": "2026-11-21T16:28+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
       "tournament": "Суперлига Турции 2026/27, 12-й тур, тир-1",
       "match": "Генчлербирлиги — Газиантеп",
       "start": "21.11, 13:30 МСК",
@@ -13708,7 +13729,8 @@
         }
       ],
       "format": "Футбол, 90 минут",
-      "updated_at": "2026-11-21T07:16+03:00"
+      "updated_at": "2026-11-21T07:16+03:00",
+      "last_sync": "2026-11-21T16:28+03:00"
     },
     {
       "id": "dota2-20261121-3l1df6",
@@ -14482,54 +14504,158 @@
       "start_approx": false,
       "published_at": "2026-11-20T17:26+03:00",
       "model_version": "v3",
-      "tournament": "Лига 1 (Франция), тир-1",
-      "match": "Ницца — ПСЖ",
-      "start": "21.11, 19:15 МСК",
-      "bet": "П2 (победа ПСЖ)",
-      "odds": "1.45",
-      "confidence": 4,
-      "model_prob": {
-        "value": 0.72,
-        "source": "ClubElo"
-      },
-      "reason": "ClubElo даёт ПСЖ 72%, рынок без маржи ~65%; наша оценка 69% против 69% в линии 1.45. Перевеса над линией нет — прогноз на более вероятный исход.",
-      "facts": [
-        "ПСЖ: 7 побед, 2 ничьи, 1 поражение в 10 турах (ESPN)",
-        "Ницца: 5-2-3 (ESPN)",
-        "Линия ESPN: +500 / +400 / −220, тотал 3.5"
-      ],
-      "against": [
-        "Ницца дома набирает очки (5 побед в 10 турах)",
-        "Рынок оценивает ПСЖ ниже, чем Elo"
-      ],
-      "uncertainty": "Нет подтверждённых составов и сведений о травмах на момент сбора.",
-      "data_quality": {
-        "level": "medium",
-        "note": "ESPN (таблица, линия) + ClubElo; составов нет"
-      },
-      "sources": [
+      "market_prob": 0.676,
+      "status": "pending",
+      "result": null,
+      "versions": [
         {
-          "title": "ESPN — Nice vs PSG",
-          "url": "https://www.espn.com/soccer/match/_/gameId/401876398"
-        },
-        {
-          "title": "ClubElo — Paris SG",
-          "url": "http://clubelo.com/ParisSG"
+          "at": "2026-11-20T17:26+03:00",
+          "replaced_at": "2026-11-21T16:28+03:00",
+          "reason": "плановое обновление",
+          "snapshot": {
+            "tournament": "Лига 1 (Франция), тир-1",
+            "match": "Ницца — ПСЖ",
+            "start": "21.11, 19:15 МСК",
+            "bet": "П2 (победа ПСЖ)",
+            "odds": "1.45",
+            "confidence": 4,
+            "model_prob": {
+              "value": 0.72,
+              "source": "ClubElo"
+            },
+            "reason": "ClubElo даёт ПСЖ 72%, рынок без маржи ~65%; наша оценка 69% против 69% в линии 1.45. Перевеса над линией нет — прогноз на более вероятный исход.",
+            "facts": [
+              "ПСЖ: 7 побед, 2 ничьи, 1 поражение в 10 турах (ESPN)",
+              "Ницца: 5-2-3 (ESPN)",
+              "Линия ESPN: +500 / +400 / −220, тотал 3.5"
+            ],
+            "against": [
+              "Ницца дома набирает очки (5 побед в 10 турах)",
+              "Рынок оценивает ПСЖ ниже, чем Elo"
+            ],
+            "uncertainty": "Нет подтверждённых составов и сведений о травмах на момент сбора.",
+            "data_quality": {
+              "level": "medium",
+              "note": "ESPN (таблица, линия) + ClubElo; составов нет"
+            },
+            "sources": [
+              {
+                "title": "ESPN — Nice vs PSG",
+                "url": "https://www.espn.com/soccer/match/_/gameId/401876398"
+              },
+              {
+                "title": "ClubElo — Paris SG",
+                "url": "http://clubelo.com/ParisSG"
+              }
+            ],
+            "format": "90 минут"
+          }
         }
       ],
-      "format": "90 минут",
-      "market_prob": 0.69,
-      "status": "withdrawn",
-      "result": null,
-      "versions": [],
       "status_log": [
         {
           "at": "2026-11-21T07:16+03:00",
           "from": "pending",
           "to": "withdrawn",
           "note": "снят с публикации до начала события"
+        },
+        {
+          "at": "2026-11-21T16:28+03:00",
+          "from": "withdrawn",
+          "to": "pending",
+          "note": "прогноз снова опубликован до начала"
         }
-      ]
+      ],
+      "tournament": "Лига 1 2026/27, 11-й тур",
+      "match": "Ницца — ПСЖ",
+      "start": "21.11, 19:15 МСК",
+      "bet": "П2 (победа ПСЖ)",
+      "odds": "1.48",
+      "confidence": 2,
+      "model_prob": {
+        "value": 0.732,
+        "source": "ClubElo"
+      },
+      "reason": "ClubElo даёт 73%, линия без маржи — 64%. Наша оценка 69% против 68% в коэффициенте 1.48: перевес +1,2 п.п.",
+      "facts": [
+        "ПСЖ — 1-е место, 23 очка в 10 матчах (7-2-1), разница +12 — ESPN",
+        "Ницца — 6-е место, 17 очков, разница +3 — ESPN",
+        "ПСЖ выиграл 4 из 5 последних матчей (DWWWW) — ESPN"
+      ],
+      "against": [
+        "Ницца выиграла 3 из 5 последних матчей (DWWLW)",
+        "Выезд к сопернику из верхней половины"
+      ],
+      "uncertainty": "Нет подтверждённых данных о стартовых составах.",
+      "data_quality": {
+        "level": "medium",
+        "note": "Таблица и форма — ESPN, модель — ClubElo"
+      },
+      "sources": [
+        {
+          "title": "ESPN — fra.1",
+          "url": "https://www.espn.com/soccer/scoreboard/_/date/20261121/league/fra.1"
+        },
+        {
+          "title": "ClubElo — прогнозы матчей",
+          "url": "https://clubelo.com/Fixtures"
+        }
+      ],
+      "format": "Футбол, 90 минут",
+      "updated_at": "2026-11-21T16:28+03:00"
+    },
+    {
+      "id": "football-20261121-12mh8qb",
+      "sport": "football",
+      "sport_name": "Футбол",
+      "home": "ГАИС",
+      "away": "Вестерос",
+      "event_date": "2026-11-21",
+      "start_iso": "2026-11-21T19:30+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T16:28+03:00",
+      "model_version": "v4.1",
+      "tournament": "Аллсвенскан 2026, 29-й тур",
+      "match": "ГАИС — Вестерос",
+      "start": "21.11, 19:30 МСК",
+      "bet": "П1 (победа ГАИС)",
+      "odds": "2.40",
+      "confidence": 2,
+      "model_prob": {
+        "value": 0.46,
+        "source": "ClubElo"
+      },
+      "reason": "ClubElo даёт 46%, линия без маржи — 39%. Наша оценка 43% против 42% в коэффициенте 2.40: перевес +1,0 п.п.",
+      "facts": [
+        "ГАИС — 9-е место, 40 очков в 28 матчах, разница +8 — ESPN",
+        "Вестерос — 6-е место, 45 очков, разница +2 — ESPN",
+        "ГАИС выиграл 3 из 5 последних (WWWDL) — ESPN"
+      ],
+      "against": [
+        "Вестерос выше в таблице",
+        "Конец сезона — мотивация может отличаться"
+      ],
+      "uncertainty": "Нет подтверждённых данных о стартовых составах.",
+      "data_quality": {
+        "level": "medium",
+        "note": "Таблица и форма — ESPN, модель — ClubElo"
+      },
+      "sources": [
+        {
+          "title": "ESPN — swe.1",
+          "url": "https://www.espn.com/soccer/scoreboard/_/date/20261121/league/swe.1"
+        },
+        {
+          "title": "ClubElo — прогнозы матчей",
+          "url": "https://clubelo.com/Fixtures"
+        }
+      ],
+      "format": "Футбол, 90 минут",
+      "market_prob": 0.417,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
     },
     {
       "id": "dota2-20261121-1t9hd15",
@@ -14591,6 +14717,59 @@
           "note": "снят с публикации до начала события"
         }
       ]
+    },
+    {
+      "id": "football-20261121-1xd4r28",
+      "sport": "football",
+      "sport_name": "Футбол",
+      "home": "Парма",
+      "away": "Рома",
+      "event_date": "2026-11-21",
+      "start_iso": "2026-11-21T20:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T16:28+03:00",
+      "model_version": "v4.1",
+      "tournament": "Серия A 2026/27, 12-й тур",
+      "match": "Парма — Рома",
+      "start": "21.11, 20:00 МСК",
+      "bet": "Ничья (X)",
+      "odds": "6.00",
+      "confidence": 3,
+      "model_prob": {
+        "value": 0.255,
+        "source": "ClubElo"
+      },
+      "reason": "ClubElo даёт 26%, линия без маржи — 15%. Наша оценка 21% против 17% в коэффициенте 6.00: перевес +3,8 п.п.",
+      "facts": [
+        "Рома — 3-е место, 27 очков в 11 матчах (8-3-0), разница +21 — ESPN, 21.11",
+        "Парма — 16-е место, 8 очков (2-2-7), разница −8 — ESPN",
+        "Форма: Парма LWDLL, Рома WLWWD — ESPN"
+      ],
+      "against": [
+        "Рома не проиграла ни одного матча",
+        "Ничья — редкий исход: даже по модели 1 шанс из 4"
+      ],
+      "uncertainty": "Нет подтверждённых данных о стартовых составах.",
+      "data_quality": {
+        "level": "medium",
+        "note": "Таблица и форма — ESPN, модель — ClubElo"
+      },
+      "sources": [
+        {
+          "title": "ESPN — ita.1",
+          "url": "https://www.espn.com/soccer/scoreboard/_/date/20261121/league/ita.1"
+        },
+        {
+          "title": "ClubElo — прогнозы матчей",
+          "url": "https://clubelo.com/Fixtures"
+        }
+      ],
+      "format": "Футбол, 90 минут",
+      "market_prob": 0.167,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
     },
     {
       "id": "football-20261121-4bwv2l",
@@ -14773,6 +14952,59 @@
       ]
     },
     {
+      "id": "football-20261121-9dtyya",
+      "sport": "football",
+      "sport_name": "Футбол",
+      "home": "Эмполи",
+      "away": "Пиза",
+      "event_date": "2026-11-21",
+      "start_iso": "2026-11-21T21:30+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T16:28+03:00",
+      "model_version": "v4.1",
+      "tournament": "Серия B 2026/27",
+      "match": "Эмполи — Пиза",
+      "start": "21.11, 21:30 МСК",
+      "bet": "Ничья (X)",
+      "odds": "3.75",
+      "confidence": 2,
+      "model_prob": {
+        "value": 0.321,
+        "source": "ClubElo"
+      },
+      "reason": "ClubElo даёт 32%, линия без маржи — 25%. Наша оценка 29% против 27% в коэффициенте 3.75: перевес +2,0 п.п.",
+      "facts": [
+        "Пиза — 8-е место, 16 очков в 11 матчах, разница +3 — ESPN",
+        "Эмполи — 18-е место, 9 очков, разница −7 — ESPN",
+        "У обеих по 3 ничьи в 5 последних матчах (DDLLD и DLDDW) — ESPN"
+      ],
+      "against": [
+        "Пиза выше в таблице и считается фаворитом",
+        "Эмполи три матча без побед — может пойти ва-банк"
+      ],
+      "uncertainty": "Нет подтверждённых данных о стартовых составах.",
+      "data_quality": {
+        "level": "medium",
+        "note": "Таблица и форма — ESPN, модель — ClubElo"
+      },
+      "sources": [
+        {
+          "title": "ESPN — ita.2",
+          "url": "https://www.espn.com/soccer/scoreboard/_/date/20261121/league/ita.2"
+        },
+        {
+          "title": "ClubElo — прогнозы матчей",
+          "url": "https://clubelo.com/Fixtures"
+        }
+      ],
+      "format": "Футбол, 90 минут",
+      "market_prob": 0.267,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
       "id": "tennis-20261121-apcp3b",
       "sport": "tennis",
       "sport_name": "Теннис",
@@ -14830,6 +15062,59 @@
           "note": "снят с публикации до начала события"
         }
       ]
+    },
+    {
+      "id": "football-20261121-1c28e9q",
+      "sport": "football",
+      "sport_name": "Футбол",
+      "home": "Ланс",
+      "away": "Тулуза",
+      "event_date": "2026-11-21",
+      "start_iso": "2026-11-21T22:45+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T16:28+03:00",
+      "model_version": "v4.1",
+      "tournament": "Лига 1 2026/27, 11-й тур",
+      "match": "Ланс — Тулуза",
+      "start": "21.11, 22:45 МСК",
+      "bet": "П1 (победа Ланса)",
+      "odds": "2.15",
+      "confidence": 2,
+      "model_prob": {
+        "value": 0.53,
+        "source": "ClubElo"
+      },
+      "reason": "ClubElo даёт 53%, линия без маржи — 44%. Наша оценка 49% против 47% в коэффициенте 2.15: перевес +2,1 п.п.",
+      "facts": [
+        "Ланс — 11-е место, 13 очков в 10 матчах, разница +2 — ESPN, 21.11",
+        "Тулуза — 12-е место, 13 очков, разница +1 — ESPN",
+        "Ланс играет дома на «Боллар-Делелис» — ESPN"
+      ],
+      "against": [
+        "Ланс проиграл 4 из 5 последних матчей (LLLWL)",
+        "Тулуза проиграла лишь 1 из 5 последних (WLDWD)"
+      ],
+      "uncertainty": "Нет подтверждённых данных о стартовых составах.",
+      "data_quality": {
+        "level": "medium",
+        "note": "Таблица и форма — ESPN, модель — ClubElo"
+      },
+      "sources": [
+        {
+          "title": "ESPN — fra.1",
+          "url": "https://www.espn.com/soccer/scoreboard/_/date/20261121/league/fra.1"
+        },
+        {
+          "title": "ClubElo — прогнозы матчей",
+          "url": "https://clubelo.com/Fixtures"
+        }
+      ],
+      "format": "Футбол, 90 минут",
+      "market_prob": 0.465,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
     },
     {
       "id": "football-20261121-1hfvi9w",
@@ -14901,34 +15186,95 @@
       "start_approx": false,
       "published_at": "2026-11-21T00:29+03:00",
       "model_version": "v3",
+      "market_prob": 0.213,
+      "status": "pending",
+      "result": null,
+      "versions": [
+        {
+          "at": "2026-11-21T00:29+03:00",
+          "replaced_at": "2026-11-21T16:28+03:00",
+          "reason": "плановое обновление",
+          "snapshot": {
+            "tournament": "Премьершип Шотландии 2026/27",
+            "match": "Мотеруэлл — Рейнджерс",
+            "start": "21.11, 23:00 МСК",
+            "bet": "Ничья (X)",
+            "odds": "4.70",
+            "confidence": 2,
+            "model_prob": {
+              "value": 0.287,
+              "source": "ClubElo"
+            },
+            "reason": "Рейнджерс сыграли вничью в 3 из 5 последних матчей; ClubElo оценивает ничью в 29%, линия — в 20%. Оценка 24% выше рыночных 21% (+3 п.п.), ставка рискованная.",
+            "facts": [
+              "Рейнджерс — 2-е место, 27 очков после 12 туров (8-3-1), разница +12 — ESPN",
+              "Мотеруэлл — 9-е место, 13 очков (3-4-6), разница −6 — ESPN",
+              "Форма Рейнджерс — DWDWD, Мотеруэлла — DWDLL — ESPN, 21.11"
+            ],
+            "against": [
+              "Рейнджерс заметно сильнее по таблице и разнице мячей",
+              "Ничья — редкий исход, даже 24% означает, что в 3 случаях из 4 она не сыграет"
+            ],
+            "uncertainty": "Нет подтверждённых данных о составах.",
+            "data_quality": {
+              "level": "medium",
+              "note": "ESPN + ClubElo"
+            },
+            "sources": [
+              {
+                "title": "ESPN — Премьершип, 21.11",
+                "url": "https://www.espn.com/soccer/scoreboard/_/date/20261121/league/sco.1"
+              },
+              {
+                "title": "ClubElo — прогнозы матчей",
+                "url": "https://clubelo.com/Fixtures"
+              }
+            ]
+          }
+        }
+      ],
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "withdrawn",
+          "note": "снят с публикации до начала события"
+        },
+        {
+          "at": "2026-11-21T16:28+03:00",
+          "from": "withdrawn",
+          "to": "pending",
+          "note": "прогноз снова опубликован до начала"
+        }
+      ],
       "tournament": "Премьершип Шотландии 2026/27",
       "match": "Мотеруэлл — Рейнджерс",
       "start": "21.11, 23:00 МСК",
       "bet": "Ничья (X)",
       "odds": "4.70",
-      "confidence": 2,
+      "confidence": 3,
       "model_prob": {
-        "value": 0.287,
+        "value": 0.285,
         "source": "ClubElo"
       },
-      "reason": "Рейнджерс сыграли вничью в 3 из 5 последних матчей; ClubElo оценивает ничью в 29%, линия — в 20%. Оценка 24% выше рыночных 21% (+3 п.п.), ставка рискованная.",
+      "reason": "ClubElo даёт 28%, линия без маржи — 20%. Наша оценка 24% против 21% в коэффициенте 4.70: перевес +3,1 п.п.",
       "facts": [
-        "Рейнджерс — 2-е место, 27 очков после 12 туров (8-3-1), разница +12 — ESPN",
+        "Рейнджерс — 2-е место, 27 очков в 12 матчах (8-3-1), разница +12 — ESPN",
         "Мотеруэлл — 9-е место, 13 очков (3-4-6), разница −6 — ESPN",
-        "Форма Рейнджерс — DWDWD, Мотеруэлла — DWDLL — ESPN, 21.11"
+        "Рейнджерс сыграли вничью в 3 из 5 последних (DWDWD) — ESPN"
       ],
       "against": [
-        "Рейнджерс заметно сильнее по таблице и разнице мячей",
-        "Ничья — редкий исход, даже 24% означает, что в 3 случаях из 4 она не сыграет"
+        "Рейнджерс заметно сильнее по таблице",
+        "Ничья даже по модели — меньше 30%"
       ],
-      "uncertainty": "Нет подтверждённых данных о составах.",
+      "uncertainty": "Нет подтверждённых данных о стартовых составах.",
       "data_quality": {
         "level": "medium",
-        "note": "ESPN + ClubElo"
+        "note": "Таблица и форма — ESPN, модель — ClubElo"
       },
       "sources": [
         {
-          "title": "ESPN — Премьершип, 21.11",
+          "title": "ESPN — sco.1",
           "url": "https://www.espn.com/soccer/scoreboard/_/date/20261121/league/sco.1"
         },
         {
@@ -14936,18 +15282,253 @@
           "url": "https://clubelo.com/Fixtures"
         }
       ],
-      "market_prob": 0.213,
-      "status": "withdrawn",
+      "format": "Футбол, 90 минут",
+      "updated_at": "2026-11-21T16:28+03:00"
+    },
+    {
+      "id": "hockey-20261122-ovt2hh",
+      "sport": "hockey",
+      "sport_name": "Хоккей",
+      "home": "Нэшвилл",
+      "away": "Питтсбург",
+      "event_date": "2026-11-22",
+      "start_iso": "2026-11-22T02:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T16:28+03:00",
+      "model_version": "v4.1",
+      "tournament": "НХЛ 2026/27, регулярный сезон",
+      "match": "Нэшвилл — Питтсбург",
+      "start": "22.11, 02:00 МСК",
+      "bet": "П1 (победа Нэшвилла, с ОТ)",
+      "odds": "1.74",
+      "confidence": 3,
+      "reason": "Своя оценка по таблице — 75%, линия без маржи — 55%. Итог 61% против 57% в коэффициенте 1.74: перевес +3,7 п.п. Внешней модели для НХЛ нет, поэтому рынок весит 70%.",
+      "facts": [
+        "Нэшвилл — 11-6-5, дома 6-3-2 — ESPN, 21.11",
+        "Питтсбург — 7-12-2, в гостях 3-7-1 — ESPN",
+        "У Питтсбурга травмирован Евгений Малкин — ESPN"
+      ],
+      "against": [
+        "Любой матч НХЛ близок к лотерее",
+        "Модель по таблице простая"
+      ],
+      "uncertainty": "Стартовые вратари не объявлены.",
+      "data_quality": {
+        "level": "medium",
+        "note": "Таблица и линия — ESPN; модель простая"
+      },
+      "sources": [
+        {
+          "title": "ESPN — НХЛ, расписание и линия",
+          "url": "https://www.espn.com/nhl/scoreboard/_/date/20261121"
+        },
+        {
+          "title": "ESPN — таблица НХЛ",
+          "url": "https://www.espn.com/nhl/standings"
+        }
+      ],
+      "format": "Хоккей, с овертаймом и буллитами",
+      "market_prob": 0.575,
+      "status": "pending",
       "result": null,
       "versions": [],
-      "status_log": [
+      "status_log": []
+    },
+    {
+      "id": "hockey-20261122-1931to9",
+      "sport": "hockey",
+      "sport_name": "Хоккей",
+      "home": "Монреаль",
+      "away": "Филадельфия",
+      "event_date": "2026-11-22",
+      "start_iso": "2026-11-22T03:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T16:28+03:00",
+      "model_version": "v4.1",
+      "tournament": "НХЛ 2026/27, регулярный сезон",
+      "match": "Монреаль — Филадельфия",
+      "start": "22.11, 03:00 МСК",
+      "bet": "П1 (победа Монреаля, с ОТ)",
+      "odds": "1.60",
+      "confidence": 2,
+      "reason": "Своя оценка по таблице — 77%, линия без маржи — 60%. Итог 65% против 63% в коэффициенте 1.60: перевес +2,7 п.п. Внешней модели для НХЛ нет, поэтому рынок весит 70%.",
+      "facts": [
+        "Монреаль — 14-5-4, дома 5-3-3 — ESPN",
+        "Филадельфия — 8-11-6, в гостях 4-6-3 — ESPN",
+        "У Монреаля травмирован Майк Мэтисон — ESPN"
+      ],
+      "against": [
+        "Монреаль дома выигрывает реже, чем в гостях",
+        "Филадельфия часто доводит до овертайма (6 поражений в ОТ)"
+      ],
+      "uncertainty": "Стартовые вратари не объявлены.",
+      "data_quality": {
+        "level": "medium",
+        "note": "Таблица и линия — ESPN; модель простая"
+      },
+      "sources": [
         {
-          "at": "2026-11-21T07:16+03:00",
-          "from": "pending",
-          "to": "withdrawn",
-          "note": "снят с публикации до начала события"
+          "title": "ESPN — НХЛ, расписание и линия",
+          "url": "https://www.espn.com/nhl/scoreboard/_/date/20261121"
+        },
+        {
+          "title": "ESPN — таблица НХЛ",
+          "url": "https://www.espn.com/nhl/standings"
         }
-      ]
+      ],
+      "format": "Хоккей, с овертаймом и буллитами",
+      "market_prob": 0.625,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "hockey-20261122-4mb73r",
+      "sport": "hockey",
+      "sport_name": "Хоккей",
+      "home": "Детройт",
+      "away": "Айлендерс",
+      "event_date": "2026-11-22",
+      "start_iso": "2026-11-22T03:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T16:28+03:00",
+      "model_version": "v4.1",
+      "tournament": "НХЛ 2026/27, регулярный сезон",
+      "match": "Детройт — Айлендерс",
+      "start": "22.11, 03:00 МСК",
+      "bet": "П2 (победа Айлендерс, с ОТ)",
+      "odds": "1.82",
+      "confidence": 2,
+      "reason": "Своя оценка по таблице — 63%, линия без маржи — 53%. Итог 56% против 55% в коэффициенте 1.82: перевес +0,8 п.п. Внешней модели для НХЛ нет, поэтому рынок весит 70%.",
+      "facts": [
+        "Айлендерс — 10-6-5, в гостях 5-3-3 — ESPN",
+        "Детройт — 8-11-3, дома 4-6-1 — ESPN",
+        "Линия ESPN: 2.02 / 1.82"
+      ],
+      "against": [
+        "Детройт дома",
+        "Перевес меньше 1 п.п."
+      ],
+      "uncertainty": "Стартовые вратари не объявлены.",
+      "data_quality": {
+        "level": "medium",
+        "note": "Таблица и линия — ESPN; модель простая"
+      },
+      "sources": [
+        {
+          "title": "ESPN — НХЛ, расписание и линия",
+          "url": "https://www.espn.com/nhl/scoreboard/_/date/20261121"
+        },
+        {
+          "title": "ESPN — таблица НХЛ",
+          "url": "https://www.espn.com/nhl/standings"
+        }
+      ],
+      "format": "Хоккей, с овертаймом и буллитами",
+      "market_prob": 0.549,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "hockey-20261122-59ag0i",
+      "sport": "hockey",
+      "sport_name": "Хоккей",
+      "home": "Оттава",
+      "away": "Лос-Анджелес",
+      "event_date": "2026-11-22",
+      "start_iso": "2026-11-22T03:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T16:28+03:00",
+      "model_version": "v4.1",
+      "tournament": "НХЛ 2026/27, регулярный сезон",
+      "match": "Оттава — Лос-Анджелес",
+      "start": "22.11, 03:00 МСК",
+      "bet": "П1 (победа Оттавы, с ОТ)",
+      "odds": "1.57",
+      "confidence": 2,
+      "reason": "Своя оценка по таблице — 79%, линия без маржи — 61%. Итог 66% против 64% в коэффициенте 1.57: перевес +2,6 п.п. Внешней модели для НХЛ нет, поэтому рынок весит 70%.",
+      "facts": [
+        "Оттава — 14-6-3, дома 7-2-2 — ESPN",
+        "Лос-Анджелес — 7-11-2, в гостях 5-3-2 — ESPN",
+        "Линия ESPN: 1.57 / 2.45"
+      ],
+      "against": [
+        "Лос-Анджелес на выезде играет лучше, чем дома",
+        "Перевес небольшой"
+      ],
+      "uncertainty": "Стартовые вратари не объявлены.",
+      "data_quality": {
+        "level": "medium",
+        "note": "Таблица и линия — ESPN; модель простая"
+      },
+      "sources": [
+        {
+          "title": "ESPN — НХЛ, расписание и линия",
+          "url": "https://www.espn.com/nhl/scoreboard/_/date/20261121"
+        },
+        {
+          "title": "ESPN — таблица НХЛ",
+          "url": "https://www.espn.com/nhl/standings"
+        }
+      ],
+      "format": "Хоккей, с овертаймом и буллитами",
+      "market_prob": 0.637,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "hockey-20261122-hnfszy",
+      "sport": "hockey",
+      "sport_name": "Хоккей",
+      "home": "Бостон",
+      "away": "Вашингтон",
+      "event_date": "2026-11-22",
+      "start_iso": "2026-11-22T03:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T16:28+03:00",
+      "model_version": "v4.1",
+      "tournament": "НХЛ 2026/27, регулярный сезон",
+      "match": "Бостон — Вашингтон",
+      "start": "22.11, 03:00 МСК",
+      "bet": "П1 (победа Бостона, с ОТ)",
+      "odds": "1.83",
+      "confidence": 2,
+      "reason": "Своя оценка по таблице — 69%, линия без маржи — 52%. Итог 57% против 55% в коэффициенте 1.83: перевес +2,6 п.п. Внешней модели для НХЛ нет, поэтому рынок весит 70%.",
+      "facts": [
+        "Бостон — 14-7-1, дома 8-4-0 — ESPN",
+        "Вашингтон — 10-10-0, в гостях 3-4-0 — ESPN",
+        "Линия ESPN: 1.83 / 2.00"
+      ],
+      "against": [
+        "У Вашингтона ровно 50% побед",
+        "Перевес небольшой"
+      ],
+      "uncertainty": "Стартовые вратари не объявлены.",
+      "data_quality": {
+        "level": "medium",
+        "note": "Таблица и линия — ESPN; модель простая"
+      },
+      "sources": [
+        {
+          "title": "ESPN — НХЛ, расписание и линия",
+          "url": "https://www.espn.com/nhl/scoreboard/_/date/20261121"
+        },
+        {
+          "title": "ESPN — таблица НХЛ",
+          "url": "https://www.espn.com/nhl/standings"
+        }
+      ],
+      "format": "Хоккей, с овертаймом и буллитами",
+      "market_prob": 0.546,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
     },
     {
       "id": "basketball-20261122-1cmjg6",
@@ -15067,6 +15648,55 @@
       ]
     },
     {
+      "id": "hockey-20261122-514jy8",
+      "sport": "hockey",
+      "sport_name": "Хоккей",
+      "home": "Ванкувер",
+      "away": "Миннесота",
+      "event_date": "2026-11-22",
+      "start_iso": "2026-11-22T06:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T16:28+03:00",
+      "model_version": "v4.1",
+      "tournament": "НХЛ 2026/27, регулярный сезон",
+      "match": "Ванкувер — Миннесота",
+      "start": "22.11, 06:00 МСК",
+      "bet": "П2 (победа Миннесоты, с ОТ)",
+      "odds": "1.34",
+      "confidence": 3,
+      "reason": "Своя оценка по таблице — 90%, линия без маржи — 72%. Итог 77% против 75% в коэффициенте 1.34: перевес +2,5 п.п. Внешней модели для НХЛ нет, поэтому рынок весит 70%.",
+      "facts": [
+        "Миннесота — 17-3-4, в гостях 11-3-2 — ESPN",
+        "Ванкувер — 5-18-1, дома 1-9-0 — ESPN",
+        "Линия ESPN: 3.40 / 1.34"
+      ],
+      "against": [
+        "Ванкувер дома может сыграть на самолюбии",
+        "Низкий кэф — одна осечка съедает несколько выигрышей"
+      ],
+      "uncertainty": "Стартовые вратари не объявлены.",
+      "data_quality": {
+        "level": "medium",
+        "note": "Таблица и линия — ESPN; модель простая"
+      },
+      "sources": [
+        {
+          "title": "ESPN — НХЛ, расписание и линия",
+          "url": "https://www.espn.com/nhl/scoreboard/_/date/20261121"
+        },
+        {
+          "title": "ESPN — таблица НХЛ",
+          "url": "https://www.espn.com/nhl/standings"
+        }
+      ],
+      "format": "Хоккей, с овертаймом и буллитами",
+      "market_prob": 0.746,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
       "id": "hockey-20261122-hl60kk",
       "sport": "hockey",
       "sport_name": "Хоккей",
@@ -15120,6 +15750,271 @@
           "note": "снят с публикации до начала события"
         }
       ]
+    },
+    {
+      "id": "football-20261122-tly3t9",
+      "sport": "football",
+      "sport_name": "Футбол",
+      "home": "Кайзерслаутерн",
+      "away": "Динамо Дрезден",
+      "event_date": "2026-11-22",
+      "start_iso": "2026-11-22T15:30+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T16:28+03:00",
+      "model_version": "v4.1",
+      "tournament": "2. Бундеслига 2026/27, 12-й тур",
+      "match": "Кайзерслаутерн — Динамо Дрезден",
+      "start": "22.11, 15:30 МСК",
+      "bet": "П1 (победа Кайзерслаутерна)",
+      "odds": "2.15",
+      "confidence": 2,
+      "model_prob": {
+        "value": 0.514,
+        "source": "ClubElo"
+      },
+      "reason": "ClubElo даёт 51%, линия без маржи — 44%. Наша оценка 48% против 47% в коэффициенте 2.15: перевес +1,0 п.п.",
+      "facts": [
+        "Кайзерслаутерн — 4-е место, 21 очко в 11 матчах, разница +3 — ESPN",
+        "Динамо Дрезден — 16-е место, 11 очков, разница −5 — ESPN",
+        "Кайзерслаутерн выиграл 4 из 5 последних (WLWWW) — ESPN"
+      ],
+      "against": [
+        "Дрезден выиграл 3 из 5 последних (WLWLW)",
+        "Перевес над линией небольшой"
+      ],
+      "uncertainty": "Нет подтверждённых данных о стартовых составах.",
+      "data_quality": {
+        "level": "medium",
+        "note": "Таблица и форма — ESPN, модель — ClubElo"
+      },
+      "sources": [
+        {
+          "title": "ESPN — ger.2",
+          "url": "https://www.espn.com/soccer/scoreboard/_/date/20261122/league/ger.2"
+        },
+        {
+          "title": "ClubElo — прогнозы матчей",
+          "url": "https://clubelo.com/Fixtures"
+        }
+      ],
+      "format": "Футбол, 90 минут",
+      "market_prob": 0.465,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "football-20261122-19u5kqs",
+      "sport": "football",
+      "sport_name": "Футбол",
+      "home": "Хеккен",
+      "away": "Эльфсборг",
+      "event_date": "2026-11-22",
+      "start_iso": "2026-11-22T16:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T16:28+03:00",
+      "model_version": "v4.1",
+      "tournament": "Аллсвенскан 2026, 29-й тур",
+      "match": "Хеккен — Эльфсборг",
+      "start": "22.11, 16:00 МСК",
+      "bet": "П2 (победа Эльфсборга)",
+      "odds": "3.60",
+      "confidence": 2,
+      "model_prob": {
+        "value": 0.315,
+        "source": "ClubElo"
+      },
+      "reason": "ClubElo даёт 32%, линия без маржи — 26%. Наша оценка 29% против 28% в коэффициенте 3.60: перевес +1,1 п.п.",
+      "facts": [
+        "Хеккен — 4-е место, 49 очков в 28 матчах, разница +17 — ESPN",
+        "Эльфсборг — 5-е место, 46 очков, разница +11 — ESPN",
+        "Форма: Хеккен LWDWW, Эльфсборг LWDDD — ESPN"
+      ],
+      "against": [
+        "Хеккен выше в таблице и дома",
+        "Эльфсборг три матча без побед"
+      ],
+      "uncertainty": "Нет подтверждённых данных о стартовых составах.",
+      "data_quality": {
+        "level": "medium",
+        "note": "Таблица и форма — ESPN, модель — ClubElo"
+      },
+      "sources": [
+        {
+          "title": "ESPN — swe.1",
+          "url": "https://www.espn.com/soccer/scoreboard/_/date/20261122/league/swe.1"
+        },
+        {
+          "title": "ClubElo — прогнозы матчей",
+          "url": "https://clubelo.com/Fixtures"
+        }
+      ],
+      "format": "Футбол, 90 минут",
+      "market_prob": 0.278,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "football-20261122-1awn699",
+      "sport": "football",
+      "sport_name": "Футбол",
+      "home": "Хорсенс",
+      "away": "Силькеборг",
+      "event_date": "2026-11-22",
+      "start_iso": "2026-11-22T16:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T16:28+03:00",
+      "model_version": "v4.1",
+      "tournament": "Суперлига Дании 2026/27",
+      "match": "Хорсенс — Силькеборг",
+      "start": "22.11, 16:00 МСК",
+      "bet": "П2 (победа Силькеборга)",
+      "odds": "2.95",
+      "confidence": 1,
+      "model_prob": {
+        "value": 0.38,
+        "source": "ClubElo"
+      },
+      "reason": "ClubElo даёт 38%, линия без маржи — 32%. Наша оценка 35% против 34% в коэффициенте 2.95: перевес +1,1 п.п.",
+      "facts": [
+        "Хорсенс в сезоне: 4 победы, 4 ничьи, 6 поражений — ESPN, 21.11",
+        "Силькеборг: 3 победы, 6 ничьих, 5 поражений — ESPN",
+        "Форма: Хорсенс LLWDD, Силькеборг WLDLD — ESPN"
+      ],
+      "against": [
+        "Хорсенс дома, у Силькеборга 1 победа в 5 матчах",
+        "Таблицу датской лиги ESPN не отдаёт — данных меньше"
+      ],
+      "uncertainty": "Нет подтверждённых данных о стартовых составах.",
+      "data_quality": {
+        "level": "low",
+        "note": "Таблица и форма — ESPN, модель — ClubElo"
+      },
+      "sources": [
+        {
+          "title": "ESPN — den.1",
+          "url": "https://www.espn.com/soccer/scoreboard/_/date/20261122/league/den.1"
+        },
+        {
+          "title": "ClubElo — прогнозы матчей",
+          "url": "https://clubelo.com/Fixtures"
+        }
+      ],
+      "format": "Футбол, 90 минут",
+      "market_prob": 0.339,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "football-20261122-1pkptv5",
+      "sport": "football",
+      "sport_name": "Футбол",
+      "home": "Пари",
+      "away": "Анже",
+      "event_date": "2026-11-22",
+      "start_iso": "2026-11-22T17:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T16:28+03:00",
+      "model_version": "v4.1",
+      "tournament": "Лига 1 2026/27, 11-й тур",
+      "match": "Пари — Анже",
+      "start": "22.11, 17:00 МСК",
+      "bet": "Ничья (X)",
+      "odds": "5.50",
+      "confidence": 3,
+      "model_prob": {
+        "value": 0.264,
+        "source": "ClubElo"
+      },
+      "reason": "ClubElo даёт 26%, линия без маржи — 17%. Наша оценка 22% против 18% в коэффициенте 5.50: перевес +3,7 п.п.",
+      "facts": [
+        "Пари — 3-е место, 20 очков в 10 матчах (6-2-2), разница +7 — ESPN, 21.11",
+        "Анже — 17-е место, 8 очков (2-2-6), разница −10 — ESPN",
+        "Форма: Пари WWLWL, Анже DLDLL — ESPN"
+      ],
+      "against": [
+        "Пари заметно сильнее и играет дома",
+        "Анже проиграл 6 из 10 матчей"
+      ],
+      "uncertainty": "Нет подтверждённых данных о стартовых составах.",
+      "data_quality": {
+        "level": "medium",
+        "note": "Таблица и форма — ESPN, модель — ClubElo"
+      },
+      "sources": [
+        {
+          "title": "ESPN — fra.1",
+          "url": "https://www.espn.com/soccer/scoreboard/_/date/20261122/league/fra.1"
+        },
+        {
+          "title": "ClubElo — прогнозы матчей",
+          "url": "https://clubelo.com/Fixtures"
+        }
+      ],
+      "format": "Футбол, 90 минут",
+      "market_prob": 0.182,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "football-20261122-gfslz1",
+      "sport": "football",
+      "sport_name": "Футбол",
+      "home": "Броммапойкарна",
+      "away": "Хальмстад",
+      "event_date": "2026-11-22",
+      "start_iso": "2026-11-22T18:30+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T16:28+03:00",
+      "model_version": "v4.1",
+      "tournament": "Аллсвенскан 2026, 29-й тур",
+      "match": "Броммапойкарна — Хальмстад",
+      "start": "22.11, 18:30 МСК",
+      "bet": "П1 (победа Броммапойкарны)",
+      "odds": "2.05",
+      "confidence": 2,
+      "model_prob": {
+        "value": 0.523,
+        "source": "ClubElo"
+      },
+      "reason": "ClubElo даёт 52%, линия без маржи — 45%. Наша оценка 49% против 49% в коэффициенте 2.05: перевеса нет (+0,0 п.п.), модель согласна с линией.",
+      "facts": [
+        "Броммапойкарна — 11-е место, 35 очков в 28 матчах, разница −5 — ESPN",
+        "Хальмстад — 16-е (последнее) место, 20 очков, разница −32 — ESPN",
+        "Хальмстад выиграл 5 матчей из 28 — ESPN"
+      ],
+      "against": [
+        "У Хальмстада мотивация бороться за выживание",
+        "Броммапойкарна выиграла 1 из 5 последних (DLDWL)"
+      ],
+      "uncertainty": "Нет подтверждённых данных о стартовых составах.",
+      "data_quality": {
+        "level": "medium",
+        "note": "Таблица и форма — ESPN, модель — ClubElo"
+      },
+      "sources": [
+        {
+          "title": "ESPN — swe.1",
+          "url": "https://www.espn.com/soccer/scoreboard/_/date/20261122/league/swe.1"
+        },
+        {
+          "title": "ClubElo — прогнозы матчей",
+          "url": "https://clubelo.com/Fixtures"
+        }
+      ],
+      "format": "Футбол, 90 минут",
+      "market_prob": 0.488,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
     },
     {
       "id": "hockey-20261122-dvhp3c",
@@ -15180,6 +16075,59 @@
           "note": "снят с публикации до начала события"
         }
       ]
+    },
+    {
+      "id": "football-20261122-1eocmu9",
+      "sport": "football",
+      "sport_name": "Футбол",
+      "home": "Марсель",
+      "away": "Ле-Ман",
+      "event_date": "2026-11-22",
+      "start_iso": "2026-11-22T22:45+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T16:28+03:00",
+      "model_version": "v4.1",
+      "tournament": "Лига 1 2026/27, 11-й тур",
+      "match": "Марсель — Ле-Ман",
+      "start": "22.11, 22:45 МСК",
+      "bet": "П1 (победа Марселя)",
+      "odds": "1.48",
+      "confidence": 2,
+      "model_prob": {
+        "value": 0.703,
+        "source": "ClubElo"
+      },
+      "reason": "ClubElo даёт 70%, линия без маржи — 64%. Наша оценка 67% против 68% в коэффициенте 1.48: перевеса нет (−0,3 п.п.), модель согласна с линией.",
+      "facts": [
+        "Марсель — 4-е место, 18 очков в 10 матчах, разница +8 — ESPN",
+        "Ле-Ман — 16-е место, 8 очков (1-5-4) — ESPN",
+        "Марсель выиграл 4 из 5 последних (WWWWL) — ESPN"
+      ],
+      "against": [
+        "Ле-Ман сыграл вничью 5 раз из 10",
+        "Перевеса над линией нет"
+      ],
+      "uncertainty": "Нет подтверждённых данных о стартовых составах.",
+      "data_quality": {
+        "level": "medium",
+        "note": "Таблица и форма — ESPN, модель — ClubElo"
+      },
+      "sources": [
+        {
+          "title": "ESPN — fra.1",
+          "url": "https://www.espn.com/soccer/scoreboard/_/date/20261122/league/fra.1"
+        },
+        {
+          "title": "ClubElo — прогнозы матчей",
+          "url": "https://clubelo.com/Fixtures"
+        }
+      ],
+      "format": "Футбол, 90 минут",
+      "market_prob": 0.676,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
     }
   ]
 }
