@@ -74,9 +74,13 @@ export function verifiedResult(row, sport, origin) {
   const season = id(row.season);
   const start = date(row.date);
   const end = date(row.completedDate);
+  const startTime = row.startedAt == null ? start : Date.parse(row.startedAt);
+  const endTime = row.endedAt == null ? end : Date.parse(row.endedAt);
   const score = row.score;
   if (!sourceId || !home || !away || home === away || !competition || !season ||
       !Number.isFinite(start) || !Number.isFinite(end) || end < start || row.status !== "completed" ||
+      !Number.isFinite(startTime) || !Number.isFinite(endTime) || endTime < startTime ||
+      Math.floor(startTime / DAY) * DAY !== start || Math.floor(endTime / DAY) * DAY !== end ||
       !pair(score) || score.some((n) => !Number.isSafeInteger(n) || n < 0)) return null;
   let rosters;
   let rules;
@@ -99,7 +103,7 @@ export function verifiedResult(row, sport, origin) {
     const bestOf = Number(row.bestOf);
     const winner = Math.max(...score);
     const loser = Math.min(...score);
-    if (row.unit !== "series" || !id(row.patch) ||
+    if (row.unit !== "series" || (row.patch != null && !id(row.patch)) ||
         (bestOf === 2 && sport === "dota2" ? winner + loser !== 2 :
           ![1, 3, 5].includes(bestOf) || winner !== (bestOf + 1) / 2 || loser >= winner)) return null;
     rules = `BO${bestOf}`;
@@ -109,7 +113,7 @@ export function verifiedResult(row, sport, origin) {
       if (rosters.flat().includes(null) || new Set(rosters.flat()).size !== 10) return null;
     }
   }
-  return ordered({ id: `${origin}:${sourceId}`, sport, start, available: end + 2 * DAY,
+  return ordered({ id: `${origin}:${sourceId}`, sport, start: startTime, end: endTime, available: endTime + 2 * DAY,
     home: `${origin}:${home}`, away: `${origin}:${away}`, competition: `${origin}:${competition}`,
     season, score, rules,
     patch: sport === "volleyball" ? undefined : id(row.patch), ...(rosters ? { rosters } : {}) });

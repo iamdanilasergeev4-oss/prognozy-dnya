@@ -17,7 +17,7 @@ test("esports accepts explicit completed series and keeps roster IDs with the pr
   assert.deepEqual(parsed.rosters[0], ["10", "6", "7", "8", "9"]);
   assert.equal(parsed.available, Date.parse("2024-01-04"));
   assert.equal(verifiedResult({ ...series, unit: "map", bestOf: 1, score: [1, 0] }, "cs2", "source"), null);
-  assert.equal(verifiedResult({ ...series, patch: undefined }, "cs2", "source"), null);
+  assert.equal(verifiedResult({ ...series, patch: undefined }, "cs2", "source").patch, null);
   const draw = { ...series, bestOf: 2, score: [1, 1] };
   assert.ok(verifiedResult(draw, "dota2", "source"));
   assert.equal(verifiedResult(draw, "cs2", "source"), null);

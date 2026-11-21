@@ -13,10 +13,10 @@ const withTemperature = (distribution, temperature) => {
 
 // Resample whole calendar weeks, preserving dependence between matches played
 // on the same weekend. Use paired differences and a fixed seed for replay.
-function interval(rows, candidate, metric) {
+export function pairedWeekInterval(rows, candidate, metric, control = "elo") {
   const blocks = [...Map.groupBy(rows, (row) => Math.floor(row.start / week)).values()]
     .map((block) => ({ count: block.length, sum: block.reduce((total, row) =>
-      total + metric(row.actual, row[candidate]) - metric(row.actual, row.elo), 0) }));
+      total + metric(row.actual, row[candidate]) - metric(row.actual, row[control]), 0) }));
   if (blocks.length < 8) return { weeks: blocks.length, low: null, high: null };
   let state = 20261122;
   const samples = Array.from({ length: 2000 }, () => {
@@ -52,7 +52,7 @@ export function compareFootballModels(rows, holdoutFrom) {
     holdoutFrom: new Date(holdoutFrom).toISOString(),
     metrics: Object.fromEntries(variants.map((key) => [key, metrics(evaluated, key)])),
     differencesVersusElo: Object.fromEntries(variants.slice(1).map((key) => [key, {
-      brier: interval(evaluated, key, brier), logLoss: interval(evaluated, key, logLoss),
+      brier: pairedWeekInterval(evaluated, key, brier), logLoss: pairedWeekInterval(evaluated, key, logLoss),
     }])),
     byDivision: Object.fromEntries([...Map.groupBy(evaluated, (row) => row.competition)]
       .map(([division, sample]) => [division, Object.fromEntries(variants.map((key) => [key, metrics(sample, key)]))])),
@@ -73,5 +73,5 @@ export function compareSparseModel(rows, holdoutFrom) {
     onlySparseMetrics: evaluateProbabilities(extra.map((row) => ({ actual: row.actual, probabilities: row.sparseModel }))),
     onlyElo: eligible.filter((row) => row.model && !row.sparseModel).length,
     metrics: { elo: metrics("elo"), sparse: metrics("sparse") },
-    differencesVersusElo: { brier: interval(paired, "sparse", brier), logLoss: interval(paired, "sparse", logLoss) } };
+    differencesVersusElo: { brier: pairedWeekInterval(paired, "sparse", brier), logLoss: pairedWeekInterval(paired, "sparse", logLoss) } };
 }

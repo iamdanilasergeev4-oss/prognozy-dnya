@@ -23,8 +23,11 @@ export function archiveBacktest(events, cutoff) {
   const baseline = createOutcomeModel();
   const shortForm = createSparseModel();
   const candidate = createOutcomeModel();
-  const observations = [...events].sort((a, b) => a.available - b.available || a.id.localeCompare(b.id));
-  const tests = events.filter((event) => event.start >= cutoff).sort((a, b) => a.start - b.start);
+  // Results without a known version count toward archive coverage. Matching
+  // model cohorts and the original patch-dependent control require a version.
+  const usable = events.filter((event) => !esports.has(event.sport) || event.patch);
+  const observations = [...usable].sort((a, b) => a.available - b.available || a.id.localeCompare(b.id));
+  const tests = usable.filter((event) => event.start >= cutoff).sort((a, b) => a.start - b.start);
   let cursor = 0;
   const rows = tests.map((event) => {
     while (cursor < observations.length && observations[cursor].available < event.start) {
@@ -57,12 +60,13 @@ export function archiveBacktest(events, cutoff) {
       .map(([key, sample]) => [key, summarize(sample)])) };
 }
 
-export async function runArchiveBacktest(sport, cutoffDate, paths, mapDirectory) {
+export async function runArchiveBacktest(sport, cutoffDate, paths, mapDirectory, asObserved = false) {
   const cutoff = Date.parse(cutoffDate);
   if (!sports.includes(sport) || !/^\d{4}-\d\d-\d\d$/.test(cutoffDate) || !Number.isFinite(cutoff) ||
       new Date(cutoff).toISOString().slice(0, 10) !== cutoffDate ||
-      (!paths.length && !(sport === "dota2" && mapDirectory)) || (mapDirectory && sport !== "dota2")) {
-    throw new Error("Usage: backtest-archive-sport.mjs <cs2|dota2|tennis|volleyball> <YYYY-MM-DD> [--dota-maps=<snapshot directory>] <files...>");
+      (!paths.length && !(sport === "dota2" && mapDirectory)) || (mapDirectory && sport !== "dota2") ||
+      (asObserved && sport === "tennis")) {
+    throw new Error("Usage: backtest-archive-sport.mjs <cs2|dota2|tennis|volleyball> <YYYY-MM-DD> [--as-observed] [--dota-maps=<snapshot directory>] <files...>");
   }
   const sources = [];
   const events = new Map();
@@ -79,10 +83,12 @@ export async function runArchiveBacktest(sport, cutoffDate, paths, mapDirectory)
       sources.push({ file: basename(path), sha256: hash, origin: "Jeff Sackmann", licence: "CC BY-NC-SA 4.0" });
       parsed = tennisSingles(text, file[1].toUpperCase());
     } else {
-      const { origin, url, rights, rows } = JSON.parse(text);
+      const { origin, url, rights, rows, capturedAt } = JSON.parse(text);
+      const captured = Date.parse(capturedAt);
       if (!/^[a-z][a-z0-9-]+$/.test(origin) || typeof rights !== "string" || !rights.trim() ||
-          new URL(url).protocol !== "https:" || !Array.isArray(rows)) throw new Error("Missing archive provenance");
-      sources.push({ file: basename(path), sha256: hash, origin, url, rights });
+          new URL(url).protocol !== "https:" || !Array.isArray(rows) ||
+          (asObserved && !Number.isFinite(captured))) throw new Error("Missing archive provenance");
+      sources.push({ file: basename(path), sha256: hash, origin, url, rights, capturedAt: capturedAt ?? null });
       parsed = rows.map((row) => verifiedResult(row, sport, origin));
     }
     for (const event of parsed) {
@@ -91,12 +97,15 @@ export async function runArchiveBacktest(sport, cutoffDate, paths, mapDirectory)
         continue;
       }
       const previous = events.get(event.id);
-      if (previous && JSON.stringify(previous) !== JSON.stringify(event)) conflicts.add(event.id);
-      events.set(event.id, event);
+      if (previous && JSON.stringify(previous.event) !== JSON.stringify(event)) conflicts.add(event.id);
+      const captured = Date.parse(sources.at(-1).capturedAt);
+      events.set(event.id, { event, captured: Math.min(previous?.captured ?? Infinity,
+        Number.isFinite(captured) ? captured : Infinity) });
     }
   }
   for (const conflict of conflicts) events.delete(conflict);
-  const accepted = [...events.values()];
+  const accepted = [...events.values()].map(({ event, captured }) => asObserved ?
+    { ...event, available: Math.max(event.available, captured) } : event);
   const circuits = Map.groupBy(accepted, (event) => event.competition);
   let mapInventory;
   if (mapDirectory) {
@@ -107,10 +116,11 @@ export async function runArchiveBacktest(sport, cutoffDate, paths, mapDirectory)
       tournaments: Object.fromEntries([...Map.groupBy(maps.values(), (map) => map.tournament || "unknown")]
         .map(([key, group]) => [key, group.length])) };
   }
-  return { sport, cutoff: cutoffDate, sources,
+  return { sport, cutoff: cutoffDate, availability: asObserved ? "captured" : "historical-delay", sources,
     data: { rejected, conflicts: conflicts.size, eligible: accepted.length,
       competitions: Object.fromEntries([...circuits].map(([name, rows]) => [name, rows.length])),
-      ...(esports.has(sport) ? { unit: "series", withRosters: accepted.filter((event) => event.rosters).length } : {}),
+      ...(esports.has(sport) ? { unit: "series", withRosters: accepted.filter((event) => event.rosters).length,
+        withPatch: accepted.filter((event) => event.patch).length } : {}),
       ...(mapInventory ? { mapInventory } : {}) },
     evaluation: archiveBacktest(accepted, cutoff) };
 }
@@ -120,5 +130,5 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   const option = "--dota-maps=";
   const maps = args.find((arg) => arg.startsWith(option))?.slice(option.length);
   console.log(JSON.stringify(await runArchiveBacktest(sport, cutoff,
-    args.filter((arg) => !arg.startsWith(option)), maps), null, 2));
+    args.filter((arg) => !arg.startsWith(option) && arg !== "--as-observed"), maps, args.includes("--as-observed")), null, 2));
 }
