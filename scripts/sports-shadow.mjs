@@ -60,6 +60,7 @@ export async function buildShadowReport({ rows, now, until, checkedAt, fetchData
       return [sport, { ...counts(group), reasons: Object.fromEntries([...Map.groupBy(
         group.filter((event) => event.analysisStatus !== "model_available"),
         (event) => event.verificationReason || event.analysisStatus)].map(([reason, events]) => [reason, events.length])),
+      historyAvailable: group.filter((event) => event.status === "confirmed" && event.checkpointHistory.every(Boolean)).length,
       availableSources, sourceFailures: reports.filter((item) => !["ok", "cached", "unchanged"].includes(item.status)).length,
       dateOnlyLeads: calendar.filter((event) => event.sport === sport).length, baseline: counts(original), legacy }];
     })) };
@@ -88,6 +89,8 @@ function assessDiscovery({ events, results, competitions }, forecastAt, checkedA
   const ambiguous = (event) => event.sources.some((source) => [event.home, event.away]
     .some((side) => sourceIds.get(identity(event, source, side))?.size > 1));
   const training = results.filter((event) => !ambiguous(event) && model.observe(event));
+  const cohort = (event) => JSON.stringify([event.sport, event.competition, event.season, event.rules, event.patch]);
+  const historyByCompetition = Map.groupBy(training, cohort);
   const createdAt = new Date(forecastAt).toISOString();
   const forecasts = [];
   const assessed = events.map((event) => {
@@ -102,7 +105,10 @@ function assessDiscovery({ events, results, competitions }, forecastAt, checkedA
         evidence: training.filter((row) => row.sport === event.sport && row.competition === event.competition &&
           row.season === event.season && row.rules === event.rules && row.patch === event.patch) });
     }
-    return { ...event, analysisStatus: predict ? "model_available" : event.status !== "confirmed" ? "schedule_needs_verification" :
+    const oldResults = historyByCompetition.get(cohort(event)) || [];
+    const checkpointHistory = [event.home, event.away]
+      .map((name) => oldResults.filter((record) => record.home === name || record.away === name).length);
+    return { ...event, checkpointHistory, analysisStatus: predict ? "model_available" : event.status !== "confirmed" ? "schedule_needs_verification" :
       !resolved ? "identity_needs_verification" :
       !contextVerified ? "format_or_patch_unverified" : !beforeDeadline ? "too_close_to_start" :
         !event.season ? "insufficient_results_or_context" : "insufficient_results",

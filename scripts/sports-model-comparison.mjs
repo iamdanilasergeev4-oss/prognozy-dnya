@@ -60,3 +60,18 @@ export function compareFootballModels(rows, holdoutFrom) {
       .map((key) => [key, metrics(marketRows, key)])) } : null,
   };
 }
+
+export function compareSparseModel(rows, holdoutFrom) {
+  const eligible = rows.filter((row) => row.start >= holdoutFrom);
+  const paired = eligible.filter((row) => row.model && row.sparseModel)
+    .map((row) => ({ ...row, elo: row.model, sparse: row.sparseModel }));
+  const extra = eligible.filter((row) => !row.model && row.sparseModel);
+  if (new Set(paired.map((row) => row.id)).size !== paired.length) throw new Error("Дубли в выборке базовой модели");
+  const metrics = (key) => evaluateProbabilities(paired.map((row) => ({ actual: row.actual, probabilities: row[key] })));
+  return { eligible: eligible.length, paired: paired.length,
+    onlySparse: extra.length,
+    onlySparseMetrics: evaluateProbabilities(extra.map((row) => ({ actual: row.actual, probabilities: row.sparseModel }))),
+    onlyElo: eligible.filter((row) => row.model && !row.sparseModel).length,
+    metrics: { elo: metrics("elo"), sparse: metrics("sparse") },
+    differencesVersusElo: { brier: interval(paired, "sparse", brier), logLoss: interval(paired, "sparse", logLoss) } };
+}

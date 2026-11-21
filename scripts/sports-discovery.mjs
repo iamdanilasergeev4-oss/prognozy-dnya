@@ -105,6 +105,7 @@ export function discover(rows, { now, until, improved = false }) {
   const grouped = Map.groupBy(claims, (row) => JSON.stringify([row.sport, competitionFor(row).id, pairKey(row)]));
   const events = [];
   const results = [];
+  const researchResults = [];
   const byCompetition = new Map();
   for (const group of grouped.values()) {
     const sorted = group.sort((a, b) => a.start - b.start);
@@ -151,6 +152,9 @@ export function discover(rows, { now, until, improved = false }) {
         rules: ["cs2", "dota2"].includes(first.sport) ? format : surface,
         homeField: first.sport === "football" && aligned && claims.every((row) => row.homeField === true),
         patch, sources: claims.map((row) => ({ title: row.source, id: row.id, url: row.url,
+          reportedStart: row.start, reportedStatus: row.status, format: row.format, surface: row.surface,
+          researchFormat: row.researchFormat ? `BO${row.researchFormat}` : null,
+          reportedScore: scoreInOrder(row), extra: row.extra,
           sourceCompetitionId: row.sourceCompetitionId, participantIds: normalizeIdentity(row.home) === home
             ? row.participantIds : row.participantIds?.slice().reverse() })),
         verificationReason,
@@ -173,9 +177,17 @@ export function discover(rows, { now, until, improved = false }) {
           claims.every((row) => JSON.stringify(scoreInOrder(row)) === JSON.stringify(score))) {
         results.push({ ...event, score });
       }
+      const scored = claims.find((row) => row.score);
+      const researchScore = scored && scoreInOrder(scored);
+      if (first.status === "finished" && cluster.at(-1).start + DAY < now && researchScore &&
+          !ambiguous && matchingStatus && matchingTime && consistentContext &&
+          claims.every((row) => (!row.extra || first.sport !== "football") &&
+            (!row.score || JSON.stringify(scoreInOrder(row)) === JSON.stringify(researchScore)))) {
+        researchResults.push({ ...event, score: researchScore });
+      }
     }
   }
-  return { events, results: results.sort((a, b) => a.start - b.start), competitions: [...byCompetition.values()] };
+  return { events, results: results.sort((a, b) => a.start - b.start), researchResults, competitions: [...byCompetition.values()] };
 }
 import { reconcileClaims } from "./sports-reconciliation.mjs";
 import { indexedOpenFootballUrl } from "./sports-openfootball.mjs";

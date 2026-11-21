@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import { createOutcomeModel, MODEL_VERSION } from "./sports-models.mjs";
 import { createFootballScoreModel } from "./sports-score-model.mjs";
+import { createSparseModel } from "./sports-sparse-model.mjs";
 
 const DAY = 86_400_000;
 const outcomes = ["home", "draw", "away"];
@@ -37,6 +38,7 @@ export function evaluateProbabilities(rows) {
 export function walkForward(events, testFrom) {
   const model = createOutcomeModel();
   const scores = createFootballScoreModel();
+  const sparse = createSparseModel();
   const sorted = [...events].sort((a, b) => a.start - b.start);
   const rows = [];
   const recentByTeam = new Map();
@@ -49,6 +51,7 @@ export function walkForward(events, testFrom) {
       const past = sorted[cursor++];
       if (!model.observe(past)) continue;
       scores.observe(past);
+      sparse.observe(past);
       for (const [i, team] of [past.home, past.away].entries()) {
         const key = formKey(past, team);
         recentByTeam.set(key, [...(recentByTeam.get(key) || []).slice(-2),
@@ -66,7 +69,7 @@ export function walkForward(events, testFrom) {
     const formPick = sample >= 2 && recent[side].filter((game) => game.won).length >= 2 &&
       rates[side] - rates[1 - side] >= (sample === 2 ? 0.5 : 2 / 3) ? ["home", "away"][side] : null;
     rows.push({ id: event.id, start: event.start, actual, formPick, model: modelPrediction?.probabilities,
-      scoreModel: scores.predict(event), market: event.market || null, sport: event.sport,
+      scoreModel: scores.predict(event), sparseModel: sparse.predict(event)?.probabilities, market: event.market || null, sport: event.sport,
       competition: event.competition, level: event.level, period: event.season });
   }
   return rows;

@@ -6,6 +6,8 @@ import { buildUpdate, DAY, esportsFormLinks, esportsResultLinks, FOOTBALL_FORM_D
 import { parseAtpHeadToHead, parseEnsiForm, parseEnsiResult, parseStrafeForm, sourceJobs } from "./sports-sources.mjs";
 import { buildShadowReport } from "./sports-shadow.mjs";
 import { loadResearchSources } from "./sports-research-sources.mjs";
+import { loadSeasonArchives, readResearchSnapshots, saveResearchSnapshot } from "./sports-research-history.mjs";
+import { compareHistory, makeHistorySnapshot } from "./sports-history-analysis.mjs";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const H = globalThis.HistoryCore;
@@ -251,8 +253,16 @@ async function preview(shadow = false) {
   if (shadow) {
     const until = Date.parse(`${H.mskDateOf(new Date(now + DAY).toISOString())}T00:00:00+03:00`) + DAY;
     const supplemental = await loadResearchSources({ cacheDir: join(root, ".sports-update", "source-cache-v2"), now, until });
-    const diagnostics = await buildShadowReport({ rows: data.rows, now, until, checkedAt: output.report.checkedAt,
+    const checkpoint = await buildShadowReport({ rows: data.rows, now, until, checkedAt: output.report.checkedAt,
       fetchData, legacyReport: output.report.sports, requestErrors: data.errors, clock: Date.now, supplemental, improve: true });
+    await writeFile(join(path, "checkpoint-c2b20e1.json"), json(checkpoint), { flag: "wx" });
+    const archive = await loadSeasonArchives({ events: checkpoint.assessed.filter((event) => event.status === "confirmed"), now, fetchData });
+    const observedAt = Date.now();
+    const snapshotsDir = join(root, ".sports-update", "research-history-v1");
+    await saveResearchSnapshot(snapshotsDir, makeHistorySnapshot({ rows: data.rows, supplemental,
+      archives: archive.results, archiveRequests: archive.requests, now, until, observedAt }));
+    const diagnostics = compareHistory({ ...checkpoint, requests: [...checkpoint.requests, ...archive.requests] },
+      await readResearchSnapshots(snapshotsDir, observedAt), observedAt);
     await writeFile(join(path, "diagnostics.json"), json(diagnostics), { flag: "wx" });
     log("info", "Диагностика нового движка сохранена", { coverage: diagnostics.coverage,
       predictions: diagnostics.forecastCount, trainingResults: diagnostics.trainingResults });

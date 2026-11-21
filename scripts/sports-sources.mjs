@@ -276,6 +276,7 @@ export function parseStrafe(html, sport, slug) {
       g.tournament?.name, status, `https://www.strafe.com/match/${g.slug}/`, {
         score: status === "finished" ? score(home?.score, away?.score) : null,
         format: g.format?.match(/^Best of ([1357])$/i)?.[1] ? `BO${g.format.at(-1)}` : null,
+          researchFormat: g.format?.match(/^(?:Best of\s+|BO)([1235])$/i)?.[1],
       });
   }).filter(Boolean);
 }
@@ -295,6 +296,7 @@ export function parseEnsi(html, sport = "cs2") {
     const scores = [...body.matchAll(/class="w5-mc__score">\s*(\d+)\s*<\/span>/g)].map((m) => m[1]);
     return event("Ensigame", sport, id, names[0], names[1], Date.parse(start),
       tournament, status, url, { format: format ? `BO${format}` : null, tier: tier ? Number(tier) : null,
+        researchFormat: body.match(/class="w5-mc__format">bo([1235])<\/span>/i)?.[1],
         score: status === "finished" ? score(...scores) : null });
   }).filter(Boolean);
 }

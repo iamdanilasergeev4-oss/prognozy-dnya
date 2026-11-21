@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import { join } from "node:path";
 import { historicalLeagues, parseEnglishSeason, parseOpenFootballSeason, summarizeEvaluation, walkForward } from "./sports-evaluation.mjs";
 import { MODEL_VERSION } from "./sports-models.mjs";
-import { compareFootballModels } from "./sports-model-comparison.mjs";
+import { compareFootballModels, compareSparseModel } from "./sports-model-comparison.mjs";
 import { indexedOpenFootballUrl } from "./sports-openfootball.mjs";
 
 const root = fileURLToPath(new URL("../.sports-update", import.meta.url));
@@ -75,6 +75,8 @@ const report = {
   byLevel: grouped("level"), bySeason: grouped("period"),
   modelComparison: compareFootballModels(evaluation.filter((row) => row.level !== "regional"), holdoutFrom),
   regionalComparison: compareFootballModels(evaluation.filter((row) => row.level === "regional"), Date.parse("2025-01-01")),
+  sparseComparison: compareSparseModel(evaluation.filter((row) => row.level !== "regional"), holdoutFrom),
+  sparseRegionalComparison: compareSparseModel(evaluation.filter((row) => row.level === "regional"), Date.parse("2025-01-01")),
   method: {
     scores: `${provider.slice(2)} published final scores on historical calendar dates with a two-calendar-day embargo. Historical feed snapshots are unavailable.`,
     benchmark: open ? "Market prices unavailable; fixed comparison is 45% home / 25% draw / 30% away." :

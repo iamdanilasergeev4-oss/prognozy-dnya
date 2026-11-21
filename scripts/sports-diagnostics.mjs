@@ -16,9 +16,14 @@ const reasons = {
   context_conflict: "расходится контекст", ambiguous_competition: "неясная лига", too_close_to_start: "скоро начало",
   format_or_patch_unverified: "не подтверждены формат или патч", identity_needs_verification: "не совпадают идентификаторы",
   insufficient_results_or_context: "не определён сезон", insufficient_results: "мало сопоставимых результатов",
+  source_conflict: "источники противоречат", only_secondary_schedule: "только вторичный календарь",
+  identity_conflict: "конфликт идентификаторов", season: "не определён сезон", series_format: "не известен формат серии",
+  surface: "не известно покрытие", doubles_model: "парный матч", history_sample: "недостаточно результатов",
+  history_context_or_identity: "история есть только в другом контексте или у одного участника",
 };
 const sports = Object.entries(shadow.sports).map(([sport, row]) =>
-  [sport, row.detected, row.confirmed, row.forecast, row.baseline ? `${row.baseline.detected} / ${row.baseline.confirmed} / ${row.baseline.forecast}` : null,
+  [sport, row.detected, row.confirmed, row.historyAvailable, row.forecast, row.checkpoint ?
+    `${row.checkpoint.detected} / ${row.checkpoint.confirmed} / ${row.checkpoint.historyAvailable} / ${row.checkpoint.forecast}` : null,
     (row.availableSources || row.legacy.publishers)?.join(", "),
     Object.entries(row.reasons || {}).map(([reason, count]) => `${reasons[reason] || reason} (${count})`).join(", ")]);
 const sources = shadow.requests.map((row) => [row.source, row.label || row.competition, row.status, row.scheduled ?? row.count, row.results, row.error]);
@@ -31,6 +36,14 @@ const showInterval = (item) => item?.low != null ? `[${format(item.low)}; ${form
 const comparisonTable = comparison ? table(["Модель", "Матчи", "Brier", "Log loss", "Δ Brier, 95%", "Δ Log loss, 95%"],
   Object.entries(comparison.metrics).map(([key, metric]) => [key, metric?.matches, format(metric?.brier), format(metric?.logLoss),
     showInterval(comparison.differencesVersusElo[key]?.brier), showInterval(comparison.differencesVersusElo[key]?.logLoss)])) : "";
+const sparseTable = backtest.sparseComparison ? table(["Выборка", "Общие матчи", "Brier Elo", "Brier формы", "Δ Brier, 95%"],
+  [backtest.sparseComparison, backtest.sparseRegionalComparison].map((entry, i) =>
+    [i ? "Региональные лиги" : "Национальные дивизионы", entry.paired, format(entry.metrics.elo?.brier),
+      format(entry.metrics.sparse?.brier), showInterval(entry.differencesVersusElo.brier)])) : "";
+const skipped = shadow.assessed.filter((row) => !row.predicted &&
+  ["independent", "official", "corroborated_unknown_origin"].includes(row.sourceTier))
+  .map((row) => [row.sport, row.match, row.tournament, row.historyMatches?.join(" / "), row.historySources?.join(", "),
+    row.missing.map((key) => reasons[key] || key).join(", "), row.potentialSources.join(", ")]);
 const plotPoints = (bins) => bins.map((bin) => {
   const x = 44 + bin.predicted * 275;
   const y = 265 - bin.actual * 225;
@@ -49,11 +62,18 @@ table{width:100%;border-collapse:collapse;margin-bottom:1.5rem}th,td{border-bott
 section{overflow:auto}svg{max-width:100%}</style><main>
 <h1>Диагностика спортивного движка</h1>
 <p>Проверено ${escape(shadow.checkedAt)}. Модель ${escape(shadow.modelVersion)} работает в пробном режиме.</p>
+${shadow.replay ? `<p>Снимок календаря ${escape(shadow.replay.checkpointAt)}. Отсечение истории ${escape(shadow.replay.cutoff)}.</p>` : ""}
+${shadow.savedHistory ? `<p>История: ${format(shadow.savedHistory.rows)} результатов, ${format(shadow.savedHistory.maps)}
+отдельных карт Dota 2, ${format(shadow.savedHistory.conflicts)} записей исключено при сверке.</p>` : ""}
 <p>Подтверждённые расписания найдены у ${format(shadow.coverage.confirmedSchedule)} из ${format(shadow.coverage.denominator)}
 соревнований, включённых в проверку охвата. В выборке для модели ${format(shadow.trainingResults)} сверенных результатов.</p>
 <h2>Календарь и данные</h2><section>
-${table(["Спорт", "Найдено", "Подтверждено", "Оценено моделью", "Прототип (те же входные данные)", "Доступные источники", "Причины пропусков"], sports)}
+${table(["Спорт", "Найдено", "Подтверждено", "С историей у обеих сторон", "Расчёты", "c2b20e1 (те же входные данные)",
+  "Доступные источники", "Причины пропусков"], sports)}
 </section>
+<details><summary>Подтверждённые события без расчёта</summary><section>
+${table(["Спорт", "Матч", "Турнир", "История по сторонам", "Источники истории", "Что отсутствует", "Где искать"], skipped)}
+</section></details>
 <details><summary>Источники и ошибки</summary><section>
 ${table(["Источник", "Соревнование", "Статус", "События", "Результаты", "Ошибка"], sources)}
 ${table(["Источник", "Дата", "Ошибка"], shadow.requestErrors.map((row) => [row.publisher, row.date, row.error]))}
@@ -63,6 +83,7 @@ ${table(["Источник", "Дата", "Ошибка"], shadow.requestErrors.m
 доступны для ${format(backtest.summary.showModel)} встреч из ${format(backtest.summary.eligibleEvents)}.</p>
 <section>${table(["Дивизион", "Матчи", "Brier модели", "Log loss модели", "Brier базы", "Log loss базы"], metricRows)}</section>
 ${comparison ? `<h3>Сравнение моделей на одинаковых матчах отложенного сезона</h3><section>${comparisonTable}</section>` : ""}
+${sparseTable ? `<h3>Базовая модель для короткой истории</h3><section>${sparseTable}</section>` : ""}
 <h3>Калибровка вероятностей</h3>${plot}
 ${calibratedBins.length ? "<p>Синий цвет — Elo, красный — ансамбль после калибровки.</p>" : ""}
 <section>${table(["Модель", "Диапазон от", "До", "Число исходов", "Оценка", "Наблюдаемая доля"],

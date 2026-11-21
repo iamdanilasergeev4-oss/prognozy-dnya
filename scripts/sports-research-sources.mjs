@@ -24,14 +24,14 @@ function failure(error) {
       ? "temporarily_unavailable" : "invalid_response";
 }
 
-export function parseOpenLiga(data, { shortcut, season, label, url, now, until }) {
+export function parseOpenLiga(data, { shortcut, season, label, url, now, until, lookback = 40 * DAY }) {
   if (!Array.isArray(data)) throw new Error("Неизвестный формат OpenLigaDB");
   return data.flatMap((match) => {
     const { team1, team2, matchDateTimeUTC } = match;
     const time = typeof matchDateTimeUTC === "string" && /Z$/.test(matchDateTimeUTC) ? Date.parse(matchDateTimeUTC) : NaN;
     if (!Number.isFinite(time) || !team1?.teamName || !team2?.teamName || !team1.teamId || !team2.teamId || !match.matchID ||
       typeof match.matchIsFinished !== "boolean" || String(match.leagueSeason) !== season || match.leagueShortcut !== shortcut ||
-      time >= until || time < now - 40 * DAY) return [];
+      time >= until || time < now - lookback) return [];
     if (!match.matchIsFinished && time <= now) return [];
     const result = match.matchResults?.find((row) => row.resultTypeKind === "After90Minutes");
     const scores = result && [result.pointsTeam1, result.pointsTeam2];
@@ -90,17 +90,21 @@ export async function loadResearchSources({ cacheDir, now, until }) {
   const season = europeanSeason(now).slice(0, 4);
   const requests = [];
   const rows = [];
+  const historicalRows = [];
   for (const [competition, shortcut, label] of germanLeagues) {
     const url = `${base}/getmatchdata/${shortcut}/${season}`;
     const result = await cachedJson(url, { cacheDir, key: `${shortcut}-${season}`, refresh: DAY / 4, now });
     let matches = [];
     try {
-      if (result.body) matches = parseOpenLiga(result.body, { shortcut, season, label, url, now, until });
+      if (result.body) {
+        matches = parseOpenLiga(result.body, { shortcut, season, label, url, now, until, lookback: 366 * DAY });
+      }
     } catch (error) {
       result.status = "invalid_response";
       result.error = error.message;
     }
-    rows.push(...matches);
+    rows.push(...matches.filter((row) => row.start >= now - 40 * DAY));
+    historicalRows.push(...matches.filter((row) => row.score));
     requests.push({ source: "OpenLigaDB", sport: "football", competition, label, url, status: result.status,
       error: result.error, scheduled: result.error ? null : matches.filter((row) => row.status === "scheduled").length,
       results: result.error ? null : matches.filter((row) => row.score).length });
@@ -115,5 +119,5 @@ export async function loadResearchSources({ cacheDir, now, until }) {
   }
   requests.push({ source: "OpenDota", sport: "dota2", competition: "professional maps", url: openDotaUrl, status: result.status,
     error: result.error, results: result.error ? null : maps.length });
-  return { rows, requests, maps };
+  return { rows, historicalRows, requests, maps };
 }
