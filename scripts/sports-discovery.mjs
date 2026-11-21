@@ -1,0 +1,150 @@
+const DAY = 86_400_000;
+const dayInMoscow = (time) => new Date(time + 3 * 3_600_000).toISOString().slice(0, 10);
+export const normalizeIdentity = (value) => String(value || "").normalize("NFKC").toLowerCase()
+  .replace(/[\s\p{P}]+/gu, " ").trim();
+
+// Only competition-specific equivalents. Reserve, youth and academy suffixes
+// remain part of participant names.
+const competitions = [
+  ["eng1", "professional_major", "GB", ["Premier League", "English Premier League"]],
+  ["eng2", "professional_mid", "GB", ["Championship", "English League Championship", "EFL Championship"]],
+  ["eng3", "lower_division", "GB", ["League One", "English League One", "EFL League One"]],
+  ["eng4", "lower_division", "GB", ["League Two", "English League Two", "EFL League Two"]],
+  ["deu2", "professional_mid", "DE", ["2. Bundesliga", "German 2. Bundesliga", "2 Bundesliga"]],
+  ["deu3", "lower_division", "DE", ["3. Liga", "German 3. Liga"]],
+  ["esp2", "professional_mid", "ES", ["Segunda División", "Spanish LALIGA 2", "LaLiga 2", "LaLiga Hypermotion"]],
+];
+
+export const sourceRegistry = [{
+  name: "openfootball", address: "https://github.com/openfootball/football.json",
+  type: ["calendar dates", "season scores"], sports: ["football"], countries: ["GB", "DE", "ES"],
+  license: "CC0-1.0", update: "upstream dependent", reliability: "calendar leads only",
+}, {
+  name: "Football-Data", address: "https://www.football-data.co.uk/englandm.php",
+  type: ["historical scores", "market benchmark"], sports: ["football"], countries: ["GB"],
+  license: "public download; no redistribution in repository", update: "completed seasons",
+  reliability: "historical evaluation input",
+}];
+
+const paths = { eng1: "en.1", eng2: "en.2", eng3: "en.3", eng4: "en.4",
+  deu2: "de.2", deu3: "de.3", esp2: "es.2" };
+const scopedNames = new Map(competitions.flatMap(([id, level, country, names]) =>
+  names.map((name) => [normalizeIdentity(name), { id, level, country }])));
+
+export function competitionOf(row) {
+  const tournament = normalizeIdentity(row.tournament);
+  const known = scopedNames.get(tournament);
+  if (row.sport === "football" && known &&
+      (row.country === known.country || !row.country && /^(?:english|efl|german|spanish) /.test(tournament))) return known;
+  if (row.sport === "hockey" && (row.league === "nhl" || ["nhl", "national hockey league"].includes(tournament))) {
+    return { id: "nhl", level: "professional_major", country: null };
+  }
+  if (row.sport === "basketball" && ["nba", "national basketball association"].includes(tournament)) {
+    return { id: "nba", level: "professional_major", country: null };
+  }
+  return { id: [row.country, tournament].filter(Boolean).join("/"), level: "unknown", country: row.country || null };
+}
+
+export function europeanSeason(time) {
+  const date = new Date(time);
+  const first = date.getUTCFullYear() - Number(date.getUTCMonth() < 6);
+  return `${first}-${String(first + 1).slice(-2)}`;
+}
+
+export function calendarJobs(now) {
+  const season = europeanSeason(now);
+  const days = new Set([dayInMoscow(now), dayInMoscow(now + DAY)]);
+  return competitions.map(([competition, level, country]) => {
+    const url = `https://raw.githubusercontent.com/openfootball/football.json/master/${season}/${paths[competition]}.json`;
+    return { competition, url, parse(data) {
+      if (!Array.isArray(data.matches)) throw new Error("Неизвестный формат календаря openfootball");
+      return data.matches.filter((match) => days.has(match.date) && !match.score?.ft &&
+        normalizeIdentity(match.team1) && normalizeIdentity(match.team2) &&
+        normalizeIdentity(match.team1) !== normalizeIdentity(match.team2))
+        .map((match) => ({ sport: "football", competition, tier: level, country, season,
+          date: match.date, start: null, home: match.team1, away: match.team2, status: "date_only",
+          sources: [{ title: "openfootball", url }] }));
+    } };
+  });
+}
+
+function dateOf(row) {
+  return dayInMoscow(row.start);
+}
+
+function pairKey(row) {
+  return [normalizeIdentity(row.home), normalizeIdentity(row.away)].sort().join("|");
+}
+
+export function discover(rows, { now, until }) {
+  const valid = rows.filter((row) => row.id && row.source && row.sport &&
+    Number.isFinite(row.start) && normalizeIdentity(row.home) && normalizeIdentity(row.away) &&
+    normalizeIdentity(row.home) !== normalizeIdentity(row.away) && normalizeIdentity(row.tournament) &&
+    /^https:\/\//i.test(row.url || ""));
+  const grouped = Map.groupBy(valid, (row) => JSON.stringify([row.sport, competitionOf(row).id, pairKey(row)]));
+  const events = [];
+  const results = [];
+  const byCompetition = new Map();
+  for (const group of grouped.values()) {
+    const sorted = group.sort((a, b) => a.start - b.start);
+    while (sorted.length) {
+      const first = sorted.shift();
+      if (first.start >= until) break;
+      const near = sorted.filter((row) => row.start - first.start <= 15 * 60_000);
+      sorted.splice(0, near.length);
+      const cluster = [first, ...near];
+      const bySource = Map.groupBy(cluster, (row) => row.source);
+      const ambiguous = [...bySource.values()].some((claims) => new Set(claims.map((row) =>
+        JSON.stringify([row.id, row.status, row.format, row.score, row.season, row.patch, row.surface]))).size > 1);
+      const claims = [...bySource.values()].map(([row]) => row);
+      const home = normalizeIdentity(first.home);
+      const away = normalizeIdentity(first.away);
+      const scoreInOrder = (row) => normalizeIdentity(row.home) === home ? row.score : row.score?.slice().reverse();
+      const aligned = claims.every((row) => normalizeIdentity(row.home) === home);
+      const consistent = (field) => new Set(claims.map((row) => row[field]).filter(Boolean)).size < 2;
+      const explicitSeason = claims.find((row) => row.season)?.season;
+      const consistentContext = ["format", "surface", "season", "patch"].every(consistent);
+      const format = claims[0].format && claims.every((row) => row.format === claims[0].format) ? claims[0].format : null;
+      const patch = claims[0].patch && claims.every((row) => row.patch === claims[0].patch) ? claims[0].patch : null;
+      const surface = claims[0].surface && claims.every((row) => row.surface === claims[0].surface) ? claims[0].surface : null;
+      const competition = competitionOf(first);
+      const season = europeanSeason(first.start);
+      const scopedSeason = first.sport === "football" && Object.hasOwn(paths, competition.id);
+      const generic = !competition.country && /^(?:premier league|championship|regional league|division \d+|a league|league \d+)$/i
+        .test(competition.id);
+      const confirmed = !ambiguous && !generic && claims.length >= 2 && consistentContext &&
+        claims.every((row) => row.status === first.status) && (first.sport !== "tennis" || cluster.at(-1).start - first.start <= 300_000);
+      const event = { id: JSON.stringify([first.sport, competition.id, pairKey(first), first.start]),
+        sport: first.sport, competition: competition.id, tournament: first.tournament, tier: competition.level,
+        country: competition.country, season: scopedSeason
+          ? !explicitSeason || [season, season.slice(0, 4)].includes(explicitSeason) ? season : null
+          : explicitSeason || null,
+        start: first.start, date: dateOf(first), home, away, match: `${first.home} — ${first.away}`,
+        rules: ["cs2", "dota2"].includes(first.sport) ? format : surface,
+        homeField: first.sport === "football" && aligned && claims.every((row) => row.homeField === true),
+        patch, sources: claims.map((row) => ({ title: row.source, id: row.id, url: row.url,
+          sourceCompetitionId: row.sourceCompetitionId, participantIds: normalizeIdentity(row.home) === home
+            ? row.participantIds : row.participantIds?.slice().reverse() })),
+        status: confirmed ? "confirmed" : ambiguous || !consistentContext || claims.some((row) => row.status !== first.status)
+          ? "conflict" : "unconfirmed",
+      };
+      if (cluster.every((row) => row.start > now) && cluster.some((row) => row.status === "scheduled")) {
+        events.push(event);
+        const key = JSON.stringify([event.sport, competition.id]);
+        const record = byCompetition.get(key) || { sport: event.sport, competition: competition.id, tier: event.tier, confirmed: 0, detected: 0 };
+        record.detected++;
+        record.confirmed += Number(confirmed);
+        byCompetition.set(key, record);
+      }
+      const score = scoreInOrder(first);
+      // The start time alone does not prove when a result became available.
+      // Keep a full day of separation from the latest claimed start.
+      if (confirmed && cluster.at(-1).start + DAY < now && event.season && first.status === "finished" &&
+          score && claims.every((row) => !row.extra || first.sport !== "football") &&
+          claims.every((row) => JSON.stringify(scoreInOrder(row)) === JSON.stringify(score))) {
+        results.push({ ...event, score });
+      }
+    }
+  }
+  return { events, results: results.sort((a, b) => a.start - b.start), competitions: [...byCompetition.values()] };
+}

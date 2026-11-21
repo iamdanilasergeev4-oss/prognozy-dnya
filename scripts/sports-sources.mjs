@@ -7,6 +7,7 @@ const ESPN_NHL_STANDINGS = "https://site.api.espn.com/apis/v2/sports/hockey/nhl/
 const LEGA_TABLE = "https://www.legavolley.it/classifica/?lang=en";
 const WORLD_TABLE = "https://it.volleyballworld.com/volleyball/competitions/superlega/standings/";
 const scoreSports = { 1: "football", 2: "basketball", 3: "tennis", 4: "hockey", 8: "volleyball" };
+const countryCodes = { England: "GB", Germany: "DE", Spain: "ES" };
 const espnFeeds = {
   football: ["soccer/all"],
   basketball: ["basketball/nba", "basketball/wnba", "basketball/euroleague"],
@@ -41,6 +42,9 @@ function event(source, sport, id, home, away, start, tournament, status, url, op
 
 export function parseScores(data, day, feedUrl = SCORES) {
   const games = list(data.games);
+  const countries = new Map(Array.isArray(data.countries) ? data.countries.map((row) => [row?.id, row?.name]) : []);
+  const competitions = new Map(Array.isArray(data.competitions)
+    ? data.competitions.map((row) => [row?.id, countries.get(row?.countryId)]) : []);
   if (!games.some((g) => g.startTime?.slice(0, 10) === day)) {
     throw new Error("Лента вернула другую дату");
   }
@@ -53,6 +57,9 @@ export function parseScores(data, day, feedUrl = SCORES) {
         score: status === "finished" ? score(home?.score, away?.score) : null,
         extra: /\/OT|\/SO|after extra time|penalt/i.test(g.statusText || ""),
         league: g.sportId === 4 && g.competitionDisplayName === "NHL" ? "nhl" : null,
+        country: g.sportId === 1 ? countryCodes[competitions.get(g.competitionId)] || null : null,
+        sourceCompetitionId: g.competitionId,
+        participantIds: [home?.id, away?.id],
       });
   }).filter(Boolean);
 }
@@ -93,6 +100,7 @@ export function parseEspn(data, sport, feed, url) {
       const regularHockey = sport === "hockey" && c.status?.period === 3;
       const gameUrl = e.links?.find((l) => /^https:\/\/(?:www\.)?espn\.com\//.test(l.href))?.href || url;
       const finalsSingles = sport === "tennis" && e.name === "Nitto ATP Finals" && home?.athlete && away?.athlete;
+      const seasonYear = Number(e.season?.year);
       return event("ESPN", sport, c.id, name(home), name(away), Date.parse(c.startDate || c.date),
         sport === "tennis" ? e.name : c.altGameNote || data.leagues?.[0]?.name, status, gameUrl, {
           score: status === "finished" && type?.completed === true &&
@@ -100,6 +108,9 @@ export function parseEspn(data, sport, feed, url) {
           regulation: regularHockey ? total : null,
           extra: /overtime|shootout|penalt|extra time/i.test(type?.detail || "") || (sport === "hockey" && c.status?.period > 3),
           league: feed === "hockey/nhl" ? "nhl" : null,
+          season: Number.isInteger(seasonYear) && seasonYear >= 1900
+            ? String(seasonYear) : null,
+          participantIds: [home?.id, away?.id],
           format: finalsSingles ? "BO3" : null,
           markets: status === "scheduled" && ["football", "basketball", "hockey"].includes(sport)
             ? parseEspnLines(c, home, away, gameUrl) : null,
@@ -115,9 +126,10 @@ export function parseNhl(data) {
     const name = (t) => t?.placeName?.default && t?.commonName?.default && `${t.placeName.default} ${t.commonName.default}`;
     const total = schedule === "finished" ? score(g.homeTeam?.score, g.awayTeam?.score) : null;
     const period = g.gameOutcome?.lastPeriodType || g.periodDescriptor?.periodType;
+    const season = /^\d{8}$/.test(String(g.season)) ? String(g.season).slice(-4) : null;
     return event("NHL", "hockey", g.id, name(g.homeTeam), name(g.awayTeam), Date.parse(g.startTimeUTC),
       "NHL", schedule, `https://www.nhl.com${g.gameCenterLink || "/scores/"}`, {
-        score: total, regulation: period === "REG" ? total : null, extra: ["OT", "SO"].includes(period), league: "nhl",
+        score: total, regulation: period === "REG" ? total : null, extra: ["OT", "SO"].includes(period), league: "nhl", season,
       });
   }).filter(Boolean);
 }

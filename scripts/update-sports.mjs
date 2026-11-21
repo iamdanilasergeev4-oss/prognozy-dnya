@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import { buildUpdate, DAY, esportsFormLinks, esportsResultLinks, FOOTBALL_FORM_DAYS, FORM_DAYS, PUBLISH_BUFFER, SPORTS,
   tennisPreviewLinks, verifiedEsportsForm } from "./sports-update-core.mjs";
 import { parseAtpHeadToHead, parseEnsiForm, parseEnsiResult, parseStrafeForm, sourceJobs } from "./sports-sources.mjs";
+import { buildShadowReport } from "./sports-shadow.mjs";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const H = globalThis.HistoryCore;
@@ -220,7 +221,7 @@ async function saveCandidate(base, update) {
   for (const [file, content] of Object.entries(files)) await writeFile(join(base, file), json(content), { flag: "wx" });
 }
 
-async function preview() {
+async function preview(shadow = false) {
   const now = Date.now();
   const input = await loadInputs(root);
   const scheduleDays = [...new Set([dateKey(now), dateKey(now + DAY), H.mskDateOf(new Date(now + DAY).toISOString())])];
@@ -245,6 +246,14 @@ async function preview() {
   const run = process.env.GITHUB_ACTIONS === "true" ? "candidate" : `run-${new Date(now).toISOString().replace(/[:.]/g, "-")}`;
   const path = join(root, ".sports-update", run);
   await saveCandidate(path, output);
+  if (shadow) {
+    const until = Date.parse(`${H.mskDateOf(new Date(now + DAY).toISOString())}T00:00:00+03:00`) + DAY;
+    const diagnostics = await buildShadowReport({ rows: data.rows, now, until, checkedAt: output.report.checkedAt,
+      fetchData, legacyReport: output.report.sports, requestErrors: data.errors, clock: Date.now });
+    await writeFile(join(path, "diagnostics.json"), json(diagnostics), { flag: "wx" });
+    log("info", "Диагностика нового движка сохранена", { coverage: diagnostics.coverage,
+      predictions: diagnostics.forecastCount, trainingResults: diagnostics.trainingResults });
+  }
   log(issues.length ? "error" : "info", "Пробный результат сохранён", { path, blockers: issues, sports: output.report.sports });
   if (issues.length) process.exitCode = 2;
 }
@@ -292,6 +301,10 @@ async function verifyDeployment() {
 const command = process.argv[2] ?? "--preview";
 try {
   if (command === "--preview") await preview();
+  else if (command === "--shadow") {
+    ensure(process.env.GITHUB_ACTIONS !== "true", "Режим исследования использует отдельный локальный архив");
+    await preview(true);
+  }
   else if (command === "--apply") await applyCandidate();
   else if (command === "--verify-deployment") await verifyDeployment();
   else throw new Error(`Неизвестный аргумент ${command}`);
