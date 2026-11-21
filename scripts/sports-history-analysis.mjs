@@ -118,8 +118,11 @@ export function compareHistory(baseline, snapshots, cutoff) {
     if (matches.some((count) => count < 3)) missing.push(alternate && !historyAvailable ? "history_context_or_identity" : "history_sample");
     if (event.start <= cutoff + 10 * 60_000) missing.push("too_close_to_start");
     const existing = researchConfirmed(tier) && !row.dataQuality.identityConflict && event.start > cutoff + 10 * 60_000 && old.get(row.id);
-    const prediction = existing || (!missing.length ? model.predict(event, cutoff) : null);
-    if (prediction) forecasts.push({ ...event, ...prediction, dataAsOf: new Date(cutoff).toISOString(), sourceTier: tier });
+    const sparse = !missing.length ? model.predict(event, cutoff) : null;
+    const prediction = existing || sparse;
+    if (prediction) forecasts.push({ ...event, ...prediction, dataAsOf: new Date(cutoff).toISOString(), sourceTier: tier,
+      candidates: [existing, sparse].filter(Boolean).map(({ probabilities, version, matches, evidence }) =>
+        ({ probabilities, version, matches, evidence })) });
     const sourceAttempts = requests.filter((request) => request.sport === event.sport &&
       (request.competition === event.competition || event.sport !== "football"));
     return { ...event, sourceTier: tier, historyAvailable, historyMatches: matches, alternateHistoryRows: alternate, missing: prediction ? [] : missing,

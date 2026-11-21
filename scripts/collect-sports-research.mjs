@@ -1,0 +1,192 @@
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { buildShadowReport } from "./sports-shadow.mjs";
+import { calendarJobs, europeanSeason, germanLeagues } from "./sports-discovery.mjs";
+import { parseOpenLiga } from "./sports-research-sources.mjs";
+import { openDotaMap } from "./import-sports-archive.mjs";
+import { compareHistory, makeHistorySnapshot } from "./sports-history-analysis.mjs";
+import { DAY, loadSeasonArchives, readResearchSnapshots } from "./sports-research-history.mjs";
+import { readResearchRuns, researchMarkdown, researchReport, sports, storeResearchObject } from "./sports-research-ledger.mjs";
+
+const base = fileURLToPath(new URL("../.sports-update/", import.meta.url));
+const liveRoot = join(base, "daily-research-v1");
+const replayRoot = join(base, "daily-research-replay-v1");
+const openLiga = "https://api.openligadb.de";
+const openDota = "https://api.opendota.com/api/proMatches";
+const headers = { "user-agent": "PrognozyDnya-Research/2.2 (+https://github.com/iamdanilasergeev4-oss/prognozy-dnya/issues)" };
+const json = async (file) => JSON.parse(await readFile(file, "utf8"));
+const allowedClaims = new Set(["scheduled", "finished", "cancelled", "postponed", "other"]);
+const filterClaims = (rows, capturedAt) => rows.filter((row) => {
+  const valid = row && sports.includes(row.sport) && typeof row.source === "string" && row.source &&
+    typeof row.id === "string" && row.id && URL.parse(row.url)?.protocol === "https:" &&
+    typeof row.tournament === "string" && row.tournament && typeof row.home === "string" && row.home &&
+    typeof row.away === "string" && row.away && row.home !== row.away && Number.isFinite(row.start) &&
+    allowedClaims.has(row.status) && (row.score == null || Array.isArray(row.score) && row.score.length === 2 &&
+      row.score.every((value) => Number.isSafeInteger(value) && value >= 0));
+  return valid && (row.status !== "finished" || row.start < capturedAt);
+});
+
+async function datasource(root, previous, requests, clock = Date.now) {
+  const past = new Map(previous.flatMap((run) => (run.requests ?? []).filter((row) => row.url?.startsWith("https:"))
+    .map((row) => [row.url, row])));
+  return async (url, { source, sport, text = false, revision, minAge = 6 * 3_600_000 }) => {
+    const old = past.get(url);
+    const record = { source, sport, url, startedAt: clock(), ...(revision ? { revision } : {}) };
+    const cached = old?.rawHash && (revision ? old.revision === revision : clock() - old.receivedAt < minAge);
+    if (old?.nextAttemptAt > clock()) {
+      requests.push({ ...record, status: "backoff", nextAttemptAt: old.nextAttemptAt, failures: old.failures });
+      throw new Error("Source backoff");
+    }
+    let body;
+    try {
+      if (cached) {
+        body = await readFile(join(root, "raw", old.rawHash + ".json"), "utf8");
+        record.receivedAt = old.receivedAt;
+      } else {
+        const reply = await fetch(url, { headers, redirect: "error", signal: AbortSignal.timeout(9000) });
+        if (!reply.ok) {
+          const wait = reply.headers.get("retry-after");
+          const error = new Error(`HTTP ${reply.status}`);
+          error.http = reply.status;
+          error.retry = /^\d+$/.test(wait ?? "") ? Number(wait) * 1000 : Date.parse(wait) - clock();
+          throw error;
+        }
+        body = await reply.text();
+        record.receivedAt = clock();
+      }
+      record.rawHash = await storeResearchObject(root, "raw", body);
+      const result = text ? body : JSON.parse(body);
+      requests.push({ ...record, status: cached ? "cached" : "ok" });
+      return result;
+    } catch (error) {
+      const failures = (old?.failures ?? 0) + 1;
+      const cooldown = Math.min(7 * DAY, 3_600_000 * 2 ** Math.min(failures, 8));
+      requests.push({ ...record, status: [401, 403].includes(error.http) ? "restricted" : "error",
+        error: error.message, failures, nextAttemptAt: clock() + Math.max(cooldown, error.retry || 0) });
+      throw error;
+    }
+  };
+}
+
+async function acquire(root, prior, startedAt, claimFiles) {
+  const requests = [];
+  const get = await datasource(root, prior, requests);
+  const season = europeanSeason(startedAt).slice(0, 4);
+  const until = startedAt + 2 * DAY;
+  const rows = [];
+  const historicalRows = [];
+  const supplemental = { rows, historicalRows, maps: [], requests: [] };
+  for (const [competition, shortcut, label] of germanLeagues) {
+    const url = `${openLiga}/getmatchdata/${shortcut}/${season}`;
+    try {
+      const options = { source: "OpenLigaDB", sport: "football" };
+      const data = await get(url, { ...options, minAge: 7 * DAY });
+      const seasonRequest = requests.at(-1);
+      if (!Array.isArray(data)) throw new Error("Ожидался список матчей сезона");
+      let feed = data;
+      if (seasonRequest.status === "cached") {
+        const groups = new Map();
+        for (const row of data) {
+          const start = Date.parse(row.matchDateTimeUTC);
+          const group = row.group?.groupOrderID;
+          if (Number.isSafeInteger(group) && start >= startedAt - 3 * DAY && start <= until &&
+              (!groups.has(group) || start >= groups.get(group))) groups.set(group, start);
+        }
+        const group = [...groups].sort((a, b) => Math.abs(a[1] - startedAt) - Math.abs(b[1] - startedAt))[0]?.[0];
+        if (group != null) {
+          const revision = await get(`${openLiga}/getlastchangedate/${shortcut}/${season}/${group}`, options);
+          if (typeof revision !== "string" || !Number.isFinite(Date.parse(revision))) throw new Error("Invalid revision");
+          const latest = await get(`${url}/${group}`, { ...options, revision });
+          if (!Array.isArray(latest)) throw new Error("Ожидался список матчей тура");
+          feed = [...data.filter((row) => row.group?.groupOrderID !== group), ...latest];
+        }
+      }
+      const context = { competition, shortcut, season, label, url, now: startedAt, until, lookback: 366 * DAY };
+      const parsed = parseOpenLiga(feed, context);
+      rows.push(...parsed.filter((row) => row.start >= startedAt - 30 * DAY));
+      historicalRows.push(...parsed.filter((row) => row.score));
+      supplemental.requests.push({ source: "OpenLigaDB", sport: "football", url, competition, status: "ok", results: parsed.length });
+    } catch (error) {
+      supplemental.requests.push({ source: "OpenLigaDB", sport: "football", url, competition, status: "error", error: error.message });
+    }
+  }
+  try {
+    const data = await get(openDota, { source: "OpenDota", sport: "dota2" });
+    if (!Array.isArray(data)) throw new Error("Ожидался список карт");
+    supplemental.maps = data.flatMap((row) => {
+      const map = openDotaMap(row);
+      return map && map.end <= Date.now() ? [{ ...map, started: map.start, tournament: row.league_name,
+        radiant: row.radiant_name, dire: row.dire_name }] : [];
+    });
+  } catch (error) {
+    supplemental.requests.push({ source: "OpenDota", sport: "dota2", url: openDota, status: "error", error: error.message });
+  }
+  const claims = [];
+  for (const file of claimFiles) {
+    const body = await readFile(file, "utf8");
+    const data = JSON.parse(body);
+    const capturedAt = Date.parse(data.capturedAt);
+    if (typeof data.rights !== "string" || !data.rights.trim() || !Array.isArray(data.rows) ||
+        !Number.isFinite(capturedAt) || capturedAt > startedAt) throw new Error("Неверный манифест разрешённых наблюдений");
+    const accepted = filterClaims(data.rows, capturedAt);
+    const fresh = capturedAt >= startedAt - 2 * DAY;
+    claims.push(...accepted.filter((row) => fresh || row.status === "finished"));
+    requests.push({ source: "local-authorized-claims", status: fresh ? "ok" : "stale_schedule", receivedAt: capturedAt,
+      rawHash: await storeResearchObject(root, "raw", body), rejected: data.rows.length - accepted.length });
+  }
+  const fetchFootball = (url, text) => get(url, { source: "openfootball", sport: "football", text });
+  const empty = Object.fromEntries(sports.map((sport) => [sport, { publishers: [] }]));
+  const checkpoint = await buildShadowReport({ rows: claims, now: startedAt, until, checkedAt: new Date(startedAt).toISOString(),
+    clock: Date.now, fetchData: fetchFootball, legacyReport: empty, requestErrors: [], supplemental, improve: true });
+  const archive = await loadSeasonArchives({ events: [...checkpoint.assessed, ...calendarJobs(startedAt)
+    .map(({ competition }) => ({ sport: "football", competition }))], now: startedAt, fetchData: fetchFootball });
+  const at = Date.now();
+  const normalized = makeHistorySnapshot({ rows: claims, supplemental, archives: archive.results,
+    archiveRequests: archive.requests, now: startedAt, until, observedAt: at });
+  const diagnostics = compareHistory(checkpoint, [...prior.filter((run) => run.normalized).map((run) => run.normalized), normalized], at);
+  return { at, diagnostics, normalized, requests: [...requests, ...supplemental.requests.filter((row) => row.status !== "ok"), ...archive.requests] };
+}
+
+async function storeRun(root, { at, diagnostics, normalized, requests }, mode) {
+  const features = [];
+  const forecasts = [];
+  for (const event of diagnostics.forecastEvidence) {
+    for (const candidate of event.candidates ?? [event]) {
+      const { version, probabilities, matches, evidence = [] } = candidate;
+      const feature = { version, event: event.id, asOf: at, matches, evidence: evidence.map(({ id, observedAt, start }) =>
+        ({ id, observedAt: observedAt ?? null, start })) };
+      features.push(feature);
+      forecasts.push({ id: event.id, sport: event.sport, competition: event.competition, start: event.start,
+        home: event.home, away: event.away, rules: event.rules, version, probabilities,
+        sources: event.sources, featureIndex: features.length - 1 });
+    }
+  }
+  const featuresHash = await storeResearchObject(root, "features", features);
+  const normalizedHash = await storeResearchObject(root, "normalized", normalized);
+  return storeResearchObject(root, "runs", { schema: 1, mode, at, requests, normalizedHash, featuresHash, normalized,
+    events: diagnostics.assessed, results: normalized.results, forecasts, history: diagnostics.savedHistory });
+}
+
+const [command, ...args] = process.argv.slice(2);
+if (command === "collect") {
+  const prior = (await readResearchRuns(liveRoot)).sort((a, b) => a.at - b.at);
+  const run = await acquire(liveRoot, prior, Date.now(), args);
+  await storeRun(liveRoot, run, "prospective");
+  console.log(JSON.stringify(researchReport(await readResearchRuns(liveRoot), Date.now()), null, 2));
+} else if (command === "replay" && args.length === 3) {
+  const [file, directory, cutoff] = args;
+  const at = Date.parse(cutoff);
+  const checkpoint = await json(file);
+  if (!Number.isFinite(at) || !(Date.parse(checkpoint.checkedAt) <= at)) throw new Error("Некорректная дата повтора");
+  const snapshots = await readResearchSnapshots(directory, at);
+  const diagnostics = compareHistory(checkpoint, snapshots, at);
+  const normalized = { at, results: snapshots.flatMap((row) => row.results), maps: snapshots.flatMap((row) => row.maps), requests: [] };
+  await storeRun(replayRoot, { at, diagnostics, normalized, requests: diagnostics.requests }, "replay");
+  console.log(JSON.stringify(researchReport(await readResearchRuns(replayRoot), at), null, 2));
+} else if (command === "report" && args.every((arg) => ["replay", "--markdown"].includes(arg))) {
+  const data = researchReport(await readResearchRuns(args.includes("replay") ? replayRoot : liveRoot), Date.now());
+  console.log(args.includes("--markdown") ? researchMarkdown(data) : JSON.stringify(data, null, 2));
+} else {
+  throw new Error("Использование: collect [разрешённые-наблюдения.json...] | report [replay] [--markdown] | replay <checkpoint.json> <snapshot-directory> <ISO-cutoff>");
+}
