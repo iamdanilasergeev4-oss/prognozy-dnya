@@ -910,18 +910,18 @@
       "status": "postponed",
       "result": {
         "score": null,
-        "note": "Матч перенесён",
+        "note": "Матч 14.11 перенесён (ESPN: Postponed; Sports.ru: «Перенесен»)",
         "sources": [
           {
-            "title": "Sofascore — футбол 14.11",
-            "url": "https://www.sofascore.com/football/2026-11-14"
+            "title": "ESPN — League One, 14.11",
+            "url": "https://www.espn.com/soccer/scoreboard/_/date/20261114/league/eng.3"
           },
           {
-            "title": "ESPN — Leicester vs Bradford",
-            "url": "https://www.espn.com/soccer/scoreboard/_/league/eng.2/date/20261114"
+            "title": "Sports.ru — футбол 14.11",
+            "url": "https://www.sports.ru/football/match/2026-11-14/"
           }
         ],
-        "checked_at": "2026-11-20T00:34+03:00"
+        "checked_at": "2026-11-21T07:16+03:00"
       },
       "versions": [],
       "status_log": [
@@ -932,7 +932,7 @@
           "note": "матч перенесён (Sports.ru: «Перенесен», Sky Sport DE: «Verlegt»)"
         }
       ],
-      "last_sync": "2026-11-20T00:34+03:00"
+      "last_sync": "2026-11-21T07:16+03:00"
     },
     {
       "id": "football-20261114-o8mmy",
@@ -12777,10 +12777,32 @@
       ],
       "format": "BO3, онлайн",
       "market_prob": 0.676,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "2:0",
+        "note": null,
+        "sources": [
+          {
+            "title": "Cyber.Sports.ru — CS2 20.11",
+            "url": "https://cyber.sports.ru/cs/match/2026-11-20/"
+          },
+          {
+            "title": "bo3.gg — Genone vs L&G",
+            "url": "https://bo3.gg/matches/genone-vs-l-g-20-11-2026"
+          }
+        ],
+        "checked_at": "2026-11-21T07:16+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-21T07:16+03:00"
     },
     {
       "id": "football-20261120-1q9wq2b",
@@ -12901,10 +12923,32 @@
       ],
       "format": "BO3, онлайн (киберспорт)",
       "market_prob": 0.4,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "2:0",
+        "note": null,
+        "sources": [
+          {
+            "title": "Cyber.Sports.ru — CS2 20.11",
+            "url": "https://cyber.sports.ru/cs/match/2026-11-20/"
+          },
+          {
+            "title": "bo3.gg — WBT vs Phantom",
+            "url": "https://bo3.gg/matches/wbt-vs-phantom-esports-20-11-2026"
+          }
+        ],
+        "checked_at": "2026-11-21T07:16+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-21T07:16+03:00"
     },
     {
       "id": "football-20261120-pmen04",
@@ -12948,10 +12992,32 @@
         }
       ],
       "market_prob": 0.877,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "2:1",
+        "note": null,
+        "sources": [
+          {
+            "title": "ESPN — Eerste Divisie 20.11",
+            "url": "https://www.espn.com/soccer/scoreboard/_/date/20261120/league/ned.2"
+          },
+          {
+            "title": "Flashscore — Эрстедивизи, результаты",
+            "url": "https://www.flashscore.com.ua/football/netherlands/eerste-divisie/results/"
+          }
+        ],
+        "checked_at": "2026-11-21T07:16+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-21T07:16+03:00"
     },
     {
       "id": "football-20261120-x3dttn",
@@ -13004,10 +13070,32 @@
         }
       ],
       "market_prob": 0.37,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "1:4",
+        "note": null,
+        "sources": [
+          {
+            "title": "ESPN — Eerste Divisie 20.11",
+            "url": "https://www.espn.com/soccer/scoreboard/_/date/20261120/league/ned.2"
+          },
+          {
+            "title": "Flashscore — Эрстедивизи, результаты",
+            "url": "https://www.flashscore.com.ua/football/netherlands/eerste-divisie/results/"
+          }
+        ],
+        "checked_at": "2026-11-21T07:16+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-21T07:16+03:00"
     },
     {
       "id": "basketball-20261120-7wf94z",
@@ -13051,10 +13139,32 @@
         }
       ],
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "92:76",
+        "note": null,
+        "sources": [
+          {
+            "title": "Flashscore — Евролига, результаты",
+            "url": "https://www.flashscore.com.ua/basketball/europe/euroleague/results/"
+          },
+          {
+            "title": "Sports.ru — баскетбол 20.11",
+            "url": "https://www.sports.ru/basketball/match/2026-11-20/"
+          }
+        ],
+        "checked_at": "2026-11-21T07:16+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-21T07:16+03:00"
     },
     {
       "id": "football-20261120-hq9lrb",
@@ -13099,10 +13209,32 @@
         }
       ],
       "market_prob": 0.943,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "1:1",
+        "note": null,
+        "sources": [
+          {
+            "title": "ESPN — Бундеслига 20.11",
+            "url": "https://www.espn.com/soccer/scoreboard/_/date/20261120/league/ger.1"
+          },
+          {
+            "title": "Flashscore — Бундеслига, результаты",
+            "url": "https://www.flashscore.com.ua/football/germany/bundesliga/results/"
+          }
+        ],
+        "checked_at": "2026-11-21T07:16+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-21T07:16+03:00"
     },
     {
       "id": "tennis-20261120-1ju6qi1",
@@ -13157,10 +13289,32 @@
       ],
       "format": "best of 3, хард в помещении",
       "market_prob": 0.714,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "2:0",
+        "note": "6:3, 6:4",
+        "sources": [
+          {
+            "title": "ESPN — ATP 20.11",
+            "url": "https://www.espn.com/tennis/scoreboard/_/date/20261120"
+          },
+          {
+            "title": "Flashscore — Итоговый турнир ATP, результаты",
+            "url": "https://www.flashscore.com.ua/tennis/atp-singles/finals-turin/results/"
+          }
+        ],
+        "checked_at": "2026-11-21T07:16+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": "6:3, 6:4"
+        }
+      ],
+      "last_sync": "2026-11-21T07:16+03:00"
     },
     {
       "id": "football-20261120-d2x0vn",
@@ -13204,10 +13358,32 @@
         }
       ],
       "market_prob": 0.676,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "0:1",
+        "note": null,
+        "sources": [
+          {
+            "title": "ESPN — Ла Лига 20.11",
+            "url": "https://www.espn.com/soccer/scoreboard/_/date/20261120/league/esp.1"
+          },
+          {
+            "title": "Flashscore — Ла Лига, результаты",
+            "url": "https://www.flashscore.com.ua/football/spain/laliga/results/"
+          }
+        ],
+        "checked_at": "2026-11-21T07:16+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-21T07:16+03:00"
     },
     {
       "id": "basketball-20261121-14g93jq",
@@ -13257,10 +13433,32 @@
       ],
       "format": "4 четверти, с ОТ",
       "market_prob": 0.699,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "111:97",
+        "note": null,
+        "sources": [
+          {
+            "title": "ESPN — NBA 20.11",
+            "url": "https://www.espn.com/nba/scoreboard/_/date/20261120"
+          },
+          {
+            "title": "Flashscore — НБА, результаты",
+            "url": "https://www.flashscore.com.ua/basketball/usa/nba/results/"
+          }
+        ],
+        "checked_at": "2026-11-21T07:16+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-21T07:16+03:00"
     },
     {
       "id": "basketball-20261121-1r8ndu2",
@@ -13310,10 +13508,32 @@
       ],
       "format": "4 четверти, с ОТ",
       "market_prob": 0.746,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "102:105",
+        "note": null,
+        "sources": [
+          {
+            "title": "ESPN — NBA 20.11",
+            "url": "https://www.espn.com/nba/scoreboard/_/date/20261120"
+          },
+          {
+            "title": "Flashscore — НБА, результаты",
+            "url": "https://www.flashscore.com.ua/basketball/usa/nba/results/"
+          }
+        ],
+        "checked_at": "2026-11-21T07:16+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-21T07:16+03:00"
     },
     {
       "id": "basketball-20261121-r4owsx",
@@ -13358,10 +13578,32 @@
         }
       ],
       "market_prob": 0.709,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "128:119",
+        "note": null,
+        "sources": [
+          {
+            "title": "ESPN — NBA 20.11",
+            "url": "https://www.espn.com/nba/scoreboard/_/date/20261120"
+          },
+          {
+            "title": "Flashscore — НБА, результаты",
+            "url": "https://www.flashscore.com.ua/basketball/usa/nba/results/"
+          }
+        ],
+        "checked_at": "2026-11-21T07:16+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": null
+        }
+      ],
+      "last_sync": "2026-11-21T07:16+03:00"
     },
     {
       "id": "football-20261121-14j0e4f",
@@ -13374,47 +13616,99 @@
       "start_approx": false,
       "published_at": "2026-11-21T00:29+03:00",
       "model_version": "v3",
-      "tournament": "Суперлига Турции 2026/27",
+      "market_prob": 0.412,
+      "status": "pending",
+      "result": null,
+      "versions": [
+        {
+          "at": "2026-11-21T00:29+03:00",
+          "replaced_at": "2026-11-21T07:16+03:00",
+          "reason": "плановое обновление",
+          "snapshot": {
+            "tournament": "Суперлига Турции 2026/27",
+            "match": "Генчлербирлиги — Газиантеп",
+            "start": "21.11, 13:30 МСК",
+            "bet": "П1 (победа Генчлербирлиги)",
+            "odds": "2.35",
+            "confidence": 2,
+            "model_prob": {
+              "value": 0.529,
+              "source": "ClubElo"
+            },
+            "reason": "Газиантеп проиграл пять матчей подряд, а ClubElo даёт хозяевам 53% против 43% в линии — оценка 47% выше рыночных 43% (+4 п.п.).",
+            "facts": [
+              "Генчлербирлиги — 14-е место, 11 очков после 11 туров (3-2-6), разница −9 — ESPN, 21.11",
+              "Газиантеп — 16-е место, 8 очков (2-2-7), разница −10 — ESPN, 21.11",
+              "Газиантеп проиграл 5 последних матчей (форма LLLLL) — ESPN, 21.11",
+              "Матч на домашнем стадионе Генчлербирлиги «Эрьяман» — ESPN"
+            ],
+            "against": [
+              "Генчлербирлиги сам выиграл лишь 1 из 5 последних матчей (LWLLD)",
+              "Обе команды в зоне вылета — матч нервный, ничья вероятна"
+            ],
+            "uncertainty": "Нет подтверждённых данных о травмах и составах обеих команд.",
+            "data_quality": {
+              "level": "medium",
+              "note": "Таблица и форма — ESPN; составы не найдены"
+            },
+            "sources": [
+              {
+                "title": "ESPN — Суперлига, 21.11",
+                "url": "https://www.espn.com/soccer/scoreboard/_/date/20261121/league/tur.1"
+              },
+              {
+                "title": "ClubElo — прогнозы матчей",
+                "url": "https://clubelo.com/Fixtures"
+              }
+            ]
+          }
+        }
+      ],
+      "status_log": [],
+      "tournament": "Суперлига Турции 2026/27, 12-й тур, тир-1",
       "match": "Генчлербирлиги — Газиантеп",
       "start": "21.11, 13:30 МСК",
       "bet": "П1 (победа Генчлербирлиги)",
-      "odds": "2.35",
+      "odds": "2.43",
       "confidence": 2,
       "model_prob": {
-        "value": 0.529,
+        "value": 0.53,
         "source": "ClubElo"
       },
-      "reason": "Газиантеп проиграл пять матчей подряд, а ClubElo даёт хозяевам 53% против 43% в линии — оценка 47% выше рыночных 43% (+4 п.п.).",
+      "reason": "Модель ClubElo даёт хозяевам 53%, рынок без маржи — 40% (кф 2.43, Flashscore). Оценка 46,5% против 41,2% в линии, перевес +5,3 п.п.",
       "facts": [
         "Генчлербирлиги — 14-е место, 11 очков после 11 туров (3-2-6), разница −9 — ESPN, 21.11",
-        "Газиантеп — 16-е место, 8 очков (2-2-7), разница −10 — ESPN, 21.11",
-        "Газиантеп проиграл 5 последних матчей (форма LLLLL) — ESPN, 21.11",
-        "Матч на домашнем стадионе Генчлербирлиги «Эрьяман» — ESPN"
+        "Газиантеп — 16-е место, 8 очков (2-2-7), разница −10, пять поражений подряд (последнее 0:2 с Касымпашей 06.11) — ESPN, 21.11",
+        "Генчлербирлиги в последнем домашнем матче обыграл Аланьяспор 5:0 (02.11) — ESPN",
+        "Матч на стадионе «Эрьяман» (Анкара) — ESPN",
+        "Коэффициенты 1X2: 2.43 / 3.59 / 2.93 — Flashscore, 21.11 07:10 МСК"
       ],
       "against": [
-        "Генчлербирлиги сам выиграл лишь 1 из 5 последних матчей (LWLLD)",
-        "Обе команды в зоне вылета — матч нервный, ничья вероятна"
+        "Генчлербирлиги выиграл лишь 1 из 5 последних матчей (поражения от Конья­спора 0:2 и Бешикташа 0:3)",
+        "Обе команды в нижней части таблицы; ничья в таком матче вероятна (~27%)",
+        "В списке Flashscore «Не сыграют» на матч много игроков обеих команд — распределение потерь неочевидно"
       ],
-      "uncertainty": "Нет подтверждённых данных о травмах и составах обеих команд.",
+      "uncertainty": "Официальные составы не объявлены; есть кадровые потери у обеих команд (Flashscore), их влияние оценить сложно.",
       "data_quality": {
         "level": "medium",
-        "note": "Таблица и форма — ESPN; составы не найдены"
+        "note": "Таблица и форма — ESPN; модель — ClubElo; линия и список травм — Flashscore; составы вероятные"
       },
       "sources": [
         {
-          "title": "ESPN — Суперлига, 21.11",
-          "url": "https://www.espn.com/soccer/scoreboard/_/date/20261121/league/tur.1"
+          "title": "ESPN — Суперлига Турции, 21.11",
+          "url": "https://www.espn.com/soccer/match/_/gameId/401888247"
         },
         {
-          "title": "ClubElo — прогнозы матчей",
+          "title": "ClubElo — Fixtures",
           "url": "https://clubelo.com/Fixtures"
+        },
+        {
+          "title": "Flashscore — Генчлербирлиги — Газиантеп, коэффициенты",
+          "url": "https://www.flashscore.com.ua/match/football/gaziantep-ITkIKZ7q/genclerbirligi-GOPqBIRK/?mid=KtIZlPFi"
         }
       ],
-      "market_prob": 0.426,
-      "status": "pending",
-      "result": null,
-      "versions": [],
-      "status_log": []
+      "format": "Футбол, 90 минут",
+      "updated_at": "2026-11-21T07:16+03:00"
     },
     {
       "id": "dota2-20261121-3l1df6",
@@ -13465,10 +13759,17 @@
       ],
       "format": "BO3 (по формату группы), онлайн-трансляция",
       "market_prob": 0.704,
-      "status": "pending",
+      "status": "withdrawn",
       "result": null,
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "withdrawn",
+          "note": "снят с публикации до начала события"
+        }
+      ]
     },
     {
       "id": "hockey-20261121-146zxsd",
@@ -13513,10 +13814,17 @@
         }
       ],
       "market_prob": 0.5,
-      "status": "pending",
+      "status": "withdrawn",
       "result": null,
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "withdrawn",
+          "note": "снят с публикации до начала события"
+        }
+      ]
     },
     {
       "id": "cs2-20261121-10fzlkr",
@@ -13562,10 +13870,17 @@
       ],
       "format": "BO3, онлайн (киберспорт)",
       "market_prob": 0.885,
-      "status": "pending",
+      "status": "withdrawn",
       "result": null,
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "withdrawn",
+          "note": "снят с публикации до начала события"
+        }
+      ]
     },
     {
       "id": "football-20261121-1jej52t",
@@ -13614,10 +13929,17 @@
         }
       ],
       "market_prob": 0.719,
-      "status": "pending",
+      "status": "withdrawn",
       "result": null,
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "withdrawn",
+          "note": "снят с публикации до начала события"
+        }
+      ]
     },
     {
       "id": "football-20261121-e4bv9i",
@@ -13666,10 +13988,17 @@
         }
       ],
       "market_prob": 0.592,
-      "status": "pending",
+      "status": "withdrawn",
       "result": null,
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "withdrawn",
+          "note": "снят с публикации до начала события"
+        }
+      ]
     },
     {
       "id": "tennis-20261121-1drh2kn",
@@ -13723,10 +14052,17 @@
       ],
       "format": "Best of 3, хард в помещении",
       "market_prob": 0.787,
-      "status": "pending",
+      "status": "withdrawn",
       "result": null,
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "withdrawn",
+          "note": "снят с публикации до начала события"
+        }
+      ]
     },
     {
       "id": "dota2-20261121-1t19yia",
@@ -13773,10 +14109,17 @@
       ],
       "format": "BO3, онлайн (киберспорт)",
       "market_prob": 0.345,
-      "status": "pending",
+      "status": "withdrawn",
       "result": null,
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "withdrawn",
+          "note": "снят с публикации до начала события"
+        }
+      ]
     },
     {
       "id": "football-20261121-15g1tvt",
@@ -13826,10 +14169,17 @@
       ],
       "format": "90 минут",
       "market_prob": 0.735,
-      "status": "pending",
+      "status": "withdrawn",
       "result": null,
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "withdrawn",
+          "note": "снят с публикации до начала события"
+        }
+      ]
     },
     {
       "id": "hockey-20261121-qc77qp",
@@ -13876,10 +14226,17 @@
       ],
       "format": "3 периода; ставка — основное время",
       "market_prob": 0.621,
-      "status": "pending",
+      "status": "withdrawn",
       "result": null,
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "withdrawn",
+          "note": "снят с публикации до начала события"
+        }
+      ]
     },
     {
       "id": "volleyball-20261121-v3lhh5",
@@ -13928,10 +14285,17 @@
         }
       ],
       "market_prob": 0.277,
-      "status": "pending",
+      "status": "withdrawn",
       "result": null,
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "withdrawn",
+          "note": "снят с публикации до начала события"
+        }
+      ]
     },
     {
       "id": "cs2-20261121-z55ums",
@@ -13977,10 +14341,17 @@
       ],
       "format": "BO3, онлайн (киберспорт)",
       "market_prob": 0.725,
-      "status": "pending",
+      "status": "withdrawn",
       "result": null,
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "withdrawn",
+          "note": "снят с публикации до начала события"
+        }
+      ]
     },
     {
       "id": "football-20261121-bp59ke",
@@ -14029,10 +14400,17 @@
         }
       ],
       "market_prob": 0.364,
-      "status": "pending",
+      "status": "withdrawn",
       "result": null,
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "withdrawn",
+          "note": "снят с публикации до начала события"
+        }
+      ]
     },
     {
       "id": "football-20261121-bupsqt",
@@ -14081,10 +14459,17 @@
         }
       ],
       "market_prob": 0.556,
-      "status": "pending",
+      "status": "withdrawn",
       "result": null,
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "withdrawn",
+          "note": "снят с публикации до начала события"
+        }
+      ]
     },
     {
       "id": "football-20261121-1quv8yz",
@@ -14134,10 +14519,17 @@
       ],
       "format": "90 минут",
       "market_prob": 0.69,
-      "status": "pending",
+      "status": "withdrawn",
       "result": null,
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "withdrawn",
+          "note": "снят с публикации до начала события"
+        }
+      ]
     },
     {
       "id": "dota2-20261121-1t9hd15",
@@ -14188,10 +14580,17 @@
       ],
       "format": "BO3, онлайн (киберспорт)",
       "market_prob": 0.833,
-      "status": "pending",
+      "status": "withdrawn",
       "result": null,
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "withdrawn",
+          "note": "снят с публикации до начала события"
+        }
+      ]
     },
     {
       "id": "football-20261121-4bwv2l",
@@ -14242,6 +14641,74 @@
       ],
       "format": "90 минут",
       "market_prob": 0.637,
+      "status": "withdrawn",
+      "result": null,
+      "versions": [],
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "withdrawn",
+          "note": "снят с публикации до начала события"
+        }
+      ]
+    },
+    {
+      "id": "football-20261121-6d3jjr",
+      "sport": "football",
+      "sport_name": "Футбол",
+      "home": "Каламата",
+      "away": "АЕК",
+      "event_date": "2026-11-21",
+      "start_iso": "2026-11-21T20:30+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-21T07:16+03:00",
+      "model_version": "v4",
+      "tournament": "Суперлига Греции 2026/27, 11-й тур, тир-1",
+      "match": "Каламата — АЕК",
+      "start": "21.11, 20:30 МСК",
+      "bet": "1X (Каламата не проиграет)",
+      "odds": "3.00",
+      "confidence": 2,
+      "model_prob": {
+        "value": 0.5,
+        "source": "ClubElo (П1+X)"
+      },
+      "reason": "ClubElo оценивает «Каламата не проиграет» в 50% (23% + 27%), рынок без маржи — 30%. Оценка 40% против 33% в линии (кф 3.00), перевес +6,8 п.п.; у АЕК несколько потерь в составе.",
+      "facts": [
+        "Каламата — 8-е место, 12 очков после 10 туров (3-3-4), разница −4 — ESPN, 21.11",
+        "АЕК — 3-е место, 20 очков после 9 туров (6-2-1) — ESPN, 21.11",
+        "Каламата обыграла ПАОК в гостях 3:1 (12.10) и ОФИ 4:3 (18.10); затем 0:5 с Олимпиакосом и две ничьи 1:1 — ESPN",
+        "АЕК в последних матчах: 1:5 с Ман Сити и 2:3 с Реалом (ЛЧ), 0:2 с Панатинаикосом, 2:1 с Левадиакосом — ESPN",
+        "В списке Flashscore «Не сыграют» на матч: Р. Марин (удаление), Зубков (перелом), Жоау Мариу (болезнь) и др. — Flashscore, 21.11",
+        "Коэффициенты: 1X2 7.75 / 5.10 / 1.34, двойной шанс 1X — 3.00 — Flashscore, 21.11 07:10 МСК"
+      ],
+      "against": [
+        "АЕК — явный фаворит рынка (около 70% на победу) и на 8 очков выше в таблице",
+        "Каламата проиграла Олимпиакосу 0:5 — против топ-клубов бывают крупные поражения",
+        "Модель и рынок расходятся на 20 п.п. — часть расхождения может объясняться информацией, которой нет в Elo"
+      ],
+      "uncertainty": "Составы вероятные; принадлежность части отсутствующих к командам по Flashscore не перепроверена во втором источнике.",
+      "data_quality": {
+        "level": "medium",
+        "note": "Таблица и форма — ESPN; модель — ClubElo; линия и травмы — Flashscore"
+      },
+      "sources": [
+        {
+          "title": "ESPN — Каламата — АЕК",
+          "url": "https://www.espn.com/soccer/match/_/gameId/401896810"
+        },
+        {
+          "title": "ClubElo — Fixtures",
+          "url": "https://clubelo.com/Fixtures"
+        },
+        {
+          "title": "Flashscore — Каламата — АЕК",
+          "url": "https://www.flashscore.com.ua/match/football/aek-ANpZncAM/kalamata-4vN7O8j0/?mid=Khzsze2n"
+        }
+      ],
+      "format": "Футбол, 90 минут",
+      "market_prob": 0.333,
       "status": "pending",
       "result": null,
       "versions": [],
@@ -14293,10 +14760,17 @@
         }
       ],
       "market_prob": null,
-      "status": "pending",
+      "status": "withdrawn",
       "result": null,
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "withdrawn",
+          "note": "снят с публикации до начала события"
+        }
+      ]
     },
     {
       "id": "tennis-20261121-apcp3b",
@@ -14345,10 +14819,17 @@
       ],
       "format": "Best of 3, хард в помещении",
       "market_prob": null,
-      "status": "pending",
+      "status": "withdrawn",
       "result": null,
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "withdrawn",
+          "note": "снят с публикации до начала события"
+        }
+      ]
     },
     {
       "id": "football-20261121-1hfvi9w",
@@ -14397,10 +14878,17 @@
         }
       ],
       "market_prob": 0.855,
-      "status": "pending",
+      "status": "withdrawn",
       "result": null,
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "withdrawn",
+          "note": "снят с публикации до начала события"
+        }
+      ]
     },
     {
       "id": "football-20261121-b3flg9",
@@ -14449,10 +14937,17 @@
         }
       ],
       "market_prob": 0.213,
-      "status": "pending",
+      "status": "withdrawn",
       "result": null,
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "withdrawn",
+          "note": "снят с публикации до начала события"
+        }
+      ]
     },
     {
       "id": "basketball-20261122-1cmjg6",
@@ -14501,10 +14996,17 @@
         }
       ],
       "market_prob": null,
-      "status": "pending",
+      "status": "withdrawn",
       "result": null,
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "withdrawn",
+          "note": "снят с публикации до начала события"
+        }
+      ]
     },
     {
       "id": "basketball-20261122-csaeez",
@@ -14552,10 +15054,17 @@
         }
       ],
       "market_prob": null,
-      "status": "pending",
+      "status": "withdrawn",
       "result": null,
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "withdrawn",
+          "note": "снят с публикации до начала события"
+        }
+      ]
     },
     {
       "id": "hockey-20261122-hl60kk",
@@ -14600,10 +15109,17 @@
         }
       ],
       "market_prob": 0.408,
-      "status": "pending",
+      "status": "withdrawn",
       "result": null,
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "withdrawn",
+          "note": "снят с публикации до начала события"
+        }
+      ]
     },
     {
       "id": "hockey-20261122-dvhp3c",
@@ -14653,10 +15169,17 @@
         }
       ],
       "market_prob": 0.5,
-      "status": "pending",
+      "status": "withdrawn",
       "result": null,
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-21T07:16+03:00",
+          "from": "pending",
+          "to": "withdrawn",
+          "note": "снят с публикации до начала события"
+        }
+      ]
     }
   ]
 }
