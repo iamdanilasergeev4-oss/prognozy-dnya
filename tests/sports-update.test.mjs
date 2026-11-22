@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { buildUpdate, eventIndex, resultFor, selectExpress, selectMixedExpress, SPORTS, upcomingEvidence,
+import { buildUpdate, classifySchedule, eventIndex, resultFor, selectExpress, selectMixedExpress, SPORTS, upcomingEvidence,
   verifiedEsportsForm } from "../scripts/sports-update-core.mjs";
 import { parseEnsi, parseEnsiForm, parseEnsiResult, parseScores, parseLega, parseGosu } from "../scripts/sports-sources.mjs";
 import { assessMarkets, completedSeries } from "../scripts/sports-markets.mjs";
@@ -24,6 +24,24 @@ test("a single publisher, a conflicting start and an already started fixture can
   const valid = eventIndex([a, game("b", { home: "Ницца", away: "Paris Saint-Germain" })]);
   assert.equal(upcomingEvidence(valid, a, now, start + 3600_000).length, 2);
   assert.equal(upcomingEvidence(valid, a, start, start + 3600_000).length, 0);
+});
+
+test("manual schedule accepts a scoped official source and rejects contradictory or mirrored claims", () => {
+  const nhl = game("NHL", { sport: "hockey", tournament: "NHL", league: "nhl",
+    home: "Boston Bruins", away: "Ottawa Senators", url: "https://www.nhl.com/gamecenter/example" });
+  const check = (...rows) => classifySchedule(eventIndex(rows), rows[0], now, start + 3600_000);
+  assert.equal(check(nhl).basis, "official");
+  assert.equal(check({ ...nhl, tournament: "AHL", league: "ahl" }).reason, "single_secondary");
+  const espn = { ...nhl, source: "ESPN", url: "https://www.espn.com/example" };
+  assert.equal(check(nhl, { ...espn, start: start + 25 * 60_000 }).reason, "time_conflict");
+  assert.equal(check(nhl, { ...espn, status: "postponed" }).reason, "status_conflict");
+  assert.equal(check(nhl, { ...espn, league: "ahl", tournament: "AHL" }).reason, "competition_conflict");
+  assert.equal(check(nhl, { ...espn, home: nhl.away, away: nhl.home }).reason, "home_away_conflict");
+  assert.equal(check({ ...nhl, url: "https://example.test/fake-nhl" }).reason, "single_secondary");
+  assert.equal(check(game("a", { origin: "one" }), game("b", { origin: "one" })).reason, "shared_origin");
+  assert.equal(check(game("a", { home: "VfB Stuttgart II" }), game("b", { home: "Stuttgart II",
+    start: Date.parse(new Date(start).toISOString()) })).basis, "corroborated");
+  assert.equal(check(game("a", { home: "VfB Stuttgart II" }), game("b", { home: "VfB Stuttgart" })).reason, "single_secondary");
 });
 
 test("results follow the order of the archived competitors and disagreements require review", () => {
@@ -131,6 +149,25 @@ test("CS2 form counts only unique recent series of the same format with an agree
   assert.ok(form[0].win);
   [form] = verifiedEsportsForm(match, strafe, [...ensigame, { ...ensigame[0], url: "https://example.test/3" }], now);
   assert.equal(form.length, 0);
+});
+
+test("a same-tournament BO3 semifinal cannot enter BO5 history and known formats stay out of missing fields", () => {
+  const make = (sport, tournament, format, home, away, status, id, time, score) => ["a", "b"].map((source) =>
+    game(source, { sport, tournament, format, home, away, status, id, start: time, score }));
+  const rows = [...make("cs2", "Cup", "BO5", "Rebels", "Famalicao", "scheduled", "final", start),
+    ...make("cs2", "Cup", "BO3", "SAW", "Famalicao", "finished", "semi", past, [1, 2]),
+    ...make("tennis", "Finals", "BO3", "A", "B", "scheduled", "t", start),
+    ...make("volleyball", "SuperLega", "BO5", "C", "D", "scheduled", "v", start)];
+  const current = { updated_at: "2026-11-21T16:00+03:00", sports: SPORTS.map(([id, name]) => ({ id, name, picks: [] })), express: [] };
+  const output = buildUpdate({ current, indexFile: { months: [] }, historyFiles: [], express: { expresses: [] }, now, rows,
+    coverage: Object.fromEntries(SPORTS.map(([id]) => [id, ["a", "b"]])) });
+  const analysis = output.next.analysis;
+  assert.doesNotMatch(analysis.find((a) => a.sport_id === "cs2").text, /SAW|Сравнение опирается/u);
+  for (const sport of ["tennis", "volleyball"]) {
+    const article = analysis.find((a) => a.sport_id === sport);
+    assert.doesNotMatch(article.text, /Не сверены:.*формат матча/u);
+    assert(article.key_factors.some((factor) => factor.startsWith("Формат BO")));
+  }
 });
 
 test("expresses use two different events, preserve known prices and never repeat matches across combinations", () => {

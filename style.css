@@ -475,6 +475,11 @@ button { font: inherit; color: inherit; }
 .st-factors li::before { content: ""; position: absolute; left: 0; top: .55em; width: 8px; height: 2px; border-radius: 2px; background: var(--c); }
 .st-src { margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--line); }
 .st-src h4 { margin: 0 0 6px; font-size: 13px; font-weight: 600; color: var(--muted); }
+.bookmaker-market + .bookmaker-market { margin-top: 12px; }
+.bookmaker-lines .bookmaker-market .pk-key, .pick .projection-estimates .pk-key { display: grid; }
+.bookmaker-source + .bookmaker-source, .projection-estimates, .xp-past-cards { margin-top: 14px; }
+.projection-estimates summary, .xp-past-cards summary { cursor: pointer; color: var(--text-2); }
+.xp-past-cards .xp-list { margin-top: 12px; }
 .st-src .src-list { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); column-gap: 8px; }
 .st-src .src-list a { padding: 6px 8px; margin-left: -8px; grid-template-columns: minmax(0, 1fr) 14px; }
 .st-src .src-list a small { display: none; }

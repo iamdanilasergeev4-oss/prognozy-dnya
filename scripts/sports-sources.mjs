@@ -7,6 +7,7 @@ const ESPN_NHL_STANDINGS = "https://site.api.espn.com/apis/v2/sports/hockey/nhl/
 const LEGA_TABLE = "https://www.legavolley.it/classifica/?lang=en";
 const WORLD_TABLE = "https://it.volleyballworld.com/volleyball/competitions/superlega/standings/";
 const scoreSports = { 1: "football", 2: "basketball", 3: "tennis", 4: "hockey", 8: "volleyball" };
+const countryCodes = { England: "GB", Germany: "DE", Spain: "ES" };
 const espnFeeds = {
   football: ["soccer/all"],
   basketball: ["basketball/nba", "basketball/wnba", "basketball/euroleague"],
@@ -41,6 +42,9 @@ function event(source, sport, id, home, away, start, tournament, status, url, op
 
 export function parseScores(data, day, feedUrl = SCORES) {
   const games = list(data.games);
+  const countries = new Map(Array.isArray(data.countries) ? data.countries.map((row) => [row?.id, row?.name]) : []);
+  const competitions = new Map(Array.isArray(data.competitions)
+    ? data.competitions.map((row) => [row?.id, countries.get(row?.countryId)]) : []);
   if (!games.some((g) => g.startTime?.slice(0, 10) === day)) {
     throw new Error("Лента вернула другую дату");
   }
@@ -53,6 +57,10 @@ export function parseScores(data, day, feedUrl = SCORES) {
         score: status === "finished" ? score(home?.score, away?.score) : null,
         extra: /\/OT|\/SO|after extra time|penalt/i.test(g.statusText || ""),
         league: g.sportId === 4 && g.competitionDisplayName === "NHL" ? "nhl" : null,
+        country: g.sportId === 1 ? countryCodes[competitions.get(g.competitionId)] || null : null,
+        sourceCountry: g.sportId === 1 ? competitions.get(g.competitionId) || null : null,
+        sourceCompetitionId: g.competitionId,
+        participantIds: [home?.id, away?.id],
       });
   }).filter(Boolean);
 }
@@ -93,6 +101,7 @@ export function parseEspn(data, sport, feed, url) {
       const regularHockey = sport === "hockey" && c.status?.period === 3;
       const gameUrl = e.links?.find((l) => /^https:\/\/(?:www\.)?espn\.com\//.test(l.href))?.href || url;
       const finalsSingles = sport === "tennis" && e.name === "Nitto ATP Finals" && home?.athlete && away?.athlete;
+      const seasonYear = Number(e.season?.year);
       return event("ESPN", sport, c.id, name(home), name(away), Date.parse(c.startDate || c.date),
         sport === "tennis" ? e.name : c.altGameNote || data.leagues?.[0]?.name, status, gameUrl, {
           score: status === "finished" && type?.completed === true &&
@@ -100,6 +109,9 @@ export function parseEspn(data, sport, feed, url) {
           regulation: regularHockey ? total : null,
           extra: /overtime|shootout|penalt|extra time/i.test(type?.detail || "") || (sport === "hockey" && c.status?.period > 3),
           league: feed === "hockey/nhl" ? "nhl" : null,
+          season: Number.isInteger(seasonYear) && seasonYear >= 1900
+            ? String(seasonYear) : null,
+          participantIds: [home?.id, away?.id],
           format: finalsSingles ? "BO3" : null,
           markets: status === "scheduled" && ["football", "basketball", "hockey"].includes(sport)
             ? parseEspnLines(c, home, away, gameUrl) : null,
@@ -115,9 +127,10 @@ export function parseNhl(data) {
     const name = (t) => t?.placeName?.default && t?.commonName?.default && `${t.placeName.default} ${t.commonName.default}`;
     const total = schedule === "finished" ? score(g.homeTeam?.score, g.awayTeam?.score) : null;
     const period = g.gameOutcome?.lastPeriodType || g.periodDescriptor?.periodType;
+    const season = /^\d{8}$/.test(String(g.season)) ? String(g.season).slice(-4) : null;
     return event("NHL", "hockey", g.id, name(g.homeTeam), name(g.awayTeam), Date.parse(g.startTimeUTC),
       "NHL", schedule, `https://www.nhl.com${g.gameCenterLink || "/scores/"}`, {
-        score: total, regulation: period === "REG" ? total : null, extra: ["OT", "SO"].includes(period), league: "nhl",
+        score: total, regulation: period === "REG" ? total : null, extra: ["OT", "SO"].includes(period), league: "nhl", season,
       });
   }).filter(Boolean);
 }
@@ -263,6 +276,7 @@ export function parseStrafe(html, sport, slug) {
       g.tournament?.name, status, `https://www.strafe.com/match/${g.slug}/`, {
         score: status === "finished" ? score(home?.score, away?.score) : null,
         format: g.format?.match(/^Best of ([1357])$/i)?.[1] ? `BO${g.format.at(-1)}` : null,
+          researchFormat: g.format?.match(/^(?:Best of\s+|BO)([1235])$/i)?.[1],
       });
   }).filter(Boolean);
 }
@@ -282,6 +296,7 @@ export function parseEnsi(html, sport = "cs2") {
     const scores = [...body.matchAll(/class="w5-mc__score">\s*(\d+)\s*<\/span>/g)].map((m) => m[1]);
     return event("Ensigame", sport, id, names[0], names[1], Date.parse(start),
       tournament, status, url, { format: format ? `BO${format}` : null, tier: tier ? Number(tier) : null,
+        researchFormat: body.match(/class="w5-mc__format">bo([1235])<\/span>/i)?.[1],
         score: status === "finished" ? score(...scores) : null });
   }).filter(Boolean);
 }
@@ -310,6 +325,7 @@ export function parseEnsiForm(html) {
       const ended = Date.parse(body.match(/<time datetime="([^"]+)"/)?.[1]);
       const format = body.match(/class="w5-mc__format">bo([1357])<\/span>/i)?.[1];
       if (names.length !== 2 || scores.length !== 2 || scores[0] === scores[1] || !Number.isFinite(ended) || !format) return [];
+      if (Math.max(...scores) !== (Number(format) + 1) / 2) return [];
       return [{ url, names, ended, winner: names[scores[0] > scores[1] ? 0 : 1], format: `BO${format}` }];
     });
 }
@@ -321,14 +337,16 @@ export function parseStrafeForm(html) {
   return [list(recent?.home), list(recent?.away)].map((team) => team.flatMap((series) => {
     const winners = series.competitors?.filter((p) => p.result_enum === "WIN") || [];
     const names = (series.competitors || []).map((p) => p.competitor?.name);
-    return names.length === 2 && names.every(Boolean) && winners.length === 1 ? [{ names, winner: winners[0].competitor.name }] : [];
+    const length = typeof series.format === "string" && series.format.match(/^(?:Best of\s+|BO)([12357])$/i)?.[1];
+    return names.length === 2 && names.every(Boolean) && winners.length === 1 ?
+      [{ names, winner: winners[0].competitor.name, format: length ? `BO${length}` : undefined }] : [];
   }));
 }
 
 export function sourceJobs(days, scheduleDays, footballDays = []) {
   const jobs = [];
-  function add(source, sports, url, parse, day, html = false, standings = false, resultIndex = false) {
-    jobs.push({ source, sports, url, parse, day, html, standings, resultIndex });
+  function add(source, sports, url, parse, day, html = false, standings = false, resultIndex = false, historicalOnly = false) {
+    jobs.push({ source, sports, url, parse, day, html, standings, resultIndex, historicalOnly });
   }
   const physical = Object.values(scoreSports);
   for (const day of [...new Set([...days, ...footballDays])].sort()) {
@@ -353,7 +371,7 @@ export function sourceJobs(days, scheduleDays, footballDays = []) {
     }
   }
   for (const day of [days[0], scheduleDays[0]]) {
-    add("NHL", ["hockey"], `https://api-web.nhle.com/v1/schedule/${day}`, parseNhl, null);
+    add("NHL", ["hockey"], `https://api-web.nhle.com/v1/schedule/${day}`, parseNhl, null, false, false, false, day !== scheduleDays[0]);
   }
   add("NHL", ["hockey"], NHL_STANDINGS, parseNhlStandings, null, false, true);
   add("ESPN", ["hockey"], ESPN_NHL_STANDINGS, parseEspnNhlStandings, null, false, true);
@@ -367,11 +385,11 @@ export function sourceJobs(days, scheduleDays, footballDays = []) {
   for (const [sport, gosu, strafe] of [["cs2", "counterstrike", "csgo"], ["dota2", "dota2", "dota2"]]) {
     for (const [suffix, mode] of [["", "scheduled"], ["/results", "finished"]]) {
       add("GosuGamers", [sport], `https://www.gosugamers.net/${gosu}/matches${suffix}`,
-        (html) => parseGosu(html, sport, gosu, mode), null, true);
+        (html) => parseGosu(html, sport, gosu, mode), null, true, false, false, mode === "finished");
     }
     for (const suffix of ["", "completed/"]) {
       add("Strafe", [sport], `https://www.strafe.com/calendar/${strafe}/${suffix}`,
-        (html) => parseStrafe(html, sport, strafe), null, true);
+        (html) => parseStrafe(html, sport, strafe), null, true, false, false, Boolean(suffix));
     }
   }
   for (const [sport, slug] of [["cs2", "cs-2"], ["dota2", "dota-2"]]) {
