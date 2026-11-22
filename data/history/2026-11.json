@@ -14652,10 +14652,32 @@
       ],
       "format": "Футбол, 90 минут",
       "market_prob": 0.417,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "3:1",
+        "note": "Итоговый счёт подтверждён",
+        "sources": [
+          {
+            "title": "365Scores",
+            "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=21%2F11%2F2026&endDate=21%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+          },
+          {
+            "title": "ESPN",
+            "url": "https://www.espn.com/soccer/match/_/gameId/401842889/vasteras-sk-gais"
+          }
+        ],
+        "checked_at": "2026-11-22T07:17+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-22T07:17+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": "Итоговый счёт подтверждён"
+        }
+      ],
+      "last_sync": "2026-11-22T07:17+03:00"
     },
     {
       "id": "dota2-20261121-1t9hd15",
@@ -14766,10 +14788,32 @@
       ],
       "format": "Футбол, 90 минут",
       "market_prob": 0.167,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "1:5",
+        "note": "Итоговый счёт подтверждён",
+        "sources": [
+          {
+            "title": "365Scores",
+            "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=21%2F11%2F2026&endDate=21%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+          },
+          {
+            "title": "ESPN",
+            "url": "https://www.espn.com/soccer/match/_/gameId/401874967/as-roma-parma"
+          }
+        ],
+        "checked_at": "2026-11-22T07:17+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-22T07:17+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": "Итоговый счёт подтверждён"
+        }
+      ],
+      "last_sync": "2026-11-22T07:17+03:00"
     },
     {
       "id": "football-20261121-4bwv2l",
@@ -14888,10 +14932,32 @@
       ],
       "format": "Футбол, 90 минут",
       "market_prob": 0.333,
-      "status": "pending",
-      "result": null,
+      "status": "review",
+      "result": {
+        "score": null,
+        "note": "Подтверждён счёт 0:1, условия прогноза требуют ручной проверки",
+        "sources": [
+          {
+            "title": "365Scores",
+            "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=21%2F11%2F2026&endDate=21%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+          },
+          {
+            "title": "ESPN",
+            "url": "https://www.espn.com/soccer/match/_/gameId/401896810/aek-athens-kalamata"
+          }
+        ],
+        "checked_at": "2026-11-22T07:17+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-22T07:17+03:00",
+          "from": "pending",
+          "to": "review",
+          "note": "Подтверждён счёт 0:1, условия прогноза требуют ручной проверки"
+        }
+      ],
+      "last_sync": "2026-11-22T07:17+03:00"
     },
     {
       "id": "basketball-20261121-11nqnwh",
@@ -14999,10 +15065,32 @@
       ],
       "format": "Футбол, 90 минут",
       "market_prob": 0.267,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "0:1",
+        "note": "Итоговый счёт подтверждён",
+        "sources": [
+          {
+            "title": "365Scores",
+            "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=21%2F11%2F2026&endDate=21%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+          },
+          {
+            "title": "ESPN",
+            "url": "https://www.espn.com/soccer/match/_/gameId/401899544/pisa-empoli"
+          }
+        ],
+        "checked_at": "2026-11-22T07:17+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-22T07:17+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": "Итоговый счёт подтверждён"
+        }
+      ],
+      "last_sync": "2026-11-22T07:17+03:00"
     },
     {
       "id": "tennis-20261121-apcp3b",
@@ -15199,10 +15287,32 @@
       ],
       "format": "Футбол, 90 минут",
       "market_prob": 0.465,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "1:1",
+        "note": "Итоговый счёт подтверждён",
+        "sources": [
+          {
+            "title": "365Scores",
+            "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=21%2F11%2F2026&endDate=21%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+          },
+          {
+            "title": "ESPN",
+            "url": "https://www.espn.com/soccer/match/_/gameId/401876403/toulouse-lens"
+          }
+        ],
+        "checked_at": "2026-11-22T07:17+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-22T07:17+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": "Итоговый счёт подтверждён"
+        }
+      ],
+      "last_sync": "2026-11-22T07:17+03:00"
     },
     {
       "id": "football-20261121-1hfvi9w",
@@ -15275,8 +15385,22 @@
       "published_at": "2026-11-21T00:29+03:00",
       "model_version": "v3",
       "market_prob": 0.213,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "1:2",
+        "note": "Итоговый счёт подтверждён",
+        "sources": [
+          {
+            "title": "365Scores",
+            "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=21%2F11%2F2026&endDate=21%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+          },
+          {
+            "title": "ESPN",
+            "url": "https://www.espn.com/soccer/match/_/gameId/401878333/rangers-motherwell"
+          }
+        ],
+        "checked_at": "2026-11-22T07:17+03:00"
+      },
       "versions": [
         {
           "at": "2026-11-21T00:29+03:00",
@@ -15333,6 +15457,12 @@
           "from": "withdrawn",
           "to": "pending",
           "note": "прогноз снова опубликован до начала"
+        },
+        {
+          "at": "2026-11-22T07:17+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": "Итоговый счёт подтверждён"
         }
       ],
       "tournament": "Премьершип Шотландии 2026/27",
@@ -15371,7 +15501,8 @@
         }
       ],
       "format": "Футбол, 90 минут",
-      "updated_at": "2026-11-21T16:28+03:00"
+      "updated_at": "2026-11-21T16:28+03:00",
+      "last_sync": "2026-11-22T07:17+03:00"
     },
     {
       "id": "hockey-20261121-fnlre9",
@@ -15494,10 +15625,32 @@
         }
       },
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "3:4",
+        "note": "Подтверждён итог с учётом ОТ и буллитов",
+        "sources": [
+          {
+            "title": "365Scores",
+            "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=21%2F11%2F2026&endDate=21%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+          },
+          {
+            "title": "ESPN",
+            "url": "https://www.espn.com/nhl/game/_/gameId/401892755/blackhawks-flames"
+          }
+        ],
+        "checked_at": "2026-11-22T07:17+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-22T07:17+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": "Подтверждён итог с учётом ОТ и буллитов"
+        }
+      ],
+      "last_sync": "2026-11-22T07:17+03:00"
     },
     {
       "id": "hockey-20261122-ovt2hh",
@@ -15543,10 +15696,32 @@
       ],
       "format": "Хоккей, с овертаймом и буллитами",
       "market_prob": 0.575,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "4:3",
+        "note": "Подтверждён итог с учётом ОТ и буллитов",
+        "sources": [
+          {
+            "title": "365Scores",
+            "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=21%2F11%2F2026&endDate=21%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+          },
+          {
+            "title": "ESPN",
+            "url": "https://www.espn.com/nhl/game/_/gameId/401892757/penguins-predators"
+          }
+        ],
+        "checked_at": "2026-11-22T07:17+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-22T07:17+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": "Подтверждён итог с учётом ОТ и буллитов"
+        }
+      ],
+      "last_sync": "2026-11-22T07:17+03:00"
     },
     {
       "id": "football-20261122-4rief6",
@@ -15623,10 +15798,32 @@
         }
       ],
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "1:2",
+        "note": "Итоговый счёт подтверждён",
+        "sources": [
+          {
+            "title": "ESPN",
+            "url": "https://www.espn.com/soccer/match/_/gameId/401841325/cruzeiro-chapecoense"
+          },
+          {
+            "title": "365Scores",
+            "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=22%2F11%2F2026&endDate=22%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+          }
+        ],
+        "checked_at": "2026-11-22T07:17+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-22T07:17+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": "Итоговый счёт подтверждён"
+        }
+      ],
+      "last_sync": "2026-11-22T07:17+03:00"
     },
     {
       "id": "hockey-20261122-1931to9",
@@ -15672,10 +15869,32 @@
       ],
       "format": "Хоккей, с овертаймом и буллитами",
       "market_prob": 0.625,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "3:4",
+        "note": "Подтверждён итог с учётом ОТ и буллитов",
+        "sources": [
+          {
+            "title": "ESPN",
+            "url": "https://www.espn.com/nhl/game/_/gameId/401892760/flyers-canadiens"
+          },
+          {
+            "title": "365Scores",
+            "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=22%2F11%2F2026&endDate=22%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+          }
+        ],
+        "checked_at": "2026-11-22T07:17+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-22T07:17+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": "Подтверждён итог с учётом ОТ и буллитов"
+        }
+      ],
+      "last_sync": "2026-11-22T07:17+03:00"
     },
     {
       "id": "hockey-20261122-1w086gx",
@@ -15798,10 +16017,32 @@
         }
       },
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "4:5",
+        "note": "Подтверждён итог с учётом ОТ и буллитов",
+        "sources": [
+          {
+            "title": "ESPN",
+            "url": "https://www.espn.com/nhl/game/_/gameId/401892764/golden-knights-jets"
+          },
+          {
+            "title": "365Scores",
+            "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=22%2F11%2F2026&endDate=22%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+          }
+        ],
+        "checked_at": "2026-11-22T07:17+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-22T07:17+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": "Подтверждён итог с учётом ОТ и буллитов"
+        }
+      ],
+      "last_sync": "2026-11-22T07:17+03:00"
     },
     {
       "id": "hockey-20261122-4mb73r",
@@ -15847,10 +16088,32 @@
       ],
       "format": "Хоккей, с овертаймом и буллитами",
       "market_prob": 0.549,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "2:3",
+        "note": "Подтверждён итог с учётом ОТ и буллитов",
+        "sources": [
+          {
+            "title": "ESPN",
+            "url": "https://www.espn.com/nhl/game/_/gameId/401892762/islanders-red-wings"
+          },
+          {
+            "title": "365Scores",
+            "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=22%2F11%2F2026&endDate=22%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+          }
+        ],
+        "checked_at": "2026-11-22T07:17+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-22T07:17+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": "Подтверждён итог с учётом ОТ и буллитов"
+        }
+      ],
+      "last_sync": "2026-11-22T07:17+03:00"
     },
     {
       "id": "hockey-20261122-59ag0i",
@@ -15896,10 +16159,32 @@
       ],
       "format": "Хоккей, с овертаймом и буллитами",
       "market_prob": 0.637,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "4:2",
+        "note": "Подтверждён итог с учётом ОТ и буллитов",
+        "sources": [
+          {
+            "title": "ESPN",
+            "url": "https://www.espn.com/nhl/game/_/gameId/401892761/kings-senators"
+          },
+          {
+            "title": "365Scores",
+            "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=22%2F11%2F2026&endDate=22%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+          }
+        ],
+        "checked_at": "2026-11-22T07:17+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-22T07:17+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": "Подтверждён итог с учётом ОТ и буллитов"
+        }
+      ],
+      "last_sync": "2026-11-22T07:17+03:00"
     },
     {
       "id": "hockey-20261122-hnfszy",
@@ -15945,10 +16230,32 @@
       ],
       "format": "Хоккей, с овертаймом и буллитами",
       "market_prob": 0.546,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "7:5",
+        "note": "Подтверждён итог с учётом ОТ и буллитов",
+        "sources": [
+          {
+            "title": "ESPN",
+            "url": "https://www.espn.com/nhl/game/_/gameId/401892758/capitals-bruins"
+          },
+          {
+            "title": "365Scores",
+            "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=22%2F11%2F2026&endDate=22%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+          }
+        ],
+        "checked_at": "2026-11-22T07:17+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-22T07:17+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": "Подтверждён итог с учётом ОТ и буллитов"
+        }
+      ],
+      "last_sync": "2026-11-22T07:17+03:00"
     },
     {
       "id": "hockey-20261122-im8avc",
@@ -16063,10 +16370,32 @@
         }
       },
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "3:4",
+        "note": "Подтверждён итог с учётом ОТ и буллитов",
+        "sources": [
+          {
+            "title": "ESPN",
+            "url": "https://www.espn.com/nhl/game/_/gameId/401892759/blue-jackets-maple-leafs"
+          },
+          {
+            "title": "365Scores",
+            "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=22%2F11%2F2026&endDate=22%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+          }
+        ],
+        "checked_at": "2026-11-22T07:17+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-22T07:17+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": "Подтверждён итог с учётом ОТ и буллитов"
+        }
+      ],
+      "last_sync": "2026-11-22T07:17+03:00"
     },
     {
       "id": "basketball-20261122-jrovyv",
@@ -16147,10 +16476,32 @@
         }
       ],
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "won",
+      "result": {
+        "score": "97:96",
+        "note": "Итоговый счёт подтверждён",
+        "sources": [
+          {
+            "title": "ESPN",
+            "url": "https://www.espn.com/nba/game/_/gameId/401910024/trail-blazers-knicks"
+          },
+          {
+            "title": "365Scores",
+            "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=22%2F11%2F2026&endDate=22%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+          }
+        ],
+        "checked_at": "2026-11-22T07:17+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-22T07:17+03:00",
+          "from": "pending",
+          "to": "won",
+          "note": "Итоговый счёт подтверждён"
+        }
+      ],
+      "last_sync": "2026-11-22T07:17+03:00"
     },
     {
       "id": "basketball-20261122-1cmjg6",
@@ -16304,10 +16655,32 @@
         }
       },
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "104:95",
+        "note": "Итоговый счёт подтверждён",
+        "sources": [
+          {
+            "title": "ESPN",
+            "url": "https://www.espn.com/nba/game/_/gameId/401910026/grizzlies-timberwolves"
+          },
+          {
+            "title": "365Scores",
+            "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=22%2F11%2F2026&endDate=22%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+          }
+        ],
+        "checked_at": "2026-11-22T07:17+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-22T07:17+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": "Итоговый счёт подтверждён"
+        }
+      ],
+      "last_sync": "2026-11-22T07:17+03:00"
     },
     {
       "id": "basketball-20261122-zthbuk",
@@ -16406,10 +16779,32 @@
         }
       },
       "market_prob": null,
-      "status": "pending",
-      "result": null,
+      "status": "lost",
+      "result": {
+        "score": "114:91",
+        "note": "Итоговый счёт подтверждён",
+        "sources": [
+          {
+            "title": "ESPN",
+            "url": "https://www.espn.com/nba/game/_/gameId/401910027/pelicans-spurs"
+          },
+          {
+            "title": "365Scores",
+            "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=22%2F11%2F2026&endDate=22%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+          }
+        ],
+        "checked_at": "2026-11-22T07:17+03:00"
+      },
       "versions": [],
-      "status_log": []
+      "status_log": [
+        {
+          "at": "2026-11-22T07:17+03:00",
+          "from": "pending",
+          "to": "lost",
+          "note": "Итоговый счёт подтверждён"
+        }
+      ],
+      "last_sync": "2026-11-22T07:17+03:00"
     },
     {
       "id": "basketball-20261122-csaeez",
@@ -17275,6 +17670,192 @@
       ],
       "format": "Футбол, 90 минут",
       "market_prob": 0.676,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "hockey-20261123-n0kfwv",
+      "sport": "hockey",
+      "sport_name": "Хоккей",
+      "home": "Tampa Bay Lightning",
+      "away": "Buffalo Sabres",
+      "event_date": "2026-11-23",
+      "start_iso": "2026-11-23T01:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-22T07:17+03:00",
+      "model_version": "v5-form",
+      "tournament": "NHL",
+      "match": "Tampa Bay Lightning — Buffalo Sabres",
+      "start": "23.11, 01:00 МСК",
+      "bet": "П1 (победа «Tampa Bay Lightning», с ОТ)",
+      "confidence": 2,
+      "reason": "По сверенной форме преимущество на стороне «Tampa Bay Lightning». Уверенность низкая.",
+      "facts": [
+        "Начало 23.11, 01:00 МСК подтверждено ESPN и NHL.",
+        "Tampa Bay Lightning: побед 3 из 3 сверенных матчей.",
+        "Buffalo Sabres: побед 1 из 3 сверенных матчей."
+      ],
+      "against": [],
+      "uncertainty": "До матча не сверены стартовые вратари, составы и игра в большинстве.",
+      "data_quality": {
+        "level": "low",
+        "note": "Оценка основана на короткой выборке подтверждённых результатов."
+      },
+      "sources": [
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892769/sabres-lightning"
+        },
+        {
+          "title": "NHL",
+          "url": "https://www.nhl.com/gamecenter/buf-vs-tbl/2026/11/22/2026020374"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892744/oilers-lightning"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=20%2F11%2F2026&endDate=20%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892729/capitals-lightning"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=18%2F11%2F2026&endDate=18%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892701/lightning-blue-jackets"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=13%2F11%2F2026&endDate=13%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=21%2F11%2F2026&endDate=21%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892756/sabres-panthers"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892746/sabres-capitals"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892732/sabres-flyers"
+        }
+      ],
+      "market_prob": null,
+      "status": "pending",
+      "result": null,
+      "versions": [],
+      "status_log": []
+    },
+    {
+      "id": "hockey-20261123-o4mhcm",
+      "sport": "hockey",
+      "sport_name": "Хоккей",
+      "home": "St. Louis Blues",
+      "away": "Edmonton Oilers",
+      "event_date": "2026-11-23",
+      "start_iso": "2026-11-23T03:00+03:00",
+      "start_approx": false,
+      "published_at": "2026-11-22T07:17+03:00",
+      "model_version": "v6-markets",
+      "tournament": "NHL",
+      "match": "St. Louis Blues — Edmonton Oilers",
+      "start": "23.11, 03:00 МСК",
+      "bet": "Ф1 (+1,5) (с ОТ)",
+      "confidence": 2,
+      "reason": "Ф1 (+1,5): условие выполнялось в 5 из 6 разных сверенных матчей. Расчёт: итог с учётом овертайма и буллитов.",
+      "facts": [
+        "Начало 23.11, 03:00 МСК подтверждено ESPN и 365Scores и NHL.",
+        "St. Louis Blues: условие выполнено в 3 из 3 сверенных матчей.",
+        "Edmonton Oilers: условие выполнено в 2 из 3 сверенных матчей.",
+        "Предматчевый порог опубликован источником «DraftKings через ESPN»."
+      ],
+      "against": [
+        "В части сверенных матчей условие не выполнялось. Уровень соперников в выборке различается."
+      ],
+      "uncertainty": "До матча не сверены стартовые вратари, составы и игра в большинстве.",
+      "data_quality": {
+        "level": "low",
+        "note": "Сверены счёт и условия расчёта; выборка короткая."
+      },
+      "sources": [
+        {
+          "title": "DraftKings через ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892770/oilers-blues"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=23%2F11%2F2026&endDate=23%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "NHL",
+          "url": "https://www.nhl.com/gamecenter/edm-vs-stl/2026/11/22/2026020375"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892763/devils-blues"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=22%2F11%2F2026&endDate=22%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892745/blues-penguins"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=20%2F11%2F2026&endDate=20%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892734/ducks-blues"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=18%2F11%2F2026&endDate=18%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "365Scores",
+          "url": "https://webws.365scores.com/web/games/?appTypeId=5&langId=1&timezoneName=Etc%2FUTC&userCountryId=1&startDate=21%2F11%2F2026&endDate=21%2F11%2F2026&sports=1%2C2%2C3%2C4%2C8"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892754/oilers-hurricanes"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892744/oilers-lightning"
+        },
+        {
+          "title": "ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892730/oilers-panthers"
+        }
+      ],
+      "market": {
+        "kind": "handicap",
+        "line": 1.5,
+        "side": "home",
+        "unit": "шайбы",
+        "scope": "final",
+        "line_source": {
+          "title": "DraftKings через ESPN",
+          "url": "https://www.espn.com/nhl/game/_/gameId/401892770/oilers-blues"
+        }
+      },
+      "market_prob": null,
       "status": "pending",
       "result": null,
       "versions": [],
