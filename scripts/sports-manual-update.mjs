@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import { normalizeIdentity } from "./sports-discovery.mjs";
 import { researchConfirmed } from "./sports-evidence.mjs";
 import { SPARSE_MODEL_VERSION } from "./sports-sparse-model.mjs";
+import { describeEvidence } from "./sports-article-evidence.mjs";
 import "../js/history-core.js";
 
 const testedLeagues = new Set(["eng1", "eng2", "eng3", "eng4", "deu2", "deu3", "esp2", "deu4b", "deu4n", "deu4e"]);
@@ -13,16 +14,28 @@ const sameMatch = (a, b) => normalizeIdentity(a) === normalizeIdentity(b);
 const publicModelLabel = "Оценка модели исхода";
 const maxFootballArticles = 6;
 
-function findArticle(next, fixture) {
+function findArticle(next, fixture, contexts) {
+  function sameFixture(article) {
+    const comparable = (contexts?.get(article)?.evidence ?? []).flatMap((row) => fixture.sources
+      .filter((claim) => claim.title === row.source && claim.id != null && row.id != null &&
+        row.participantIds?.length === 2 && row.participantIds.every((id) => id != null) &&
+        claim.participantIds?.length === 2 && claim.participantIds.every((id) => id != null))
+      .map((claim) => ({ row, claim })));
+    if (!comparable.length) return sameMatch(article.match, fixture.match) && sameMatch(article.tournament, fixture.tournament);
+    return comparable.every(({ row, claim }) => String(claim.id) === String(row.id) &&
+      claim.reportedStatus === "scheduled" && Math.abs(row.start - claim.reportedStart) <= 5 * mins &&
+      row.participantIds.every((id, i) => String(id) === String(claim.participantIds[i])) &&
+      (row.sourceCompetitionId == null || claim.sourceCompetitionId == null ||
+        String(row.sourceCompetitionId) === String(claim.sourceCompetitionId)));
+  }
   const matches = next.analysis.filter((article) => article.sport_id === fixture.sport &&
-    sameMatch(article.match, fixture.match) && Math.abs(Date.parse(article.start_iso) - fixture.start) <= 5 * mins &&
-    sameMatch(article.tournament, fixture.tournament));
+    Math.abs(Date.parse(article.start_iso) - fixture.start) <= 5 * mins && sameFixture(article));
   return matches.length === 1 ? matches[0] : null;
 }
 
 function readyModel(result, now) {
   if (result.sport !== "football" || !testedLeagues.has(result.competition) || !researchConfirmed(result.sourceTier) ||
-      result.start <= now + 10 * mins || !(Date.parse(result.dataAsOf) <= now)) return null;
+      result.dataQuality?.identityConflict || result.start <= now + 10 * mins || !(Date.parse(result.dataAsOf) <= now)) return null;
   const model = result.candidates?.find((item) => item.version === SPARSE_MODEL_VERSION);
   const probabilities = model?.probabilities;
   if (!probabilities || Object.keys(probabilities).length !== outcomes.length ||
@@ -37,17 +50,26 @@ function readyModel(result, now) {
   return sample.every((count) => count >= 4) ? { ...model, sample } : null;
 }
 
-export function appendValidatedAnalysis(next, research, now) {
+export function appendValidatedAnalysis(next, research, now, { existingOnly = false, decisions = [], contexts } = {}) {
   const applied = [];
   const eligible = research.forecastEvidence.flatMap((event) => {
     const model = readyModel(event, now);
+    if (!model) decisions.push({ match: event.match, sport: event.sport,
+      reason: event.sport !== "football" || !testedLeagues.has(event.competition) ? "unvalidated_scope" : "evidence_gate" });
     return model ? [{ event, model }] : [];
   }).sort((a, b) => Math.min(...b.model.sample) - Math.min(...a.model.sample) || a.event.start - b.event.start);
   for (const { event, model } of eligible) {
-    let article = findArticle(next, event);
+    let article = findArticle(next, event, contexts);
     if (article) {
-      if (!article.sources.some((source) => event.sources.some((claim) => sourceKey(claim) === sourceKey(source)))) continue;
+      if (!article.sources.some((source) => event.sources.some((claim) => sourceKey(claim) === sourceKey(source)))) {
+        decisions.push({ match: event.match, sport: event.sport, reason: "schedule_source_mismatch" });
+        continue;
+      }
     } else {
+      if (existingOnly) {
+        decisions.push({ match: event.match, sport: event.sport, reason: "not_matched_to_confirmed_calendar" });
+        continue;
+      }
       const claims = event.sources.filter((claim) => claim.title && URL.parse(claim.url)?.protocol === "https:" &&
         claim.reportedStatus === "scheduled" && Math.abs(claim.reportedStart - event.start) <= 5 * mins);
       const duplicate = next.analysis.some((item) => item.sport_id === event.sport && sameMatch(item.match, event.match) &&
@@ -64,13 +86,63 @@ export function appendValidatedAnalysis(next, research, now) {
     }
     const percentages = outcomes.map((key) => Math.round(model.probabilities[key] * 100));
     const summary = `${publicModelLabel} за основное время (округлено) — победа первой команды ${percentages[0]}%, ничья ${percentages[1]}%, победа второй команды ${percentages[2]}%.`;
-    article.text += `\n${summary}\nМодель учитывает результаты обеих команд. В текущем сезоне использовано ${model.sample.join(" и ")} матчей соответственно. Оценка основана на проверке исторических данных по этой группе лиг.`;
+    const [first, second] = article.match.split(/\s+[—–]\s+/);
+    const labels = [first && `победа «${first}»`, "ничья", second && `победа «${second}»`];
+    const [top, runnerUp] = percentages.map((value, i) => ({ value, label: labels[i] })).sort((a, b) => b.value - a.value);
+    article.verdict = top.value - runnerUp.value <= 5 || !top.label
+      ? "Две наибольшие оценки модели близки. Явного преимущества нет."
+      : `Наибольшая оценка модели — ${top.label} (${top.value}%). Даже этот исход может не состояться.`;
+    const homeAdjustment = event.homeField === true;
+    const inputs = `В расчёте вероятностей — победы, ничьи и поражения обеих команд, давность игр и частота ничьих в лиге. Игры прошлого сезона получают меньший вес. В текущем сезоне использовано ${model.sample.join(" и ")} матчей соответственно.`;
+    const exclusions = homeAdjustment
+      ? "Применена фиксированная поправка на домашнее поле. Раздельная домашняя и выездная форма, сила соперников, составы и травмы в расчёт не входят."
+      : "Поправка на домашнее поле не применялась. Домашняя и выездная форма, сила соперников, составы и травмы в расчёт не входят.";
+    article.text += `\n${summary}\n${inputs}\n${exclusions}`;
     const evidenceSources = model.evidence.flatMap((entry) => entry.sources ?? []);
     article.sources = [...new Map([...article.sources, ...evidenceSources.filter((source) => source.title && URL.parse(source.url)?.protocol === "https:")]
       .map((source) => [sourceKey(source), { title: source.title, url: source.url }])).values()];
-    applied.push({ id: event.id, match: article.match, start: Date.parse(article.start_iso), version: model.version, sample: model.sample });
+    applied.push({ id: event.id, match: article.match, start: Date.parse(article.start_iso), version: model.version, sample: model.sample, homeAdjustment });
   }
   return applied;
+}
+
+export function selectManualAnalysis(next, contexts, research, now, editorial) {
+  const modelDecisions = [];
+  const drafts = [...contexts.keys()].filter((article) => Date.parse(article.start_iso) > now);
+  const draftSite = { analysis: drafts };
+  const applied = appendValidatedAnalysis(draftSite, research.diagnostics, now, { existingOnly: true, decisions: modelDecisions, contexts });
+  const evaluated = drafts.map((article) => ({
+    article, context: contexts.get(article), evidence: describeEvidence(article, contexts.get(article), research, now, editorial),
+  })).filter(({ evidence }) => evidence);
+  const rank = (a, b) => Number(b.evidence.model) - Number(a.evidence.model) ||
+    Math.min(...b.evidence.history) - Math.min(...a.evidence.history) ||
+    Number(b.evidence.opponentComparison) - Number(a.evidence.opponentComparison) ||
+    b.evidence.splits - a.evidence.splits || Date.parse(a.article.start_iso) - Date.parse(b.article.start_iso);
+  const qualified = evaluated.filter(({ evidence }) => evidence.quality).sort(rank);
+  const selected = [];
+  const same = (event, article) => event.match === article.match && event.start_iso === article.start_iso;
+  for (const sport of next.sports) {
+    const limit = sport.id === "football" ? maxFootballArticles : sport.id === "cs2" ? 5 : Infinity;
+    const articles = qualified.filter(({ article }) => article.sport_id === sport.id).slice(0, limit);
+    selected.push(...articles);
+    const calendar = articles.map(({ article, context }) => sport.events.find((event) => same(event, article)) ?? {
+      match: article.match, tournament: article.tournament, start: article.start, start_iso: article.start_iso,
+      format: article.format, sources: context.evidence.map(({ source, url }) => ({ title: source, url })),
+      schedule_evidence: context.basis, has_pick: false,
+    });
+    const necessary = sport.events.filter((event) => event.has_pick && !calendar.some((entry) => same(event, entry)));
+    const remaining = sport.events.filter((event) => !event.has_pick && !calendar.some((entry) => same(event, entry)));
+    sport.events = [...calendar, ...necessary, ...remaining.slice(0, Math.max(0, limit - calendar.length - necessary.length))]
+      .sort((a, b) => Date.parse(a.start_iso) - Date.parse(b.start_iso));
+  }
+  next.analysis = selected.sort(rank).map(({ article }) => article);
+  const visibleModels = applied.filter((item) => next.analysis.some((article) => article.match === item.match &&
+    Date.parse(article.start_iso) === item.start));
+  for (const item of applied.filter((item) => !visibleModels.includes(item))) {
+    modelDecisions.push({ match: item.match, sport: "football", reason: "editorial_quality_or_limit" });
+  }
+  return { researchApplied: visibleModels, articles: selected.map(({ evidence }) => evidence),
+    evaluated: evaluated.map(({ evidence }) => evidence), modelDecisions };
 }
 
 export function siteData(input, output) {
@@ -112,6 +184,40 @@ export function manualSummary(report, research, requests, snapshot) {
   for (const [sport, label] of Object.entries(names)) {
     const group = research.sports[sport] ?? {};
     lines.push(`| ${label} | ${group.detected ?? "—"} | ${group.confirmed ?? "—"} | ${group.historyAvailable ?? "—"} | ${group.forecast ?? "—"} | ${report.sports[sport].confirmed} | ${report.sports[sport].selected} |`);
+  }
+  if (report.evaluatedArticles) {
+    lines.push("", "## Отбор для «Разбора дня»", "",
+      "Берём матчи с минимум четырьмя сопоставимыми результатами у каждой стороны и хотя бы одним результатом за последние 28 дней у каждой стороны. Для киберспорта нужен подтверждённый формат серии.",
+      "", "| Спорт | Подтверждено для сайта | Достаточно истории | В «Разборе дня» | Только в календаре |",
+      "| --- | ---: | ---: | ---: | ---: |");
+    for (const [sport, label] of Object.entries(names)) {
+      const row = report.sports[sport];
+      lines.push(`| ${label} | ${row.confirmed} | ${row.qualifiedAnalysis} | ${row.articles} | ${row.calendarOnly} |`);
+    }
+    lines.push("", "### Разборы в локальном превью", "",
+      ...report.articles.map((item) => `- ${item.match} — ${item.history.join(" / ")} результатов. ${item.historySources.join(", ")}.${item.model ? " Добавлена проверенная модель исхода." : ""}`));
+  }
+  if (report.rawRequests) {
+    const replay = report.runMode === "replay";
+    const { ok = 0, cached = 0, error = 0, restricted = 0, backoff = 0 } = report.rawRequests;
+    const responses = replay ? `из сохранённого снимка ${ok + cached}` : `по сети ${ok}, из архива ${cached}`;
+    lines.push("", `Ответы источников — ${responses}, ошибок ${error}, ограничений доступа ${restricted}, отложенных запросов ${backoff}.`,
+      replay ? "Редакционный повтор выполнен без сетевых запросов." :
+        "Основные календари запрашивались заново. Сохранённые исторические ответы учитываются отдельно в журнале.");
+  }
+  if (report.scheduleJobs) {
+    lines.push("", "## Проверка расписаний", "",
+      "| Спорт | Прежние правила на этих ответах | Подтверждено | Только официальный источник | В подборке |",
+      "| --- | ---: | ---: | ---: | ---: |");
+    for (const [sport, label] of Object.entries(names)) {
+      const row = report.sports[sport];
+      lines.push(`| ${label} | ${row.legacyConfirmedOnSameRows} | ${row.confirmed} | ${row.officialOnly} | ${row.selected} |`);
+    }
+    const skipped = Map.groupBy(report.scheduleExclusions ?? [], (row) => row.reason);
+    const lack = new Set(["single_secondary", "shared_origin"]);
+    lines.push("", `Пропущено из-за недостатка подтверждений — ${[...skipped].filter(([reason]) => lack.has(reason)).reduce((sum, [, rows]) => sum + rows.length, 0)}.`,
+      `Пропущено из-за расхождений в расписании — ${[...skipped].filter(([reason]) => !lack.has(reason)).reduce((sum, [, rows]) => sum + rows.length, 0)}.`,
+      "Сетевые попытки и результаты разбора ответов записаны в network.json. Причины пропуска матчей записаны в scheduleExclusions в manual-report.json.");
   }
   lines.push("", "Проверка для сайта пользуется действующими правилами сопоставления. Исследовательская проверка отдельно сверяет турнир, контекст и происхождение источников.",
     `Разборов с оценкой модели — ${report.researchApplied.length}. Остальные модельные расчёты остаются в локальной диагностике.`,

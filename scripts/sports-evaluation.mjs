@@ -125,7 +125,7 @@ export function parseOpenFootballSeason(json, competition, level, season) {
   });
 }
 
-function parseCsvRow(line) {
+export function parseCsvRow(line) {
   return [...line.matchAll(/(?:^|,)(?:"((?:[^"]|"")*)"|([^",]*))/g)]
     .map((cell) => cell[1]?.replaceAll('""', '"') ?? cell[2]);
 }

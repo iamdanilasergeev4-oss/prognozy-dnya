@@ -1,6 +1,9 @@
 import "../js/history-core.js";
 import { createHash } from "node:crypto";
 import { assessMarkets, completedSeries } from "./sports-markets.mjs";
+import { isOfficial, sourceOrigin, validSeries } from "./sports-evidence.mjs";
+
+import { competitionOf } from "./sports-discovery.mjs";
 
 const H = globalThis.HistoryCore;
 const MINUTE = 60_000;
@@ -43,6 +46,7 @@ const aliases = [
   ["Vero Volley Monza", "Volley Monza"],
   ["Brooklyn Nets", "Brooklyn"], ["NY Knicks", "New York Knicks"],
   ["Inner Circle x Insanity", "Inner Circle"], ["LGD Gaming", "LGD"], ["1W Team", "1Win"],
+  ["VfB Stuttgart II", "Stuttgart II"], ["FC Ingolstadt 04", "FC Ingolstadt", "Ingolstadt"],
   ["BBL Esports", "BBL"], ["Sinners Esports", "SINNERS"], ["The Huns Esports", "The Huns"],
   ["Team Spirit", "Spirit"], ["Xtreme Gaming", "XG"], ["PARIVISION", "PARI"], ["Team Liquid", "Liquid"],
 ];
@@ -107,10 +111,10 @@ export function tennisPreviewLinks(rows, now) {
   }).slice(0, 3);
 }
 
-export function verifiedEsportsForm({ row, strafe }, first, second, now) {
+export function verifiedEsportsForm({ row, strafe }, first, second, now, days = 7, limit = 3) {
   const key = (names) => names.map(team).sort().join("|");
   const entries = [...new Map(second.filter((entry) => entry.format === strafe.format && entry.ended < now &&
-    entry.ended > now - 7 * DAY).map((entry) => [entry.url, entry])).values()];
+    entry.ended > now - days * DAY).map((entry) => [entry.url, entry])).values()];
   return [row.home, row.away].map((name) => {
     const involves = (entry) => entry.names.some((side) => team(side) === team(name));
     const [matches = []] = first.map((series) => series.filter(involves)).sort((a, b) => b.length - a.length);
@@ -119,10 +123,11 @@ export function verifiedEsportsForm({ row, strafe }, first, second, now) {
       const pairKey = key(entry.names);
       const duplicate = candidates.filter((other) => key(other.names) === pairKey).length !== 1;
       const corroborated = matches.filter((other) => key(other.names) === pairKey);
-      if (duplicate || corroborated.length !== 1 || team(corroborated[0].winner) !== team(entry.winner)) return [];
-      return [{ win: team(entry.winner) === team(name), start: entry.ended, match: entry.names.join(" — "),
-        outcome: `победа «${entry.winner}»`, sources: [link(strafe), { title: "Ensigame", url: entry.url }] }];
-    }).sort((a, b) => b.start - a.start).slice(0, 3);
+      if (duplicate || corroborated.length !== 1 || team(corroborated[0].winner) !== team(entry.winner) ||
+          corroborated[0].format && corroborated[0].format !== entry.format) return [];
+      return [{ id: entry.url, win: team(entry.winner) === team(name), start: entry.ended, match: entry.names.join(" — "),
+        format: entry.format, outcome: `победа «${entry.winner}»`, sources: [link(strafe), { title: "Ensigame", url: entry.url }] }];
+    }).sort((a, b) => b.start - a.start).slice(0, limit);
   });
 }
 
@@ -198,19 +203,27 @@ export function resultFor(index, entry) {
     note: scope === "regulation" ? "Счёт основного времени подтверждён" : hockeyFinal ? "Подтверждён итог с учётом ОТ и буллитов" : "Итоговый счёт подтверждён" };
 }
 
-function formFor(index, event, name, now) {
+function formFor(index, event, name, now, fixtureFormat, editorialDays, officialHistory = false) {
   const results = [];
   const used = new Set();
-  const formDays = ["football", "volleyball"].includes(event.sport) ? FOOTBALL_FORM_DAYS : FORM_DAYS;
+  const baseDays = ["football", "volleyball"].includes(event.sport) ? FOOTBALL_FORM_DAYS : FORM_DAYS;
+  const formDays = Math.max(baseDays, editorialDays);
   for (const group of index.values()) {
     for (const row of group) {
-      if (row.sport !== event.sport || row.start >= now || row.start < now - formDays * DAY ||
+      const isLeagueArchive = officialHistory && row.source === "Lega Pallavolo" && officialFixtureSource(row);
+      const days = isLeagueArchive ? 90 : formDays;
+      if (row.sport !== event.sport || row.start >= now || row.start < now - days * DAY ||
           ![team(row.home), team(row.away)].includes(team(name))) continue;
       // Keep the form window within the same competitions to avoid mixing levels of play.
       if (normalize(row.tournament) !== normalize(event.tournament) && !(row.league && row.league === event.league) &&
           !(esports.has(event.sport) && row.format && row.format === event.format)) continue;
       const sources = consensusScore(index, row, "final");
-      if (sources.length < 2 || sources.some((r) => !sameScore(r.aligned, sources[0].aligned))) continue;
+      const official = officialHistory && sources.length === 1 && officialFixtureSource(sources[0]) &&
+        (row.sport !== "volleyball" || Math.max(...(sources[0].aligned ?? [])) === 3);
+      if ((!official && sources.length < 2) || sources.some((r) => !sameScore(r.aligned, sources[0].aligned))) continue;
+      const formats = sources.map((source) => source.format).filter(Boolean);
+      if (esports.has(event.sport) && (!fixtureFormat || !formats.length ||
+          formats.some((format) => format !== fixtureFormat) || !validSeries(sources[0].aligned, fixtureFormat, event.sport))) continue;
       const id = sources.map((r) => `${r.source}|${r.id}`).sort().join(";");
       if (used.has(id)) continue;
       used.add(id);
@@ -221,7 +234,7 @@ function formFor(index, event, name, now) {
         sources: sources.map(link) });
     }
   }
-  return results.sort((a, b) => b.start - a.start).slice(0, 3);
+  return results.sort((a, b) => b.start - a.start);
 }
 
 function checkedStandings(standings) {
@@ -256,9 +269,11 @@ function timeLabel(msk) {
 function analysisFor(index, context, row, sources, sportName, missing, now) {
   const format = sources.find((r) => r.format)?.format;
   const forms = [row.home, row.away].map((name, i) => {
-    const exact = formFor(index, row, name, now);
+    const exact = formFor(index, row, name, now, format, 0).slice(0, 3);
+    const longer = context.editorialDays ? formFor(index, row, name, now, format, context.editorialDays, true) : exact;
     const extra = context.esportsForm.get(row.url)?.[i] || [];
-    return { name, results: extra.length > exact.length ? extra : exact, exact };
+    const editorial = context.esportsEditorialForm.get(row.url)?.[i] || [];
+    return { name, results: extra.length > exact.length ? extra : exact, exact, longer, editorial };
   });
   const market = assessMarkets(row, sources.map((source) => ({ ...source, alignment: orientation(row, source) })),
     forms.map(({ name, exact }) => ({ name, results: exact })));
@@ -307,12 +322,18 @@ function analysisFor(index, context, row, sources, sportName, missing, now) {
   }
   const opposition = h2h ? `Очные встречи: преимущество на стороне «${h2h.leader}» (${h2h.wins}:${h2h.losses}).` : "";
   const caveat = row.sport === "hockey" ? "В сравнении формы учтён итог матча с овертаймом и буллитами." :
-    esports.has(row.sport) && forms.some(({ results }) => results.length) ? "В форме учтены недавние серии того же формата. Турниры могут отличаться по уровню." : "";
+    esports.has(row.sport) && forms.some(({ results }) => results.length) ? `Сравнение опирается на серии ${format}. Уровень турниров может различаться.` : "";
   const records = forms.filter(({ results }) => results.length).map(({ name, results }) =>
     `${name}. Сверенные результаты: ${results.map((r) => `${r.match} (${r.score || r.outcome})`).join("; ")}.`);
   const winnerVerdict = favored ? seasonLead ? `По результатам сезона преимущество на стороне «${favored}». Недавние результаты этому не противоречат. Уверенность средняя.`
     : `По ${formEnough ? "сверенной форме" : tennisLead ? "рейтингу и недавним результатам" : "таблице Суперлиги"} преимущество на стороне «${favored}». Уверенность низкая.`
     : "Подтверждённых данных недостаточно, чтобы выделить наиболее вероятный исход.";
+  const method = market ? "Основание вывода — сколько раз условие выполнялось в короткой выборке сверенных счётов." :
+    seasonLead ? "Основание вывода — доля набранных очков за сезон и проверка недавних результатов." :
+    formEnough ? "Основание вывода — сравнение числа побед в короткой серии сверенных матчей." :
+    tennisLead ? "Основание вывода — сочетание рейтинга тура и результатов недавних матчей." :
+    volleyLead ? "Основание вывода — сравнение долей побед по сверенной таблице Суперлиги." :
+    "";
   const links = [...new Map([...sources.map(link), ...forms.flatMap(({ results }) => results.flatMap((x) => x.sources)),
     ...(hasSeason ? season.flatMap((record) => record.sources.map(link)) : []),
     ...(volleyValid ? volleyTable.flatMap((record) => record.sources.map(link)) : []),
@@ -321,24 +342,72 @@ function analysisFor(index, context, row, sources, sportName, missing, now) {
   const article = {
     sport: sportName, sport_id: row.sport, match: `${row.home} — ${row.away}`, tournament: row.tournament,
     start: timeLabel(start), start_iso: start, format,
-    text: [key[0], ...records, opposition, caveat, market?.against, `Для оценки не сверены ${missing}. Эти сведения могут изменить вывод.`].filter(Boolean).join("\n"),
+    text: [key[0], ...records, opposition, caveat, market?.against,
+      `Не сверены: ${format ? missing.replace(/ и формат матча$/, "") : missing}.`].filter(Boolean).join("\n"),
     key_factors: [...key, ...(market?.facts || [])], verdict: market ? market.reason + " Уверенность низкая." : winnerVerdict,
     sources: links, automated: true,
   };
-  return { article, wins, sample, hasOutlook: !!favored || !!market, forecastSide, favored, missing, opposition, market, winnerVerdict,
+  return { article, forms, method, wins, sample, hasOutlook: !!favored || !!market, forecastSide, favored, missing, opposition, market, winnerVerdict,
     seasonSide: seasonLead ? seasonSide : null };
 }
 
-function selectUpcoming(index, sport, now, until) {
+export function officialFixtureSource(row, source = link(row)) {
+  const competition = competitionOf(row, true).id;
+  return isOfficial({ sport: row.sport, competition }, source);
+}
+
+export function classifySchedule(index, candidate, now, until) {
+  const { sport } = candidate;
+  const group = index.get(pair(candidate)) ?? [];
+  const near = group.filter((row) => Math.abs(row.start - candidate.start) <= tolerance(sport));
+  const scoped = (row) => competitionOf(row, true);
+  const sameCompetition = (a, b) => scoped(a).id === scoped(b).id ||
+    Boolean(a.league && a.league === b.league) || Boolean(a.tournament && normalize(a.tournament) === normalize(b.tournament));
+  const contextConflict = near.some((row) => row.source !== candidate.source &&
+    ((row.country && candidate.country && row.country !== candidate.country) ||
+     (row.league && candidate.league && row.league !== candidate.league) ||
+     (scoped(row).level !== "unknown" && scoped(candidate).level !== "unknown" && !sameCompetition(row, candidate))));
+  if (contextConflict) return { reason: "competition_conflict" };
+  const feeds = Map.groupBy(near, (row) => row.source);
+  if ([...feeds.values()].some((rows) => new Set(rows.map((row) => row.id)).size > 1)) {
+    return { reason: "duplicate_source_ids" };
+  }
+  if (near.some((row) => row.status !== "scheduled" || row.start <= now || row.start >= until)) return { reason: "status_conflict" };
+  if (["football", "basketball", "hockey", "volleyball"].includes(sport) &&
+      near.some((row) => orientation(candidate, row) !== 1)) return { reason: "home_away_conflict" };
+  if (new Set(near.map((row) => row.format).filter(Boolean)).size > 1) return { reason: "format_conflict" };
+  const spread = Math.max(...near.map((row) => row.start)) - Math.min(...near.map((row) => row.start));
+  if (spread > tolerance(sport) || group.some((row) => row.source !== candidate.source && !near.includes(row) &&
+      sameCompetition(row, candidate) && Math.abs(row.start - candidate.start) <= 3 * 60 * MINUTE)) return { reason: "time_conflict" };
+  const evidence = [...feeds.values()].map(([row]) => row);
+  const official = evidence.some((row) => officialFixtureSource(row));
+  if (!official && evidence.length < 2) return { reason: "single_secondary" };
+  const origins = evidence.map((row) => sourceOrigin({ ...link(row), origin: row.origin }));
+  if (!official && origins.every(Boolean) && new Set(origins).size < 2) return { reason: "shared_origin" };
+  return { evidence, basis: official ? "official" : "corroborated" };
+}
+
+function selectUpcoming(index, sport, now, until, audit) {
   const upcoming = [];
   for (const group of index.values()) {
     const candidates = group.filter((e) => e.sport === sport && e.status === "scheduled" && e.start > now && e.start < until);
     for (const candidate of candidates) {
       if (upcoming.some(({ evidence }) => evidence.includes(candidate))) continue;
-      const evidence = upcomingEvidence(index, candidate, now, until);
-      if (evidence.length < 2) continue;
-      const row = evidence.find((r) => ["NHL", "Lega Pallavolo", "Strafe"].includes(r.source)) || evidence[0];
-      upcoming.push({ row, evidence });
+      const checked = audit ? classifySchedule(index, candidate, now, until) : { evidence: upcomingEvidence(index, candidate, now, until) };
+      if (!checked.evidence?.length) {
+        if (audit) {
+          const key = JSON.stringify([sport, pair(candidate), candidate.start, checked.reason]);
+          const item = audit.get(key) ?? { sport, home: candidate.home, away: candidate.away, tournament: candidate.tournament,
+            start: new Date(candidate.start).toISOString(), reason: checked.reason, sources: [] };
+          item.sources.push(link(candidate));
+          audit.set(key, item);
+        }
+        continue;
+      }
+      const { evidence } = checked;
+      const row = evidence.find((item) => audit && officialFixtureSource(item)) ||
+        evidence.find((item) => ["NHL", "Lega Pallavolo", "Strafe"].includes(item.source)) || evidence[0];
+      upcoming.push({ row, evidence, basis: checked.basis });
     }
   }
   return upcoming.sort((a, b) => a.row.start - b.row.start);
@@ -455,15 +524,15 @@ export function selectMixedExpress(legs) {
   return result;
 }
 
-export function buildUpdate({ current, indexFile, historyFiles, express, rows, standings = [], esportsForm = new Map(),
-  tennisPreviews = new Map(), coverage, now }) {
+export function buildUpdate({ current, indexFile, historyFiles, express, rows, standings = [], esportsForm = new Map(), esportsEditorialForm = new Map(),
+  tennisPreviews = new Map(), coverage, now, reviewArticle = () => {}, editorialDays = 0, manualSchedule = false }) {
   const at = H.toMskIso(new Date(now));
   const tomorrow = H.mskDateOf(new Date(now + DAY).toISOString());
   const until = Date.parse(`${tomorrow}T23:59:59.999+03:00`) + 1;
   const index = eventIndex(rows);
   const context = { hockey: checkedStandings(standings.filter((row) => !row.kind)), volley: checkedVolleyTable(standings),
     tennis: new Map(standings.filter((row) => row.kind === "tennis" && row.updated <= now && row.updated >= now - 14 * DAY)
-      .map((row) => [team(row.name), row])), tennisPreviews, esportsForm };
+      .map((row) => [team(row.name), row])), tennisPreviews, esportsForm, esportsEditorialForm, editorialDays };
   const analysis = [];
   const sportsReport = {};
   const exclusions = [];
@@ -471,23 +540,27 @@ export function buildUpdate({ current, indexFile, historyFiles, express, rows, s
   const expressLegs = [];
   const forecastSports = [];
   const pickKey = (sport, p) => JSON.stringify([sport, p.match, p.bet]);
+  const scheduleAudit = manualSchedule ? new Map() : null;
   const sports = SPORTS.map(([id, name, emoji, missing]) => {
-    const upcoming = selectUpcoming(index, id, now, until);
+    const upcoming = selectUpcoming(index, id, now, until, scheduleAudit);
     const old = current.sports.find((s) => s.id === id);
     const events = [];
     const picks = [];
     const generated = [];
     const articles = [];
-    const assessed = upcoming.map(({ row, evidence }) => ({
-      row, evidence, detail: analysisFor(index, context, row, evidence, name, missing, now),
+    const assessed = upcoming.map(({ row, evidence, basis }) => ({
+      row, evidence, basis, detail: analysisFor(index, context, row, evidence, name, missing, now),
     }));
+    if (manualSchedule) for (const { row, evidence, detail, basis } of assessed) {
+      reviewArticle(detail.article, { row, forms: detail.forms, method: detail.method, evidence, basis });
+    }
     const tier = ({ evidence }) => evidence.find((source) => source.tier)?.tier ?? 6;
-    const selected = id === "football" ? assessed.filter(({ detail }) => detail.sample >= 2).sort(rankByEvidence).slice(0, FOOTBALL_LIMIT)
-      : id === "cs2" ? assessed.filter(({ evidence }) => evidence.filter((item) => item.format).length >= 2)
+    const selected = id === "football" ? assessed.filter(({ detail }) => manualSchedule || detail.sample >= 2).sort(rankByEvidence).slice(0, FOOTBALL_LIMIT)
+      : id === "cs2" ? assessed.filter(({ evidence }) => manualSchedule || evidence.filter((item) => item.format).length >= 2)
         .sort((a, b) => tier(a) - tier(b) || rankByEvidence(a, b)).slice(0, CS2_LIMIT) : assessed;
-    for (const { row, evidence, detail } of selected) {
+    for (const { row, evidence, detail, basis } of selected) {
       const { article } = detail;
-      const matched = (old?.picks || []).filter((pick) => {
+      const matched = (evidence.length < 2 ? [] : old?.picks || []).filter((pick) => {
         const target = targetFor(id, pick.match, pick.start_iso, pick.tournament);
         const win = H.normBet(pick.bet).match(/^п([12])$/iu)?.[1];
         const supported = win && detail.wins[Number(win) - 1] > detail.wins[2 - Number(win)];
@@ -508,13 +581,14 @@ export function buildUpdate({ current, indexFile, historyFiles, express, rows, s
           }
         }
       }
-      const forecast = matched.length ? null : forecastFrom(detail, row, now);
+      const forecast = matched.length || evidence.length < 2 ? null : forecastFrom(detail, row, now);
       if (forecast) {
         generated.push(forecast);
         picks.push(forecast);
       }
       events.push({ match: article.match, tournament: article.tournament, start: article.start, start_iso: article.start_iso,
-        format: article.format, sources: evidence.map(link), has_pick: Boolean(matched.length || forecast) });
+        format: article.format, sources: evidence.map(link), ...(basis ? { schedule_evidence: basis } : {}), has_pick: Boolean(matched.length || forecast) });
+      if (!manualSchedule) reviewArticle(article, { row, forms: detail.forms, method: detail.method, evidence, basis });
       articles.push(article);
     }
     for (const pick of old?.picks || []) {
@@ -526,10 +600,12 @@ export function buildUpdate({ current, indexFile, historyFiles, express, rows, s
       events[i].has_pick || selected[i].detail.hasOutlook));
     const candidates = [...index.values()].flat().filter((e) => e.sport === id && e.status === "scheduled" && e.start > now && e.start < until);
     const publishers = coverage[id];
-    const availability = publishers.length < 2 ? "unavailable" : events.length ? "verified" :
+    const availability = manualSchedule && events.length ? "verified" : publishers.length < 2 ? "unavailable" : events.length ? "verified" :
       upcoming.length ? "insufficient_quality" : candidates.length ? "unconfirmed" : "empty";
     const rowsByPublisher = Object.fromEntries([...Map.groupBy(candidates, (row) => row.source)].map(([source, matches]) => [source, matches.length]));
     sportsReport[id] = { publishers, rowsByPublisher, confirmed: upcoming.length, selected: events.length, picks: picks.length,
+      ...(manualSchedule ? { officialOnly: upcoming.filter(({ evidence }) => evidence.length === 1).length,
+        legacyConfirmedOnSameRows: selectUpcoming(index, id, now, until).length } : {}),
       generated: generated.length, markets: picks.reduce((types, pick) => {
         const kind = pick.market?.kind || "outcome";
         return { ...types, [kind]: (types[kind] || 0) + 1 };
@@ -597,7 +673,7 @@ export function buildUpdate({ current, indexFile, historyFiles, express, rows, s
   }
   if (JSON.stringify(nextIndex.months) !== JSON.stringify(indexFile.months)) nextIndex.updated_at = at;
   return { next, nextIndex, months, express: expressUpdate.store,
-    report: { sports: sportsReport, exclusions, analysis: analysis.length,
+    report: { sports: sportsReport, ...(scheduleAudit ? { scheduleExclusions: [...scheduleAudit.values()] } : {}), exclusions, analysis: analysis.length,
       express: { current: activeExpress.length, mixed: mixedExpress.length, eligibleLegs: expressLegs.map(({ sport, match }) => ({ sport, match })), ...expressUpdate.report },
       history: { archived: archive.added.length, newForecasts: archivedPicks.length, due: due.length, unresolved: due.length - results.length,
         awaitingEvidence: due.filter((entry) => !results.some((r) => r.id === entry.id))

@@ -5,7 +5,7 @@ import { buildShadowReport } from "./sports-shadow.mjs";
 import { calendarJobs, europeanSeason, germanLeagues } from "./sports-discovery.mjs";
 import { parseOpenLiga } from "./sports-research-sources.mjs";
 import { openDotaMap } from "./import-sports-archive.mjs";
-import { compareHistory, makeHistorySnapshot } from "./sports-history-analysis.mjs";
+import { compareHistory, makeHistorySnapshot, mergeHistory } from "./sports-history-analysis.mjs";
 import { DAY, loadSeasonArchives, readResearchSnapshots } from "./sports-research-history.mjs";
 import { copyResearchStore, readResearchRuns, researchMarkdown, researchReport, sports, storeResearchObject,
   verifyResearchObject, verifyResearchStore } from "./sports-research-ledger.mjs";
@@ -29,49 +29,110 @@ const filterClaims = (rows, capturedAt) => rows.filter((row) => {
   return valid && (row.status !== "finished" || row.start < capturedAt);
 });
 
-export function datasource(root, previous, requests, clock = Date.now, fetcher = fetch) {
-  const past = new Map(previous.flatMap((run) => (run.requests ?? []).filter((row) =>
-    Number.isFinite(row.startedAt) && row.url?.startsWith("https:"))
-    .map((row) => [row.url, row])));
-  return async (url, { source, sport, text = false, revision, minAge = 6 * 3_600_000 }) => {
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const failureKind = (error) => {
+  if (error.http === 429) return "rate_limit";
+  if ([401, 403].includes(error.http)) return "access";
+  if (error.name === "TimeoutError") return "timeout";
+  if (error.http) return error.http >= 500 ? "server" : "http";
+  if (error instanceof SyntaxError) return "payload";
+  return "transport";
+};
+
+export function datasource(root, previous, requests, clock = Date.now, fetcher = fetch, manual = false) {
+  const past = new Map();
+  const lastGood = new Map();
+  const hosts = new Map();
+  for (const run of [...previous].sort((a, b) => (a.at ?? 0) - (b.at ?? 0))) for (const row of run.requests ?? []) {
+    if (!Number.isFinite(row.startedAt) || !row.url?.startsWith("https:") || row.status === "backoff") continue;
+    if (row.status !== "cached") past.set(row.url, row);
+    if (["ok", "cached"].includes(row.status) && row.rawHash) lastGood.set(row.url, row);
+  }
+  async function fromHost(url, operation) {
+    if (!manual) return operation();
+    const host = new URL(url).hostname;
+    if (!hosts.has(host)) hosts.set(host, { slots: [Promise.resolve(), Promise.resolve()], next: 0, nextStart: 0, blockedUntil: 0 });
+    const state = hosts.get(host);
+    const slot = state.next++ % state.slots.length;
+    const result = state.slots[slot].then(async () => {
+      if (state.blockedUntil > clock()) {
+        throw Object.assign(new Error("HTTP 429: Retry-After"), { http: 429, retry: state.blockedUntil - clock() });
+      }
+      const start = Math.max(clock(), state.nextStart);
+      state.nextStart = start + 180;
+      if (start > clock()) await delay(start - clock());
+      if (state.blockedUntil > clock()) {
+        throw Object.assign(new Error("HTTP 429: Retry-After"), { http: 429, retry: state.blockedUntil - clock() });
+      }
+      try {
+        return await operation();
+      } catch (error) {
+        if (error.http === 429) state.blockedUntil = clock() + (error.retry || 60_000);
+        throw error;
+      }
+    });
+    state.slots[slot] = result.catch(() => {});
+    return result;
+  }
+  return async (url, { source, sport, text = false, revision, minAge = 6 * 3_600_000, schedule = false }) => {
     const old = past.get(url);
-    const record = { source, sport, url, startedAt: clock(), ...(revision ? { revision } : {}) };
-    const cached = old?.rawHash && (revision ? old.revision === revision : clock() - old.receivedAt < minAge);
-    if (old?.nextAttemptAt > clock()) {
-      requests.push({ ...record, status: "backoff", nextAttemptAt: old.nextAttemptAt, failures: old.failures });
-      throw new Error("Source backoff");
+    const good = lastGood.get(url);
+    const record = { source, sport, url, startedAt: clock(), schedule, ...(revision ? { revision } : {}) };
+    const cached = !schedule && good?.rawHash && (revision ? good.revision === revision : clock() - good.receivedAt < minAge);
+    const hardBackoff = ["rate_limit", "access", "http"].includes(old?.kind) || old?.status === "restricted" ||
+      old?.serverRetryAt > clock() || /^HTTP (?:429|404)\b/.test(old?.error ?? "");
+    if (!cached && old?.nextAttemptAt > clock() && (!schedule || hardBackoff)) {
+      requests.push({ ...record, status: "backoff", kind: old.kind || "previous_failure", error: old.error,
+        nextAttemptAt: old.nextAttemptAt, failures: old.failures });
+      throw Object.assign(new Error("Source backoff"), { kind: old.kind || "previous_failure" });
     }
-    let body;
+    const attempts = [];
     try {
+      let body;
       if (cached) {
-        body = await verifyResearchObject(root, "raw", old.rawHash);
-        record.receivedAt = old.receivedAt;
+        body = await verifyResearchObject(root, "raw", good.rawHash);
+        record.receivedAt = good.receivedAt;
       } else {
-        const reply = await fetcher(url, { headers, redirect: "error", signal: AbortSignal.timeout(9000) });
-        if (!reply.ok) {
-          const wait = reply.headers.get("retry-after");
-          const error = new Error(`HTTP ${reply.status}`);
-          error.http = reply.status;
-          error.retry = /^\d+$/.test(wait ?? "") ? Number(wait) * 1000 : Date.parse(wait) - clock();
-          throw error;
+        for (let i = 0; ; i++) {
+          try {
+            body = await fromHost(url, async () => {
+              const reply = await fetcher(url, { headers, redirect: "error", signal: AbortSignal.timeout(9000) });
+              if (!reply.ok) {
+                const wait = reply.headers.get("retry-after");
+                const retry = /^\d+$/.test(wait ?? "") ? Number(wait) * 1000 : Math.max(0, Date.parse(wait) - clock()) || 0;
+                throw Object.assign(new Error("HTTP " + reply.status), { http: reply.status, retry });
+              }
+              return Buffer.from(await reply.arrayBuffer());
+            });
+            attempts.push({ status: "ok" });
+            break;
+          } catch (error) {
+            const kind = failureKind(error);
+            attempts.push({ status: "error", kind, error: error.message, http: error.http });
+            if (!manual || !schedule || i >= 1 || !["timeout", "transport", "server"].includes(kind) || error.retry > 1500) throw error;
+            await delay(Math.max(600, error.retry || 0));
+          }
         }
-        body = Buffer.from(await reply.arrayBuffer());
         record.receivedAt = clock();
       }
-      record.rawHash = await storeResearchObject(root, "raw", body);
       const result = text ? body.toString("utf8") : JSON.parse(body.toString("utf8"));
-      const saved = { ...record, status: cached ? "cached" : "ok" };
+      record.rawHash = await storeResearchObject(root, "raw", body);
+      const saved = { ...record, status: cached ? "cached" : "ok", attempts };
       requests.push(saved);
-      past.set(url, saved);
+      if (!cached) past.set(url, saved);
+      lastGood.set(url, saved);
       return result;
     } catch (error) {
+      const kind = failureKind(error);
       const failures = (old?.failures ?? 0) + 1;
-      const cooldown = Math.min(7 * DAY, 15 * 60_000 * 2 ** Math.min(failures, 10));
-      const failed = { ...record, status: [401, 403].includes(error.http) ? "restricted" : "error",
-        error: error.message, failures, nextAttemptAt: clock() + Math.max(cooldown, error.retry || 0) };
+      const cooldown = manual && !["rate_limit", "access", "http"].includes(kind) ? 60_000 :
+        Math.min(7 * DAY, 15 * 60_000 * 2 ** Math.min(failures, 10));
+      const failed = { ...record, status: kind === "access" ? "restricted" : "error", kind, http: error.http,
+        attempts, error: error.message, failures, nextAttemptAt: clock() + Math.max(cooldown, error.retry || 0),
+        ...(error.retry > 0 ? { serverRetryAt: clock() + error.retry } : {}) };
       requests.push(failed);
       past.set(url, failed);
-      throw error;
+      throw Object.assign(error, { kind });
     }
   };
 }
@@ -85,10 +146,10 @@ export function seasonCacheAge(prior, now) {
 
 async function acquire(root, prior, startedAt, claimFiles, collectSite) {
   const requests = [];
-  const get = await datasource(root, prior, requests);
+  const get = datasource(root, prior, requests, Date.now, fetch, Boolean(collectSite));
   const site = collectSite ? await collectSite(get) : null;
   const season = europeanSeason(startedAt).slice(0, 4);
-  const minAge = seasonCacheAge(prior, startedAt);
+  const minAge = collectSite ? 0 : seasonCacheAge(prior, startedAt);
   const until = startedAt + 2 * DAY;
   const rows = [];
   const historicalRows = [];
@@ -96,7 +157,7 @@ async function acquire(root, prior, startedAt, claimFiles, collectSite) {
   for (const [competition, shortcut, label] of germanLeagues) {
     const url = `${openLiga}/getmatchdata/${shortcut}/${season}`;
     try {
-      const options = { source: "OpenLigaDB", sport: "football" };
+      const options = { source: "OpenLigaDB", sport: "football", schedule: Boolean(collectSite) };
       const data = await get(url, { ...options, minAge });
       const seasonRequest = requests.at(-1);
       if (!Array.isArray(data)) throw new Error("Ожидался список матчей сезона");
@@ -172,8 +233,11 @@ async function acquire(root, prior, startedAt, claimFiles, collectSite) {
   const at = Date.now();
   const normalized = makeHistorySnapshot({ rows: claims, supplemental, archives: archive.results,
     archiveRequests: archive.requests, now: startedAt, until, observedAt: at });
-  const diagnostics = compareHistory(checkpoint, [...prior.filter((run) => run.normalized).map((run) => run.normalized), normalized], at);
-  return { at, diagnostics, normalized, site, requests: [...requests, ...supplemental.requests.filter((row) => row.status !== "ok"), ...archive.requests] };
+  const snapshots = [...prior.filter((run) => run.normalized).map((run) => run.normalized), normalized];
+  const diagnostics = compareHistory(checkpoint, snapshots, at);
+  if (site) site.rows.push(...rows.filter((row) => row.status === "scheduled"));
+  return { at, diagnostics, snapshots, normalized, site,
+    requests: [...requests, ...supplemental.requests.filter((row) => row.status !== "ok"), ...archive.requests] };
 }
 
 async function storeRun(root, { at, diagnostics, normalized, requests }, mode, runKey, slot, retryAt) {
@@ -211,7 +275,7 @@ export async function captureManualResearch(root, startedAt, collectSite) {
     const prior = (await readResearchRuns(root)).sort((a, b) => a.at - b.at);
     const run = await acquire(root, prior, startedAt, [], collectSite);
     const snapshot = await storeRun(root, run, "prospective");
-    return { ...run, snapshot };
+    return { ...run, snapshot, history: mergeHistory(run.snapshots.flatMap((entry) => entry.results), run.at).history };
   });
 }
 

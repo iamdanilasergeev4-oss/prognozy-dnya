@@ -6,7 +6,8 @@ import { DAY } from "./sports-research-history.mjs";
 const esports = new Set(["cs2", "dota2"]);
 const footballAliases = {
   eng1: { "man utd": "manchester united", "brentford fc": "brentford", "everton fc": "everton", "liverpool fc": "liverpool" },
-  eng2: { "burnley fc": "burnley", "blackburn rovers fc": "blackburn rovers" },
+  eng2: { "burnley fc": "burnley", "blackburn rovers fc": "blackburn rovers", "bristol city fc": "bristol city",
+    "portsmouth fc": "portsmouth", "wrexham afc": "wrexham", "west ham united fc": "west ham united" },
 };
 const team = (event, name) => footballAliases[event.competition]?.[name] || name;
 const adapt = (event) => ({ ...event, ...tournamentContext(event), home: team(event, event.home), away: team(event, event.away) });
@@ -27,7 +28,8 @@ function supportedResults(events, observedAt) {
 }
 
 export function mergeHistory(rows, asOf) {
-  const available = rows.filter((row) => row.observedAt <= asOf && row.start + (row.dateOnly ? 2 : 1) * DAY <= asOf);
+  const available = rows.filter((row) => row.observedAt <= asOf && row.start + (row.dateOnly ? 2 : 1) * DAY <= asOf)
+    .map((row) => ({ ...row, home: team(row, row.home), away: team(row, row.away) }));
   const grouped = Map.groupBy(available, historyKey);
   const names = new Map();
   const keysOf = (row) => row.sources.flatMap((source) => [row.home, row.away].flatMap((name, i) => {

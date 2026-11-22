@@ -48,6 +48,15 @@ test("a future revision is invisible and conflicting final scores are quarantine
   assert.equal(mergeHistory([finished, reverse, conflict], now + DAY).conflicts.length, 1);
 });
 
+test("Championship club suffixes merge without merging a reserve side", () => {
+  const fixture = { ...finished, competition: "eng2", home: "bristol city", away: "wrexham" };
+  const archived = { ...fixture, id: "archived", home: "bristol city fc", away: "wrexham afc" };
+  const reserve = { ...fixture, id: "reserve", home: "bristol city u21" };
+  const result = mergeHistory([fixture, archived, reserve], now);
+  assert.deepEqual(result.history.map(({ home }) => home), ["bristol city", "bristol city u21"]);
+  assert.deepEqual(result.conflicts, []);
+});
+
 test("official status is scoped and mirror credit does not establish independence", () => {
   const match = { sport: "hockey", competition: "nhl", status: "unconfirmed",
     sources: [{ title: "NHL", url: "https://www.nhl.com/gamecenter/example" }] };

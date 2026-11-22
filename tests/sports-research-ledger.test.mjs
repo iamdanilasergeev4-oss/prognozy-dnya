@@ -133,6 +133,31 @@ test("a saved network backoff prevents repeat requests and allows recovery", asy
   }
 });
 
+test("a manual calendar retries timeouts and verifies the schedule on the network", async () => {
+  const root = await mkdtemp(join(tmpdir(), "sports-live-source-"));
+  try {
+    const url = "https://example.org/calendar";
+    const options = { source: "test", sport: "football" };
+    const initial = [];
+    await datasource(root, [], initial, Date.now, async () => new Response('["old"]'))(url, options);
+    const failed = { ...initial[0], status: "error", kind: "timeout", nextAttemptAt: Date.now() + 3600_000 };
+    const requests = [];
+    let calls = 0;
+    const get = datasource(root, [{ at: 2, requests: [failed] }, { at: 1, requests: initial }], requests, Date.now, async () => {
+      if (++calls === 1) throw new DOMException("request timed out", "TimeoutError");
+      return new Response('["fresh"]');
+    }, true);
+    assert.deepEqual(await get(url, options), ["old"]);
+    assert.equal(calls, 0);
+    assert.deepEqual(await get(url, { ...options, schedule: true }), ["fresh"]);
+    assert.equal(requests[1].attempts[0].kind, "timeout");
+    assert.equal(requests[1].attempts[1].status, "ok");
+    assert.equal(calls, 2);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
 test("DFB authority is league scoped and reversed football sides cannot confirm by unordered names", () => {
   const source = { source: "DFB Datencenter", id: "dfb", start, status: "scheduled", sport: "football",
     tournament: "3. Liga", country: "DE", home: "VfB Stuttgart II", away: "FC Ingolstadt 04",

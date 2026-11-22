@@ -325,6 +325,7 @@ export function parseEnsiForm(html) {
       const ended = Date.parse(body.match(/<time datetime="([^"]+)"/)?.[1]);
       const format = body.match(/class="w5-mc__format">bo([1357])<\/span>/i)?.[1];
       if (names.length !== 2 || scores.length !== 2 || scores[0] === scores[1] || !Number.isFinite(ended) || !format) return [];
+      if (Math.max(...scores) !== (Number(format) + 1) / 2) return [];
       return [{ url, names, ended, winner: names[scores[0] > scores[1] ? 0 : 1], format: `BO${format}` }];
     });
 }
@@ -336,7 +337,9 @@ export function parseStrafeForm(html) {
   return [list(recent?.home), list(recent?.away)].map((team) => team.flatMap((series) => {
     const winners = series.competitors?.filter((p) => p.result_enum === "WIN") || [];
     const names = (series.competitors || []).map((p) => p.competitor?.name);
-    return names.length === 2 && names.every(Boolean) && winners.length === 1 ? [{ names, winner: winners[0].competitor.name }] : [];
+    const length = typeof series.format === "string" && series.format.match(/^(?:Best of\s+|BO)([12357])$/i)?.[1];
+    return names.length === 2 && names.every(Boolean) && winners.length === 1 ?
+      [{ names, winner: winners[0].competitor.name, format: length ? `BO${length}` : undefined }] : [];
   }));
 }
 

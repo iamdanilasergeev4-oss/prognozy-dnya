@@ -2,18 +2,21 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { buildUpdate, DAY, esportsFormLinks, esportsResultLinks, FOOTBALL_FORM_DAYS, FORM_DAYS, PUBLISH_BUFFER, SPORTS,
-  tennisPreviewLinks, verifiedEsportsForm } from "./sports-update-core.mjs";
+  tennisPreviewLinks, verifiedEsportsForm, officialFixtureSource } from "./sports-update-core.mjs";
 import { parseAtpHeadToHead, parseEnsiForm, parseEnsiResult, parseStrafeForm, sourceJobs } from "./sports-sources.mjs";
 import { buildShadowReport } from "./sports-shadow.mjs";
 import { loadResearchSources } from "./sports-research-sources.mjs";
 import { loadSeasonArchives, readResearchSnapshots, saveResearchSnapshot } from "./sports-research-history.mjs";
-import { compareHistory, makeHistorySnapshot } from "./sports-history-analysis.mjs";
+import { compareHistory, makeHistorySnapshot, mergeHistory } from "./sports-history-analysis.mjs";
 import { captureManualResearch } from "./collect-sports-research.mjs";
-import { appendValidatedAnalysis, checkManualPacket, manualSummary, sealManualPacket, siteData } from "./sports-manual-update.mjs";
+import { checkManualPacket, manualSummary, sealManualPacket, selectManualAnalysis, siteData } from "./sports-manual-update.mjs";
+import { readResearchRuns, verifyResearchObject } from "./sports-research-ledger.mjs";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const H = globalThis.HistoryCore;
 const MONTH = /^\d{4}-(?:0[1-9]|1[0-2])$/;
+const RUN = /^run-(\d{4}-\d{2}-\d{2})T(\d{2})-(\d{2})-(\d{2})-(\d{3})Z$/;
+const MANUAL_EDITORIAL_DAYS = 28;
 const required = {
   football: ["365Scores", "ESPN"],
   basketball: ["365Scores", "ESPN"],
@@ -53,21 +56,38 @@ async function fetchData(url, html = false) {
 async function collect(jobs, scheduleDays, now, includeTennisPreviews = true, get = fetchData, currentScheduleOnly = false) {
   const errors = [];
   const outcomes = new Array(jobs.length);
-  let cursor = 0;
-  await Promise.all(Array.from({ length: 8 }, async () => {
-    while (cursor < jobs.length) {
-      const index = cursor++;
-      const job = jobs[index];
-      try {
-        const rows = job.parse(await get(job.url, job.html, job.source, job.sports[0], job.day));
-        outcomes[index] = { job, rows };
-      } catch (error) {
-        errors.push(log("error", "Ошибка источника", {
-          publisher: job.source, sports: job.sports, date: job.day, url: job.url, error: error.message,
-        }));
+  const isCalendar = (job) => !job.standings && !job.resultIndex && !job.historicalOnly &&
+    (job.day === null || scheduleDays.includes(job.day));
+  const jobReport = [];
+  async function runBatch(indices) {
+    let cursor = 0;
+    await Promise.all(Array.from({ length: Math.min(8, indices.length) }, async () => {
+      while (cursor < indices.length) {
+        const index = indices[cursor++];
+        const job = jobs[index];
+        const calendar = isCalendar(job);
+        let received = false;
+        try {
+          const body = await get(job.url, job.html, job.source, job.sports[0], job.day, calendar);
+          received = true;
+          const rows = job.parse(body);
+          outcomes[index] = { job, rows };
+          jobReport.push({ url: job.url, source: job.source, day: job.day, calendar, status: "parsed", rows: rows.length });
+        } catch (error) {
+          jobReport.push({ url: job.url, source: job.source, day: job.day, calendar,
+            status: received ? "parser_error" : "fetch_error", kind: error.kind, error: error.message });
+          errors.push(log("error", "Ошибка источника", {
+            publisher: job.source, sports: job.sports, date: job.day, url: job.url, error: error.message,
+          }));
+        }
       }
-    }
-  }));
+    }));
+  }
+  const indices = jobs.map((_, i) => i);
+  if (currentScheduleOnly) {
+    await runBatch(indices.filter((i) => isCalendar(jobs[i])));
+    await runBatch(indices.filter((i) => !isCalendar(jobs[i])));
+  } else await runBatch(indices);
   const received = outcomes.filter(Boolean);
   const coverage = Object.fromEntries(SPORTS.map(([sport]) => {
     const available = received.filter(({ job }) => !job.standings && !job.resultIndex &&
@@ -79,7 +99,9 @@ async function collect(jobs, scheduleDays, now, includeTennisPreviews = true, ge
     return [sport, publishers];
   }));
   const rows = received.filter(({ job }) => !job.standings && !job.resultIndex)
-    .flatMap(({ rows }) => rows.filter((row) => row.source !== "Ensigame" || row.status !== "finished"));
+    .flatMap(({ job, rows }) => rows.filter((row) =>
+      (row.source !== "Ensigame" || row.status !== "finished") &&
+      (!currentScheduleOnly || isCalendar(job) || row.status !== "scheduled")));
   const links = esportsResultLinks(received.filter(({ job }) => job.resultIndex).flatMap(({ rows }) => rows), rows);
   const results = await Promise.all(links.map(async (row) => {
     try {
@@ -91,6 +113,7 @@ async function collect(jobs, scheduleDays, now, includeTennisPreviews = true, ge
   }));
   const fixtures = esportsFormLinks(rows, now);
   const forms = new Array(fixtures.length);
+  const editorialForms = new Array(fixtures.length);
   let nextFixture = 0;
   await Promise.all(Array.from({ length: Math.min(3, fixtures.length) }, async () => {
     while (nextFixture < fixtures.length) {
@@ -99,7 +122,10 @@ async function collect(jobs, scheduleDays, now, includeTennisPreviews = true, ge
       const { strafe, ensi, row } = fixture;
       try {
         const [first, second] = await Promise.all([get(strafe.url, true, strafe.source, row.sport), get(ensi.url, true, ensi.source, row.sport)]);
-        forms[i] = [row.url, verifiedEsportsForm(fixture, parseStrafeForm(first), parseEnsiForm(second), now)];
+        const strafeResults = parseStrafeForm(first);
+        const ensiResults = parseEnsiForm(second);
+        forms[i] = [row.url, verifiedEsportsForm(fixture, strafeResults, ensiResults, now)];
+        if (currentScheduleOnly) editorialForms[i] = [row.url, verifiedEsportsForm(fixture, strafeResults, ensiResults, now, 28, 12)];
       } catch (error) {
         errors.push(log("error", "Ошибка сверки формы команд", { sport: row.sport, match: `${row.home} — ${row.away}`, error: error.message }));
       }
@@ -126,8 +152,9 @@ async function collect(jobs, scheduleDays, now, includeTennisPreviews = true, ge
     rows: [...rows, ...results.filter(Boolean)],
     standings: received.filter(({ job }) => job.standings).flatMap(({ rows }) => rows),
     esportsForm: new Map(forms.filter(Boolean)),
+    esportsEditorialForm: new Map(editorialForms.filter(Boolean)),
     tennisPreviews: new Map(tennisPreviews.filter(Boolean)),
-    coverage, errors, requests: { total: jobs.length + links.length + 2 * fixtures.length + previewsTried,
+    coverage, errors, jobReport, requests: { total: jobs.length + links.length + 2 * fixtures.length + previewsTried,
       success: received.length + results.filter(Boolean).length + 2 * forms.filter(Boolean).length + previewsReceived },
   };
 }
@@ -152,7 +179,7 @@ async function loadInputs(base) {
   return { current, indexFile, historyFiles, express };
 }
 
-function validate(input, output, now) {
+function validate(input, output, now, manual = false) {
   const previous = input.historyFiles.flatMap((h) => h.predictions);
   const next = Object.values(output.months).flatMap((h) => h.predictions);
   const ids = new Map(next.map((e) => [e.id, e]));
@@ -165,7 +192,8 @@ function validate(input, output, now) {
     ensure(new Set(sport.events.map((e) => `${e.match}|${e.start_iso}`)).size === sport.events.length,
       `Дубли матчей в категории ${sport.id}`);
     ensure(sport.events.every((e) => Date.parse(e.start_iso) > now &&
-      new Set(e.sources.map((s) => s.title)).size >= 2), `Некорректное расписание в категории ${sport.id}`);
+      (new Set(e.sources.map((s) => s.title)).size >= 2 ||
+        manual && e.sources.some((source) => officialFixtureSource({ sport: sport.id, tournament: e.tournament }, source)))), `Некорректное расписание в категории ${sport.id}`);
     ensure(sport.picks.every((p) => Date.parse(p.start_iso) > now), "Найден уже начавшийся прогноз");
     const previousPicks = input.current.sports.find((previous) => previous.id === sport.id).picks;
     for (const pick of sport.picks.filter((p) => p.generated)) {
@@ -202,6 +230,7 @@ function validate(input, output, now) {
 function blockers(output, now, lastUpdated, manual = false) {
   const issues = SPORTS.flatMap(([sport]) => {
     const info = output.report.sports[sport];
+    if (manual && info.selected) return [];
     const missing = required[sport].filter((name) => !info.publishers.includes(name) &&
       !(manual && sport === "dota2" && name === "GosuGamers" && info.publishers.includes("Ensigame")));
     if (sport === "cs2" && !["GosuGamers", "Ensigame"].some((name) => info.publishers.includes(name))) missing.push("GosuGamers или Ensigame");
@@ -211,7 +240,7 @@ function blockers(output, now, lastUpdated, manual = false) {
     return missing.length ? [`${sport}: недоступны ${missing.join(", ")}`] : [];
   });
   if (lastUpdated > now) issues.push("Исходные прогнозы датированы будущим временем");
-  if (!output.next.sports.some((s) => s.events.length)) issues.push("Ни одного события не подтверждено для всех семи категорий");
+  if (!output.next.sports.some((s) => s.events.length)) issues.push("Нет подтверждённых предстоящих событий");
   return issues;
 }
 
@@ -223,49 +252,92 @@ async function saveCandidate(base, update) {
   for (const [file, content] of Object.entries(files)) await writeFile(join(base, file), json(content), { flag: "wx" });
 }
 
-async function preview(mode = "preview") {
+async function preview(mode = "preview", editorialFile, replay) {
   const shadow = mode === "shadow";
-  const manual = mode === "manual";
-  const now = Date.now();
+  const manual = mode === "manual" || Boolean(replay);
+  const editorial = editorialFile ? JSON.parse(await readFile(resolve(editorialFile), "utf8")) : [];
+  ensure(Array.isArray(editorial), "Редакционные сверки должны быть списком");
+  const wallClock = Date.now();
+  const now = replay ? replay.startedAt : wallClock;
   const input = await loadInputs(root);
   const scheduleDays = [...new Set([dateKey(now), dateKey(now + DAY), H.mskDateOf(new Date(now + DAY).toISOString())])];
-  const recent = Array.from({ length: FORM_DAYS + 1 }, (_, i) => dateKey(now - (FORM_DAYS - i) * DAY));
+  const recentDays = replay ? replay.editorialDays : manual ? MANUAL_EDITORIAL_DAYS : FORM_DAYS;
+  const recent = Array.from({ length: recentDays + 1 }, (_, i) => dateKey(now - (recentDays - i) * DAY));
   // Also request older exact dates for unresolved predictions, with a fixed
   // bound on extra requests. Older unmatched entries remain in the archive.
   const due = H.dueForCheck(H.mergeMonths(input.historyFiles), now);
   const older = [...new Set(due.filter((e) => e.start_iso && !e.start_approx && !e.late)
     .map((e) => dateKey(Date.parse(e.start_iso))))].sort().slice(-7);
   const days = [...new Set([...recent, ...older, ...scheduleDays])].sort();
-  const footballDays = Array.from({ length: FOOTBALL_FORM_DAYS - FORM_DAYS }, (_, i) => dateKey(now - (FOOTBALL_FORM_DAYS - i) * DAY));
+  const footballDays = Array.from({ length: Math.max(0, FOOTBALL_FORM_DAYS - recentDays) }, (_, i) =>
+    dateKey(now - (FOOTBALL_FORM_DAYS - i) * DAY));
   const jobs = sourceJobs(days, scheduleDays, footballDays);
   log("info", "Начата проверка источников", { dates: days, requests: jobs.length });
   const store = join(root, ".sports-update", "manual-research");
-  const research = manual ? await captureManualResearch(store, now, (get) =>
-    collect(jobs, scheduleDays, now, false, (url, text, source, sport, day) =>
-      get(url, { text, source, sport, minAge: day && day < dateKey(now - DAY) ? DAY : 0 }), true)) : null;
+  let research;
+  if (replay) {
+    const record = JSON.parse((await verifyResearchObject(store, "runs", replay.snapshot)).toString("utf8"));
+    ensure(record.at >= now && record.at <= wallClock, "Снимок исследования не соответствует дате прогона");
+    const prior = (await readResearchRuns(store)).filter((run) => run.at <= record.at && run.normalized);
+    const raw = new Map(record.requests.filter((request) => request.rawHash && ["ok", "cached"].includes(request.status))
+      .map((item) => [item.url, item.rawHash]));
+    const site = await collect(jobs, scheduleDays, now, false, async (url, html) => {
+      const hash = raw.get(url);
+      if (!hash) throw new Error("Ответ отсутствует в сохранённом снимке");
+      const body = (await verifyResearchObject(store, "raw", hash)).toString("utf8");
+      return html ? body : JSON.parse(body);
+    }, true);
+    research = { site, diagnostics: await read(join(root, ".sports-update", replay.run), "diagnostic.json"),
+      history: mergeHistory(prior.flatMap((run) => run.normalized.results), record.at).history,
+      requests: record.requests, snapshot: replay.snapshot };
+  } else if (manual) {
+    research = await captureManualResearch(store, now, (get) =>
+      collect(jobs, scheduleDays, now, false, (url, text, source, sport, day, schedule) =>
+        get(url, { text, source, sport, schedule, minAge: day && day < dateKey(now - DAY) ? 7 * DAY : 0 }), true));
+  }
   const data = research ? research.site : await collect(jobs, scheduleDays, now, !shadow);
   // History settlement can mutate entries that share references with the
   // input archive. Keep the exact pre-run state for validation and approval.
-  const output = buildUpdate({ ...structuredClone(input), ...data, now });
+  const articleContexts = new Map();
+  const output = buildUpdate({ ...structuredClone(input), ...data, now,
+    reviewArticle: (article, context) => articleContexts.set(article, context), editorialDays: manual ? recentDays : 0, manualSchedule: manual });
   const reviewedAt = Date.now();
-  const researchApplied = research ? appendValidatedAnalysis(output.next, research.diagnostics, reviewedAt) : [];
+  const selection = research ? selectManualAnalysis(output.next, articleContexts, research, reviewedAt, editorial) : null;
+  if (selection) {
+    output.report.analysis = output.next.analysis.length;
+    for (const sport of output.next.sports) {
+      const row = output.report.sports[sport.id];
+      row.selected = sport.events.length;
+      row.qualifiedAnalysis = selection.evaluated.filter((item) => item.sport === sport.id && item.quality).length;
+      row.articles = selection.articles.filter((item) => item.sport === sport.id).length;
+      row.calendarOnly = row.selected - row.articles;
+    }
+  }
   const issues = blockers(output, now, Date.parse(input.current.updated_at), manual);
-  try { validate(input, output, Date.now()); } catch (e) { issues.push(e.message); }
+  if (replay) issues.push("Редакционный повтор по сохранённым ответам. Для публикации нужен свежий сетевой прогон.");
+  try { validate(input, output, Date.now(), manual); } catch (e) { issues.push(e.message); }
   Object.assign(output.report, {
     checkedAt: H.toMskIso(new Date(now)), basedOn: input.current.updated_at,
     requests: data.requests, errors: data.errors, blockers: issues, eligible: issues.length === 0,
   });
-  const run = process.env.GITHUB_ACTIONS === "true" ? "candidate" : `run-${new Date(now).toISOString().replace(/[:.]/g, "-")}`;
+  const run = process.env.GITHUB_ACTIONS === "true" ? "candidate" : `run-${new Date(wallClock).toISOString().replace(/[:.]/g, "-")}`;
   const path = join(root, ".sports-update", run);
   await saveCandidate(path, output);
   if (manual) {
-    const report = { ...output.report, checkedAt: new Date(reviewedAt).toISOString(), researchApplied };
+    const report = { ...output.report, checkedAt: new Date(reviewedAt).toISOString(),
+      researchApplied: selection.researchApplied, articles: selection.articles,
+      evaluatedArticles: selection.evaluated, modelDecisions: selection.modelDecisions,
+      runMode: replay ? "replay" : "live", editorialDays: recentDays, scheduleJobs: data.jobReport,
+      rawRequests: Object.fromEntries([...Map.groupBy(research.requests.filter((request) => request.startedAt),
+        (request) => request.status)].map(([name, items]) => [name, items.length])) };
     await writeFile(join(path, "manual-report.json"), json(report), { flag: "wx" });
+    await writeFile(join(path, "network.json"), json({ mode: report.runMode, requests: research.requests, jobs: data.jobReport }), { flag: "wx" });
     await writeFile(join(path, "diagnostic.json"), json(research.diagnostics), { flag: "wx" });
     const packet = sealManualPacket(report, siteData(input), siteData(null, output));
     await writeFile(join(path, "manual-packet.json"), json(packet), { flag: "wx" });
     await writeFile(join(path, "review.md"), manualSummary(report, research.diagnostics, research.requests, research.snapshot), { flag: "wx" });
-    log("info", "Подборка для ручной проверки", { run, approvalId: packet.approvalId, eligible: report.eligible, researchApplied });
+    log("info", "Подборка для ручной проверки", { run, approvalId: packet.approvalId, eligible: report.eligible,
+      researchApplied: selection.researchApplied });
   }
   if (shadow) {
     const until = Date.parse(`${H.mskDateOf(new Date(now + DAY).toISOString())}T00:00:00+03:00`) + DAY;
@@ -289,7 +361,7 @@ async function preview(mode = "preview") {
 }
 
 async function verifyManualCandidate(run, approvalId, siteRoot = root) {
-  ensure(/^run-\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}-\d{3}Z$/.test(run || "") && /^[a-f0-9]{64}$/.test(approvalId || ""),
+  ensure(RUN.test(run || "") && /^[a-f0-9]{64}$/.test(approvalId || ""),
     "Нужен каталог ручного прогона и его идентификатор");
   const path = join(root, ".sports-update", run);
   const [input, candidate, packet, report] = await Promise.all([
@@ -298,7 +370,7 @@ async function verifyManualCandidate(run, approvalId, siteRoot = root) {
   const now = Date.now();
   checkManualPacket(packet, approvalId, report, siteData(input), siteData(candidate), now);
   validate(input, { next: candidate.current, months: Object.fromEntries(candidate.historyFiles.map((file) => [file.month, file])),
-    express: candidate.express }, now);
+    express: candidate.express }, now, true);
   log("info", "Пакет совпал с проверенной версией", { path, files: Object.keys(packet.candidate) });
 }
 
@@ -351,7 +423,17 @@ try {
   }
   else if (command === "--manual") {
     ensure(process.env.GITHUB_ACTIONS !== "true", "Ручное обновление запускается локально");
-    await preview("manual");
+    ensure(!process.argv[3] || process.argv[3] === "--editorial" && process.argv[4], "Укажите файл после --editorial");
+    await preview("manual", process.argv[4]);
+  }
+  else if (command === "--manual-review") {
+    const [run, snapshot, editorial] = process.argv.slice(3);
+    const parsed = RUN.exec(run || "");
+    ensure(process.env.GITHUB_ACTIONS !== "true" && parsed && /^[a-f0-9]{64}$/.test(snapshot || ""), "Неверный снимок для редакционного повтора");
+    const [, date, hour, minute, second, milli] = parsed;
+    const { editorialDays = FORM_DAYS } = await read(join(root, ".sports-update", run), "manual-report.json");
+    ensure(Number.isInteger(editorialDays) && editorialDays >= FORM_DAYS && editorialDays <= MANUAL_EDITORIAL_DAYS, "Неизвестный период сбора в снимке");
+    await preview("manual", editorial, { run, snapshot, editorialDays, startedAt: Date.parse(`${date}T${hour}:${minute}:${second}.${milli}Z`) });
   }
   else if (command === "--check-manual") await verifyManualCandidate(process.argv[3], process.argv[4], process.argv[5]);
   else if (command === "--apply") await applyCandidate();
