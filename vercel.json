@@ -1,0 +1,7 @@
+{
+  "git": {
+    "deploymentEnabled": {
+      "codex/sports-manual-integration": false
+    }
+  }
+}
