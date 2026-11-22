@@ -83,9 +83,10 @@ export function seasonCacheAge(prior, now) {
   return !latestCapture || now - latestCapture.at >= DAY ? 0 : 7 * DAY;
 }
 
-async function acquire(root, prior, startedAt, claimFiles) {
+async function acquire(root, prior, startedAt, claimFiles, collectSite) {
   const requests = [];
   const get = await datasource(root, prior, requests);
+  const site = collectSite ? await collectSite(get) : null;
   const season = europeanSeason(startedAt).slice(0, 4);
   const minAge = seasonCacheAge(prior, startedAt);
   const until = startedAt + 2 * DAY;
@@ -161,18 +162,18 @@ async function acquire(root, prior, startedAt, claimFiles) {
       requests.push({ source: "local-authorized-claims", status: "error", file, error: error.message });
     }
   }
-  const claims = [...claimsByCapture.values()].flatMap((entry) => entry.rows);
+  const claims = [...(site?.rows ?? []), ...[...claimsByCapture.values()].flatMap((entry) => entry.rows)];
   const fetchFootball = (url, text) => get(url, { source: "openfootball", sport: "football", text });
-  const empty = Object.fromEntries(sports.map((sport) => [sport, { publishers: [] }]));
+  const empty = Object.fromEntries(sports.map((sport) => [sport, { publishers: site?.coverage[sport] ?? [] }]));
   const checkpoint = await buildShadowReport({ rows: claims, now: startedAt, until, checkedAt: new Date(startedAt).toISOString(),
-    clock: Date.now, fetchData: fetchFootball, legacyReport: empty, requestErrors: [], supplemental, improve: true });
+    clock: Date.now, fetchData: fetchFootball, legacyReport: empty, requestErrors: site?.errors ?? [], supplemental, improve: true });
   const archive = await loadSeasonArchives({ events: [...checkpoint.assessed, ...calendarJobs(startedAt)
     .map(({ competition }) => ({ sport: "football", competition }))], now: startedAt, fetchData: fetchFootball });
   const at = Date.now();
   const normalized = makeHistorySnapshot({ rows: claims, supplemental, archives: archive.results,
     archiveRequests: archive.requests, now: startedAt, until, observedAt: at });
   const diagnostics = compareHistory(checkpoint, [...prior.filter((run) => run.normalized).map((run) => run.normalized), normalized], at);
-  return { at, diagnostics, normalized, requests: [...requests, ...supplemental.requests.filter((row) => row.status !== "ok"), ...archive.requests] };
+  return { at, diagnostics, normalized, site, requests: [...requests, ...supplemental.requests.filter((row) => row.status !== "ok"), ...archive.requests] };
 }
 
 async function storeRun(root, { at, diagnostics, normalized, requests }, mode, runKey, slot, retryAt) {
@@ -203,6 +204,15 @@ export function decideResearchSlot(prior, slot, now) {
   if (last && !last.retryAt) return { collect: false, retry: false };
   if (last && last.retryAt > now) return { collect: false, retry: true };
   return { collect: true, key: `${slot}-${attempts.length + 1}` };
+}
+
+export async function captureManualResearch(root, startedAt, collectSite) {
+  return withResearchLock(root, async () => {
+    const prior = (await readResearchRuns(root)).sort((a, b) => a.at - b.at);
+    const run = await acquire(root, prior, startedAt, [], collectSite);
+    const snapshot = await storeRun(root, run, "prospective");
+    return { ...run, snapshot };
+  });
 }
 
 async function main([command, ...args]) {

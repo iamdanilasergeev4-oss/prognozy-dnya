@@ -1,5 +1,5 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
-import { dirname, join } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { buildUpdate, DAY, esportsFormLinks, esportsResultLinks, FOOTBALL_FORM_DAYS, FORM_DAYS, PUBLISH_BUFFER, SPORTS,
   tennisPreviewLinks, verifiedEsportsForm } from "./sports-update-core.mjs";
@@ -8,6 +8,8 @@ import { buildShadowReport } from "./sports-shadow.mjs";
 import { loadResearchSources } from "./sports-research-sources.mjs";
 import { loadSeasonArchives, readResearchSnapshots, saveResearchSnapshot } from "./sports-research-history.mjs";
 import { compareHistory, makeHistorySnapshot } from "./sports-history-analysis.mjs";
+import { captureManualResearch } from "./collect-sports-research.mjs";
+import { appendValidatedAnalysis, checkManualPacket, manualSummary, sealManualPacket, siteData } from "./sports-manual-update.mjs";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const H = globalThis.HistoryCore;
@@ -48,7 +50,7 @@ async function fetchData(url, html = false) {
   }
 }
 
-async function collect(jobs, scheduleDays, now, includeTennisPreviews = true) {
+async function collect(jobs, scheduleDays, now, includeTennisPreviews = true, get = fetchData, currentScheduleOnly = false) {
   const errors = [];
   const outcomes = new Array(jobs.length);
   let cursor = 0;
@@ -57,7 +59,7 @@ async function collect(jobs, scheduleDays, now, includeTennisPreviews = true) {
       const index = cursor++;
       const job = jobs[index];
       try {
-        const rows = job.parse(await fetchData(job.url, job.html));
+        const rows = job.parse(await get(job.url, job.html, job.source, job.sports[0], job.day));
         outcomes[index] = { job, rows };
       } catch (error) {
         errors.push(log("error", "Ошибка источника", {
@@ -68,7 +70,8 @@ async function collect(jobs, scheduleDays, now, includeTennisPreviews = true) {
   }));
   const received = outcomes.filter(Boolean);
   const coverage = Object.fromEntries(SPORTS.map(([sport]) => {
-    const available = received.filter(({ job }) => !job.standings && !job.resultIndex && job.sports.includes(sport));
+    const available = received.filter(({ job }) => !job.standings && !job.resultIndex &&
+      (!currentScheduleOnly || !job.historicalOnly) && job.sports.includes(sport));
     const publishers = [...new Set(available.map(({ job }) => job.source))].filter((source) => {
       const feeds = available.filter(({ job }) => job.source === source);
       return feeds.some(({ job }) => job.day === null) || scheduleDays.every((day) => feeds.some(({ job }) => job.day === day));
@@ -80,7 +83,7 @@ async function collect(jobs, scheduleDays, now, includeTennisPreviews = true) {
   const links = esportsResultLinks(received.filter(({ job }) => job.resultIndex).flatMap(({ rows }) => rows), rows);
   const results = await Promise.all(links.map(async (row) => {
     try {
-      return parseEnsiResult(await fetchData(row.url, true), row);
+      return parseEnsiResult(await get(row.url, true, row.source, row.sport), row);
     } catch (error) {
       errors.push(log("error", "Ошибка проверки результата серии", { publisher: row.source, url: row.url, error: error.message }));
       return null;
@@ -95,7 +98,7 @@ async function collect(jobs, scheduleDays, now, includeTennisPreviews = true) {
       const fixture = fixtures[i];
       const { strafe, ensi, row } = fixture;
       try {
-        const [first, second] = await Promise.all([fetchData(strafe.url, true), fetchData(ensi.url, true)]);
+        const [first, second] = await Promise.all([get(strafe.url, true, strafe.source, row.sport), get(ensi.url, true, ensi.source, row.sport)]);
         forms[i] = [row.url, verifiedEsportsForm(fixture, parseStrafeForm(first), parseEnsiForm(second), now)];
       } catch (error) {
         errors.push(log("error", "Ошибка сверки формы команд", { sport: row.sport, match: `${row.home} — ${row.away}`, error: error.message }));
@@ -109,7 +112,7 @@ async function collect(jobs, scheduleDays, now, includeTennisPreviews = true) {
     for (const url of urls) {
       previewsTried++;
       try {
-        const html = await fetchData(url, true);
+        const html = await get(url, true, "ATP Finals", row.sport);
         previewsReceived++;
         const data = parseAtpHeadToHead(html, row, url);
         if (data) return [row.url, data];
@@ -196,10 +199,11 @@ function validate(input, output, now) {
   }
 }
 
-function blockers(output, now, lastUpdated) {
+function blockers(output, now, lastUpdated, manual = false) {
   const issues = SPORTS.flatMap(([sport]) => {
     const info = output.report.sports[sport];
-    const missing = required[sport].filter((name) => !info.publishers.includes(name));
+    const missing = required[sport].filter((name) => !info.publishers.includes(name) &&
+      !(manual && sport === "dota2" && name === "GosuGamers" && info.publishers.includes("Ensigame")));
     if (sport === "cs2" && !["GosuGamers", "Ensigame"].some((name) => info.publishers.includes(name))) missing.push("GosuGamers или Ensigame");
     if (sport === "volleyball" && !["Lega Pallavolo", "TheSportsDB", "ESPN"].some((name) => info.publishers.includes(name))) {
       missing.push("Lega Pallavolo, TheSportsDB или ESPN");
@@ -212,20 +216,16 @@ function blockers(output, now, lastUpdated) {
 }
 
 async function saveCandidate(base, update) {
-  const files = {
-    "data/predictions.json": update.next,
-    "data/history/express.json": update.express,
-    "data/history/index.json": update.nextIndex,
-    ...Object.fromEntries(Object.entries(update.months).map(([month, archive]) => [`data/history/${month}.json`, archive])),
-    "report.json": update.report,
-  };
+  const files = { ...siteData(null, update), "report.json": update.report };
   await mkdir(dirname(base), { recursive: true });
   await mkdir(base);
   await mkdir(join(base, "data/history"), { recursive: true });
   for (const [file, content] of Object.entries(files)) await writeFile(join(base, file), json(content), { flag: "wx" });
 }
 
-async function preview(shadow = false) {
+async function preview(mode = "preview") {
+  const shadow = mode === "shadow";
+  const manual = mode === "manual";
   const now = Date.now();
   const input = await loadInputs(root);
   const scheduleDays = [...new Set([dateKey(now), dateKey(now + DAY), H.mskDateOf(new Date(now + DAY).toISOString())])];
@@ -239,9 +239,17 @@ async function preview(shadow = false) {
   const footballDays = Array.from({ length: FOOTBALL_FORM_DAYS - FORM_DAYS }, (_, i) => dateKey(now - (FOOTBALL_FORM_DAYS - i) * DAY));
   const jobs = sourceJobs(days, scheduleDays, footballDays);
   log("info", "Начата проверка источников", { dates: days, requests: jobs.length });
-  const data = await collect(jobs, scheduleDays, now, !shadow);
-  const output = buildUpdate({ ...input, ...data, now });
-  const issues = blockers(output, now, Date.parse(input.current.updated_at));
+  const store = join(root, ".sports-update", "manual-research");
+  const research = manual ? await captureManualResearch(store, now, (get) =>
+    collect(jobs, scheduleDays, now, false, (url, text, source, sport, day) =>
+      get(url, { text, source, sport, minAge: day && day < dateKey(now - DAY) ? DAY : 0 }), true)) : null;
+  const data = research ? research.site : await collect(jobs, scheduleDays, now, !shadow);
+  // History settlement can mutate entries that share references with the
+  // input archive. Keep the exact pre-run state for validation and approval.
+  const output = buildUpdate({ ...structuredClone(input), ...data, now });
+  const reviewedAt = Date.now();
+  const researchApplied = research ? appendValidatedAnalysis(output.next, research.diagnostics, reviewedAt) : [];
+  const issues = blockers(output, now, Date.parse(input.current.updated_at), manual);
   try { validate(input, output, Date.now()); } catch (e) { issues.push(e.message); }
   Object.assign(output.report, {
     checkedAt: H.toMskIso(new Date(now)), basedOn: input.current.updated_at,
@@ -250,6 +258,15 @@ async function preview(shadow = false) {
   const run = process.env.GITHUB_ACTIONS === "true" ? "candidate" : `run-${new Date(now).toISOString().replace(/[:.]/g, "-")}`;
   const path = join(root, ".sports-update", run);
   await saveCandidate(path, output);
+  if (manual) {
+    const report = { ...output.report, checkedAt: new Date(reviewedAt).toISOString(), researchApplied };
+    await writeFile(join(path, "manual-report.json"), json(report), { flag: "wx" });
+    await writeFile(join(path, "diagnostic.json"), json(research.diagnostics), { flag: "wx" });
+    const packet = sealManualPacket(report, siteData(input), siteData(null, output));
+    await writeFile(join(path, "manual-packet.json"), json(packet), { flag: "wx" });
+    await writeFile(join(path, "review.md"), manualSummary(report, research.diagnostics, research.requests, research.snapshot), { flag: "wx" });
+    log("info", "Подборка для ручной проверки", { run, approvalId: packet.approvalId, eligible: report.eligible, researchApplied });
+  }
   if (shadow) {
     const until = Date.parse(`${H.mskDateOf(new Date(now + DAY).toISOString())}T00:00:00+03:00`) + DAY;
     const supplemental = await loadResearchSources({ cacheDir: join(root, ".sports-update", "source-cache-v2"), now, until });
@@ -269,6 +286,20 @@ async function preview(shadow = false) {
   }
   log(issues.length ? "error" : "info", "Пробный результат сохранён", { path, blockers: issues, sports: output.report.sports });
   if (issues.length) process.exitCode = 2;
+}
+
+async function verifyManualCandidate(run, approvalId, siteRoot = root) {
+  ensure(/^run-\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}-\d{3}Z$/.test(run || "") && /^[a-f0-9]{64}$/.test(approvalId || ""),
+    "Нужен каталог ручного прогона и его идентификатор");
+  const path = join(root, ".sports-update", run);
+  const [input, candidate, packet, report] = await Promise.all([
+    loadInputs(resolve(siteRoot)), loadInputs(path), read(path, "manual-packet.json"), read(path, "manual-report.json"),
+  ]);
+  const now = Date.now();
+  checkManualPacket(packet, approvalId, report, siteData(input), siteData(candidate), now);
+  validate(input, { next: candidate.current, months: Object.fromEntries(candidate.historyFiles.map((file) => [file.month, file])),
+    express: candidate.express }, now);
+  log("info", "Пакет совпал с проверенной версией", { path, files: Object.keys(packet.candidate) });
 }
 
 async function applyCandidate() {
@@ -291,9 +322,9 @@ async function applyCandidate() {
   for (const [file, value] of Object.entries(inputs)) await writeFile(join(root, file), json(value));
 }
 
-async function verifyDeployment() {
+async function verifyDeployment(siteRoot = root) {
   const origin = "https://prognozy-dnya.vercel.app";
-  const input = await loadInputs(root);
+  const input = await loadInputs(resolve(siteRoot));
   const files = {
     "data/predictions.json": input.current, "data/history/index.json": input.indexFile, "data/history/express.json": input.express,
     ...Object.fromEntries(input.historyFiles.map((file) => [`data/history/${file.month}.json`, file])),
@@ -316,10 +347,15 @@ try {
   if (command === "--preview") await preview();
   else if (command === "--shadow") {
     ensure(process.env.GITHUB_ACTIONS !== "true", "Режим исследования использует отдельный локальный архив");
-    await preview(true);
+    await preview("shadow");
   }
+  else if (command === "--manual") {
+    ensure(process.env.GITHUB_ACTIONS !== "true", "Ручное обновление запускается локально");
+    await preview("manual");
+  }
+  else if (command === "--check-manual") await verifyManualCandidate(process.argv[3], process.argv[4], process.argv[5]);
   else if (command === "--apply") await applyCandidate();
-  else if (command === "--verify-deployment") await verifyDeployment();
+  else if (command === "--verify-deployment") await verifyDeployment(process.argv[3]);
   else throw new Error(`Неизвестный аргумент ${command}`);
 } catch (error) {
   log("error", "Обновление остановлено", { error: error.message });

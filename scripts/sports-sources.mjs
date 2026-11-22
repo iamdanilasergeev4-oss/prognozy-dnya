@@ -342,8 +342,8 @@ export function parseStrafeForm(html) {
 
 export function sourceJobs(days, scheduleDays, footballDays = []) {
   const jobs = [];
-  function add(source, sports, url, parse, day, html = false, standings = false, resultIndex = false) {
-    jobs.push({ source, sports, url, parse, day, html, standings, resultIndex });
+  function add(source, sports, url, parse, day, html = false, standings = false, resultIndex = false, historicalOnly = false) {
+    jobs.push({ source, sports, url, parse, day, html, standings, resultIndex, historicalOnly });
   }
   const physical = Object.values(scoreSports);
   for (const day of [...new Set([...days, ...footballDays])].sort()) {
@@ -368,7 +368,7 @@ export function sourceJobs(days, scheduleDays, footballDays = []) {
     }
   }
   for (const day of [days[0], scheduleDays[0]]) {
-    add("NHL", ["hockey"], `https://api-web.nhle.com/v1/schedule/${day}`, parseNhl, null);
+    add("NHL", ["hockey"], `https://api-web.nhle.com/v1/schedule/${day}`, parseNhl, null, false, false, false, day !== scheduleDays[0]);
   }
   add("NHL", ["hockey"], NHL_STANDINGS, parseNhlStandings, null, false, true);
   add("ESPN", ["hockey"], ESPN_NHL_STANDINGS, parseEspnNhlStandings, null, false, true);
@@ -382,11 +382,11 @@ export function sourceJobs(days, scheduleDays, footballDays = []) {
   for (const [sport, gosu, strafe] of [["cs2", "counterstrike", "csgo"], ["dota2", "dota2", "dota2"]]) {
     for (const [suffix, mode] of [["", "scheduled"], ["/results", "finished"]]) {
       add("GosuGamers", [sport], `https://www.gosugamers.net/${gosu}/matches${suffix}`,
-        (html) => parseGosu(html, sport, gosu, mode), null, true);
+        (html) => parseGosu(html, sport, gosu, mode), null, true, false, false, mode === "finished");
     }
     for (const suffix of ["", "completed/"]) {
       add("Strafe", [sport], `https://www.strafe.com/calendar/${strafe}/${suffix}`,
-        (html) => parseStrafe(html, sport, strafe), null, true);
+        (html) => parseStrafe(html, sport, strafe), null, true, false, false, Boolean(suffix));
     }
   }
   for (const [sport, slug] of [["cs2", "cs-2"], ["dota2", "dota-2"]]) {
