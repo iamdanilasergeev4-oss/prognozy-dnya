@@ -6,6 +6,7 @@ import { DAY } from "./sports-research-history.mjs";
 import { validSeries } from "./sports-evidence.mjs";
 
 export const sports = ["football", "basketball", "tennis", "volleyball", "hockey", "cs2", "dota2"];
+export const MIN_SETTLED_MATCHES = 30;
 const digest = (bytes) => createHash("sha256").update(bytes).digest("hex");
 const dataHash = (value) => digest(JSON.stringify(value));
 const stable = (event) => JSON.stringify([event.sport, event.competition, [event.home, event.away].sort()]);
@@ -108,10 +109,13 @@ export async function copyResearchStore(source, destination) {
 function makeIdentityIndex() {
   const aliases = new Map();
   const ids = new Map();
-  return (event) => {
+  return (event, onConflict) => {
     const keys = [exact(event), ...sourceKeys(event)];
     const matches = [...new Set(keys.map((key) => aliases.get(key)).filter(Boolean))];
-    if (matches.length > 1 || matches.length === 1 && ids.get(matches[0]) !== stable(event)) return null;
+    if (matches.length > 1 || matches.length === 1 && ids.get(matches[0]) !== stable(event)) {
+      matches.forEach(onConflict);
+      return null;
+    }
     const id = matches[0] ?? dataHash(exact(event));
     ids.set(id, stable(event));
     for (const key of keys) aliases.set(key, id);
@@ -138,12 +142,14 @@ function probabilitiesFor(forecast, event) {
 }
 
 function statistics(rows) {
-  const metrics = (sample, model) => evaluateProbabilities(sample.map((row) =>
-    ({ actual: row.actual, probabilities: row.models[model] })));
+  const metrics = (sample, model) => sample.length < MIN_SETTLED_MATCHES ? null :
+    evaluateProbabilities(sample.map((row) => ({ actual: row.actual, probabilities: row.models[model] })));
   const versions = [...new Set(rows.flatMap((row) => Object.keys(row.models)))].sort();
   return { scoredEvents: rows.length, models: Object.fromEntries(versions.map((version) => {
     const sample = rows.filter((row) => row.models[version]);
-    return [version, { ...metrics(sample, version), shareOfScoredEvents: sample.length / rows.length }];
+    return [version, { ...metrics(sample, version), matches: sample.length,
+      status: sample.length < MIN_SETTLED_MATCHES ? "insufficient_observations" : "descriptive",
+      shareOfScoredEvents: sample.length / rows.length }];
   })), paired: versions.flatMap((first, index) => versions.slice(index + 1).flatMap((second) => {
     const sample = rows.filter((row) => row.models[first] && row.models[second] &&
       row.modelObservedAt[first] === row.modelObservedAt[second]);
@@ -162,9 +168,10 @@ export function researchReport(input, asOf) {
   const forecasts = new Map();
   const results = new Map();
   const holds = new Set();
+  const hold = (id) => holds.add(id);
   for (const run of runs) {
     for (const event of run.events.filter(fullMatch)) {
-      const id = identify(event);
+      const id = identify(event, hold);
       if (!id) continue;
       const previous = events.get(id);
       if (previous && previous.start !== event.start) holds.add(id);
@@ -172,7 +179,7 @@ export function researchReport(input, asOf) {
         everConfirmed: Boolean(previous?.everConfirmed || scheduled(event.sourceTier)) });
     }
     for (const forecast of run.forecasts.filter(fullMatch)) {
-      const id = identify(forecast);
+      const id = identify(forecast, hold);
       const event = events.get(id);
       if (!event || event.observedAt !== run.at || event.start !== forecast.start || holds.has(id) ||
           !scheduled(event.sourceTier) || event.dataQuality?.identityConflict ||
@@ -184,7 +191,7 @@ export function researchReport(input, asOf) {
     for (const result of run.results.filter(fullMatch)) {
       if (result.dateOnly || !trusted(result.tier) || result.start + DAY > result.observedAt ||
           result.observedAt > run.at || !Number.isFinite(result.observedAt) || !validScore(result.score)) continue;
-      const id = identify(result);
+      const id = identify(result, hold);
       if (!id) continue;
       const event = events.get(id);
       if (!event) continue;
@@ -223,7 +230,14 @@ export function researchReport(input, asOf) {
       const confirmed = rows.filter((row) => row.everConfirmed).length;
       const predicted = rows.filter((row) => Object.keys(row.models).length).length;
       const models = rows.flatMap((row) => Object.keys(row.models));
+      const predictedRows = rows.filter((row) => Object.keys(row.models).length);
       return { completeWindow, detected, confirmed, predicted, forecastCoverage: confirmed ? predicted / confirmed : null,
+        forecastReconciliation: {
+          notStarted: predictedRows.filter((row) => row.start > asOf && row.status !== "conflict").length,
+          awaitingVerifiedResult: predictedRows.filter((row) => row.start <= asOf && ["pending", "result_missing"].includes(row.status)).length,
+          verifiedResults: scored.length,
+          matchingErrors: predictedRows.filter((row) => row.status === "conflict").length,
+        },
         settledEvents: rows.filter((row) => row.status === "settled").length,
         forecastCoverageByModel: Object.fromEntries(Object.entries(counts(models, (model) => model))
           .map(([model, total]) => [model, { total, coverage: confirmed ? total / confirmed : null }])),
@@ -242,7 +256,8 @@ export function researchReport(input, asOf) {
         const current = summarize(all.filter((row) => row.start > from && row.start <= asOf), complete(from, asOf));
         const previous = summarize(all.filter((row) => row.start > from - days * DAY && row.start <= from),
           complete(from - days * DAY, from));
-        const changes = Object.fromEntries(Object.entries(current.models).filter(([version]) => previous.models[version])
+        const changes = Object.fromEntries(Object.entries(current.models).filter(([version, model]) =>
+          model.status === "descriptive" && previous.models[version]?.status === "descriptive")
           .map(([version, model]) => [version, {
             brier: model.brier - previous.models[version].brier,
             logLoss: model.logLoss - previous.models[version].logLoss,
@@ -269,7 +284,7 @@ export function researchReport(input, asOf) {
     firstCaptureAt: runs[0]?.at ?? null, lastCaptureAt: runs.at(-1)?.at ?? null,
     sourceRequests: runs.at(-1)?.requests ?? [], sourceHistory: Object.fromEntries(
       [...Map.groupBy(requestHistory, (row) => row.source)].map(([source, rows]) => [source, counts(rows, (row) => row.status)])),
-    history: runs.at(-1)?.history ?? null,
+    history: runs.at(-1)?.history ?? null, minimumSettledMatches: MIN_SETTLED_MATCHES,
     readiness, bySport, records };
 }
 
@@ -292,8 +307,9 @@ export function researchMarkdown(report) {
       lines.push(`| ${sport} | ${row.detected} | ${row.confirmed} | ${row.historyAvailable} | ${row.predicted} | ${row.scoredEvents} |`);
     }
     const models = Object.entries(report.bySport).flatMap(([sport, data]) =>
-      Object.entries(data[key].models).map(([version, row]) =>
-        `- ${sport}, ${version} — Brier ${row.brier.toFixed(4)}, Log Loss ${row.logLoss.toFixed(4)}, событий ${row.matches}.`));
+      Object.entries(data[key].models).map(([version, row]) => row.status === "descriptive" ?
+        `- ${sport}, ${version} — Brier ${row.brier.toFixed(4)}, Log Loss ${row.logLoss.toFixed(4)}, событий ${row.matches}.` :
+        `- ${sport}, ${version} — подтверждено ${row.matches} из ${report.minimumSettledMatches}, необходимых для метрик.`));
     lines.push("", ...(models.length ? models : ["Данных для оценки качества моделей пока нет."]));
     if (key === "all") {
       const missing = Object.entries(report.bySport).flatMap(([sport, data]) => Object.keys(data.all.skipped).length ?

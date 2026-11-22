@@ -1,4 +1,4 @@
-import { mkdir, open, readFile, unlink } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { buildShadowReport } from "./sports-shadow.mjs";
@@ -9,6 +9,7 @@ import { compareHistory, makeHistorySnapshot } from "./sports-history-analysis.m
 import { DAY, loadSeasonArchives, readResearchSnapshots } from "./sports-research-history.mjs";
 import { copyResearchStore, readResearchRuns, researchMarkdown, researchReport, sports, storeResearchObject,
   verifyResearchObject, verifyResearchStore } from "./sports-research-ledger.mjs";
+import { withResearchLock } from "./sports-research-lock.mjs";
 
 const base = fileURLToPath(new URL("../.sports-update/", import.meta.url));
 const liveRoot = process.env.SPORTS_RESEARCH_STORE ? resolve(process.env.SPORTS_RESEARCH_STORE) : join(base, "daily-research-v1");
@@ -65,7 +66,7 @@ export function datasource(root, previous, requests, clock = Date.now, fetcher =
       return result;
     } catch (error) {
       const failures = (old?.failures ?? 0) + 1;
-      const cooldown = Math.min(7 * DAY, 3_600_000 * 2 ** Math.min(failures, 8));
+      const cooldown = Math.min(7 * DAY, 15 * 60_000 * 2 ** Math.min(failures, 10));
       const failed = { ...record, status: [401, 403].includes(error.http) ? "restricted" : "error",
         error: error.message, failures, nextAttemptAt: clock() + Math.max(cooldown, error.retry || 0) };
       requests.push(failed);
@@ -75,10 +76,18 @@ export function datasource(root, previous, requests, clock = Date.now, fetcher =
   };
 }
 
+export function seasonCacheAge(prior, now) {
+  const latestCapture = prior.findLast((run) => (run.requests ?? []).some((request) =>
+    request.source === "OpenLigaDB" && ["ok", "cached"].includes(request.status) &&
+    request.url?.includes("/getmatchdata/")));
+  return !latestCapture || now - latestCapture.at >= DAY ? 0 : 7 * DAY;
+}
+
 async function acquire(root, prior, startedAt, claimFiles) {
   const requests = [];
   const get = await datasource(root, prior, requests);
   const season = europeanSeason(startedAt).slice(0, 4);
+  const minAge = seasonCacheAge(prior, startedAt);
   const until = startedAt + 2 * DAY;
   const rows = [];
   const historicalRows = [];
@@ -87,7 +96,7 @@ async function acquire(root, prior, startedAt, claimFiles) {
     const url = `${openLiga}/getmatchdata/${shortcut}/${season}`;
     try {
       const options = { source: "OpenLigaDB", sport: "football" };
-      const data = await get(url, { ...options, minAge: 7 * DAY });
+      const data = await get(url, { ...options, minAge });
       const seasonRequest = requests.at(-1);
       if (!Array.isArray(data)) throw new Error("Ожидался список матчей сезона");
       let feed = data;
@@ -101,7 +110,8 @@ async function acquire(root, prior, startedAt, claimFiles) {
         }
         const group = [...groups].sort((a, b) => Math.abs(a[1] - startedAt) - Math.abs(b[1] - startedAt))[0]?.[0];
         if (group != null) {
-          const revision = await get(`${openLiga}/getlastchangedate/${shortcut}/${season}/${group}`, options);
+          const revision = await get(`${openLiga}/getlastchangedate/${shortcut}/${season}/${group}`,
+            { ...options, minAge: 30 * 60_000 });
           if (typeof revision !== "string" || !Number.isFinite(Date.parse(revision))) throw new Error("Invalid revision");
           const latest = await get(`${url}/${group}`, { ...options, revision });
           if (!Array.isArray(latest)) throw new Error("Ожидался список матчей тура");
@@ -118,7 +128,7 @@ async function acquire(root, prior, startedAt, claimFiles) {
     }
   }
   try {
-    const data = await get(openDota, { source: "OpenDota", sport: "dota2" });
+    const data = await get(openDota, { source: "OpenDota", sport: "dota2", minAge: 60 * 60_000 });
     if (!Array.isArray(data)) throw new Error("Ожидался список карт");
     supplemental.maps = data.flatMap((row) => {
       const map = openDotaMap(row);
@@ -128,19 +138,30 @@ async function acquire(root, prior, startedAt, claimFiles) {
   } catch (error) {
     supplemental.requests.push({ source: "OpenDota", sport: "dota2", url: openDota, status: "error", error: error.message });
   }
-  const claims = [];
+  const claimsByCapture = new Map();
   for (const file of claimFiles) {
-    const body = await readFile(file, "utf8");
-    const data = JSON.parse(body);
-    const capturedAt = Date.parse(data.capturedAt);
-    if (typeof data.rights !== "string" || !data.rights.trim() || !Array.isArray(data.rows) ||
-        !Number.isFinite(capturedAt) || capturedAt > startedAt) throw new Error("Неверный манифест разрешённых наблюдений");
-    const accepted = filterClaims(data.rows, capturedAt);
-    const fresh = capturedAt >= startedAt - 2 * DAY;
-    claims.push(...accepted.filter((row) => fresh || row.status === "finished"));
-    requests.push({ source: "local-authorized-claims", status: fresh ? "ok" : "stale_schedule", receivedAt: capturedAt,
-      rawHash: await storeResearchObject(root, "raw", body), rejected: data.rows.length - accepted.length });
+    try {
+      const body = await readFile(file);
+      const data = JSON.parse(body.toString("utf8"));
+      const capturedAt = Date.parse(data.capturedAt);
+      if (typeof data.rights !== "string" || !data.rights.trim() || !Array.isArray(data.rows) ||
+          !Number.isFinite(capturedAt) || capturedAt > startedAt) throw new Error("Неверный манифест разрешённых наблюдений");
+      const accepted = filterClaims(data.rows, capturedAt);
+      const fresh = capturedAt >= startedAt - 2 * DAY;
+      const rawHash = await storeResearchObject(root, "raw", body);
+      for (const row of accepted.filter((row) => fresh || row.status === "finished")) {
+        const key = JSON.stringify([row.source, row.sport, row.id]);
+        const priorClaim = claimsByCapture.get(key);
+        if (!priorClaim || priorClaim.at < capturedAt) claimsByCapture.set(key, { at: capturedAt, rows: [row] });
+        else if (priorClaim.at === capturedAt) priorClaim.rows.push(row);
+      }
+      requests.push({ source: "local-authorized-claims", status: fresh ? "ok" : "stale_schedule", receivedAt: capturedAt,
+        rawHash, rejected: data.rows.length - accepted.length });
+    } catch (error) {
+      requests.push({ source: "local-authorized-claims", status: "error", file, error: error.message });
+    }
   }
+  const claims = [...claimsByCapture.values()].flatMap((entry) => entry.rows);
   const fetchFootball = (url, text) => get(url, { source: "openfootball", sport: "football", text });
   const empty = Object.fromEntries(sports.map((sport) => [sport, { publishers: [] }]));
   const checkpoint = await buildShadowReport({ rows: claims, now: startedAt, until, checkedAt: new Date(startedAt).toISOString(),
@@ -154,7 +175,7 @@ async function acquire(root, prior, startedAt, claimFiles) {
   return { at, diagnostics, normalized, requests: [...requests, ...supplemental.requests.filter((row) => row.status !== "ok"), ...archive.requests] };
 }
 
-async function storeRun(root, { at, diagnostics, normalized, requests }, mode, runKey) {
+async function storeRun(root, { at, diagnostics, normalized, requests }, mode, runKey, slot, retryAt) {
   const features = [];
   const forecasts = [];
   for (const event of diagnostics.forecastEvidence) {
@@ -170,34 +191,40 @@ async function storeRun(root, { at, diagnostics, normalized, requests }, mode, r
   }
   const featuresHash = await storeResearchObject(root, "features", features);
   const normalizedHash = await storeResearchObject(root, "normalized", normalized);
-  return storeResearchObject(root, "runs", { schema: 1, mode, runKey, at, requests, normalizedHash, featuresHash, normalized,
+  return storeResearchObject(root, "runs", { schema: 1, mode, runKey, slot, retryAt, at, requests, normalizedHash, featuresHash, normalized,
     calendarLeads: diagnostics.calendar,
     events: diagnostics.assessed, results: normalized.results, forecasts, history: diagnostics.savedHistory });
 }
 
+export function decideResearchSlot(prior, slot, now) {
+  if (!slot) return { collect: true };
+  const attempts = prior.filter((run) => run.slot === slot || run.runKey === slot).sort((a, b) => a.at - b.at);
+  const last = attempts.at(-1);
+  if (last && !last.retryAt) return { collect: false, retry: false };
+  if (last && last.retryAt > now) return { collect: false, retry: true };
+  return { collect: true, key: `${slot}-${attempts.length + 1}` };
+}
+
 async function main([command, ...args]) {
   if (command === "collect") {
-    const runKey = process.env.SPORTS_RESEARCH_RUN_KEY;
-    if (runKey && !/^[a-zA-Z0-9_.-]{1,64}$/.test(runKey)) throw new Error("Некорректный идентификатор прогона");
-    await mkdir(liveRoot, { recursive: true });
-    const lockPath = join(liveRoot, "collect.lock");
-    const lock = await open(lockPath, "wx").catch((error) => {
-      if (error.code === "EEXIST") throw new Error("Уже есть блокировка сбора: " + lockPath);
-      throw error;
-    });
-    try {
-      await lock.writeFile(JSON.stringify({ pid: process.pid, startedAt: new Date().toISOString() }));
+    const slot = process.env.SPORTS_RESEARCH_RUN_KEY;
+    if (slot && !/^[a-zA-Z0-9_.-]{1,64}$/.test(slot)) throw new Error("Некорректный идентификатор прогона");
+    await withResearchLock(liveRoot, async () => {
       const prior = (await readResearchRuns(liveRoot)).sort((a, b) => a.at - b.at);
-      if (runKey && prior.some((run) => run.runKey === runKey)) {
-        await verifyResearchStore(liveRoot);
-      } else {
-        const run = await acquire(liveRoot, prior, Date.now(), args);
-        await storeRun(liveRoot, run, "prospective", runKey);
+      const decision = decideResearchSlot(prior, slot, Date.now());
+      if (!decision.collect) {
+        if (decision.retry) process.exitCode = 3;
+        return;
       }
-    } finally {
-      await lock.close();
-      await unlink(lockPath);
-    }
+      const run = await acquire(liveRoot, prior, Date.now(), args);
+      const network = run.requests.filter((request) => Number.isFinite(request.startedAt));
+      const transient = network.filter((request) => ["error", "backoff"].includes(request.status) &&
+        Number.isFinite(request.nextAttemptAt));
+      const retryAt = transient.length && !network.some((request) => request.status === "ok") ?
+        Math.min(...transient.map((request) => request.nextAttemptAt)) : null;
+      await storeRun(liveRoot, run, "prospective", decision.key, slot, retryAt);
+      if (retryAt) process.exitCode = 3;
+    });
     console.log(JSON.stringify(researchReport(await readResearchRuns(liveRoot), Date.now()), null, 2));
   } else if (command === "replay" && args.length === 3) {
     const [file, directory, cutoff] = args;

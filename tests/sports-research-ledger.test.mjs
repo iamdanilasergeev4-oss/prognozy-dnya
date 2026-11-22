@@ -1,11 +1,14 @@
 import assert from "node:assert/strict";
+import { spawn } from "node:child_process";
+import { once } from "node:events";
 import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
-import { copyResearchStore, readResearchRuns, researchReport, storeResearchObject,
+import { copyResearchStore, MIN_SETTLED_MATCHES, readResearchRuns, researchReport, storeResearchObject,
   verifyResearchStore } from "../scripts/sports-research-ledger.mjs";
-import { datasource } from "../scripts/collect-sports-research.mjs";
+import { datasource, decideResearchSlot, seasonCacheAge } from "../scripts/collect-sports-research.mjs";
+import { withResearchLock } from "../scripts/sports-research-lock.mjs";
 import { discover } from "../scripts/sports-discovery.mjs";
 import { evidenceTier } from "../scripts/sports-evidence.mjs";
 
@@ -32,7 +35,10 @@ test("a settled match scores only its first pre-match forecast per model", () =>
   assert.equal(Object.keys(report.bySport).length, 7);
   assert.equal(cs.all.predicted, 1);
   assert.equal(cs.all.paired[0].matches, 1);
-  assert.ok(Math.abs(cs.all.models.elo.brier - 0.08) < 1e-8);
+  assert.equal(cs.all.models.elo.brier, undefined);
+  assert.equal(cs.all.models.elo.status, "insufficient_observations");
+  assert.equal(cs.all.forecastReconciliation.verifiedResults, 1);
+  assert.equal(report.records[0].models.elo.home, 0.8);
   assert.equal(cs.all.byLevel.regional.scoredEvents, 1);
   assert.equal(cs.days7.settledEvents, 1);
   assert.equal(cs.days7.completeWindow, false);
@@ -151,4 +157,62 @@ test("repeated observations of the same result count once", () => {
     run(start + 2 * day, [], [], [result(start + 2 * day, [2, 0])]),
     run(start + 3 * day, [], [], [result(start + 3 * day, [2, 0])])], start + 3 * day);
   assert.equal(report.bySport.cs2.all.scoredEvents, 1);
+});
+
+test("unattended retries preserve the slot journal; a missed day does not create backdated observations", () => {
+  const slot = "utc-2025-01-09-12";
+  const failed = { at: start, slot, runKey: slot + "-1", retryAt: start + 1 };
+  assert.deepEqual(decideResearchSlot([failed], slot, start), { collect: false, retry: true });
+  assert.deepEqual(decideResearchSlot([failed], slot, start + 1), { collect: true, key: slot + "-2" });
+  const success = { at: start + 1, slot, runKey: slot + "-2", retryAt: null };
+  assert.deepEqual(decideResearchSlot([failed, success], slot, start + 2), { collect: false, retry: false });
+  assert.deepEqual(decideResearchSlot([failed, success], "utc-2025-01-11-12", start + 2 * day),
+    { collect: true, key: "utc-2025-01-11-12-1" });
+  const prior = [{ ...success, requests: [{ source: "OpenLigaDB", status: "cached", url: "https://api.openligadb.de/getmatchdata/bl2/2025" }] }];
+  assert.equal(seasonCacheAge(prior, start + day / 2), 7 * day);
+  assert.equal(seasonCacheAge(prior, start + 2 * day), 0);
+});
+
+test("metric calculation opens only after the observation threshold", () => {
+  const events = Array.from({ length: MIN_SETTLED_MATCHES }, (_, index) => ({
+    ...event, home: "team-" + index, sources: [{ title: "publisher", id: String(index) }],
+  }));
+  const forecasts = events.map((item) => ({ ...pick("elo"), ...item }));
+  const results = events.map((item) => ({ ...item, ...result(start + day, [2, 0]), home: item.home, sources: item.sources }));
+  const snapshot = run(start - day, events, forecasts);
+  const assess = (rows) => researchReport([snapshot, run(start + day, [], [], rows)], start + day).bySport.cs2.all;
+  assert.equal(assess(results.slice(1)).models.elo.brier, undefined);
+  assert.ok(Math.abs(assess(results).models.elo.brier - 0.08) < 1e-8);
+});
+
+test("a verified result attached to a conflicting provider identity quarantines the first prediction", () => {
+  const first = run(start - day, [event], [pick("elo")]);
+  const wrongTeam = { ...result(start + 2 * day, [2, 0]), away: "other" };
+  const report = researchReport([first, run(start + 2 * day, [], [], [wrongTeam])], start + 2 * day);
+  assert.equal(report.bySport.cs2.all.forecastReconciliation.matchingErrors, 1);
+  assert.equal(report.bySport.cs2.all.scoredEvents, 0);
+});
+
+test("the OS lock excludes another collector and releases after a process is killed", { timeout: 10_000 }, async () => {
+  const root = await mkdtemp(join(tmpdir(), "sports-process-"));
+  const module = new URL("../scripts/sports-research-lock.mjs", import.meta.url).href;
+  const child = spawn(process.execPath, ["--input-type=module", "-e",
+    `import {withResearchLock} from ${JSON.stringify(module)};
+     await withResearchLock(process.argv[1], () => { console.log('locked'); return new Promise(() => {}); });`, root],
+  { stdio: ["ignore", "pipe", "pipe"] });
+  const closed = once(child, "close");
+  try {
+    await Promise.race([once(child.stdout, "data"), closed.then(([code]) => { throw new Error("Child exited " + code); })]);
+    await assert.rejects(withResearchLock(root, () => {}), /уже выполняется/);
+    child.kill("SIGKILL");
+    await closed;
+    await writeFile(join(root, "collect.lock"), JSON.stringify({ pid: child.pid }));
+    assert.equal(await withResearchLock(root, () => "recovered"), "recovered");
+    await writeFile(join(root, "collect.lock"), JSON.stringify({ pid: process.pid }));
+    await assert.rejects(withResearchLock(root, () => {}), /ещё работает/);
+  } finally {
+    child.kill("SIGKILL");
+    await closed;
+    await rm(root, { recursive: true, force: true });
+  }
 });
