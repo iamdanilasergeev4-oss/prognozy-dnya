@@ -1,9 +1,13 @@
 import assert from "node:assert/strict";
-import { mkdtemp, rm, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
-import { readResearchRuns, researchReport, storeResearchObject } from "../scripts/sports-research-ledger.mjs";
+import { copyResearchStore, readResearchRuns, researchReport, storeResearchObject,
+  verifyResearchStore } from "../scripts/sports-research-ledger.mjs";
+import { datasource } from "../scripts/collect-sports-research.mjs";
+import { discover } from "../scripts/sports-discovery.mjs";
+import { evidenceTier } from "../scripts/sports-evidence.mjs";
 
 const day = 86_400_000;
 const start = Date.UTC(2025, 0, 9, 18);
@@ -75,4 +79,76 @@ test("content addressed snapshots are idempotent and checked on read", async () 
   } finally {
     await rm(root, { recursive: true, force: true });
   }
+});
+
+test("verified backup and restore are additive and ignore an interrupted temporary write", async () => {
+  const root = await mkdtemp(join(tmpdir(), "sports-recovery-"));
+  try {
+    const live = join(root, "live");
+    const backup = join(root, "backup");
+    const restored = join(root, "restored");
+    const featuresHash = await storeResearchObject(live, "features", []);
+    const normalizedHash = await storeResearchObject(live, "normalized", { results: [] });
+    const rawHash = await storeResearchObject(live, "raw", Buffer.from("[]"));
+    await mkdir(join(live, "runs"), { recursive: true });
+    await writeFile(join(live, "runs", "interrupted.tmp"), '{"incomplete":');
+    const item = { ...run(start), featuresHash, normalizedHash, requests: [{ rawHash }] };
+    await storeResearchObject(live, "runs", item);
+    assert.equal((await copyResearchStore(live, backup)).runs, 1);
+    assert.deepEqual(await copyResearchStore(live, backup), await verifyResearchStore(backup));
+    assert.equal((await copyResearchStore(backup, restored)).objects.length, 4);
+    assert.deepEqual(await readResearchRuns(restored), [item]);
+    await writeFile(join(restored, "raw", rawHash + ".json"), "corrupt");
+    await assert.rejects(verifyResearchStore(restored), /Повреждён/);
+    await assert.rejects(copyResearchStore(backup, restored), /Повреждён/);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test("a saved network backoff prevents repeat requests and allows recovery", async () => {
+  const root = await mkdtemp(join(tmpdir(), "sports-source-"));
+  try {
+    let clock = start;
+    let attempts = 0;
+    const url = "https://example.org/fixtures";
+    const options = { source: "test", sport: "football" };
+    const first = [];
+    const fetcher = async () => ++attempts === 1 ? new Response("", { status: 503 }) : new Response("[]");
+    await assert.rejects(datasource(root, [], first, () => clock, fetcher)(url, options), /503/);
+    const second = [];
+    await assert.rejects(datasource(root, [{ requests: first }], second, () => clock, fetcher)(url, options), /backoff/);
+    assert.equal(attempts, 1);
+    clock = first[0].nextAttemptAt + 1;
+    assert.deepEqual(await datasource(root, [{ requests: second }], [], () => clock, fetcher)(url, options), []);
+    assert.equal(attempts, 2);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test("DFB authority is league scoped and reversed football sides cannot confirm by unordered names", () => {
+  const source = { source: "DFB Datencenter", id: "dfb", start, status: "scheduled", sport: "football",
+    tournament: "3. Liga", country: "DE", home: "VfB Stuttgart II", away: "FC Ingolstadt 04",
+    url: "https://datencenter.dfb.de/competitions/4/seasons/2026-2027" };
+  const assess = (rows) => discover(rows, { now: start - day, until: start + day, improved: true }).events[0];
+  assert.equal(evidenceTier(assess([source])), "official");
+  assert.equal(evidenceTier(assess([{ ...source, tournament: "2. Bundesliga" }])), "secondary");
+  const mirror = { ...source, source: "OpenLigaDB", id: "ol", home: source.away, away: source.home,
+    url: "https://api.openligadb.de/fixtures" };
+  assert.equal(assess([source, mirror]).verificationReason, "home_away_conflict");
+  assert.equal(evidenceTier(assess([source, mirror])), "conflicting");
+  const moved = { ...mirror, home: source.home, away: source.away, start: start + day / 2 };
+  assert.equal(assess([{ ...source, season: "2024-25" }, { ...moved, season: "2024-25" }]).verificationReason, "time_conflict");
+  const corroborated = assess([{ ...source, season: "2024/2025" }, { ...moved, start, season: "2024" }]);
+  assert.equal(corroborated.status, "confirmed");
+  assert.equal(evidenceTier(corroborated), "official");
+  assert.equal(assess([{ ...source, season: "2024/2025" }, { ...moved, start, season: "2023" }]).verificationReason, "context_conflict");
+});
+
+test("repeated observations of the same result count once", () => {
+  const report = researchReport([run(start - day, [event], [pick("elo")]),
+    run(start + 2 * day, [], [], [result(start + 2 * day, [2, 0])]),
+    run(start + 3 * day, [], [], [result(start + 3 * day, [2, 0])])], start + 3 * day);
+  assert.equal(report.bySport.cs2.all.scoredEvents, 1);
 });

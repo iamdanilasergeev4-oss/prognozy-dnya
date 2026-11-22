@@ -1,5 +1,5 @@
 import { createHash, randomUUID } from "node:crypto";
-import { link, mkdir, readFile, readdir, unlink, writeFile } from "node:fs/promises";
+import { link, mkdir, open, readFile, readdir, unlink } from "node:fs/promises";
 import { join } from "node:path";
 import { evaluateProbabilities } from "./sports-evaluation.mjs";
 import { DAY } from "./sports-research-history.mjs";
@@ -22,14 +22,20 @@ const fullMatch = (event) => sports.includes(event.sport) && typeof event.compet
   Boolean(event.competition && event.home && event.away && event.home !== event.away) && Number.isFinite(event.start);
 
 export async function storeResearchObject(root, kind, value) {
-  const body = typeof value === "string" ? value : JSON.stringify(value);
+  const body = Buffer.isBuffer(value) || typeof value === "string" ? value : JSON.stringify(value);
   const hash = digest(body);
   const directory = join(root, kind);
   await mkdir(directory, { recursive: true });
   const file = join(directory, hash + ".json");
   const temporary = join(directory, randomUUID() + ".tmp");
   try {
-    await writeFile(temporary, body, { flag: "wx" });
+    const handle = await open(temporary, "wx");
+    try {
+      await handle.writeFile(body);
+      await handle.sync();
+    } finally {
+      await handle.close();
+    }
     try { await link(temporary, file); } catch (error) {
       if (error.code !== "EEXIST" || digest(await readFile(file)) !== hash) throw error;
     }
@@ -39,6 +45,18 @@ export async function storeResearchObject(root, kind, value) {
   return hash;
 }
 
+export async function verifyResearchObject(root, kind, hash) {
+  if (!/^[a-f0-9]{64}$/.test(hash ?? "")) throw new Error("Некорректная ссылка на объект " + kind);
+  const body = await readFile(join(root, kind, hash + ".json"));
+  if (digest(body) !== hash) throw new Error("Повреждён исследовательский снимок " + kind + "/" + hash);
+  return body;
+}
+
+function references(run) {
+  return [["features", run.featuresHash], ["normalized", run.normalizedHash],
+    ...(run.requests ?? []).filter((row) => row.rawHash).map((row) => ["raw", row.rawHash])];
+}
+
 export async function readResearchRuns(root) {
   const folder = join(root, "runs");
   const names = await readdir(folder).catch((error) => {
@@ -46,13 +64,45 @@ export async function readResearchRuns(root) {
     throw error;
   });
   return Promise.all(names.filter((name) => /^[a-f0-9]{64}\.json$/.test(name)).sort().map(async (name) => {
-    const body = await readFile(join(folder, name));
-    if (digest(body) !== name.slice(0, 64)) throw new Error("Повреждён исследовательский снимок " + name);
+    const body = await verifyResearchObject(root, "runs", name.slice(0, 64));
     const run = JSON.parse(body);
     if (run.schema !== 1 || !Number.isFinite(run.at) || !Array.isArray(run.events) ||
         !Array.isArray(run.forecasts) || !Array.isArray(run.results)) throw new Error("Неизвестный формат прогона " + name);
     return run;
   }));
+}
+
+export async function verifyResearchStore(root) {
+  const runs = await readResearchRuns(root);
+  const unique = new Map();
+  const runKeys = new Map();
+  for (const run of runs) {
+    for (const [kind, hash] of references(run)) unique.set(kind + "/" + hash, [kind, hash]);
+    const hash = dataHash(run);
+    if (run.runKey) {
+      if (runKeys.has(run.runKey) && runKeys.get(run.runKey) !== hash) throw new Error("Два снимка для ключа " + run.runKey);
+      runKeys.set(run.runKey, hash);
+    }
+    unique.set("runs/" + hash, ["runs", hash]);
+  }
+  for (const [kind, hash] of unique.values()) await verifyResearchObject(root, kind, hash);
+  return { runs: runs.length, runKeys: Object.fromEntries(runKeys), objects: [...unique.values()] };
+}
+
+export async function copyResearchStore(source, destination) {
+  const snapshot = await verifyResearchStore(source);
+  if (!snapshot.runs) throw new Error("Пустое хранилище");
+  const existing = await verifyResearchStore(destination);
+  for (const [key, hash] of Object.entries(snapshot.runKeys)) {
+    if (Object.hasOwn(existing.runKeys, key) && existing.runKeys[key] !== hash) throw new Error("Разные снимки для ключа " + key);
+  }
+  for (const [kind, hash] of snapshot.objects.filter(([kind]) => kind !== "runs")) {
+    await storeResearchObject(destination, kind, await verifyResearchObject(source, kind, hash));
+  }
+  for (const [kind, hash] of snapshot.objects.filter(([kind]) => kind === "runs")) {
+    await storeResearchObject(destination, kind, await verifyResearchObject(source, kind, hash));
+  }
+  return verifyResearchStore(destination);
 }
 
 function makeIdentityIndex() {

@@ -1,16 +1,17 @@
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
-import { fileURLToPath } from "node:url";
+import { mkdir, open, readFile, unlink } from "node:fs/promises";
+import { join, resolve } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { buildShadowReport } from "./sports-shadow.mjs";
 import { calendarJobs, europeanSeason, germanLeagues } from "./sports-discovery.mjs";
 import { parseOpenLiga } from "./sports-research-sources.mjs";
 import { openDotaMap } from "./import-sports-archive.mjs";
 import { compareHistory, makeHistorySnapshot } from "./sports-history-analysis.mjs";
 import { DAY, loadSeasonArchives, readResearchSnapshots } from "./sports-research-history.mjs";
-import { readResearchRuns, researchMarkdown, researchReport, sports, storeResearchObject } from "./sports-research-ledger.mjs";
+import { copyResearchStore, readResearchRuns, researchMarkdown, researchReport, sports, storeResearchObject,
+  verifyResearchObject, verifyResearchStore } from "./sports-research-ledger.mjs";
 
 const base = fileURLToPath(new URL("../.sports-update/", import.meta.url));
-const liveRoot = join(base, "daily-research-v1");
+const liveRoot = process.env.SPORTS_RESEARCH_STORE ? resolve(process.env.SPORTS_RESEARCH_STORE) : join(base, "daily-research-v1");
 const replayRoot = join(base, "daily-research-replay-v1");
 const openLiga = "https://api.openligadb.de";
 const openDota = "https://api.opendota.com/api/proMatches";
@@ -27,8 +28,9 @@ const filterClaims = (rows, capturedAt) => rows.filter((row) => {
   return valid && (row.status !== "finished" || row.start < capturedAt);
 });
 
-async function datasource(root, previous, requests, clock = Date.now) {
-  const past = new Map(previous.flatMap((run) => (run.requests ?? []).filter((row) => row.url?.startsWith("https:"))
+export function datasource(root, previous, requests, clock = Date.now, fetcher = fetch) {
+  const past = new Map(previous.flatMap((run) => (run.requests ?? []).filter((row) =>
+    Number.isFinite(row.startedAt) && row.url?.startsWith("https:"))
     .map((row) => [row.url, row])));
   return async (url, { source, sport, text = false, revision, minAge = 6 * 3_600_000 }) => {
     const old = past.get(url);
@@ -41,10 +43,10 @@ async function datasource(root, previous, requests, clock = Date.now) {
     let body;
     try {
       if (cached) {
-        body = await readFile(join(root, "raw", old.rawHash + ".json"), "utf8");
+        body = await verifyResearchObject(root, "raw", old.rawHash);
         record.receivedAt = old.receivedAt;
       } else {
-        const reply = await fetch(url, { headers, redirect: "error", signal: AbortSignal.timeout(9000) });
+        const reply = await fetcher(url, { headers, redirect: "error", signal: AbortSignal.timeout(9000) });
         if (!reply.ok) {
           const wait = reply.headers.get("retry-after");
           const error = new Error(`HTTP ${reply.status}`);
@@ -52,18 +54,22 @@ async function datasource(root, previous, requests, clock = Date.now) {
           error.retry = /^\d+$/.test(wait ?? "") ? Number(wait) * 1000 : Date.parse(wait) - clock();
           throw error;
         }
-        body = await reply.text();
+        body = Buffer.from(await reply.arrayBuffer());
         record.receivedAt = clock();
       }
       record.rawHash = await storeResearchObject(root, "raw", body);
-      const result = text ? body : JSON.parse(body);
-      requests.push({ ...record, status: cached ? "cached" : "ok" });
+      const result = text ? body.toString("utf8") : JSON.parse(body.toString("utf8"));
+      const saved = { ...record, status: cached ? "cached" : "ok" };
+      requests.push(saved);
+      past.set(url, saved);
       return result;
     } catch (error) {
       const failures = (old?.failures ?? 0) + 1;
       const cooldown = Math.min(7 * DAY, 3_600_000 * 2 ** Math.min(failures, 8));
-      requests.push({ ...record, status: [401, 403].includes(error.http) ? "restricted" : "error",
-        error: error.message, failures, nextAttemptAt: clock() + Math.max(cooldown, error.retry || 0) });
+      const failed = { ...record, status: [401, 403].includes(error.http) ? "restricted" : "error",
+        error: error.message, failures, nextAttemptAt: clock() + Math.max(cooldown, error.retry || 0) };
+      requests.push(failed);
+      past.set(url, failed);
       throw error;
     }
   };
@@ -148,7 +154,7 @@ async function acquire(root, prior, startedAt, claimFiles) {
   return { at, diagnostics, normalized, requests: [...requests, ...supplemental.requests.filter((row) => row.status !== "ok"), ...archive.requests] };
 }
 
-async function storeRun(root, { at, diagnostics, normalized, requests }, mode) {
+async function storeRun(root, { at, diagnostics, normalized, requests }, mode, runKey) {
   const features = [];
   const forecasts = [];
   for (const event of diagnostics.forecastEvidence) {
@@ -164,29 +170,60 @@ async function storeRun(root, { at, diagnostics, normalized, requests }, mode) {
   }
   const featuresHash = await storeResearchObject(root, "features", features);
   const normalizedHash = await storeResearchObject(root, "normalized", normalized);
-  return storeResearchObject(root, "runs", { schema: 1, mode, at, requests, normalizedHash, featuresHash, normalized,
+  return storeResearchObject(root, "runs", { schema: 1, mode, runKey, at, requests, normalizedHash, featuresHash, normalized,
+    calendarLeads: diagnostics.calendar,
     events: diagnostics.assessed, results: normalized.results, forecasts, history: diagnostics.savedHistory });
 }
 
-const [command, ...args] = process.argv.slice(2);
-if (command === "collect") {
-  const prior = (await readResearchRuns(liveRoot)).sort((a, b) => a.at - b.at);
-  const run = await acquire(liveRoot, prior, Date.now(), args);
-  await storeRun(liveRoot, run, "prospective");
-  console.log(JSON.stringify(researchReport(await readResearchRuns(liveRoot), Date.now()), null, 2));
-} else if (command === "replay" && args.length === 3) {
-  const [file, directory, cutoff] = args;
-  const at = Date.parse(cutoff);
-  const checkpoint = await json(file);
-  if (!Number.isFinite(at) || !(Date.parse(checkpoint.checkedAt) <= at)) throw new Error("Некорректная дата повтора");
-  const snapshots = await readResearchSnapshots(directory, at);
-  const diagnostics = compareHistory(checkpoint, snapshots, at);
-  const normalized = { at, results: snapshots.flatMap((row) => row.results), maps: snapshots.flatMap((row) => row.maps), requests: [] };
-  await storeRun(replayRoot, { at, diagnostics, normalized, requests: diagnostics.requests }, "replay");
-  console.log(JSON.stringify(researchReport(await readResearchRuns(replayRoot), at), null, 2));
-} else if (command === "report" && args.every((arg) => ["replay", "--markdown"].includes(arg))) {
-  const data = researchReport(await readResearchRuns(args.includes("replay") ? replayRoot : liveRoot), Date.now());
-  console.log(args.includes("--markdown") ? researchMarkdown(data) : JSON.stringify(data, null, 2));
-} else {
-  throw new Error("Использование: collect [разрешённые-наблюдения.json...] | report [replay] [--markdown] | replay <checkpoint.json> <snapshot-directory> <ISO-cutoff>");
+async function main([command, ...args]) {
+  if (command === "collect") {
+    const runKey = process.env.SPORTS_RESEARCH_RUN_KEY;
+    if (runKey && !/^[a-zA-Z0-9_.-]{1,64}$/.test(runKey)) throw new Error("Некорректный идентификатор прогона");
+    await mkdir(liveRoot, { recursive: true });
+    const lockPath = join(liveRoot, "collect.lock");
+    const lock = await open(lockPath, "wx").catch((error) => {
+      if (error.code === "EEXIST") throw new Error("Уже есть блокировка сбора: " + lockPath);
+      throw error;
+    });
+    try {
+      await lock.writeFile(JSON.stringify({ pid: process.pid, startedAt: new Date().toISOString() }));
+      const prior = (await readResearchRuns(liveRoot)).sort((a, b) => a.at - b.at);
+      if (runKey && prior.some((run) => run.runKey === runKey)) {
+        await verifyResearchStore(liveRoot);
+      } else {
+        const run = await acquire(liveRoot, prior, Date.now(), args);
+        await storeRun(liveRoot, run, "prospective", runKey);
+      }
+    } finally {
+      await lock.close();
+      await unlink(lockPath);
+    }
+    console.log(JSON.stringify(researchReport(await readResearchRuns(liveRoot), Date.now()), null, 2));
+  } else if (command === "replay" && args.length === 3) {
+    const [file, directory, cutoff] = args;
+    const at = Date.parse(cutoff);
+    const checkpoint = await json(file);
+    if (!Number.isFinite(at) || !(Date.parse(checkpoint.checkedAt) <= at)) throw new Error("Некорректная дата повтора");
+    const snapshots = await readResearchSnapshots(directory, at);
+    const diagnostics = compareHistory(checkpoint, snapshots, at);
+    const normalized = { at, results: snapshots.flatMap((row) => row.results), maps: snapshots.flatMap((row) => row.maps), requests: [] };
+    await storeRun(replayRoot, { at, diagnostics, normalized, requests: diagnostics.requests }, "replay");
+    console.log(JSON.stringify(researchReport(await readResearchRuns(replayRoot), at), null, 2));
+  } else if (command === "report" && args.every((arg) => ["replay", "--markdown"].includes(arg))) {
+    const data = researchReport(await readResearchRuns(args.includes("replay") ? replayRoot : liveRoot), Date.now());
+    console.log(args.includes("--markdown") ? researchMarkdown(data) : JSON.stringify(data, null, 2));
+  } else if (command === "verify" && args.length === 0) {
+    console.log(JSON.stringify(await verifyResearchStore(liveRoot), null, 2));
+  } else if (["backup", "restore"].includes(command) && args.length === 1) {
+    const other = resolve(args[0]);
+    if (other === liveRoot) throw new Error("Укажите отдельный каталог");
+    const [source, destination] = command === "backup" ? [liveRoot, other] : [other, liveRoot];
+    console.log(JSON.stringify(await copyResearchStore(source, destination), null, 2));
+  } else {
+    throw new Error("Использование: collect | report | replay | verify | backup <dir> | restore <dir>");
+  }
+}
+
+if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) {
+  await main(process.argv.slice(2));
 }

@@ -5,17 +5,26 @@ export function sourceOrigin(source) {
   return source.title === "OpenLigaDB" ? "OpenLigaDB" : null;
 }
 
-function isOfficial(event, source) {
-  const host = URL.parse(source.url)?.hostname;
+export function isOfficial(event, source) {
+  const url = URL.parse(source.url);
+  if (url?.protocol !== "https:") return false;
+  const host = url.hostname;
+  const dfbPath = { deu2: /\/datencenter\/2-bundesliga\/|\/competitions\/3\/seasons\//,
+    deu3: /\/datencenter\/3-liga\/|\/competitions\/4\/seasons\// };
   return event.sport === "hockey" && event.competition === "nhl" && source.title === "NHL" && host === "www.nhl.com" ||
-    event.sport === "volleyball" && event.competition === "superlega" && source.title === "Lega Pallavolo" && host === "www.legavolley.it";
+    event.sport === "volleyball" && event.competition === "superlega" && source.title === "Lega Pallavolo" && host === "www.legavolley.it" ||
+    event.sport === "football" && source.title === "DFB Datencenter" && host === "datencenter.dfb.de" &&
+      Boolean(dfbPath[event.competition]?.test(url.pathname));
 }
 
 export function evidenceTier(event, sources = event.sources) {
-  if (event.status === "conflict" || ["context_conflict", "time_conflict", "status_conflict", "duplicate_source_ids"]
+  if (event.status === "conflict" || ["context_conflict", "time_conflict", "status_conflict", "duplicate_source_ids", "home_away_conflict"]
     .includes(event.verificationReason)) return "conflicting";
   if (!sources.length || event.verificationReason === "ambiguous_competition") return "insufficient";
   const official = sources.filter((source) => isOfficial(event, source));
+  // A community editor may have transcribed the federation calendar.
+  // Credit the DFB authority without treating the mirror as independent.
+  if (official.some((source) => source.title === "DFB Datencenter")) return "official";
   const origins = new Set(sources.map((source) => isOfficial(event, source) ? sourceOrigin(source) || source.title : sourceOrigin(source)).filter(Boolean));
   if (origins.size > 1) return "independent";
   if (official.length) return "official";

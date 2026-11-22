@@ -94,12 +94,22 @@ function pairKey(row) {
   return [normalizeIdentity(row.home), normalizeIdentity(row.away)].sort().join("|");
 }
 
+function claimSeason(row) {
+  const season = row.season == null ? null : String(row.season);
+  if (row.sport !== "football" || row.country !== "DE" || !season) return season;
+  const expected = europeanSeason(row.start);
+  const first = expected.slice(0, 4);
+  const next = String(Number(first) + 1);
+  return [first, expected, `${first}-${next}`, `${first}/${next}`, `${first}/${expected.slice(-2)}`].includes(season) ?
+    expected : season;
+}
+
 export function discover(rows, { now, until, improved = false }) {
   const valid = rows.filter((row) => row.id && row.source && row.sport &&
     Number.isFinite(row.start) && normalizeIdentity(row.home) && normalizeIdentity(row.away) &&
     normalizeIdentity(row.home) !== normalizeIdentity(row.away) && normalizeIdentity(row.tournament) &&
     /^https:\/\//i.test(row.url || ""));
-  const claims = improved ? reconcileClaims(valid, normalizeIdentity) : valid;
+  const claims = improved ? reconcileClaims(valid, normalizeIdentity).map((row) => ({ ...row, season: claimSeason(row) })) : valid;
   const competitionFor = (row) => competitionOf(row, improved);
   const indexedPairs = Map.groupBy(claims, (row) => JSON.stringify([row.sport, pairKey(row)]));
   const grouped = Map.groupBy(claims, (row) => JSON.stringify([row.sport, competitionFor(row).id, pairKey(row)]));
@@ -117,7 +127,8 @@ export function discover(rows, { now, until, improved = false }) {
       const cluster = [first, ...near];
       const bySource = Map.groupBy(cluster, (row) => row.source);
       const ambiguous = [...bySource.values()].some((claims) => new Set(claims.map((row) =>
-        JSON.stringify([row.id, row.status, row.format, row.score, row.season, row.patch, row.surface]))).size > 1);
+        JSON.stringify([row.id, row.start, row.status, row.format, row.score, row.season, row.patch, row.surface,
+          row.participantIds]))).size > 1);
       const claims = [...bySource.values()].map(([row]) => row);
       const home = normalizeIdentity(first.home);
       const away = normalizeIdentity(first.away);
@@ -136,12 +147,16 @@ export function discover(rows, { now, until, improved = false }) {
         .test(competition.id);
       const matchingStatus = claims.every((row) => row.status === first.status);
       const matchingTime = first.sport !== "tennis" || cluster.at(-1).start - first.start <= 300_000;
-      const confirmed = !ambiguous && !generic && claims.length >= 2 && consistentContext && matchingStatus && matchingTime;
+      const matchingSides = !improved || first.sport !== "football" || aligned;
+      const confirmed = !ambiguous && !generic && claims.length >= 2 && consistentContext && matchingStatus && matchingTime && matchingSides;
       const related = indexedPairs.get(JSON.stringify([first.sport, pairKey(first)]))
         .filter((row) => row.source !== first.source && Math.abs(row.start - first.start) <= 3 * 3_600_000);
+      const competingDate = improved && first.sport === "football" && explicitSeason &&
+        group.some((row) => row.source !== first.source && row.season === explicitSeason &&
+          row.start !== first.start && Math.abs(row.start - first.start) <= 2 * DAY);
       const verificationReason = confirmed ? null : ambiguous ? "duplicate_source_ids" : !consistentContext ? "context_conflict" :
-        !matchingStatus ? "status_conflict" : !matchingTime ? "time_conflict" : generic ? "ambiguous_competition" :
-        related.some((row) => competitionFor(row).id === competition.id) ? "time_conflict" :
+        !matchingStatus ? "status_conflict" : !matchingSides ? "home_away_conflict" : !matchingTime ? "time_conflict" : generic ? "ambiguous_competition" :
+        competingDate || related.some((row) => competitionFor(row).id === competition.id) ? "time_conflict" :
         related.length ? "competition_mismatch" : "single_publisher";
       const event = { id: JSON.stringify([first.sport, competition.id, pairKey(first), first.start]),
         sport: first.sport, competition: competition.id, tournament: first.tournament, tier: competition.level,
@@ -151,14 +166,14 @@ export function discover(rows, { now, until, improved = false }) {
         start: first.start, date: dateOf(first), home, away, match: first.displayMatch || `${first.home} — ${first.away}`,
         rules: ["cs2", "dota2"].includes(first.sport) ? format : surface,
         homeField: first.sport === "football" && aligned && claims.every((row) => row.homeField === true),
-        patch, sources: claims.map((row) => ({ title: row.source, id: row.id, url: row.url,
+        patch, sources: claims.map((row) => ({ title: row.source, id: row.id, url: row.url, origin: row.origin,
           reportedStart: row.start, reportedStatus: row.status, format: row.format, surface: row.surface,
           researchFormat: row.researchFormat ? `BO${row.researchFormat}` : null,
           reportedScore: scoreInOrder(row), extra: row.extra,
           sourceCompetitionId: row.sourceCompetitionId, participantIds: normalizeIdentity(row.home) === home
             ? row.participantIds : row.participantIds?.slice().reverse() })),
         verificationReason,
-        status: confirmed ? "confirmed" : ambiguous || !consistentContext || !matchingStatus
+        status: confirmed ? "confirmed" : ambiguous || !consistentContext || !matchingStatus || !matchingSides
           ? "conflict" : "unconfirmed",
       };
       if (cluster.every((row) => row.start > now) && cluster.some((row) => row.status === "scheduled")) {
@@ -180,7 +195,7 @@ export function discover(rows, { now, until, improved = false }) {
       const scored = claims.find((row) => row.score);
       const researchScore = scored && scoreInOrder(scored);
       if (first.status === "finished" && cluster.at(-1).start + DAY < now && researchScore &&
-          !ambiguous && matchingStatus && matchingTime && consistentContext &&
+          !ambiguous && matchingStatus && matchingTime && consistentContext && matchingSides &&
           claims.every((row) => (!row.extra || first.sport !== "football") &&
             (!row.score || JSON.stringify(scoreInOrder(row)) === JSON.stringify(researchScore)))) {
         researchResults.push({ ...event, score: researchScore });

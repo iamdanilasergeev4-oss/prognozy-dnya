@@ -16,13 +16,18 @@ const volleyballAliases = {
 const germanTeams = {
   "hertha berlin": "hertha bsc", "fc kaiserslautern": "1 fc kaiserslautern", kaiserslautern: "1 fc kaiserslautern",
   karlsruher: "karlsruher sc", "vfl osnabruck": "vfl osnabrück", "osnabrück": "vfl osnabrück",
-  "stuttgart ii": "vfb stuttgart ii",
+  "stuttgart ii": "vfb stuttgart ii", "fc ingolstadt": "fc ingolstadt 04",
+  "sg dynamo dresden": "dynamo dresden", "fc energie cottbus": "energie cottbus",
+  "f c hansa rostock": "hansa rostock", "fc hansa rostock": "hansa rostock",
+  "sv werder bremen ii": "werder bremen ii", "bsv kickers emden": "kickers emden",
+  "1 fc frankfurt o": "1 fc frankfurt", "1 fc frankfurt oder": "1 fc frankfurt",
 };
 const germanCompetitions = {
   "bundesliga 2": "2. Bundesliga", "2 bundesliga": "2. Bundesliga",
   "3 liga regular season": "3. Liga", "3 liga": "3. Liga",
   "regionalliga north": "Regionalliga Nord", "regionalliga nordost": "Regionalliga Nordost",
   "regionalliga bayern": "Regionalliga Bayern",
+  "nofv oberliga süd": "NOFV Oberliga Süd",
 };
 
 const families = {
