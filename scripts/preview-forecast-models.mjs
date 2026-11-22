@@ -15,10 +15,10 @@ import "../js/history-core.js";
 const root = fileURLToPath(new URL("../.sports-update/", import.meta.url));
 const [run, liveBase, ...options] = process.argv.slice(2);
 if (!/^run-\d{4}-\d\d-\d\dT\d\d-\d\d-\d\d-\d{3}Z$/.test(run || "") || !liveBase ||
-    options.some((option) => option !== "--private-football-data")) {
+    options.some((option) => !["--private-football-data", "--private-odds-gap"].includes(option))) {
   throw new Error("Укажите имя свежего ручного прогона и локальную копию опубликованного сайта");
 }
-const privatePreview = options.includes("--private-football-data");
+const privatePreview = options.length > 0;
 const now = Date.now();
 const input = join(root, run);
 const store = join(root, "manual-research");
@@ -95,7 +95,8 @@ const bookmakerCoverage = await collectBookmakerLines(forecasts.map(({ event }) 
   apiKey: process.env.ODDS_API_KEY,
   fonbetKey: process.env.ARBPLAY_FONBET_API_KEY,
   teamTotals: process.env.ODDS_API_TEAM_TOTALS === "1",
-  privateDir: privatePreview ? join(root, "bookmaker-private") : undefined,
+  privateDir: options.includes("--private-football-data") ? join(root, "bookmaker-private") : undefined,
+  oddsGapDir: options.includes("--private-odds-gap") ? join(root, "bookmaker-private") : undefined,
 });
 const oddsCheckedAt = Date.now();
 const excluded = [

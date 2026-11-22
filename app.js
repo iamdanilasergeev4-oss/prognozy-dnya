@@ -765,11 +765,13 @@
         return `<section class="bookmaker-source">
       <p><strong>${esc(source.bookmaker)}</strong> · ${esc(scopes[source.scope])}</p>
       <p>Получено ${esc(fmtDate(source.receivedAt))}.${source.publishedAt ?
-        ` Файл обновлён ${esc(fmtDate(source.publishedAt))}. Время изменения каждой цены не указано.` : ""}</p>
+        ` Файл обновлён ${esc(fmtDate(source.publishedAt))}. Время изменения каждой цены не указано.` :
+        source.scannedAt ? ` Снимок источника от ${esc(fmtDate(source.scannedAt))}. Время изменения каждой цены не указано.` : ""}</p>
       ${lines.map((line) => `<div class="bookmaker-market"${line.expiresAt ? ` data-expires-at="${esc(line.expiresAt)}"` : ""}><strong>${esc(line.marketName || labels[line.type])}</strong>
         ${line.updatedAt ? `<small> · Обновление у источника ${esc(fmtDate(line.updatedAt))}</small>` : ""}
-        <ul class="pk-key">${line.outcomes.map(({ condition, price: odds, model, point }) => `<li>
-          ${esc(ru(condition, sport))} · коэффициент <b>${esc(price.format(odds))}</b> ·
+        <ul class="pk-key">${line.outcomes.map(({ condition, price: odds, model, point, americanPrice }) => `<li>
+          ${esc(ru(condition, sport))} · коэффициент <b>${esc(Number.isSafeInteger(americanPrice) ? fmtOdds(odds) : price.format(odds))}</b> ·
+          ${Number.isSafeInteger(americanPrice) ? `в источнике ${americanPrice > 0 ? "+" : ""}${americanPrice} · ` : ""}
           ${model ? `модель ${percentage(model.win)}${model.push == null ? "" : `, возврат ${percentage(model.push)}`}` :
             point != null && !Number.isInteger(2 * point) ? "условие линии требует двух расчётов, проверенной оценки нет" :
               "условие линии не соответствует проверенной модели"}

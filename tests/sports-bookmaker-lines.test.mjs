@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { bookmakerCard, collectBookmakerLines, importFonbet, importFootballSnapshot, importOddsApi, priceProbability }
+import { bookmakerCard, collectBookmakerLines, importFonbet, importFootballSnapshot, importOddsApi, importOddsGapSnapshot, priceProbability }
   from "../scripts/sports-bookmaker-lines.mjs";
 
 const received = Date.parse("2026-11-23T17:00:00Z");
@@ -156,6 +156,29 @@ test("NHL fetches full-game team totals and leaves moneyline and wrong periods w
   assert.equal(card.lines[0].outcomes[0].comparisonStatus, "condition_mismatch");
   assert.equal(card.lines[1].outcomes[0].model.win, 0.6);
   assert.equal(priceProbability({ ...card.lines[1], scope: "regulation" }, card.lines[1].outcomes[0], projection, benchmark), null);
+});
+
+test("private NBA snapshot requires a reviewed identity and preserves the full-game market, raw price and scan time", () => {
+  const startIso = "2026-11-23T20:00:00Z";
+  const nba = { ...event, competition: "nba", sport: "basketball", start: Date.parse(startIso),
+    home: "Home Team", away: "Away Team", sources: [{ id: "espn-id", title: "ESPN", reportedStatus: "scheduled", reportedStart: Date.parse(startIso) }] };
+  const published = "2026-11-23T16:00:00Z";
+  const game = { id: 10, sport: "basketball_nba", home: nba.home, away: nba.away,
+    scanned_at: published, commence_time: "2026-11-23T20:10:00Z",
+    totals_data: { all_books: { draftkings: { total: 225.5, over_juice: -110, under_juice: 100 } } },
+    period_data: { label: "1st Half", totals_data: { all_books: { draftkings: { total: 105.5, over_juice: -120, under_juice: 110 } } } } };
+  const receipt = { url: "https://theoddsgap.com/api/lineshop", status: 200, receivedAt: "2026-11-23T17:00:00Z",
+    fixtures: [{ espnId: "espn-id", sourceId: 10, scheduleStart: startIso, scheduleSource: "https://ak-static.cms.nba.com/schedule.pdf" }] };
+  const data = { last_updated: published, games: [game] };
+  const [market] = importOddsGapSnapshot(data, receipt, [nba]);
+  assert.equal(market.scope, "overtime");
+  assert.equal(market.privateSnapshot, true);
+  assert.equal(market.updatedAt, null);
+  assert.equal(market.scannedAt, new Date(published).toISOString());
+  assert.deepEqual(market.outcomes[0], { selection: "over", price: 1 + 100 / 110, point: 225.5, americanPrice: -110 });
+  assert.deepEqual(importOddsGapSnapshot(data, { ...receipt, fixtures: [] }, [nba]), []);
+  assert.deepEqual(importOddsGapSnapshot(data, receipt, [{ ...nba, home: nba.away, away: nba.home }]), []);
+  assert.deepEqual(importOddsGapSnapshot({ ...data, games: [game, game] }, receipt, [nba]), []);
 });
 
 test("Fonbet imports only open, pre-match top-level football markets with an unambiguous league, sides and time", () => {

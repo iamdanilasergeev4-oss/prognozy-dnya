@@ -6,6 +6,7 @@ import { parseCsvRow } from "./sports-evaluation.mjs";
 
 const maxAge = 2 * 60 * 60_000;
 const footballFixtureUrl = "https://football-data.co.uk/fixtures.csv";
+const oddsGapUrl = "https://theoddsgap.com/api/lineshop";
 const apiDocs = "https://the-odds-api.com/liveapi/guides/v4/";
 const fonbetDocs = "https://arbplay.app/api/fonbet-odds-api";
 const fonbetUrl = "https://api.arbplay.app/v1/data/site_livepre_fonbet.json";
@@ -149,6 +150,60 @@ export function importOddsApi(rows, competition, received, events, requestedMark
   });
 }
 
+export function importOddsGapSnapshot(data, receipt, events) {
+  const received = Date.parse(receipt.receivedAt);
+  const published = Date.parse(data.last_updated);
+  if (receipt.url !== oddsGapUrl || receipt.status !== 200 || !Number.isFinite(received) ||
+      !(published <= received) || !Array.isArray(data.games) || !Array.isArray(receipt.fixtures)) {
+    throw new Error("Некорректный снимок The Odds Gap");
+  }
+  const byId = Map.groupBy(data.games, ({ id }) => String(id));
+  const reviewed = Map.groupBy(receipt.fixtures, ({ espnId }) => String(espnId));
+  const reviewsByProvider = Map.groupBy(receipt.fixtures, ({ sourceId }) => String(sourceId));
+  const american = (value) => Number.isSafeInteger(value) && Math.abs(value) >= 100 ?
+    (value > 0 ? 1 + value / 100 : 1 + 100 / -value) : null;
+  return events.filter((event) => event.competition === "nba" && event.start > received).flatMap((event) => {
+    const schedule = event.sources.find(({ title, reportedStart, reportedStatus }) =>
+      title === "ESPN" && reportedStart === event.start && reportedStatus === "scheduled");
+    const matchReview = schedule && reviewed.get(String(schedule.id));
+    const [link] = matchReview ?? [];
+    if (matchReview?.length !== 1 || reviewsByProvider.get(String(link.sourceId))?.length !== 1 ||
+        Date.parse(link.scheduleStart) !== event.start || URL.parse(link.scheduleSource)?.origin !== "https://ak-static.cms.nba.com") return [];
+    const matches = byId.get(String(link.sourceId));
+    if (matches?.length !== 1) return [];
+    const [game] = matches;
+    const scanned = Date.parse(game.scanned_at);
+    const providerStart = Date.parse(game.commence_time);
+    if (game.sport !== "basketball_nba" || !Number.isFinite(scanned) || scanned > published ||
+        !Number.isFinite(providerStart) || Math.abs(providerStart - event.start) > 10 * 60_000 ||
+        normalizeIdentity(game.home) !== normalizeIdentity(event.home) ||
+        normalizeIdentity(game.away) !== normalizeIdentity(event.away)) return [];
+
+    const ml = game.book_odds?.draftkings;
+    const spread = game.spread_data?.all_books?.draftkings;
+    const total = game.totals_data?.all_books?.draftkings;
+    const prices = { h2h: [ml?.home_odds, ml?.away_odds], spreads: [spread?.home_juice, spread?.away_juice],
+      totals: [total?.over_juice, total?.under_juice] };
+    const outcomes = (key, names, points = []) => ({
+      key, outcomes: names.map((name, i) => ({ name, price: american(prices[key][i]), point: points[i] })),
+    });
+    const markets = [
+      outcomes("h2h", [game.home, game.away]),
+      outcomes("spreads", [game.home, game.away], [spread?.home_line, spread?.away_line]),
+      outcomes("totals", ["Over", "Under"], [total?.total, total?.total]),
+    ];
+    // Reuse the same full-game and market validation as the licensed feed.
+    const normalized = { id: String(game.id), sport_key: game.sport, home_team: game.home, away_team: game.away,
+      commence_time: iso(event.start), bookmakers: [{ key: "draftkings", last_update: iso(scanned), markets }] };
+    return importOddsApi([normalized], "nba", received, [event]).map((market) => ({
+      ...market, outcomes: market.outcomes.map((offer, i) => ({ ...offer, americanPrice: prices[market.providerMarket][i] })),
+      source: "The Odds Gap", sourceUrl: oddsGapUrl, referenceUrl: "https://theoddsgap.com/",
+      scannedAt: iso(scanned), providerStart: iso(providerStart), scheduleSource: link.scheduleSource,
+      publishedAt: null, updatedAt: null, privateSnapshot: true,
+    }));
+  });
+}
+
 export function importFonbet(payload, received, events, onUnmatched = () => {}) {
   const updated = Date.parse(payload.updated_at);
   const { data } = payload;
@@ -218,13 +273,19 @@ async function getMarkets(url, apiKey, fetchSource, parse) {
   return { attempts, status, markets: [], unmatched: [] };
 }
 
-export async function collectBookmakerLines(events, { apiKey, fonbetKey, teamTotals = false, privateDir, fetchSource = fetch } = {}) {
+export async function collectBookmakerLines(events, { apiKey, fonbetKey, teamTotals = false, privateDir, oddsGapDir, fetchSource = fetch } = {}) {
   const requests = new Map();
   const markets = [];
   if (privateDir) {
     const [csv, receipt] = await Promise.all([readFile(join(privateDir, "fixtures.csv"), "utf8"),
       readFile(join(privateDir, "receipt.json"), "utf8")]);
     markets.push(...importFootballSnapshot(csv, JSON.parse(receipt.replace(/^\uFEFF/, "")), events));
+  }
+  if (oddsGapDir) {
+    const [data, receipt] = await Promise.all([
+      readFile(join(oddsGapDir, "odds-gap-lineshop.json"), "utf8"), readFile(join(oddsGapDir, "odds-gap-receipt.json"), "utf8"),
+    ]);
+    markets.push(...importOddsGapSnapshot(JSON.parse(data), JSON.parse(receipt.replace(/^\uFEFF/, "")), events));
   }
   if (apiKey) {
     const groups = Map.groupBy(events.filter(({ competition }) => Object.hasOwn(feeds, competition)), (event) => event.competition);
