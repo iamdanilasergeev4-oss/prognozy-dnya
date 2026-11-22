@@ -738,8 +738,12 @@
       stale: "Срок актуальности полученной линии истёк.",
       unsupported: "В подключённом источнике для этого турнира нет проверенной схемы линий.",
       unconfigured: "Актуальная линия не найдена. Источник с ключом доступа не подключён.",
-      unavailable: "Источник линий недоступен. Актуальные коэффициенты проверить не удалось.",
-      missing: "Линия с совпадающими участниками, временем и условиями не найдена.",
+      access_required: "Нет доступа к источнику линий.",
+      unauthorized: "Ошибка авторизации источника линий.",
+      quota_exhausted: "Исчерпана квота источника линий.",
+      unavailable: "Источник линий временно недоступен.",
+      unmatched: "Матч у поставщика не удалось сопоставить.",
+      missing: "Линия для этого матча не найдена.",
     };
     if (!available.length) {
       return `<div class="st-src bookmaker-lines"><h4>Букмекерская линия</h4><p>${esc(message[status === "current" ? "stale" : status])}</p></div>`;
@@ -751,7 +755,8 @@
     const price = new Intl.NumberFormat("ru", { minimumFractionDigits: 2, maximumFractionDigits: 12 });
     const groupBySource = Map.groupBy(available, (line) => JSON.stringify([line.bookmaker, line.source, line.receivedAt, line.scope]));
     return `<div class="st-src bookmaker-lines"><h4>Букмекерская линия</h4>
-      ${status === "snapshot" ? "<p><strong>Архивный снимок. Актуальная линия не подтверждена.</strong></p>" : ""}
+      ${status === "snapshot" ? "<p><strong>Архивный снимок. Доступны только архивные коэффициенты.</strong></p>" :
+        "<p><strong>Доступны актуальные котировки.</strong></p>"}
       ${[...groupBySource.values()].map((lines) => {
         const [source] = lines;
         const sources = [{ url: source.referenceUrl || source.sourceUrl, title: source.source },
@@ -766,8 +771,8 @@
         <ul class="pk-key">${line.outcomes.map(({ condition, price: odds, model, point }) => `<li>
           ${esc(ru(condition, sport))} · коэффициент <b>${esc(price.format(odds))}</b> ·
           ${model ? `модель ${percentage(model.win)}${model.push == null ? "" : `, возврат ${percentage(model.push)}`}` :
-            point != null && !Number.isInteger(2 * point) ? "два условия расчёта, модельная оценка не проверена" :
-              "проверенной оценки для этого условия нет"}
+            point != null && !Number.isInteger(2 * point) ? "условие линии требует двух расчётов, проверенной оценки нет" :
+              "условие линии не соответствует проверенной модели"}
         </li>`).join("")}</ul></div>`).join("")}${srcChips(sources)}</section>`;
       }).join("")}
       <p>Вероятности рассчитаны отдельно от коэффициентов.</p></div>`;

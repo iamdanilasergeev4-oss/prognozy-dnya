@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { appendValidatedAnalysis, checkManualPacket, MANUAL_REVIEW_AGE, sealManualPacket, selectManualAnalysis } from "../scripts/sports-manual-update.mjs";
+import { appendValidatedAnalysis, checkManualPacket, checkModelCandidate, digest, MANUAL_REVIEW_AGE, sealManualPacket, selectManualAnalysis }
+  from "../scripts/sports-manual-update.mjs";
 
 const now = Date.parse("2026-11-22T01:00:00Z");
 const start = now + 3_600_000;
@@ -16,6 +17,52 @@ const makeForecast = () => ({
       id: home + index, home, away: "other", sport: "football", competition: "eng1", season: "2026-27",
       start: now - 99_000 - index, observedAt: now - 9_000, sources: [historySource],
     }))) }],
+});
+
+test("model packet verifies evidence, history and freshness, and rejects private snapshot data", () => {
+  const measure = { id: "total", range: { probability: 0.6 }, support: [[2, 0.4], [3, 0.6]] };
+  const baseline = { "data/predictions.json": { sports: [{ id: "football" }] },
+    "data/history/express.json": { expresses: [{ id: "existing", status: "won" }] } };
+  const article = { ...makeArticle(), distributions: [measure],
+    modelConclusion: { id: "distribution_total", probability: 0.6 }, bookmaker: { status: "access_required", lines: [] } };
+  const candidate = { ...structuredClone(baseline), "data/predictions.json": {
+    source: "model-preview", analysis: [article], express: [], dailySummary: [], expressHighlights: [],
+    sports: [{ id: "football", forecasts: [article] }],
+  } };
+  const evaluation = { checkedAt: new Date(now).toISOString(),
+    forecastEvidence: [{ event: { ...makeForecast(), status: "confirmed" }, targets: [], distributions: [measure] }],
+    distributionChecks: [{ sport: "football", competition: "eng1", id: "total", approved: true, thresholds: { approved: true } }],
+  };
+  const quotes = { quotes: [] };
+  const report = { kind: "model-preview", runMode: "live", checkedAt: evaluation.checkedAt,
+    blockers: [], eligible: true, researchApplied: [{ start }],
+    evidence: { evaluation: digest(evaluation), quotes: digest(quotes) } };
+  const verify = (files = candidate, proof = evaluation, receipt = quotes, stamp = report, at = now) =>
+    checkModelCandidate(baseline, files, stamp, proof, receipt, at);
+  const packet = sealManualPacket(report, baseline, candidate);
+  assert.doesNotThrow(() => checkManualPacket(packet, packet.approvalId, report, baseline, candidate, now));
+  assert.doesNotThrow(() => verify());
+  assert.throws(() => verify(candidate, { ...evaluation, changed: true }), /Журнал/);
+  assert.throws(() => verify({ ...candidate, "data/history/express.json": { expresses: [] } }), /архив/);
+  assert.throws(() => verify(candidate, evaluation, quotes, report, start - 9 * 60_000), /скоро начнётся/);
+  const archive = { quotes: [{ privateSnapshot: true }] };
+  assert.throws(() => verify(candidate, evaluation, archive,
+    { ...report, evidence: { ...report.evidence, quotes: digest(archive) } }), /Частный архив/);
+
+  const offer = { selection: "over", price: 1.9, point: 2.5 };
+  const market = { type: "total", scope: "regulation", bookmaker: "Test", source: "Test",
+    sourceUrl: "https://example.com/odds", rulesUrl: "https://example.com/rules",
+    receivedAt: new Date(now).toISOString(), updatedAt: new Date(now - 119 * 60_000).toISOString() };
+  const recorded = { quotes: [{ ...market, sport: "football", match: article.match, start: article.start_iso, outcomes: [offer] }] };
+  const priced = structuredClone(candidate);
+  const pricedArticle = priced["data/predictions.json"].analysis[0];
+  pricedArticle.bookmaker = { status: "current", lines: [{ ...market,
+    expiresAt: new Date(now + 60_000).toISOString(), outcomes: [{ ...offer, model: { win: 0.6, method: "distribution" } }] }] };
+  const pricedReport = { ...report, evidence: { ...report.evidence, quotes: digest(recorded) } };
+  assert.doesNotThrow(() => verify(priced, evaluation, recorded, pricedReport));
+  assert.throws(() => verify(priced, evaluation, recorded, pricedReport, now + 2 * 60_000), /Котировка устарела/);
+  pricedArticle.bookmaker.lines[0].outcomes[0].model.win = 0.8;
+  assert.throws(() => verify(priced, evaluation, recorded, pricedReport), /отличается от журнала или не соответствует/);
 });
 
 test("tested model enriches the existing analysis without adding a pick or rewriting other sections", () => {

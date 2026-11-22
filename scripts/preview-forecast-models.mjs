@@ -9,6 +9,7 @@ import { dailyModelSummary, describeScoreDistribution, expressHighlights, modelC
 import { recordForecastPreview } from "./sports-forecast-journal.mjs";
 import { scoreMeasures } from "./sports-score-distribution.mjs";
 import { bookmakerCard, bookmakerMarketName, collectBookmakerLines } from "./sports-bookmaker-lines.mjs";
+import { checkModelCandidate, digest, sealManualPacket } from "./sports-manual-update.mjs";
 import "../js/history-core.js";
 
 const root = fileURLToPath(new URL("../.sports-update/", import.meta.url));
@@ -17,6 +18,7 @@ if (!/^run-\d{4}-\d\d-\d\dT\d\d-\d\d-\d\d-\d{3}Z$/.test(run || "") || !liveBase 
     options.some((option) => option !== "--private-football-data")) {
   throw new Error("Укажите имя свежего ручного прогона и локальную копию опубликованного сайта");
 }
+const privatePreview = options.includes("--private-football-data");
 const now = Date.now();
 const input = join(root, run);
 const store = join(root, "manual-research");
@@ -93,7 +95,7 @@ const bookmakerCoverage = await collectBookmakerLines(forecasts.map(({ event }) 
   apiKey: process.env.ODDS_API_KEY,
   fonbetKey: process.env.ARBPLAY_FONBET_API_KEY,
   teamTotals: process.env.ODDS_API_TEAM_TOTALS === "1",
-  privateDir: options.includes("--private-football-data") ? join(root, "bookmaker-private") : undefined,
+  privateDir: privatePreview ? join(root, "bookmaker-private") : undefined,
 });
 const oddsCheckedAt = Date.now();
 const excluded = [
@@ -245,16 +247,47 @@ const sourceResearch = {
 const audit = { checkedAt: report.checkedAt, earliestTest: "2025-10-01", secondTest: "2026-02-01", archivedThrough: new Date(now).toISOString(),
   inventory, archiveChecks, sourceResearch, checks, pointChecks, distributionChecks, journal, excluded, forecastEvidence: forecasts };
 await writeFile(join(output, "evaluation.json"), JSON.stringify(audit, null, 2) + "\n");
+const baselineFiles = { "data/predictions.json": liveData };
+for (const file of historyFiles) baselineFiles[`data/history/${file}`] = await read(resolve(liveBase), `data/history/${file}`);
+const manualReport = {
+  kind: "model-preview",
+  runMode: report.runMode,
+  sourceRun: run,
+  checkedAt: report.checkedAt,
+  researchApplied: forecasts.map(({ event }) => ({ sport: event.sport, match: event.match, start: event.start })),
+  evidence: { evaluation: digest(audit), quotes: digest(bookmakerAudit) },
+  blockers: [...report.blockers],
+};
+if (privatePreview) manualReport.blockers.push("Частный архив котировок разрешён только в локальном превью");
+if (!privatePreview) {
+  try {
+    checkModelCandidate(baselineFiles, payload, manualReport, audit, bookmakerAudit, Date.now());
+  } catch (error) {
+    manualReport.blockers.push(error.message);
+  }
+}
+manualReport.eligible = report.eligible === true && manualReport.blockers.length === 0;
+const packet = sealManualPacket(manualReport, baselineFiles, payload);
+await Promise.all([
+  writeFile(join(output, "manual-report.json"), JSON.stringify(manualReport, null, 2) + "\n", { flag: "wx" }),
+  writeFile(join(output, "manual-packet.json"), JSON.stringify(packet, null, 2) + "\n", { flag: "wx" }),
+]);
 const lines = [
   "# Локальная проверка вероятностных прогнозов", "",
+  `Идентификатор пакета — ${packet.approvalId}.`,
+  manualReport.eligible ? "Пакет готов к ручной проверке перед отдельным подтверждением." :
+    `Пакет доступен для просмотра. Применение заблокировано. ${manualReport.blockers.join(" · ")}`, "",
   "| Спорт | Подтверждено | Исторических результатов | Материалов | Численных оценок |",
   "| --- | ---: | ---: | ---: | ---: |",
   ...inventory.map((row) => `| ${names[row.sport]} | ${row.confirmed} | ${row.history} | ${row.materials} | ${row.estimates} |`),
   "", "## Букмекерские линии", "",
   ...[...Map.groupBy(modelArticles, ({ bookmaker }) => bookmaker.status)].map(([status, articles]) =>
-    `- ${({ current: "Актуальная линия", snapshot: "Исторический снимок для частного превью", stale: "Линия устарела",
-      unconfigured: "Провайдер не подключён", unavailable: "Источник недоступен", unsupported: "Турнир не поддерживается",
-      missing: "Совпадающая линия не найдена" })[status]} — ${articles.length}.`),
+    `- ${({ current: "Доступны актуальные котировки", snapshot: "Доступны только архивные коэффициенты", stale: "Линия устарела",
+      access_required: "Нет доступа к источнику", unauthorized: "Ошибка авторизации", quota_exhausted: "Исчерпана квота",
+      unavailable: "Источник временно недоступен", unsupported: "Турнир не поддерживается",
+      unmatched: "Матч не удалось сопоставить", missing: "Линия не найдена" })[status]} — ${articles.length}.`),
+  `- Условие линии не соответствует доступной проверенной модели — ${modelArticles.flatMap((article) =>
+    article.bookmaker.lines.flatMap(({ outcomes }) => outcomes)).filter((offer) => offer.comparisonStatus === "condition_mismatch").length}.`,
   "", "Коэффициенты и их метки времени записаны в [журнал линий](bookmaker-lines.json). Вероятности модели рассчитываются отдельно. Для непротестированных показателей или несовпадающих правил показывается только коэффициент.",
   "", "## Проверка распределений счёта", "",
   "Центральный диапазон ограничен 20-м и 80-м процентилями. Для целочисленного счёта его вероятность может превышать 60%. Синтетические границы используются только в историческом тесте калибровки. В карточке граница берётся из реальной линии. Допуск по историческому тесту относится к распределению и его центральным границам. Отдельная историческая проверка на архиве котировок для этих рынков не проводилась.",
@@ -295,4 +328,5 @@ const lines = [
   "Полные результаты по каждому показателю, таблицы калибровки, источники и случаи отказа находятся в evaluation.json.",
 ];
 await writeFile(join(output, "review.md"), lines.join("\n") + "\n");
-console.log(JSON.stringify({ output, inventory, approved: checks.filter((row) => row.approved).map((row) => [row.competition, row.id, row.paired]) }));
+console.log(JSON.stringify({ output, approvalId: packet.approvalId, eligible: manualReport.eligible,
+  blockers: manualReport.blockers, inventory, approved: checks.filter((row) => row.approved).map((row) => [row.competition, row.id, row.paired]) }));

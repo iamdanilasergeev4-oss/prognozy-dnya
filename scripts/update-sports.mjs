@@ -9,13 +9,14 @@ import { loadResearchSources } from "./sports-research-sources.mjs";
 import { loadSeasonArchives, readResearchSnapshots, saveResearchSnapshot } from "./sports-research-history.mjs";
 import { compareHistory, makeHistorySnapshot, mergeHistory } from "./sports-history-analysis.mjs";
 import { captureManualResearch } from "./collect-sports-research.mjs";
-import { checkManualPacket, manualSummary, sealManualPacket, selectManualAnalysis, siteData } from "./sports-manual-update.mjs";
+import { checkManualPacket, checkModelCandidate, manualSummary, sealManualPacket, selectManualAnalysis, siteData } from "./sports-manual-update.mjs";
 import { readResearchRuns, verifyResearchObject } from "./sports-research-ledger.mjs";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const H = globalThis.HistoryCore;
 const MONTH = /^\d{4}-(?:0[1-9]|1[0-2])$/;
 const RUN = /^run-(\d{4}-\d{2}-\d{2})T(\d{2})-(\d{2})-(\d{2})-(\d{3})Z$/;
+const MODEL_RUN = /^forecast-preview-\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}-\d{3}Z$/;
 const MANUAL_EDITORIAL_DAYS = 28;
 const required = {
   football: ["365Scores", "ESPN"],
@@ -361,14 +362,22 @@ async function preview(mode = "preview", editorialFile, replay) {
 }
 
 async function verifyManualCandidate(run, approvalId, siteRoot = root) {
-  ensure(RUN.test(run || "") && /^[a-f0-9]{64}$/.test(approvalId || ""),
+  const modelRun = MODEL_RUN.test(run || "");
+  ensure((modelRun || RUN.test(run || "")) && /^[a-f0-9]{64}$/.test(approvalId || ""),
     "Нужен каталог ручного прогона и его идентификатор");
   const path = join(root, ".sports-update", run);
   const [input, candidate, packet, report] = await Promise.all([
     loadInputs(resolve(siteRoot)), loadInputs(path), read(path, "manual-packet.json"), read(path, "manual-report.json"),
   ]);
   const now = Date.now();
-  checkManualPacket(packet, approvalId, report, siteData(input), siteData(candidate), now);
+  const baselineFiles = siteData(input);
+  const candidateFiles = siteData(candidate);
+  ensure((report.kind === "model-preview") === modelRun, "Тип отчёта и каталог пакета не совпадают");
+  checkManualPacket(packet, approvalId, report, baselineFiles, candidateFiles, now);
+  if (modelRun) {
+    const [evaluation, quotes] = await Promise.all([read(path, "evaluation.json"), read(path, "bookmaker-lines.json")]);
+    checkModelCandidate(baselineFiles, candidateFiles, report, evaluation, quotes, now);
+  }
   validate(input, { next: candidate.current, months: Object.fromEntries(candidate.historyFiles.map((file) => [file.month, file])),
     express: candidate.express }, now, true);
   log("info", "Пакет совпал с проверенной версией", { path, files: Object.keys(packet.candidate) });

@@ -3,6 +3,7 @@ import { normalizeIdentity } from "./sports-discovery.mjs";
 import { researchConfirmed } from "./sports-evidence.mjs";
 import { SPARSE_MODEL_VERSION } from "./sports-sparse-model.mjs";
 import { describeEvidence } from "./sports-article-evidence.mjs";
+import { priceProbability } from "./sports-bookmaker-lines.mjs";
 import "../js/history-core.js";
 
 const testedLeagues = new Set(["eng1", "eng2", "eng3", "eng4", "deu2", "deu3", "esp2", "deu4b", "deu4n", "deu4e"]);
@@ -155,7 +156,7 @@ export function siteData(input, output) {
   };
 }
 
-const digest = (value) => createHash("sha256").update(JSON.stringify(value)).digest("hex");
+export const digest = (value) => createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const fileHashes = (files) => Object.fromEntries(Object.keys(files).sort().map((name) => [name, digest(files[name])]));
 
 export function sealManualPacket(report, baseline, candidate) {
@@ -171,6 +172,78 @@ export function checkManualPacket(packet, approvalId, report, baseline, candidat
     throw new Error("Подборка заблокирована или устарела. Нужен новый пробный запуск");
   }
   if (report.researchApplied.some(({ start }) => start <= now + 10 * mins)) throw new Error("Матч из нового разбора скоро начнётся");
+}
+
+export function checkModelCandidate(baseline, candidate, report, evaluation, quotes, now) {
+  const requireValid = (condition, message) => { if (!condition) throw new Error(message); };
+  requireValid(report.kind === "model-preview" && report.runMode === "live" && evaluation.checkedAt === report.checkedAt &&
+    report.evidence?.evaluation === digest(evaluation) && report.evidence?.quotes === digest(quotes),
+  "Журнал моделей или котировок отличается от проверенного пакета");
+  const predictionFile = "data/predictions.json";
+  const current = candidate[predictionFile];
+  const history = (files) => Object.fromEntries(Object.entries(files).filter(([path]) => path.startsWith("data/history/")));
+  requireValid(digest(fileHashes(history(baseline))) === digest(fileHashes(history(candidate))),
+    "Модельный пакет изменил действующий архив");
+  requireValid(current.source === "model-preview" && current.analysis.length && current.express.length === 0 &&
+    current.sports.map(({ id }) => id).join("|") === baseline[predictionFile].sports.map(({ id }) => id).join("|"),
+  "Модельный пакет не сохранил структуру сайта");
+  requireValid(!quotes.quotes.some((market) => market.privateSnapshot),
+    "Частный архив котировок доступен только в локальном превью");
+
+  const fixtureKey = (sport, match, start) => JSON.stringify([sport, match, start]);
+  const articleKey = (article) => fixtureKey(article.sport_id, article.match, Date.parse(article.start_iso));
+  const forecasts = new Map(evaluation.forecastEvidence.map((forecast) =>
+    [fixtureKey(forecast.event.sport, forecast.event.match, forecast.event.start), forecast]));
+  const articles = new Map(current.analysis.map((article) => [articleKey(article), article]));
+  const cards = current.sports.flatMap((sport) => sport.forecasts.map((card) => {
+    requireValid(card.sport_id === sport.id, "Модельная карточка помещена в неверную категорию");
+    return card;
+  }));
+  requireValid(articles.size === current.analysis.length && cards.length === articles.size &&
+    forecasts.size === articles.size && evaluation.forecastEvidence.length === forecasts.size &&
+    new Set(cards.map(articleKey)).size === articles.size && cards.every((card) =>
+      articles.has(articleKey(card)) && digest(articles.get(articleKey(card))) === digest(card)),
+  "Карточки, разборы и журнал модели не совпадают");
+  requireValid([...current.dailySummary, ...current.expressHighlights].every((item) => {
+    const article = articles.get(articleKey(item));
+    return article && digest(item.modelConclusion) === digest(article.modelConclusion);
+  }), "Сводка или сценарии не совпадают с утверждаемыми разборами");
+  for (const [key, article] of articles) {
+    const forecast = forecasts.get(key);
+    requireValid(forecast && forecast.event.start > now + 10 * mins && forecast.event.sources.some(({ url }) =>
+      URL.parse(url)?.protocol === "https:") &&
+      ["confirmed", "official"].includes(forecast.event.status) &&
+      !forecast.event.verificationReason && !forecast.event.dataQuality?.identityConflict,
+    "Матч из модельного пакета не подтверждён, скоро начнётся или отсутствует в журнале");
+    requireValid(digest(article.distributions) === digest(forecast.distributions),
+      "Распределение карточки отличается от журнала модели");
+    const conclusion = article.modelConclusion;
+    const measure = conclusion.id.startsWith("distribution_") ?
+      forecast.distributions.find(({ id }) => `distribution_${id}` === conclusion.id) : null;
+    const outcome = forecast.targets.find(({ id }) => id === conclusion.id);
+    requireValid(measure ? conclusion.probability === measure.range.probability &&
+      evaluation.distributionChecks.some((check) => check.id === measure.id && check.approved &&
+        check.sport === forecast.event.sport && check.competition === forecast.event.competition) :
+      outcome && (conclusion.close ? conclusion.probability === null :
+        conclusion.probability === outcome.probabilities[conclusion.outcome]),
+    "Итог карточки отличается от проверенной оценки");
+    requireValid((article.bookmaker.lines.length > 0) === (article.bookmaker.status === "current"),
+      "Статус котировок не совпадает с содержимым карточки");
+    for (const market of article.bookmaker.lines) {
+      const received = Date.parse(market.receivedAt), updated = Date.parse(market.updatedAt);
+      const expiry = Date.parse(market.expiresAt);
+      const recorded = quotes.quotes.some((row) =>
+        fixtureKey(row.sport, row.match, Date.parse(row.start)) === key &&
+        ["type", "team", "scope", "bookmaker", "source", "sourceUrl", "rulesUrl", "receivedAt", "updatedAt"]
+          .every((field) => row[field] === market[field]) &&
+        digest(row.outcomes) === digest(market.outcomes.map(({ selection, price, point }) => ({ selection, price, point }))));
+      requireValid(article.bookmaker.status === "current" && !market.privateSnapshot && recorded &&
+        expiry === Math.min(forecast.event.start, updated + 2 * 60 * mins) && expiry > now &&
+        updated <= received && received <= now && market.outcomes.every((offer) =>
+          digest(offer.model) === digest(priceProbability(market, offer, forecast, evaluation.distributionChecks))),
+      "Котировка устарела, отличается от журнала или не соответствует модели");
+    }
+  }
 }
 
 export function manualSummary(report, research, requests, snapshot) {

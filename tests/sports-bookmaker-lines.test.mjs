@@ -43,6 +43,28 @@ test("licensed feed rejects duplicate fixtures, orientation changes and an incom
   assert.deepEqual(importOddsApi([row], "eng1", received, [event]), []);
 });
 
+test("bookmaker status separates access, authentication, quota, temporary errors and unmatched fixtures", async () => {
+  const current = Date.now();
+  const next = { ...forecast, event: { ...event, start: current + 3 * 3600_000 } };
+  const row = { ...apiRow(), commence_time: new Date(next.event.start).toISOString() };
+  row.bookmakers[0].last_update = new Date(current - 60_000).toISOString();
+  const scenarios = [
+    [undefined, () => assert.fail("No key must skip network"), "access_required"],
+    ["test", () => new Response(null, { status: 403 }), "access_required"],
+    ["test", () => new Response(null, { status: 401 }), "unauthorized"],
+    ["test", () => Response.json({ error_code: "OUT_OF_USAGE_CREDITS" }, { status: 401 }), "quota_exhausted"],
+    ["test", () => new Response(null, { status: 429 }), "unavailable"],
+    ["test", () => Response.json([]), "missing"],
+    ["test", () => Response.json([{ ...row, home_team: "Brentford U21" }]), "unmatched"],
+    ["test", () => Response.json([{ ...row, commence_time: new Date(next.event.start + 60_000).toISOString() }]), "unmatched"],
+    ["test", () => Response.json([row]), "current"],
+  ];
+  for (const [apiKey, fetchSource, expected] of scenarios) {
+    const coverage = await collectBookmakerLines([next.event], { apiKey, fetchSource });
+    assert.equal(bookmakerCard(coverage, next, [], Date.now()).status, expected);
+  }
+});
+
 test("live adapter passes the key only in a header and uses market, bookmaker and receive times separately", async () => {
   const apiKey = "test-key";
   const row = apiRow();
@@ -105,6 +127,35 @@ test("individual totals use the named side's score distribution, independently o
   assert.equal(priceProbability(away, away.outcomes[0], projection, checks.slice(0, 1)), null);
   row.bookmakers[0].markets[0].outcomes[1].point = 115.5;
   assert.deepEqual(importOddsApi([row], "nba", received, [nba], "team_totals").map(({ team }) => team), ["away"]);
+});
+
+test("NHL fetches full-game team totals and leaves moneyline and wrong periods without matching probabilities", async () => {
+  const now = Date.now();
+  const event = { sport: "hockey", competition: "nhl", home: "Home Team", away: "Away Team",
+    match: "Home Team — Away Team", start: now + 3 * 3600_000 };
+  const homeTotal = { key: "team_totals", outcomes: [
+    { name: "Over", description: event.home, price: 1.9, point: 2.5 },
+    { name: "Under", description: event.home, price: 2.0, point: 2.5 },
+  ] };
+  const response = (markets) => ({ id: "nhl-fixture", sport_key: "icehockey_nhl", home_team: event.home,
+    away_team: event.away, commence_time: new Date(event.start).toISOString(),
+    bookmakers: [{ key: "draftkings", last_update: new Date(now - 60_000).toISOString(), markets }] });
+  const coverage = await collectBookmakerLines([event], { apiKey: "test", fetchSource: (url) => {
+    if (url.searchParams.get("markets") === "team_totals") {
+      assert.match(url.pathname, /events\/nhl-fixture\/odds$/);
+      return Response.json(response([homeTotal, { ...homeTotal, key: "team_totals_p1" }]));
+    }
+    return Response.json([response([{ key: "h2h", outcomes: [
+      { name: event.home, price: 1.9 }, { name: event.away, price: 1.9 },
+    ] }])]);
+  } });
+  const projection = { event, targets: [], distributions: [{ id: "home", support: [[2, 0.4], [3, 0.6]] }] };
+  const benchmark = [{ id: "home", sport: "hockey", competition: "nhl", approved: true, thresholds: { approved: true } }];
+  const card = bookmakerCard(coverage, projection, benchmark, Date.now());
+  assert.deepEqual(card.lines.map(({ type }) => type), ["outcome", "team_total"]);
+  assert.equal(card.lines[0].outcomes[0].comparisonStatus, "condition_mismatch");
+  assert.equal(card.lines[1].outcomes[0].model.win, 0.6);
+  assert.equal(priceProbability({ ...card.lines[1], scope: "regulation" }, card.lines[1].outcomes[0], projection, benchmark), null);
 });
 
 test("Fonbet imports only open, pre-match top-level football markets with an unambiguous league, sides and time", () => {

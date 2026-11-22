@@ -26,7 +26,7 @@ const feeds = {
 const rules = {
   regulation: "https://sportsbook.draftkings.com/help/sport-rules/soccer",
   overtime: "https://massgaming.com/wp-content/uploads/Meeting-Materials-8.14.25-OPEN.pdf",
-  overtime_shootout: "https://sportsbook.draftkings.com/help/general-betting-rules",
+  overtime_shootout: "https://boothillcasino.com/wp-content/uploads/2026/10/KS-DKE-House-Rules-v13.0-EN-CLEAN-9.2.26.pdf",
 };
 const footballRules = "https://help.bet365.com/s/en-gb/sportsrules/soccer/result-event-half-time";
 const london = new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/London",
@@ -38,6 +38,22 @@ const scoreSport = { football: "голов", basketball: "очков", hockey: "
 
 function fixtureKey({ sport, competition, home, away, start }) {
   return JSON.stringify([sport, competition, normalizeIdentity(home), normalizeIdentity(away), start]);
+}
+
+function matchedFixture(index, event, onUnmatched) {
+  const key = fixtureKey(event);
+  const exact = index.get(key) ?? [];
+  if (exact.length === 1) return exact[0].row;
+  const home = normalizeIdentity(event.home), away = normalizeIdentity(event.away);
+  const related = [...index.values()].some((group) => group.some((candidate) => {
+    if (candidate.competition !== event.competition) return false;
+    const candidates = [normalizeIdentity(candidate.home), normalizeIdentity(candidate.away)];
+    const known = [home, away].filter((team) => candidates.includes(team)).length;
+    const timeGap = Math.abs(candidate.start - event.start);
+    return known === 2 && timeGap <= 24 * 3600_000 || known === 1 && timeGap <= 15 * 60_000;
+  }));
+  if (exact.length || related) onUnmatched(key);
+  return null;
 }
 
 function londonKey(start, home, away, competition) {
@@ -80,18 +96,17 @@ export function importFootballSnapshot(csv, receipt, events) {
   });
 }
 
-export function importOddsApi(rows, competition, received, events, requestedMarket = null) {
+export function importOddsApi(rows, competition, received, events, requestedMarket = null, onUnmatched = () => {}) {
   const [sportKey, , sport, scope] = feeds[competition];
   if (!Array.isArray(rows) || !Number.isFinite(received)) throw new Error("Некорректный ответ The Odds API");
   const candidates = rows.filter((row) => row?.sport_key === sportKey && typeof row.id === "string" &&
     typeof row.home_team === "string" && typeof row.away_team === "string");
-  const byFixture = Map.groupBy(candidates, (row) => fixtureKey({
+  const byFixture = Map.groupBy(candidates.map((row) => ({ row,
     sport, competition, home: row.home_team, away: row.away_team, start: Date.parse(row.commence_time),
-  }));
+  })), fixtureKey);
   return events.filter((event) => event.competition === competition && event.sport === sport && event.start > received).flatMap((event) => {
-    const matches = byFixture.get(fixtureKey(event));
-    if (matches?.length !== 1) return [];
-    const [match] = matches;
+    const match = matchedFixture(byFixture, event, onUnmatched);
+    if (!match) return [];
     const bookmakers = (match.bookmakers ?? []).filter(({ key }) => key === "draftkings");
     if (bookmakers.length !== 1) return [];
     const [book] = bookmakers;
@@ -134,7 +149,7 @@ export function importOddsApi(rows, competition, received, events, requestedMark
   });
 }
 
-export function importFonbet(payload, received, events) {
+export function importFonbet(payload, received, events, onUnmatched = () => {}) {
   const updated = Date.parse(payload.updated_at);
   const { data } = payload;
   if (payload.company !== "fonbet" || payload.file !== "site_livepre_fonbet.json" ||
@@ -149,14 +164,13 @@ export function importFonbet(payload, received, events) {
   const blocked = new Set(data.eventBlocks.map(({ eventId }) => eventId));
   const byMatch = Map.groupBy(data.events.filter((row) => row.place === "line" && row.level === 1 &&
     Number.isSafeInteger(row.id) && !row.parentId && !blocked.has(row.id) && competitions.get(row.sportId) &&
-    typeof row.team1 === "string" && typeof row.team2 === "string" && Number.isSafeInteger(row.startTime)),
-  (row) => fixtureKey({ sport: "football", competition: competitions.get(row.sportId),
-    home: row.team1, away: row.team2, start: row.startTime * 1000 }));
+    typeof row.team1 === "string" && typeof row.team2 === "string" && Number.isSafeInteger(row.startTime))
+    .map((row) => ({ row, sport: "football", competition: competitions.get(row.sportId),
+      home: row.team1, away: row.team2, start: row.startTime * 1000 })), fixtureKey);
   const factors = Map.groupBy(data.customFactors, ({ e }) => e);
   return events.filter(({ sport, start }) => sport === "football" && start > received).flatMap((event) => {
-    const rows = byMatch.get(fixtureKey(event));
-    if (rows?.length !== 1) return [];
-    const [match] = rows;
+    const match = matchedFixture(byMatch, event, onUnmatched);
+    if (!match) return [];
     const prices = factors.get(match.id);
     if (prices?.length !== 1 || !Array.isArray(prices[0].factors)) return [];
     const selections = [[921, "home"], [922, "draw"], [923, "away"]];
@@ -174,6 +188,7 @@ export function importFonbet(payload, received, events) {
 
 async function getMarkets(url, apiKey, fetchSource, parse) {
   const attempts = [];
+  let status = "unavailable";
   for (let attempt = 0; attempt < 2; attempt++) {
     try {
       const response = await fetchSource(url, { headers: { "x-api-key": apiKey },
@@ -181,15 +196,26 @@ async function getMarkets(url, apiKey, fetchSource, parse) {
       attempts.push(response.status);
       if (response.ok) {
         const payload = await response.json();
-        return { attempts, markets: parse(payload, Date.now()) };
+        const unmatched = new Set();
+        const markets = parse(payload, Date.now(), (key) => unmatched.add(key));
+        return { attempts, status: "ok", markets, unmatched: [...unmatched] };
       }
-      if (![502, 503, 504].includes(response.status)) break;
+      const body = await response.json().catch(() => null);
+      const code = body?.error_code;
+      const exhausted = code === "OUT_OF_USAGE_CREDITS" ||
+        response.status === 429 && response.headers.get("x-requests-remaining") === "0";
+      if (exhausted) status = "quota_exhausted";
+      else if (["INVALID_KEY", "DEACTIVATED_KEY"].includes(code)) status = "unauthorized";
+      else if (response.status === 403 || code === "MISSING_KEY") status = "access_required";
+      else if (response.status === 401) status = "unauthorized";
+      else status = "unavailable";
+      if (status !== "unavailable" || ![502, 503, 504].includes(response.status)) break;
     } catch {
-      attempts.push("network_or_invalid_response");
+      attempts.push(attempts.at(-1) === 200 ? "invalid_response" : "network_error");
     }
     if (!attempt) await new Promise((done) => setTimeout(done, 1000));
   }
-  return { attempts, markets: [] };
+  return { attempts, status, markets: [], unmatched: [] };
 }
 
 export async function collectBookmakerLines(events, { apiKey, fonbetKey, teamTotals = false, privateDir, fetchSource = fetch } = {}) {
@@ -209,12 +235,13 @@ export async function collectBookmakerLines(events, { apiKey, fonbetKey, teamTot
       // The documented query bounds accept seconds, without milliseconds.
       const seconds = (time) => iso(time).replace(".000Z", "Z");
       url.search = new URLSearchParams({ regions: "us", bookmakers: "draftkings", markets: types,
-        oddsFormat: "decimal", dateFormat: "iso", commenceTimeFrom: seconds(Math.floor(Math.min(...starts) / 1000) * 1000),
-        commenceTimeTo: seconds(Math.ceil(Math.max(...starts) / 1000) * 1000 + 1000) });
-      const result = await getMarkets(url, apiKey, fetchSource, (rows, time) => importOddsApi(rows, competition, time, group));
+        oddsFormat: "decimal", dateFormat: "iso", commenceTimeFrom: seconds(Math.floor(Math.min(...starts) / 1000) * 1000 - 900_000),
+        commenceTimeTo: seconds(Math.ceil(Math.max(...starts) / 1000) * 1000 + 900_000) });
+      const result = await getMarkets(url, apiKey, fetchSource, (rows, time, reject) =>
+        importOddsApi(rows, competition, time, group, null, reject));
       markets.push(...result.markets);
-      requests.set(competition, result.attempts);
-      if (teamTotals && competition === "nba") {
+      requests.set(competition, { status: result.status, attempts: result.attempts, unmatched: result.unmatched });
+      if (competition === "nhl" || teamTotals && competition === "nba") {
         const verified = new Map(result.markets.map(({ providerEventId, event }) => [providerEventId, event]));
         for (const [id, event] of verified) {
           const exactUrl = new URL(`https://api.the-odds-api.com/v4/sports/${sportKey}/events/${encodeURIComponent(id)}/odds`);
@@ -223,16 +250,17 @@ export async function collectBookmakerLines(events, { apiKey, fonbetKey, teamTot
           const individual = await getMarkets(exactUrl, apiKey, fetchSource, (row, time) =>
             importOddsApi([row], competition, time, [event], "team_totals"));
           markets.push(...individual.markets);
-          requests.set(`nba:team_totals:${id}`, individual.attempts);
+          requests.set(`${competition}:team_totals:${id}`, { status: individual.status, attempts: individual.attempts });
         }
       }
     }
   }
   const canUseFonbet = events.some(({ competition }) => Object.values(fonbetLeague).includes(competition));
   if (fonbetKey && canUseFonbet) {
-    const result = await getMarkets(new URL(fonbetUrl), fonbetKey, fetchSource, (payload, time) => importFonbet(payload, time, events));
+    const result = await getMarkets(new URL(fonbetUrl), fonbetKey, fetchSource, (payload, time, reject) =>
+      importFonbet(payload, time, events, reject));
     markets.push(...result.markets);
-    requests.set("fonbet", result.attempts);
+    requests.set("fonbet", { status: result.status, attempts: result.attempts, unmatched: result.unmatched });
   }
   return { markets: Map.groupBy(markets, (row) => fixtureKey(row.event)), requests, configured: Boolean(apiKey),
     fonbetConfigured: Boolean(fonbetKey) };
@@ -240,15 +268,18 @@ export async function collectBookmakerLines(events, { apiKey, fonbetKey, teamTot
 
 export function priceProbability(market, offer, forecast, benchmark) {
   const { event, targets, distributions } = forecast;
+  if (market.event && fixtureKey(market.event) !== fixtureKey(event)) return null;
   const expectedScope = event.sport === "football" ? "regulation" : feeds[event.competition]?.[3];
   if (!expectedScope || market.scope !== expectedScope) return null;
   if (market.type === "outcome") {
     const win = targets.find(({ id }) => id === "outcome")?.probabilities[offer.selection];
     return Number.isFinite(win) ? { win, method: "outcome" } : null;
   }
+  const selection = market.type === "handicap" ? ["home", "away"] : ["over", "under"];
+  if (!selection.includes(offer.selection)) return null;
   // Quarter Asian lines split into two settlements. A single win estimate would be misleading.
   if (!Number.isInteger(offer.point * 2)) return null;
-  const id = { total: "total", handicap: "margin", team_total: market.team }[market.type];
+  const id = { total: "total", handicap: "margin", team_total: ["home", "away"].includes(market.team) ? market.team : null }[market.type];
   if (!id || !Number.isFinite(offer.point)) return null;
   const { support } = distributions.find((measure) => measure.id === id) ?? {};
   if (!support || !benchmark.some((row) => row.id === id && row.sport === event.sport &&
@@ -267,15 +298,19 @@ export function priceProbability(market, offer, forecast, benchmark) {
 
 export function bookmakerCard(coverage, forecast, benchmark, now) {
   const { event } = forecast;
-  const scoped = coverage.markets.get(fixtureKey(event)) ?? [];
+  const key = fixtureKey(event);
+  const scoped = coverage.markets.get(key) ?? [];
   const fresh = scoped.filter((market) => !market.privateSnapshot && Date.parse(market.updatedAt) <= now &&
     now - Date.parse(market.updatedAt) <= maxAge && Date.parse(market.receivedAt) <= now && now < event.start);
   const snapshot = scoped.filter((market) => market.privateSnapshot && Date.parse(market.receivedAt) <= now);
   const attempts = [coverage.requests.get(event.competition),
     ...(Object.values(fonbetLeague).includes(event.competition) ? [coverage.requests.get("fonbet")] : [])].filter(Boolean);
   const status = fresh.length ? "current" : snapshot.length ? "snapshot" : scoped.length ? "stale" :
-    attempts.length ? attempts.some((entry) => entry.at(-1) === 200) ? "missing" : "unavailable" :
-      feeds[event.competition] || Object.values(fonbetLeague).includes(event.competition) ? "unconfigured" : "unsupported";
+    attempts.some((entry) => entry.unmatched?.includes(key)) ? "unmatched" :
+      attempts.some((entry) => entry.status === "ok") ? "missing" :
+        ["unauthorized", "quota_exhausted", "access_required", "unavailable"]
+          .find((reason) => attempts.some((entry) => entry.status === reason)) ??
+          (feeds[event.competition] || Object.values(fonbetLeague).includes(event.competition) ? "access_required" : "unsupported");
   const [home, away] = event.match.split(/\s+[—–]\s+/);
   const number = (x) => String(x).replace(".", ",");
   const lines = [...fresh, ...(fresh.length ? [] : snapshot)].map(({ event: _, ...market }) => ({
@@ -287,7 +322,8 @@ export function bookmakerCard(coverage, forecast, benchmark, now) {
         market.type === "total" || market.type === "team_total" ?
           `${market.type === "team_total" ? `«${market.team === "home" ? home : away}» · ` : ""}${offer.selection === "over" ? "Больше" : "Меньше"} ${number(offer.point)} ${scoreSport[event.sport]}` :
           `«${team}» с форой ${offer.point > 0 ? "+" : ""}${number(offer.point)}`;
-      return { ...offer, condition, model: priceProbability(market, offer, forecast, benchmark) };
+      const model = priceProbability(market, offer, forecast, benchmark);
+      return { ...offer, condition, model, comparisonStatus: model ? "matched" : "condition_mismatch" };
     }),
   }));
   return { status, lines };
