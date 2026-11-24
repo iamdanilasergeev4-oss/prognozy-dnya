@@ -956,6 +956,15 @@
     </article>`;
   }
 
+  function categoryGroup(card) {
+    const review = card.review;
+    const context = card.analysis_context;
+    if (review?.editorialForecast || review?.checkedModel || review?.modelConclusion ||
+        card.modelConclusion || card.statisticalSummary || card.facts?.length ||
+        (context?.history?.length === 2 && context.history.every((count) => count >= 4) && !context.reasons?.length)) return 0;
+    return review?.hasStatistics || context?.history?.some((count) => count > 0) ? 1 : 2;
+  }
+
   function sportHTML(sport) {
     const projections = data.source === "model-preview";
     const cards = displayCards(sport);
@@ -1001,9 +1010,17 @@
     const chips = [["all", "Все"], ["soon", "Ближайшие 3 часа"], ["today", "Сегодня"], ["tomorrow", "Завтра"]]
       .map(([k, l]) => `<button type="button" class="when-chip" data-when="${k}" aria-pressed="${whenFilter === k}"${cnt[k] || k === "all" ? "" : " disabled"}>${l}<b>${cnt[k]}</b></button>`).join("");
     html += `<div class="when" role="group" aria-label="Когда начинается матч">${chips}</div>`;
-    html += `<div class="list" data-when="${whenFilter}">` + cards.map((p, i) =>
-      matchOverviews() ? overviewCard(p, i, sport) :
-        projections || integrated() && !p.bet ? projectionHTML(p, i, sport) : pickHTML(p, i, sport, i === 0 && topConf >= 4)).join("") + `</div>`;
+    const groups = [[], [], []];
+    for (const [i, card] of cards.entries()) groups[categoryGroup(card)].push({ card, i });
+    const titles = ["Полноценные разборы", "Частичная статистика", "Только расписание"];
+    html += `<div class="list" data-when="${whenFilter}">` + titles.map((title, group) => {
+      const matches = groups[group];
+      if (!matches.length) return "";
+      return `<section class="match-group"><h3 class="note">${title}</h3><div class="list">${matches.sort((a, b) => startOf(a.card).ms - startOf(b.card).ms).map(({ card: p, i }) => {
+        return matchOverviews() ? overviewCard(p, i, sport) :
+          projections || integrated() && !p.bet ? projectionHTML(p, i, sport) : pickHTML(p, i, sport, i === 0 && topConf >= 4);
+      }).join("")}</div></section>`;
+    }).join("") + "</div>";
     html += `<div class="when-empty" hidden><p>В этом окне матчей нет.</p><button type="button" class="when-chip" data-when="all">Показать все</button></div>`;
     return html + scheduleHTML(sport, events);
   }
@@ -1267,6 +1284,9 @@
     list.dataset.when = whenFilter;
     panel.querySelectorAll(".when .when-chip").forEach((c) => c.setAttribute("aria-pressed", c.dataset.when === whenFilter));
     const filter = { all: "", soon: "[data-soon]", today: '[data-day="today"]', tomorrow: '[data-day="tomorrow"]' }[whenFilter];
+    list.querySelectorAll(".match-group").forEach((group) => {
+      group.hidden = !group.querySelector(".pick" + filter);
+    });
     const schedule = panel.querySelector(".sport-schedule");
     if (schedule) {
       schedule.querySelectorAll(".schedule-match").forEach((event) => { event.hidden = !event.matches(".schedule-match" + filter); });
