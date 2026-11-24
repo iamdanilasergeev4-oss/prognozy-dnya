@@ -8,6 +8,7 @@ const numbers = new Intl.NumberFormat("ru", { maximumFractionDigits: 1 });
 const decimal = (n) => numbers.format(n);
 const date = new Intl.DateTimeFormat("ru", { timeZone: "Europe/Moscow", day: "numeric", month: "short" });
 const units = { football: "голов", basketball: "очков", tennis: "сетов", volleyball: "сетов", hockey: "шайб", cs2: "карт", dota2: "карт" };
+const scoringUnit = { football: "голы", basketball: "очки", tennis: "сеты", volleyball: "сеты", hockey: "шайбы", cs2: "карты", dota2: "карты" };
 const series = new Set(["cs2", "dota2"]);
 const scorePatterns = {
   football: ["матчи с 3+ голами", ([own, allowed]) => own + allowed >= 3, "матчи с 2+ своими голами", ([own]) => own >= 2],
@@ -165,21 +166,40 @@ export function describeEvidence(article, context, research, now, editorial = []
   const surface = article.sport_id === "tennis" && contextEvent?.rules === "outdoor-clay" &&
     contextEvent.contextSource?.startsWith("https://www.wtatennis.com/") ? "Покрытие по данным WTA — открытый грунт." : "";
   const marketEvidence = (article.key_factors || []).filter((line) => /условие выполнено|предматчевый порог|порог соответствует/i.test(line));
-  const recentForm = best.matches.flatMap((results, index) => {
-    const recent = [...results].sort((a, b) => b.start - a.start).slice(0, 5);
-    return recent.length ? [`${articleTeams[index]} — побед ${wins(recent)} из ${recent.length}`] : [];
+  const recent = best.matches.map((results) => [...results].sort((a, b) => b.start - a.start).slice(0, 5));
+  const recentScores = recent.map(verifiedScores);
+  const scoreDiff = (scores) => scores.reduce((sum, [own, allowed]) => sum + own - allowed, 0) / scores.length;
+  const differentBalance = recentScores.every((scores) => scores.length >= 3) &&
+    recentScores.some((scores) => scoreDiff(scores) > 0) && recentScores.some((scores) => scoreDiff(scores) < 0);
+  const balance = differentBalance ?
+    `${articleTeams[recentScores.findIndex((scores) => scoreDiff(scores) > 0)]} в этой выборке в среднем набирал больше соперников. У второй стороны баланс отрицательный.` : "";
+  const recentForm = recent.flatMap((results, index) => {
+    if (!results.length) return [];
+    const scores = recentScores[index];
+    const form = `${articleTeams[index]} — побед ${wins(results)} из ${results.length} в последних сверенных матчах`;
+    if (!scores.length) return [form + "."];
+    const latest = scores[0].join(":");
+    if (scores.length < 3) return [`${form}. Последний сверенный счёт — ${latest} (сначала результат этой стороны).`];
+    const own = scores.reduce((sum, [scored]) => sum + scored, 0) / scores.length;
+    const allowed = scores.reduce((sum, [, conceded]) => sum + conceded, 0) / scores.length;
+    return [`${form}. Средний счёт в ${scores.length} матчах — ${decimal(own)}:${decimal(allowed)} (${scoringUnit[article.sport_id]}, сначала результат этой стороны).`];
   });
   const tableNotes = baselineNotes.filter((note) => !marketEvidence.includes(note));
-  article.overview = recentForm.length ? recentForm.join("; ") + "." :
-    tableNotes.length ? tableNotes.join(" ") :
-      `Матч в турнире «${article.tournament}»${article.format ? `, формат ${article.format}` : ""}. Свежих сверенных результатов пока нет.`;
+  const verifiedMeeting = original.find((line) => line.startsWith("Очные встречи:"));
+  const contextFacts = [surface, verifiedMeeting, ...splits, ...tableNotes].filter(Boolean);
+  const format = series.has(article.sport_id) && article.format ? `Формат встречи — ${article.format}.` : "";
+  const observations = [format, ...recentForm, balance, ...contextFacts.slice(0, 2)].filter(Boolean);
+  if (recentForm.length === 1) observations.push("Сопоставимых результатов второй стороны в этой выборке нет.");
+  article.overview = observations.length ? observations.join(" ") :
+    `Матч в турнире «${article.tournament}»${article.format ? `, формат ${article.format}` : ""}. Свежих сверенных результатов пока нет.`;
   const recentMeeting = [...meetings].sort((a, b) => b.start - a.start)[0];
   if (recentMeeting) article.overview += ` Последняя встреча — ${recentMeeting.scores.join(":")} в порядке команд в карточке.`;
-  article.hasStatistics = Boolean(recentForm.length || tableNotes.length);
+  article.hasStatistics = Boolean(recentForm.length || tableNotes.length || verifiedMeeting);
   if (model.length) article.checkedModel = { conclusion: article.verdict, lines: model };
   const descriptive = model.length ? [] : ["Вероятности исходов не рассчитаны.", context?.method, ...marketEvidence];
   article.text = [original[0], ...model, ...descriptive, "Контекст матча и статистика для сравнения",
-    ...sourceNotes.map((item) => item.note), basis, surface, ...stats, ...scoring.lines, ...splits, strength, headToHead,
+    ...(article.hasStatistics ? [`Спортивный обзор. ${article.overview}`] : []),
+    ...sourceNotes.map((item) => item.note), basis, surface, ...stats, ...scoring.lines, ...splits, strength, headToHead, verifiedMeeting,
     ...tableNotes, unavailable].filter(Boolean).join("\n");
   article.key_factors = [contextName(article), model.length ? "Вероятности рассчитаны по отдельной модели исхода." : "Без численной оценки вероятности."].filter(Boolean);
   const sources = [...article.sources, ...rowsBySide.flatMap(({ rows }) =>
