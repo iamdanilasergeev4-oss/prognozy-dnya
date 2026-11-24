@@ -669,6 +669,22 @@
     return `<ul class="src-list">` + (list || []).map((s) =>
       `<li><a href="${esc(s.url)}" target="_blank" rel="nofollow noopener"><span>${esc(s.title || host(s.url))}</span><small>${esc(host(s.url))}</small>${I_OUT}</a>${sourceTiming(s) ? `<small class="source-timing">${esc(sourceTiming(s))}</small>` : ""}</li>`).join("") + `</ul>`;
   }
+  function groupedStorySources(sources) {
+    if (!sources?.length) return "";
+    const distinct = Map.groupBy(sources, (source) => source.title || host(source.url));
+    return `<details class="st-src story-sources"><summary>Источники · ${[...distinct.keys()].map(esc).join(", ")}</summary>
+      ${[...distinct].map(([title, group]) => {
+        const byLink = Map.groupBy(group, (source) => source.url);
+        return `<section><h4>${esc(title)} · ${byLink.size}</h4><ul class="src-list">
+          ${[...byLink].map(([url, entries], index) => {
+            const timing = [...new Set(entries.map(sourceTiming).filter(Boolean))];
+            const dated = entries.find((source) => source.snapshotAt || source.receivedAt);
+            const label = dated ? `Материал ${index + 1} · ${fmtDate(dated.snapshotAt || dated.receivedAt)}` : `Материал ${index + 1}`;
+            return `<li><a href="${esc(url)}" target="_blank" rel="nofollow noopener"><span>${esc(label)}</span><small>${esc(host(url))}</small>${I_OUT}</a>
+              ${timing.map((value) => `<small class="source-timing">${esc(value)}</small>`).join("")}</li>`;
+          }).join("")}</ul></section>`;
+      }).join("")}</details>`;
+  }
   /* Уверенность: пять делений растущей высоты */
   function gauge(conf) {
     const bars = Array.from({ length: 5 }, (_, k) => {
@@ -698,6 +714,7 @@
     const prob = p.model_prob && p.model_prob.value ? Math.round(p.model_prob.value * 100) : null;
     const bk = bucketOf(p);
     const si = storyIndexFor(p.match, sport.id, p.start_iso);
+    const fixture = (sport.events || []).find((event) => cardKey(event) === cardKey(p));
     const nSrc = (p.sources || []).length;
     const confWhy = `Это оценка того, насколько вывод подкреплён данными, а не вероятность исхода. ` +
       (v2 ? `Под этим прогнозом: ${facts.length} ${plural(facts.length, "факт", "факта", "фактов")} «за», ${against.length} «против»` : `Подробного разбора у этого прогноза нет`) +
@@ -722,7 +739,7 @@
         <div class="pk-main">
           ${teamsHTML(p.match, sport.id)}
           <div class="pk-bet">
-            <span class="pk-label"><span class="pl">${market || "Прогноз"}</span>${p.odds ? `<span class="odds">кф <b>${esc(p.odds)}</b></span>` : ""}</span>
+            <span class="pk-label"><span class="pl">${market || "Прогноз"}</span>${p.odds && !integrated() && !data.manual_schedule ? `<span class="odds">кф <b>${esc(p.odds)}</b></span>` : ""}</span>
             <strong>${shown(p.bet)}</strong>
           </div>
         </div>
@@ -738,31 +755,61 @@
             : `<span class="srcs">${srcChips(p.sources)}</span>`}
         </div>
         ${si >= 0 ? `<button type="button" class="pk-story" data-story="${si}">${icon("analysis")}<span>Подробный разбор этого матча</span></button>` : ""}
+        ${si < 0 ? scheduleContext(fixture, sport.id) : ""}
+        ${!p.projection ? bookmakerHTML(p.bookmaker || fixture?.bookmaker, sport.id) : ""}
         ${detail}
       </article>`;
   }
 
-  function scheduleHTML(sport, cards = []) {
+  function scheduleEvents(sport, cards) {
     const displayed = new Set(cards.map(cardKey).filter(Boolean));
-    const events = (sport.events || []).filter((event) => !event.has_pick &&
+    return (sport.events || []).filter((event) => !event.has_pick &&
       !displayed.has(cardKey(event)) && Date.parse(event.start_iso) > Date.now());
+  }
+
+  function scheduleContext(event, sport) {
+    const context = event?.analysis_context;
+    if (!context) return "";
+    const labels = {
+      insufficient_results: "Нужно минимум по 4 сопоставимых результата у каждой стороны.",
+      no_recent_results: "У одной из сторон нет подтверждённого результата за последние 28 дней.",
+      unconfirmed_format: "Формат серии пока не подтверждён.",
+      editorial_limit: "Матч не вошёл в подборку подробных разборов.",
+      not_assessed: "Статистика матча пока не прошла сверку.",
+    };
+    const teams = splitTeams(event.match);
+    const counts = teams && context.history?.length === 2 ? teams.map((team, index) => {
+      const count = context.history[index];
+      const wins = context.historicalWins?.[index];
+      return `${ru(team, sport)} — ${count} ${plural(count, "результат", "результата", "результатов")}${count && Number.isInteger(wins) ? `, побед ${wins}` : ""}`;
+    }).join("; ") : "";
+    return `<div class="schedule-context"><strong>Почему нет разбора</strong>
+      <p>${esc(context.reasons.map((reason) => labels[reason]).filter(Boolean).join(" "))}</p>
+      ${counts ? `<p>${esc(counts)}. ${context.historySources?.length ? esc("История: " + context.historySources.join(", ") + ".") : ""}</p>` : ""}</div>`;
+  }
+
+  function scheduleHTML(sport, events) {
     if (!events.length) return "";
     events.sort((a, b) => Date.parse(a.start_iso) - Date.parse(b.start_iso));
     return `<section class="sport-schedule"><h3>Расписание</h3><ul>${events.map((event) => {
       const story = storyIndexFor(event.match, sport.id, event.start_iso);
-      return `<li class="schedule-match">
+      const bucket = bucketOf(event);
+      return `<li class="schedule-match" data-day="${bucket.day}"${bucket.soon ? " data-soon" : ""}>
         <div class="schedule-meta"><span>${esc(ruTournament(event.tournament, sport.id))}${event.format ? " · " + esc(event.format) : ""}</span>${whenHTML(event, sport.id)}</div>
         <strong>${esc(ru(event.match, sport.id))}</strong>
         <div class="schedule-meta"><span class="srcs">${srcChips(event.sources)}</span>
         ${story < 0 ? "" : `<button type="button" class="pk-story" data-story="${story}">${icon("analysis")}<span>Разбор</span></button>`}</div>
         ${(event.sources || []).filter((source) => sourceTiming(source)).map((source) =>
           `<small class="source-timing">${esc(source.title)} · ${esc(sourceTiming(source))}</small>`).join("")}
+        ${story < 0 ? scheduleContext(event, sport.id) : ""}
+        ${bookmakerHTML(event.bookmaker, sport.id)}
       </li>`;
     }).join("")}</ul></section>`;
   }
 
   function bookmakerHTML(bookmaker, sport) {
-    if (!bookmaker) return "";
+    if (!bookmaker && !integrated() && !data.manual_schedule) return "";
+    bookmaker ||= { status: "missing", lines: [] };
     const { status, lines } = bookmaker;
     const now = new Date().getTime();
     const available = (Array.isArray(lines) ? lines : []).flatMap((line) => {
@@ -785,7 +832,7 @@
       quota_exhausted: "Исчерпана квота источника линий.",
       unavailable: "Источник линий временно недоступен.",
       unmatched: "Матч у поставщика не удалось сопоставить.",
-      missing: "Линия для этого матча не найдена.",
+      missing: "Подтверждённых котировок пока нет.",
     };
     if (!available.length) {
       return `<div class="st-src bookmaker-lines"><h4>Букмекерская линия</h4><p>${esc(message[["current", "observed"].includes(status) ? "stale" : status] || message.missing)}</p></div>`;
@@ -808,9 +855,9 @@
         const sources = [{ url: source.referenceUrl || source.sourceUrl, title: source.source },
           ...new Map(lines.map(({ line }) => line).filter((line) => URL.parse(line.rulesUrl)?.protocol === "https:").map((line) => [line.rulesUrl, { url: line.rulesUrl,
             title: line.type === "handicap" && sport === "football" ? "Правила азиатской форы" : "Правила расчёта" }])).values()];
-        return `<section class="bookmaker-source">
-      <p><strong>${freshnessLabel[freshness]}.</strong> ${freshnessNote[freshness]}</p>
-      <p><strong>${esc(source.bookmaker)}</strong> · ${esc(source.source)} · ${esc(scopes[source.scope] || "Период расчёта не подтверждён")}</p>
+        return `<details class="bookmaker-source">
+      <summary><strong>${freshnessLabel[freshness]}</strong> · ${esc(source.bookmaker)} · ${esc(source.source)}</summary>
+      <p>${esc(scopes[source.scope] || "Период расчёта не подтверждён")}. ${freshnessNote[freshness]}</p>
       ${source.modelComparable === false ? "<p>Подробные правила расчёта букмекера не подтверждены.</p>" : ""}
       <p>Получено <time datetime="${esc(source.receivedAt)}">${esc(fmtDate(source.receivedAt))}</time>.${source.publishedAt ?
         ` Файл обновлён ${esc(fmtDate(source.publishedAt))}. Время изменения каждой цены не указано.` :
@@ -828,7 +875,7 @@
             point != null && !Number.isInteger(2 * point) ? "условие линии требует двух расчётов, проверенной оценки нет" :
               "для этого условия нет проверенной модельной оценки"}
         </li>`;
-        }).join("")}</ul></div>`).join("")}${srcChips(sources)}</section>`;
+        }).join("")}</ul></div>`).join("")}${srcChips(sources)}</details>`;
       }).join("")}
       ${available.some(({ line }) => line.outcomes.some((offer) => comparableModel(line, offer))) ?
         "<p>Вероятности рассчитаны отдельно от коэффициентов.</p>" : ""}</div>`;
@@ -885,10 +932,9 @@
       html += `<p class="note warn">Сегодня обновить не удалось — показаны прогнозы от ${esc(fmtDate(sport.updated_at))}.</p>`;
     }
     const fullSchedule = integrated() || data.manual_schedule;
-    const schedule = fullSchedule || !cards.length || ["tennis", "volleyball", "dota2"].includes(sport.id) ?
-      scheduleHTML(sport, fullSchedule ? cards : []) : "";
-    if (!cards.length && schedule) return html + schedule;
-    if (!cards.length) {
+    const events = fullSchedule || !cards.length || ["tennis", "volleyball", "dota2"].includes(sport.id) ?
+      scheduleEvents(sport, fullSchedule ? cards : []) : [];
+    if (!cards.length && !events.length) {
       const story = (data.analysis || []).findIndex((a) => a.sport_id === sport.id);
       const emptyMessage = {
         model_unavailable: "Для предстоящих матчей нет модели, прошедшей историческую проверку на доступных данных.",
@@ -909,15 +955,15 @@
     }
     const topConf = Math.max(...cards.map((p) => Number(p.confidence) || 0));
     const now = Date.now();
-    const bks = cards.map((p) => bucketOf(p, now));
-    const cnt = { all: cards.length, soon: bks.filter((b) => b.soon).length, today: bks.filter((b) => b.day === "today").length, tomorrow: bks.filter((b) => b.day === "tomorrow").length };
+    const bks = [...cards, ...events].map((p) => bucketOf(p, now));
+    const cnt = { all: bks.length, soon: bks.filter((b) => b.soon).length, today: bks.filter((b) => b.day === "today").length, tomorrow: bks.filter((b) => b.day === "tomorrow").length };
     const chips = [["all", "Все"], ["soon", "Ближайшие 3 часа"], ["today", "Сегодня"], ["tomorrow", "Завтра"]]
       .map(([k, l]) => `<button type="button" class="when-chip" data-when="${k}" aria-pressed="${whenFilter === k}"${cnt[k] || k === "all" ? "" : " disabled"}>${l}<b>${cnt[k]}</b></button>`).join("");
     html += `<div class="when" role="group" aria-label="Когда начинается матч">${chips}</div>`;
     html += `<div class="list" data-when="${whenFilter}">` + cards.map((p, i) =>
       projections || integrated() && !p.bet ? projectionHTML(p, i, sport) : pickHTML(p, i, sport, i === 0 && topConf >= 4)).join("") + `</div>`;
     html += `<div class="when-empty" hidden><p>В этом окне матчей нет.</p><button type="button" class="when-chip" data-when="all">Показать все</button></div>`;
-    return html + schedule;
+    return html + scheduleHTML(sport, events);
   }
 
 
@@ -1005,11 +1051,10 @@
           "Отдельные статистические сценарии по матчам дня." :
           "Собраны из прогнозов сайта. Общий коэффициент указан для подборок, в которых есть коэффициенты всех событий."}</p></div>
       </div>
-      ${highlights.length ? '<p class="note"><a href="#xp-past">Перейти к архиву экспрессов</a></p>' : ""}
       ${highlights.length ? `<div class="xp-list express-highlights">${highlights.map(expressScenario).join("")}</div>` : ""}
-      <div class="xp-list">${list.length ? list.map((item, i) => expressCard(item, i)).join("") : highlights.length ? "" : `<p class="note">${data.source === "model-preview" ?
-        "На сегодня нет отдельных оценок для информационной подборки. Архив доступен ниже." : "Пока нет двух действующих прогнозов, для которых сверенная форма подтверждает выбранный исход."}</p>`}</div>
-      <section class="xp-past" id="xp-past" hidden></section>`;
+      ${list.length ? `<div class="xp-list">${list.map((item, i) => expressCard(item, i)).join("")}</div>` : highlights.length ? "" :
+        '<div class="empty"><strong>На сегодня нет опубликованных экспрессов</strong><p><a href="#xp-past">Перейти к истории экспрессов</a></p></div>'}
+      <section class="xp-past" id="xp-past"><p class="note" role="status">Загружаем историю экспрессов…</p></section>`;
   }
   let expressPast = null;
   async function loadExpressPast() {
@@ -1018,12 +1063,20 @@
     if (!expressPast) {
       try {
         const r = await fetch("data/history/express.json?v=" + Date.now(), { cache: "no-store" });
-        expressPast = r.ok ? await r.json() : { expresses: [] };
-      } catch { expressPast = { expresses: [] }; }
+        if (!r.ok) throw new Error("Экспресс-архив недоступен");
+        expressPast = await r.json();
+      } catch {
+        box.innerHTML = '<h3 class="xp-past-h">История экспрессов</h3><p class="note">Не удалось загрузить историю. Откройте раздел ещё раз, чтобы повторить попытку.</p>';
+        return;
+      }
     }
     const all = (expressPast.expresses || []).filter((x) => x.status !== "withdrawn").sort((a, b) => Date.parse(b.published_at) - Date.parse(a.published_at));
     const settled = all.filter((x) => x.status === "won" || x.status === "lost");
-    if (!all.length || !$("#xp-past")) return;
+    if ($("#xp-past") !== box) return;
+    if (!all.length) {
+      box.innerHTML = '<h3 class="xp-past-h">История экспрессов</h3><p class="note">В архиве пока нет записей.</p>';
+      return;
+    }
     const won = settled.filter((x) => x.status === "won");
     const profit = settled.filter((x) => !x.forecast_only).reduce((a, x) =>
       a + (x.status === "won" ? 1000 * ((Number(x.settled_odds) || Number(x.total_odds)) - 1) : -1000), 0);
@@ -1041,7 +1094,7 @@
           <span class="xr-d">${esc(dayShort(Date.parse(x.published_at)))}</span>
           <span class="xr-t">${esc(x.title || TIER[x.tier] || "Экспресс")}</span>
           <span class="xr-l">${(x.legs || []).map((l) => `<i class="lg-${esc(l.status || "pending")}" title="${esc(ru(l.match + " — " + l.bet, l.sport))}"></i>`).join("")}</span>
-          <span class="xr-o">${x.forecast_only ? "—" : fmtOdds(x.settled_odds || x.total_odds)}</span>
+          <span class="xr-o">${x.forecast_only || !(Number(x.settled_odds || x.total_odds) > 1) ? "—" : fmtOdds(x.settled_odds || x.total_odds)}</span>
           <span class="xr-s">${LBL[x.status] || x.status}</span>
         </li>`).join("")}</ul>
       ${analytical() ? `<details class="xp-past-cards"><summary>Показать карточки из архива</summary>
@@ -1092,6 +1145,8 @@
       const sportName = String(a.sport || "").replace(/^[^\p{L}]+/u, "").trim();
       const paras = String(a.text || "").split(/\n+/).map((t) => t.trim()).filter(Boolean);
       const first = paras.shift();
+      const limitations = paras.filter((line) => /^(Что не удалось проверить|Не сверены|Ограничения)[.:]/u.test(line));
+      const facts = paras.filter((line) => line !== "Контекст матча и статистика для сравнения" && !limitations.includes(line));
       const factors = (a.key_factors || []).filter((item) => !a.automated || item !== first);
       const t = splitTeams(a.match);
       const title = t
@@ -1104,23 +1159,26 @@
         <article class="story${i === 0 ? " lead" : ""}" id="story-card-${i}" style="--c:${colorOf(sid)};--i:${i}">
           <p class="st-kicker">${icon(sid)}<span>${esc(sportName || "Матч")}</span><span class="st-dot"></span><span>${esc(ruTournament(a.tournament, sid))}</span><span class="st-dot"></span><span>${esc(when)}</span></p>
           <h3 class="st-title">${title}</h3>
+          ${modelConclusionHTML(a.modelConclusion, sid)}
+          ${!a.modelConclusion && a.verdict ? `<div class="verdict"><small>${a.statisticalSummary ? "Статистический вывод" : a.automated ? "Итог аналитики" : "Вывод"}</small><p>${shown(a.verdict)}</p></div>` : ""}
           <div class="st-grid">
             <div class="st-text">
-              ${first ? `<p class="st-lead">${shown(first)}</p>` : ""}
-              ${paras.length || a.scoreSections?.length ? `
+              ${first && first !== a.verdict ? `<p class="st-lead">${shown(first)}</p>` : ""}
+              ${facts.length || a.scoreSections?.length ? `
                 <div class="more" id="${moreId}"><div>
+                  <h4>Подтверждающие факты</h4>
                   ${(a.scoreSections || []).map(({ title, lines }) => `<section><h4>${shown(title)}</h4>${lines.map((x) => `<p>${shown(x)}</p>`).join("")}</section>`).join("")}
-                  ${paras.map((x) => `<p>${shown(x)}</p>`).join("")}</div></div>
+                  ${facts.map((x) => `<p>${shown(x)}</p>`).join("")}</div></div>
                 <button class="toggle" type="button" aria-expanded="false" aria-controls="${moreId}"><span>Читать разбор полностью</span>${I_CHEV}</button>` : ""}
-              ${(a.sources || []).length ? `<div class="st-src"><h4>Источники</h4>${srcList(a.sources)}</div>` : ""}
-              ${bookmakerHTML(a.bookmaker, sid)}
             </div>
-            <aside class="st-side">
-              ${!a.modelConclusion && a.verdict ? `<div class="verdict"><small>${a.statisticalSummary ? "Статистический вывод" : a.automated ? "Итог аналитики" : "Вывод"}</small><p>${shown(a.verdict)}</p></div>` : ""}
+            ${factors.length || limitations.length ? `<aside class="st-side">
               ${factors.length ? `<div class="st-factors"><h4>Ключевые факторы</h4><ul>${factors.map((f) => `<li>${shown(f)}</li>`).join("")}</ul></div>` : ""}
-            </aside>
+              ${limitations.length ? `<div class="st-factors"><h4>Ограничения</h4><ul>${limitations.map((line) =>
+                `<li>${shown(line.replace(/^[^:]+:\s*/, ""))}</li>`).join("")}</ul></div>` : ""}
+            </aside>` : ""}
           </div>
-          ${modelConclusionHTML(a.modelConclusion, sid)}
+          ${bookmakerHTML(a.bookmaker, sid)}
+          ${groupedStorySources(a.sources)}
         </article>`;
     }).join("") + `</div>`;
     return html;
@@ -1136,8 +1194,13 @@
     if (!list) return;
     list.dataset.when = whenFilter;
     panel.querySelectorAll(".when .when-chip").forEach((c) => c.setAttribute("aria-pressed", c.dataset.when === whenFilter));
-    const sel = { all: ".pick", soon: ".pick[data-soon]", today: '.pick[data-day="today"]', tomorrow: '.pick[data-day="tomorrow"]' }[whenFilter];
-    const empty = !list.querySelector(sel);
+    const filter = { all: "", soon: "[data-soon]", today: '[data-day="today"]', tomorrow: '[data-day="tomorrow"]' }[whenFilter];
+    const schedule = panel.querySelector(".sport-schedule");
+    if (schedule) {
+      schedule.querySelectorAll(".schedule-match").forEach((event) => { event.hidden = !event.matches(".schedule-match" + filter); });
+      schedule.hidden = !schedule.querySelector(".schedule-match:not([hidden])");
+    }
+    const empty = !list.querySelector(".pick" + filter) && (!schedule || schedule.hidden);
     panel.querySelector(".when-empty").hidden = !empty;
   }
   let pendingFocus = null; // элемент, к которому прокрутить после отрисовки панели

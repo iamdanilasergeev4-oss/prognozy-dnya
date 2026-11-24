@@ -484,6 +484,15 @@ button { font: inherit; color: inherit; }
 .st-src .src-list { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); column-gap: 8px; }
 .st-src .src-list a { padding: 6px 8px; margin-left: -8px; grid-template-columns: minmax(0, 1fr) 14px; }
 .st-src .src-list a small { display: none; }
+.story-sources summary, .bookmaker-source summary { cursor: pointer; color: var(--text-2); }
+.story-sources section { margin-top: 12px; }
+.story-sources .src-list { grid-template-columns: repeat(auto-fill, minmax(min(100%, 225px), 1fr)); gap: 6px 12px; }
+.story > .verdict + .st-grid { margin-top: 18px; }
+.schedule-context { color: var(--text-2); font-size: 13px; line-height: 1.45; }
+.schedule-context p, .bookmaker-lines p { margin: 5px 0 0; }
+.schedule-match[hidden] { display: none; }
+.bookmaker-lines { margin-top: 12px; padding-top: 9px; font-size: 13px; }
+.bookmaker-source[open] > summary { margin-bottom: 6px; }
 
 /* ===== Форма ===== */
 .suggest {

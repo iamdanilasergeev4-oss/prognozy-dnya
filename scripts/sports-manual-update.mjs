@@ -135,6 +135,19 @@ export function selectManualAnalysis(next, contexts, research, now, editorial) {
     const necessary = sport.events.filter((event) => event.has_pick && !calendar.some((entry) => same(event, entry)));
     const remaining = sport.events.filter((event) => !event.has_pick && !calendar.some((entry) => same(event, entry)));
     sport.events = [...calendar, ...necessary, ...remaining.slice(0, Math.max(0, limit - calendar.length - necessary.length))]
+      .map((event) => {
+        if (articles.some(({ article }) => same(event, article))) return event;
+        const evidence = evaluated.find(({ article }) => article.sport_id === sport.id && same(event, article))?.evidence;
+        if (!evidence) return { ...event, analysis_context: { reasons: ["not_assessed"] } };
+        const { history, historicalWins, historySources, freshResults, formatKnown, quality } = evidence;
+        const reasons = [
+          ...(!history.every((count) => count >= 4) ? ["insufficient_results"] : []),
+          ...(history.every((count) => count > 0) && !freshResults ? ["no_recent_results"] : []),
+          ...(!formatKnown ? ["unconfirmed_format"] : []),
+          ...(quality ? ["editorial_limit"] : []),
+        ];
+        return { ...event, analysis_context: { reasons, history, historicalWins, historySources } };
+      })
       .sort((a, b) => Date.parse(a.start_iso) - Date.parse(b.start_iso));
   }
   next.analysis = selected.sort(rank).map(({ article }) => article);

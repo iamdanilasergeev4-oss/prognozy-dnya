@@ -180,5 +180,5 @@ export function describeEvidence(article, context, research, now, editorial = []
   return { match: article.match, sport: article.sport_id, start: article.start_iso, history: counts, season: Boolean(usedSeason),
     splits: splits.length, opponentComparison: Boolean(strength), model: model.length > 0, editorialChecks: sourceNotes.length,
     quality, historyType: best.type, freshResults, formatKnown, historySources: publishers,
-    scoreSamples: scoring.counts, scoringContext: scoring.included };
+    scoreSamples: scoring.counts, scoringContext: scoring.included, historicalWins: best.matches.map(wins) };
 }

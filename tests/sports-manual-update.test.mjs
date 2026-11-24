@@ -175,6 +175,11 @@ test("manual analysis evaluates the whole confirmed calendar and leaves thin or 
   assert.deepEqual(next.analysis.map((article) => article.match), [rich.match]);
   assert.deepEqual(new Set(next.sports[0].events.map((item) => item.match)), new Set([rich.match, thin.match, stale.match]));
   assert.deepEqual(out.articles[0].history, [4, 6]);
+  const calendarContext = (draft) => next.sports[0].events.find(({ match }) => match === draft.match).analysis_context;
+  assert.equal(calendarContext(rich), undefined);
+  assert.deepEqual(calendarContext(thin), { reasons: ["insufficient_results"], history: [2, 5],
+    historicalWins: [2, 5], historySources: ["openfootball"] });
+  assert.deepEqual(calendarContext(stale).reasons, ["no_recent_results"]);
   assert.equal(out.evaluated.find((item) => item.match === stale.match).freshResults, false);
   assert.equal(out.researchApplied.length, 1);
 });
