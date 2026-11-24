@@ -35,8 +35,16 @@ const germanCompetitions = {
 const wtaEditions = [
   { from: "2026-11-21", through: "2026-11-30", names: /^(?:buenos aires(?: 125)?(?: qualifications)?|ieb\+? argentina open)$/,
     title: "IEB+ Argentina Open", url: "https://www.wtatennis.com/tournaments/2052/buenos-aires-125/2026" },
-  { from: "2026-11-14", through: "2026-11-23", names: /^(?:colina(?: 125)?(?: qualifications| round of 16| semi finals| quarter finals| final)?|lp open by ind)$/,
+  { from: "2026-11-14", through: "2026-11-23", names: /^(?:colina(?: 125)?(?: qualifications| round of (?:32|16)| semi finals| quarter finals| final)?|lp open by ind)$/,
     title: "LP Open by IND", url: "https://www.wtatennis.com/tournaments/2076/colina-125/2026/" },
+  { from: "2026-10-26", through: "2026-11-01", names: /^(?:curitiba open|curitiba(?: round of (?:32|16)| quarter finals| semi finals| final))$/,
+    title: "Curitiba Open", url: "https://www.wtatennis.com/tournaments/1180/curitiba-open-curitiba-bra/2026" },
+  { from: "2026-10-26", through: "2026-11-01", names: /^quer[eé]taro (?:open|round of (?:32|16)|quarter finals|semi finals|final)$/,
+    title: "Queretaro Open", url: "https://www.wtatennis.com/tournaments/1145/queretaro/2026" },
+  { from: "2026-11-02", through: "2026-11-07", names: /^(?:reto win tennis cali open|cali(?: round of (?:32|16)| quarter finals| semi finals| final))$/,
+    title: "Reto Win Tennis Cali Open", url: "https://www.wtatennis.com/tournaments/1110/cali/2026/" },
+  { from: "2026-11-09", through: "2026-11-14", names: /^(?:directv open presentado por compesar|sop[oó](?: round of (?:32|16)| quarter finals| semi finals| final))$/,
+    title: "DIRECTV Open Presentado por Compesar", url: "https://www.wtatennis.com/tournaments/1181/sopo/2026/" },
 ];
 const wtaPlayerNames = {
   "irene burillo escorihuela": "Irene Burillo",
@@ -113,7 +121,7 @@ export function reconcileClaims(rows, normalize) {
       const edition = wtaEditions.find((item) => day >= item.from && day <= item.through && item.names.test(league));
       if (edition) return { ...row, tournament: edition.title, displayTournament: row.tournament,
         home: wtaPlayerNames[normalize(row.home)] ?? row.home, away: wtaPlayerNames[normalize(row.away)] ?? row.away,
-        season: row.season ?? "2026", surface: row.surface ?? "outdoor-clay", contextSource: edition.url };
+        season: row.season ?? "2026", surface: row.surface ?? "outdoor-clay", contextSource: edition.url, tennisTier: "wta125" };
     }
     return row;
   });

@@ -44,6 +44,34 @@ test("manual tennis pairs the two Argentina Open calendars within the same editi
   assert.equal(inspect({ tournament: "ATP Buenos Aires" }).reason, "single_secondary");
 });
 
+test("manual tennis can use a completed WTA 125 main-draw result from another verified clay tournament", () => {
+  const checkedAt = Date.parse("2026-11-24T16:00:00Z");
+  const currentStart = Date.parse("2026-11-24T18:00:00Z");
+  const previousStart = Date.parse("2026-11-16T18:00:00Z");
+  const tennis = (source, options) => game(source, { sport: "tennis", home: "First Player", away: "Second Player", ...options });
+  const scheduled = [tennis("365Scores", { tournament: "Buenos Aires", start: currentStart }),
+    tennis("ESPN", { tournament: "IEB+ Argentina Open", start: currentStart })];
+  const previous = [tennis("365Scores", { id: "old", tournament: "Colina - Round of 32", away: "Other Player",
+    status: "finished", score: [2, 1], start: previousStart }),
+    tennis("ESPN", { id: "old", tournament: "LP Open by IND", away: "Other Player", tennisMainDraw: true,
+      status: "finished", score: [2, 1], start: previousStart + 12 * 60_000 })];
+  const current = { updated_at: new Date(checkedAt).toISOString(),
+    sports: SPORTS.map(([id]) => ({ id, picks: [] })), express: [] };
+  const readForm = (override) => {
+    let form;
+    buildUpdate({ current, indexFile: { months: [] }, historyFiles: [], express: { expresses: [] },
+      rows: [...scheduled, previous[0], { ...previous[1], ...override }],
+      coverage: Object.fromEntries(SPORTS.map(([id]) => [id, []])), manualSchedule: true,
+      editorialDays: 28, now: checkedAt,
+      reviewArticle: (_, context) => { form = context.forms[0]; } });
+    return form.longer;
+  };
+  assert.deepEqual(readForm().map(({ scores, tour }) => [scores, tour]), [[[2, 1], "wta125"]]);
+  assert.deepEqual(readForm({ score: [1, 2] }), []);
+  assert.deepEqual(readForm({ tennisMainDraw: false }), []);
+  assert.deepEqual(readForm({ tournament: "Other Open" }), []);
+});
+
 test("manual schedule accepts a scoped official source and rejects contradictory or mirrored claims", () => {
   const nhl = game("NHL", { sport: "hockey", tournament: "NHL", league: "nhl",
     home: "Boston Bruins", away: "Ottawa Senators", url: "https://www.nhl.com/gamecenter/example" });

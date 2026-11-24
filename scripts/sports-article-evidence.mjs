@@ -154,7 +154,9 @@ export function describeEvidence(article, context, research, now, editorial = []
   const meetings = usedSeason ? rowsBySide[0].rows.filter((row) => row.opponent === sides[1]) : [];
   const headToHead = meetings.length >= 2 ?
     `Личные встречи сезона (${articleTeams.join(" — ")}, в указанном порядке): ${meetings.map((row) => row.scores.join(":")).join(", ")}.` : "";
+  const tourHistory = best.matches.flat().some((row) => row.tour === "wta125");
   const basis = usedSeason ? `Выборка по текущему сезону ${contextEvent.season} в этом соревновании.` :
+    tourHistory ? "Сравнены завершённые одиночные матчи основной сетки турниров WTA 125 на открытом грунте." :
     best.type === "series" ? "Сравнены завершённые серии того же формата. Уровень турниров может различаться." :
     series.has(article.sport_id) ? "Сравнены завершённые серии того же формата. Уровень турниров может различаться." :
     "Сравнены недавние результаты в том же соревновании.";
@@ -179,6 +181,6 @@ export function describeEvidence(article, context, research, now, editorial = []
   const publishers = [...new Set(rowsBySide.flatMap(({ rows }) => rows.flatMap((row) => row.sources.map(({ title }) => title))))];
   return { match: article.match, sport: article.sport_id, start: article.start_iso, history: counts, season: Boolean(usedSeason),
     splits: splits.length, opponentComparison: Boolean(strength), model: model.length > 0, editorialChecks: sourceNotes.length,
-    quality, historyType: best.type, freshResults, formatKnown, historySources: publishers,
+    quality, historyType: tourHistory ? "wta125_clay" : best.type, freshResults, formatKnown, historySources: publishers,
     scoreSamples: scoring.counts, scoringContext: scoring.included, historicalWins: best.matches.map(wins) };
 }

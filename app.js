@@ -856,7 +856,7 @@
           ...new Map(lines.map(({ line }) => line).filter((line) => URL.parse(line.rulesUrl)?.protocol === "https:").map((line) => [line.rulesUrl, { url: line.rulesUrl,
             title: line.type === "handicap" && sport === "football" ? "Правила азиатской форы" : "Правила расчёта" }])).values()];
         return `<details class="bookmaker-source">
-      <summary><strong>${freshnessLabel[freshness]}</strong> · ${esc(source.bookmaker)} · ${esc(source.source)}</summary>
+      <summary><strong>${freshnessLabel[freshness]}</strong> · ${esc(source.bookmaker)} · ${esc(source.source)} · ${esc(fmtDate(source.receivedAt))}</summary>
       <p>${esc(scopes[source.scope] || "Период расчёта не подтверждён")}. ${freshnessNote[freshness]}</p>
       ${source.modelComparable === false ? "<p>Подробные правила расчёта букмекера не подтверждены.</p>" : ""}
       <p>Получено <time datetime="${esc(source.receivedAt)}">${esc(fmtDate(source.receivedAt))}</time>.${source.publishedAt ?
@@ -1041,6 +1041,27 @@
       ${story < 0 ? "" : `<footer class="xp-foot"><button type="button" class="pk-story" data-story="${story}">${icon("analysis")}<span>Открыть подробный разбор</span></button></footer>`}
     </article>`;
   }
+  function dailyEventsOverview() {
+    const now = Date.now();
+    const upcoming = data.sports.flatMap((sport) => (sport.events || [])
+      .filter((event) => Date.parse(event.start_iso) > now).map((event) => ({ sport, event })))
+      .sort((a, b) => Date.parse(a.event.start_iso) - Date.parse(b.event.start_iso));
+    const today = upcoming.filter(({ event }) => bucketOf(event, now).day === "today");
+    const selected = today.length ? today : upcoming;
+    if (!selected.length) return "";
+    const entries = selected.map(({ sport, event }) => ({ sport, event, story: storyIndexFor(event.match, sport.id, event.start_iso) }));
+    const count = entries.filter(({ story }) => story >= 0).length;
+    return `<section class="sport-schedule express-overview">
+      <h3>${today.length ? "Подтверждённые события сегодня" : "Ближайшие подтверждённые события"}</h3>
+      <p class="note">${entries.length} ${plural(entries.length, "событие", "события", "событий")} · ${count} ${analysisCountLabel(count)}</p>
+      <ul>${entries.slice(0, 4).map(({ sport, event, story }) => `<li class="schedule-match">
+        <div class="schedule-meta"><span>${esc(sport.name)}</span>${whenHTML(event, sport.id)}</div>
+        <strong>${esc(ru(event.match, sport.id))}</strong>
+        ${story >= 0 ? `<button type="button" class="pk-story" data-story="${story}">${icon("analysis")}<span>Разбор матча</span></button>` :
+          scheduleContext(event, sport.id)}
+      </li>`).join("")}</ul>
+    </section>`;
+  }
   function expressHTML() {
     const list = data.express || [];
     const highlights = integrated() ? [] : data.expressHighlights || [];
@@ -1049,11 +1070,12 @@
         <span class="sh-ico">${icon("express", "big-ico")}</span>
         <div><h2>Экспрессы дня</h2><p>${data.source === "model-preview" ?
           "Отдельные статистические сценарии по матчам дня." :
-          "Собраны из прогнозов сайта. Общий коэффициент указан для подборок, в которых есть коэффициенты всех событий."}</p></div>
+          list.length ? "Общий коэффициент указан для подборок с опубликованными коэффициентами всех событий." : ""}</p></div>
       </div>
       ${highlights.length ? `<div class="xp-list express-highlights">${highlights.map(expressScenario).join("")}</div>` : ""}
       ${list.length ? `<div class="xp-list">${list.map((item, i) => expressCard(item, i)).join("")}</div>` : highlights.length ? "" :
-        '<div class="empty"><strong>На сегодня нет опубликованных экспрессов</strong><p><a href="#xp-past">Перейти к истории экспрессов</a></p></div>'}
+        `<div class="empty"><strong>На сегодня нет опубликованных экспрессов</strong><p><a href="#xp-past">Перейти к истории экспрессов</a></p></div>
+         ${dailyEventsOverview()}`}
       <section class="xp-past" id="xp-past"><p class="note" role="status">Загружаем историю экспрессов…</p></section>`;
   }
   let expressPast = null;

@@ -86,6 +86,10 @@ function parseEspnLines(competition, home, away, url) {
 
 export function parseEspn(data, sport, feed, url) {
   return list(data.events).flatMap((e) => {
+    const singlesMainDraw = sport === "tennis" ? new Set(list(e.groupings)
+      .filter((g) => g.grouping?.slug === "womens-singles")
+      .flatMap((g) => list(g.competitions)).filter((match) =>
+        /^(?:Round [1-9]|Quarterfinal|Semifinal|Final)$/.test(match.round?.displayName))) : null;
     const competitions = sport === "tennis"
       ? list(e.groupings).flatMap((g) => list(g.competitions))
       : list(e.competitions);
@@ -112,6 +116,7 @@ export function parseEspn(data, sport, feed, url) {
           season: Number.isInteger(seasonYear) && seasonYear >= 1900
             ? String(seasonYear) : null,
           participantIds: [home?.id, away?.id],
+          ...(singlesMainDraw?.has(c) ? { tennisMainDraw: true } : {}),
           format: finalsSingles ? "BO3" : null,
           markets: status === "scheduled" && ["football", "basketball", "hockey"].includes(sport)
             ? parseEspnLines(c, home, away, gameUrl) : null,

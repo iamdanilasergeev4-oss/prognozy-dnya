@@ -164,6 +164,21 @@ function consensusScore(index, target, scope) {
     .map((row) => ({ ...row, aligned: align(row[field], target, row) }));
 }
 
+function sameTourResults(index, match, now) {
+  const claims = (index.get(pair(match)) ?? []).filter((row) =>
+    row.contextSource === match.contextSource && Math.abs(row.start - match.start) <= 20 * MINUTE &&
+    Math.floor(row.start / DAY) === Math.floor(match.start / DAY));
+  const bySource = Map.groupBy(claims, (row) => row.source);
+  if (bySource.size !== 2 || [...bySource.values()].some((entries) => entries.length !== 1)) return [];
+  const espn = bySource.get("ESPN")?.[0];
+  const scores = bySource.get("365Scores")?.[0];
+  if (!espn?.tennisMainDraw || !scores || ![espn, scores].every((row) =>
+    row.status === "finished" && row.start < now && completedSeries(scoreText(row.score), 3)) ||
+    Math.abs(espn.start - scores.start) > 20 * MINUTE) return [];
+  const rows = [espn, scores].map((row) => ({ ...row, aligned: align(row.score, match, row) }));
+  return sameScore(rows[0].aligned, rows[1].aligned) ? rows : [];
+}
+
 function targetFor(sport, match, start, tournament) {
   const { home, away } = H.splitTeams(match);
   return { sport, home, away, start: Date.parse(start), league: /\bNHL\b|НХЛ/i.test(tournament) ? "nhl" : null };
@@ -211,6 +226,8 @@ function formFor(index, event, name, now, fixtureFormat, editorialDays, official
   const used = new Set();
   const baseDays = ["football", "volleyball"].includes(event.sport) ? FOOTBALL_FORM_DAYS : FORM_DAYS;
   const formDays = Math.max(baseDays, editorialDays);
+  const tourHistory = officialHistory && event.sport === "tennis" && event.tennisTier === "wta125" &&
+    event.surface === "outdoor-clay" && event.contextSource;
   for (const group of index.values()) {
     for (const row of group) {
       const isLeagueArchive = officialHistory && row.source === "Lega Pallavolo" && officialFixtureSource(row);
@@ -219,10 +236,13 @@ function formFor(index, event, name, now, fixtureFormat, editorialDays, official
           ![team(row.home), team(row.away)].includes(team(name))) continue;
       // Keep the form window within the same competitions to avoid mixing levels of play.
       const plusLiga = (item) => ["plusliga", "tauron liga"].includes(normalize(item.tournament));
+      const comparableTour = tourHistory && row.tennisTier === event.tennisTier && row.surface === event.surface && row.contextSource;
+      if (tourHistory && !comparableTour) continue;
       if (normalize(row.tournament) !== normalize(event.tournament) && !(row.league && row.league === event.league) &&
+          !comparableTour &&
           !(event.sport === "volleyball" && officialHistory && plusLiga(row) && plusLiga(event)) &&
           !(esports.has(event.sport) && row.format && row.format === event.format)) continue;
-      const sources = consensusScore(index, row, "final");
+      const sources = comparableTour ? sameTourResults(index, row, now) : consensusScore(index, row, "final");
       const official = officialHistory && sources.length === 1 && officialFixtureSource(sources[0]) &&
         (row.sport !== "volleyball" || Math.max(...(sources[0].aligned ?? [])) === 3);
       if ((!official && sources.length < 2) || sources.some((r) => !sameScore(r.aligned, sources[0].aligned))) continue;
@@ -236,7 +256,8 @@ function formFor(index, event, name, now, fixtureFormat, editorialDays, official
       const [own, opponent] = team(name) === team(row.home) ? scores : [...scores].reverse();
       results.push({ id, win: own > opponent, start: row.start, match: `${row.home} — ${row.away}`,
         score: scoreText(scores), scores: [own, opponent], format: sources.find((source) => source.format)?.format,
-        sources: sources.map(link) });
+        ...(comparableTour ? { tour: row.tennisTier } : {}),
+        sources: [...sources.map(link), ...(comparableTour ? [{ title: "WTA", url: row.contextSource, freshness: "archive" }] : [])] });
     }
   }
   return results.sort((a, b) => b.start - a.start);
