@@ -116,47 +116,33 @@ export function selectManualAnalysis(next, contexts, research, now, editorial) {
   const evaluated = drafts.map((article) => ({
     article, context: contexts.get(article), evidence: describeEvidence(article, contexts.get(article), research, now, editorial),
   })).filter(({ evidence }) => evidence);
-  const rank = (a, b) => Number(b.evidence.model) - Number(a.evidence.model) ||
-    Math.min(...b.evidence.history) - Math.min(...a.evidence.history) ||
-    Number(b.evidence.opponentComparison) - Number(a.evidence.opponentComparison) ||
-    b.evidence.splits - a.evidence.splits || Date.parse(a.article.start_iso) - Date.parse(b.article.start_iso);
-  const qualified = evaluated.filter(({ evidence }) => evidence.quality).sort(rank);
-  const selected = [];
-  const same = (event, article) => event.match === article.match && event.start_iso === article.start_iso;
+  const key = (item) => JSON.stringify([item.match, Date.parse(item.start_iso)]);
   for (const sport of next.sports) {
-    const limit = sport.id === "football" ? maxFootballArticles : sport.id === "cs2" ? 5 : Infinity;
-    const articles = qualified.filter(({ article }) => article.sport_id === sport.id).slice(0, limit);
-    selected.push(...articles);
-    const calendar = articles.map(({ article, context }) => sport.events.find((event) => same(event, article)) ?? {
-      match: article.match, tournament: article.tournament, start: article.start, start_iso: article.start_iso,
-      format: article.format, sources: context.evidence.map(({ source, url, sourceReceipt }) => ({ title: source, url, ...sourceReceipt })),
-      schedule_evidence: context.basis, has_pick: false,
-    });
-    const necessary = sport.events.filter((event) => event.has_pick && !calendar.some((entry) => same(event, entry)));
-    const remaining = sport.events.filter((event) => !event.has_pick && !calendar.some((entry) => same(event, entry)));
-    sport.events = [...calendar, ...necessary, ...remaining.slice(0, Math.max(0, limit - calendar.length - necessary.length))]
-      .map((event) => {
-        if (articles.some(({ article }) => same(event, article))) return event;
-        const evidence = evaluated.find(({ article }) => article.sport_id === sport.id && same(event, article))?.evidence;
-        if (!evidence) return { ...event, analysis_context: { reasons: ["not_assessed"] } };
-        const { history, historicalWins, historySources, freshResults, formatKnown, quality } = evidence;
-        const reasons = [
-          ...(!history.every((count) => count >= 4) ? ["insufficient_results"] : []),
-          ...(history.every((count) => count > 0) && !freshResults ? ["no_recent_results"] : []),
-          ...(!formatKnown ? ["unconfirmed_format"] : []),
-          ...(quality ? ["editorial_limit"] : []),
-        ];
-        return { ...event, analysis_context: { reasons, history, historicalWins, historySources } };
-      })
-      .sort((a, b) => Date.parse(a.start_iso) - Date.parse(b.start_iso));
+    const calendar = new Map(sport.events.filter((event) => isUpcoming(event, now)).map((event) => [key(event), event]));
+    for (const { article, context, evidence } of evaluated) {
+      if (article.sport_id !== sport.id) continue;
+      const event = calendar.get(key(article)) ?? {
+        match: article.match, tournament: article.tournament, start: article.start, start_iso: article.start_iso,
+        format: article.format, sources: context.evidence.map(({ source, url, sourceReceipt }) => ({ title: source, url, ...sourceReceipt })),
+        schedule_evidence: context.basis, has_pick: false,
+      };
+      calendar.set(key(article), { ...event, analysis_context: {
+        reasons: [...(evidence.history.some((count) => count < 4) ? ["insufficient_results"] : []),
+          ...(evidence.history.every((count) => count > 0) && !evidence.freshResults ? ["no_recent_results"] : []),
+          ...(!evidence.formatKnown ? ["unconfirmed_format"] : [])],
+        history: evidence.history, historicalWins: evidence.historicalWins, historySources: evidence.historySources,
+      } });
+    }
+    sport.events = [...calendar.values()].sort((a, b) => Date.parse(a.start_iso) - Date.parse(b.start_iso));
   }
-  next.analysis = selected.sort(rank).map(({ article }) => article);
+  next.analysis = evaluated.map(({ article }) => article).sort((a, b) => Date.parse(a.start_iso) - Date.parse(b.start_iso));
+  next.match_overviews = true;
   const visibleModels = applied.filter((item) => next.analysis.some((article) => article.match === item.match &&
     Date.parse(article.start_iso) === item.start));
   for (const item of applied.filter((item) => !visibleModels.includes(item))) {
     modelDecisions.push({ match: item.match, sport: "football", reason: "editorial_quality_or_limit" });
   }
-  return { researchApplied: visibleModels, articles: selected.map(({ evidence }) => evidence),
+  return { researchApplied: visibleModels, articles: evaluated.map(({ evidence }) => evidence),
     evaluated: evaluated.map(({ evidence }) => evidence), modelDecisions };
 }
 

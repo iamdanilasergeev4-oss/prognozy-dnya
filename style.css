@@ -493,6 +493,10 @@ button { font: inherit; color: inherit; }
 .schedule-match[hidden] { display: none; }
 .bookmaker-lines { margin-top: 12px; padding-top: 9px; font-size: 13px; }
 .bookmaker-source[open] > summary { margin-bottom: 6px; }
+.overview-details { margin-top: 12px; }
+.overview-details > summary { color: var(--text-2); cursor: pointer; font-size: 13px; }
+.overview-details[open] > summary { margin-bottom: 12px; }
+.match-overview .pk-reason { margin-top: 10px; }
 
 /* ===== Форма ===== */
 .suggest {

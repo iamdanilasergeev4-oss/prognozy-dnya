@@ -152,10 +152,11 @@ export function describeEvidence(article, context, research, now, editorial = []
   const strength = opponents && sides.every((side) => opponents.get(side).count >= 3) ?
     `Средняя доля побед соперников по доступным результатам лиги — ${opponents.get(sides[0]).pct}% и ${opponents.get(sides[1]).pct}% соответственно. Матчи против сравниваемой команды исключены.` : "";
   const meetings = usedSeason ? rowsBySide[0].rows.filter((row) => row.opponent === sides[1]) : [];
-  const headToHead = meetings.length >= 2 ?
+  const headToHead = meetings.length ?
     `Личные встречи сезона (${articleTeams.join(" — ")}, в указанном порядке): ${meetings.map((row) => row.scores.join(":")).join(", ")}.` : "";
   const tourHistory = best.matches.flat().some((row) => row.tour === "wta125");
-  const basis = usedSeason ? `Выборка по текущему сезону ${contextEvent.season} в этом соревновании.` :
+  const basis = !best.matches.some((rows) => rows.length) ? "" :
+    usedSeason ? `Выборка по текущему сезону ${contextEvent.season} в этом соревновании.` :
     tourHistory ? "Сравнены завершённые одиночные матчи основной сетки турниров WTA 125 на открытом грунте." :
     best.type === "series" ? "Сравнены завершённые серии того же формата. Уровень турниров может различаться." :
     series.has(article.sport_id) ? "Сравнены завершённые серии того же формата. Уровень турниров может различаться." :
@@ -164,10 +165,22 @@ export function describeEvidence(article, context, research, now, editorial = []
   const surface = article.sport_id === "tennis" && contextEvent?.rules === "outdoor-clay" &&
     contextEvent.contextSource?.startsWith("https://www.wtatennis.com/") ? "Покрытие по данным WTA — открытый грунт." : "";
   const marketEvidence = (article.key_factors || []).filter((line) => /условие выполнено|предматчевый порог|порог соответствует/i.test(line));
+  const recentForm = best.matches.flatMap((results, index) => {
+    const recent = [...results].sort((a, b) => b.start - a.start).slice(0, 5);
+    return recent.length ? [`${articleTeams[index]} — побед ${wins(recent)} из ${recent.length}`] : [];
+  });
+  const tableNotes = baselineNotes.filter((note) => !marketEvidence.includes(note));
+  article.overview = recentForm.length ? recentForm.join("; ") + "." :
+    tableNotes.length ? tableNotes.join(" ") :
+      `Матч в турнире «${article.tournament}»${article.format ? `, формат ${article.format}` : ""}. Свежих сверенных результатов пока нет.`;
+  const recentMeeting = [...meetings].sort((a, b) => b.start - a.start)[0];
+  if (recentMeeting) article.overview += ` Последняя встреча — ${recentMeeting.scores.join(":")} в порядке команд в карточке.`;
+  article.hasStatistics = Boolean(recentForm.length || tableNotes.length);
+  if (model.length) article.checkedModel = { conclusion: article.verdict, lines: model };
   const descriptive = model.length ? [] : ["Вероятности исходов не рассчитаны.", context?.method, ...marketEvidence];
   article.text = [original[0], ...model, ...descriptive, "Контекст матча и статистика для сравнения",
     ...sourceNotes.map((item) => item.note), basis, surface, ...stats, ...scoring.lines, ...splits, strength, headToHead,
-    ...baselineNotes.filter((note) => !marketEvidence.includes(note)), unavailable].filter(Boolean).join("\n");
+    ...tableNotes, unavailable].filter(Boolean).join("\n");
   article.key_factors = [contextName(article), model.length ? "Вероятности рассчитаны по отдельной модели исхода." : "Без численной оценки вероятности."].filter(Boolean);
   const sources = [...article.sources, ...rowsBySide.flatMap(({ rows }) =>
     rows.flatMap((row) => row.sources.map((source) => ({ ...source, freshness: "archive" })))),

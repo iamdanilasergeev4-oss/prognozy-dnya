@@ -155,7 +155,7 @@ test("a separately verified calendar can supply a missing analysis within the fo
   assert.deepEqual(appendValidatedAnalysis({ analysis: [] }, { forecastEvidence: [fixture] }, now), []);
 });
 
-test("manual analysis evaluates the whole confirmed calendar and leaves thin or stale samples in the calendar", () => {
+test("manual reviews retain every confirmed fixture without upgrading thin or stale samples", () => {
   const rich = makeArticle();
   const thin = { ...makeArticle(), match: "East — West" };
   const stale = { ...makeArticle(), match: "Old — Long" };
@@ -172,11 +172,14 @@ test("manual analysis evaluates the whole confirmed calendar and leaves thin or 
   ]);
   const research = { history: [], diagnostics: { assessed: [], forecastEvidence: [makeForecast()] } };
   const out = selectManualAnalysis(next, contexts, research, now);
-  assert.deepEqual(next.analysis.map((article) => article.match), [rich.match]);
+  assert.deepEqual(new Set(next.analysis.map((article) => article.match)), new Set([rich.match, thin.match, stale.match]));
+  assert.match(thin.overview, /East — побед 2 из 2/);
+  assert.equal(thin.checkedModel, undefined);
+  assert.equal(rich.checkedModel.lines.some((line) => line.includes("52%")), true);
   assert.deepEqual(new Set(next.sports[0].events.map((item) => item.match)), new Set([rich.match, thin.match, stale.match]));
-  assert.deepEqual(out.articles[0].history, [4, 6]);
+  assert.deepEqual(out.articles.find(({ match }) => match === rich.match).history, [4, 6]);
   const calendarContext = (draft) => next.sports[0].events.find(({ match }) => match === draft.match).analysis_context;
-  assert.equal(calendarContext(rich), undefined);
+  assert.deepEqual(calendarContext(rich).reasons, []);
   assert.deepEqual(calendarContext(thin), { reasons: ["insufficient_results"], history: [2, 5],
     historicalWins: [2, 5], historySources: ["openfootball"] });
   assert.deepEqual(calendarContext(stale).reasons, ["no_recent_results"]);

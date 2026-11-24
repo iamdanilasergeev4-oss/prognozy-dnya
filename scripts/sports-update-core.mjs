@@ -590,8 +590,9 @@ export function buildUpdate({ current, indexFile, historyFiles, express, rows, s
       reviewArticle(detail.article, { row, forms: detail.forms, method: detail.method, evidence, basis });
     }
     const tier = ({ evidence }) => evidence.find((source) => source.tier)?.tier ?? 6;
-    const selected = id === "football" ? assessed.filter(({ detail }) => manualSchedule || detail.sample >= 2).sort(rankByEvidence).slice(0, FOOTBALL_LIMIT)
-      : id === "cs2" ? assessed.filter(({ evidence }) => manualSchedule || evidence.filter((item) => item.format).length >= 2)
+    const selected = manualSchedule ? assessed :
+      id === "football" ? assessed.filter(({ detail }) => detail.sample >= 2).sort(rankByEvidence).slice(0, FOOTBALL_LIMIT)
+      : id === "cs2" ? assessed.filter(({ evidence }) => evidence.filter((item) => item.format).length >= 2)
         .sort((a, b) => tier(a) - tier(b) || rankByEvidence(a, b)).slice(0, CS2_LIMIT) : assessed;
     for (const { row, evidence, detail, basis } of selected) {
       const { article } = detail;
@@ -617,7 +618,7 @@ export function buildUpdate({ current, indexFile, historyFiles, express, rows, s
           }
         }
       }
-      const forecast = matched.length || evidence.length < 2 ? null : forecastFrom(detail, row, now);
+      const forecast = manualSchedule || matched.length || evidence.length < 2 ? null : forecastFrom(detail, row, now);
       if (forecast) {
         generated.push(forecast);
         picks.push(forecast);

@@ -121,8 +121,9 @@
     try { return new URL(url).hostname.replace(/^www\./, ""); } catch { return "источник"; }
   }
   const integrated = () => data?.analysis_engine === "sports-intelligence-2";
+  const matchOverviews = () => data?.match_overviews === true;
   const analytical = () => integrated() || data?.source === "model-preview";
-  const hasAnalysis = () => Array.isArray(data?.analysis) && (data.analysis.length > 0 || analytical());
+  const hasAnalysis = () => Array.isArray(data?.analysis) && (data.analysis.length > 0 || analytical() || matchOverviews());
   const hasExpress = () => Array.isArray(data?.express) &&
     (data.express.length > 0 || ["sports-update", "model-preview"].includes(data.source));
   const cardKey = (card) => {
@@ -131,6 +132,11 @@
     return teams && Number.isFinite(time) ? JSON.stringify([teams.map(teamKey), time]) : null;
   };
   const displayCards = (sport) => {
+    if (matchOverviews()) {
+      const reviews = new Map((data.analysis || []).filter((a) => a.sport_id === sport.id).map((a) => [cardKey(a), a]));
+      return (sport.events || []).filter((event) => Date.parse(event.start_iso) > Date.now())
+        .map((event) => ({ ...event, review: reviews.get(cardKey(event)) }));
+    }
     if (!integrated()) return (data.source === "model-preview" ? sport.forecasts : sport.picks) || [];
     const projections = new Map((sport.forecasts || []).map((card) => [cardKey(card), card]));
     const picks = (sport.picks || []).map((pick) => {
@@ -146,6 +152,7 @@
   const pickCount = (sport) => displayCards(sport).length;
   const firstForecastSport = () => (data.sports.find(pickCount) || data.sports[0]).id;
   const countLabel = (n) => plural(n, "прогноз", "прогноза", "прогнозов");
+  const matchCountLabel = (n) => plural(n, "матч", "матча", "матчей");
   const analysisCountLabel = (n) => plural(n, "разбор", "разбора", "разборов");
   const ru = (value, sport) => window.SportsRu?.text(value, sport) ?? value;
   const ruTournament = (value, sport) => window.SportsRu?.tournament(value, sport) ?? value;
@@ -333,7 +340,7 @@
           <circle class="ring-bg" cx="18" cy="18" r="${R}"/>
           <circle class="ring-fg" cx="18" cy="18" r="${R}" stroke-dasharray="${(C * frac).toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 18 18)"/>
         </svg>
-        <div><b>Обновлено ${esc(agoRel(t, now))}</b><span>${analytical() ? "Ручное обновление" : `Следующее обновление ${esc(next)}`}</span></div>
+        <div><b>Обновлено ${esc(agoRel(t, now))}</b><span>${analytical() || data.manual_schedule ? "Ручное обновление" : `Следующее обновление ${esc(next)}`}</span></div>
       </div>`;
   }
 
@@ -419,7 +426,7 @@
     const hosts = new Set();
     cards.forEach(({ p }) => (p.sources || []).forEach((x) => hosts.add(host(x.url))));
     (data.analysis || []).forEach((a) => (a.sources || []).forEach((x) => hosts.add(host(x.url))));
-    const withWhy = cards.filter(({ p }) => Array.isArray(p.facts) && p.facts.length).length;
+    const withWhy = cards.filter(({ p }) => matchOverviews() ? p.review?.hasStatistics : Array.isArray(p.facts) && p.facts.length).length;
     const ms = cards.map(({ p }) => startOf(p).ms).filter((t) => !isNaN(t));
     const days = [...new Set(ms.map(dayKey))].sort();
     const range = days.length > 1
@@ -428,7 +435,7 @@
     const sports = data.sports.filter(pickCount);
     const dist = sports.map((s) => {
       const n = pickCount(s);
-      const label = displayCards(s).some((card) => card.statisticalSummary) ? analysisCountLabel(n) : countLabel(n);
+      const label = matchOverviews() ? matchCountLabel(n) : displayCards(s).some((card) => card.statisticalSummary) ? analysisCountLabel(n) : countLabel(n);
       return `<button type="button" class="bd-seg" data-id="${esc(s.id)}" style="--c:${colorOf(s.id)};flex-grow:${n}" aria-label="${esc(s.name)}: ${n} ${label}"></button>`;
     }).join("");
     const legend = data.sports.map((s) => {
@@ -440,7 +447,7 @@
       <div class="bd-top">
         <div class="bd-total">
           <b class="bd-num">${total}</b>
-          <span>${cards.some(({ p }) => p.statisticalSummary) ? analysisCountLabel(total) : countLabel(total)}${range ? `<br>на ${esc(range)}` : ""}</span>
+          <span>${matchOverviews() ? matchCountLabel(total) : cards.some(({ p }) => p.statisticalSummary) ? analysisCountLabel(total) : countLabel(total)}${range ? `<br>на ${esc(range)}` : ""}</span>
         </div>
         ${freshnessHTML()}
       </div>
@@ -456,7 +463,7 @@
         <div class="bd-bar">${dist}</div>
         <div class="bd-legend">${legend}</div>
       </div>
-      ${total ? `<p class="bd-cap">${data.source === "model-preview" ? "Все прогнозы прошли историческую проверку" : `${withWhy} из ${total} — с разбором «за» и «против»`} · ${hosts.size} ${plural(hosts.size, "источник", "источника", "источников")}</p>` : ""}`;
+      ${total ? `<p class="bd-cap">${matchOverviews() ? `${withWhy} из ${total} — со сверенной статистикой` : data.source === "model-preview" ? "Все прогнозы прошли историческую проверку" : `${withWhy} из ${total} — с разбором «за» и «против»`} · ${hosts.size} ${plural(hosts.size, "источник", "источника", "источников")}</p>` : ""}`;
     board.appendChild(tip);
     drawTimeline();
     board.querySelectorAll(".bd-seg, .bd-leg").forEach((b) => {
@@ -477,12 +484,13 @@
     const nb = $("#bd-next");
     if (nb && next) {
       const rel = inRel(next.s.ms, now) || `${dayRel(next.s.ms, now)}, ${hhmm(next.s.ms)}`;
-      nb.innerHTML = `<small>Ближайший матч с прогнозом ${esc(rel)}</small><b>${esc(ru(next.p.match, next.sport))}</b>`;
+      nb.innerHTML = `<small>Ближайший матч${matchOverviews() ? "" : " с прогнозом"} ${esc(rel)}</small><b>${esc(ru(next.p.match, next.sport))}</b>`;
       nb.style.setProperty("--c", colorOf(next.sport));
       nb.hidden = false;
       nb.onclick = () => {
         pendingFocus = `#pick-${next.sport}-${next.i}`;
-        if (current === next.sport) focusAfterPaint(); else select(next.sport, false);
+        whenFilter = "all";
+        if (current === next.sport) { applyWhen(); focusAfterPaint(); } else select(next.sport, false);
       };
     }
     const ab = $("#bd-acc");
@@ -533,7 +541,7 @@
     const a = list[0];
     tip.innerHTML = `<div class="tt-h" style="--c:${colorOf(a.sport)}">${icon(a.sport)}<span>${esc(a.name)} · ${esc(dayRel(a.ms))}${a.exact ? ", " + hhmm(a.ms) : ""}</span></div>` +
       list.slice(0, 6).map((it) => `<div class="tt-r"><b>${esc(ru(it.p.match, it.sport))}</b><span>${it.p.lines ?
-        esc(ru(it.p.lines[0], it.sport)) : `${esc(ru(it.p.bet, it.sport))} · уверенность ${esc(CONF_LABEL[it.conf])}`}</span></div>`).join("") +
+        esc(ru(it.p.lines[0], it.sport)) : matchOverviews() ? esc(ru(it.p.review?.overview || "", it.sport)) : `${esc(ru(it.p.bet, it.sport))} · уверенность ${esc(CONF_LABEL[it.conf])}`}</span></div>`).join("") +
       (list.length > 6 ? `<div class="tt-more">и ещё ${list.length - 6}</div>` : "") +
       `<div class="tt-go">Нажмите, чтобы перейти к матчу</div>`;
     tip.hidden = false;
@@ -548,13 +556,14 @@
   function hideTip() { tip.hidden = true; }
   function jumpTo(it) {
     if (!it) return;
+    whenFilter = "all";
     const go = () => {
       const card = document.getElementById(`pick-${it.sport}-${it.i}`);
       if (!card) return;
       card.scrollIntoView({ behavior: calm() ? "auto" : "smooth", block: "center" });
       card.classList.remove("flash"); void card.offsetWidth; card.classList.add("flash");
     };
-    if (current !== it.sport) { select(it.sport); setTimeout(go, calm() ? 30 : 260); } else go();
+    if (current !== it.sport) { select(it.sport); setTimeout(go, calm() ? 30 : 260); } else { applyWhen(); go(); }
   }
   function syncBoard() {
     board.querySelectorAll(".bd-seg, .bd-leg").forEach((b) => b.classList.toggle("on", b.dataset.id === current));
@@ -573,7 +582,8 @@
     });
     if (analytical()) list.push({ id: "summary", name: "Сводка дня", n: data.dailySummary?.length || 0 });
     if (hasExpress()) list.push({ id: "express", name: "Экспрессы", n: data.express.length || data.expressHighlights?.length || 0 });
-    if (hasAnalysis()) list.push({ id: "analysis", name: "Разбор дня", n: data.analysis.length });
+    if (hasAnalysis()) list.push({ id: "analysis", name: "Разбор дня", n: matchOverviews() ?
+      data.analysis.filter((review) => Date.parse(review.start_iso) > Date.now()).length : data.analysis.length });
     return list;
   }
 
@@ -835,7 +845,9 @@
       missing: "Подтверждённых котировок пока нет.",
     };
     if (!available.length) {
-      return `<div class="st-src bookmaker-lines"><h4>Букмекерская линия</h4><p>${esc(message[["current", "observed"].includes(status) ? "stale" : status] || message.missing)}</p></div>`;
+      const label = esc(message[["current", "observed"].includes(status) ? "stale" : status] || message.missing);
+      return `<div class="st-src bookmaker-lines">${matchOverviews() ? `<p><strong>Котировки.</strong> ${label}</p>` :
+        `<h4>Букмекерская линия</h4><p>${label}</p>`}</div>`;
     }
     const scopes = { regulation: "90 минут с добавленным временем", overtime: "Весь матч с овертаймом",
       overtime_shootout: "Весь матч с овертаймом и буллитами", match_bo5: "Матч до трёх выигранных сетов",
@@ -915,13 +927,42 @@
       </details>` : ""}`;
   }
 
+  function overviewCard(event, i, sport, isStory = false) {
+    const review = event.review;
+    const bucket = bucketOf(event);
+    const paragraphs = String(review?.text || "").split(/\n+/).slice(1).filter(Boolean);
+    const limits = paragraphs.filter((line) => /^(Что не удалось проверить|Не сверены|Ограничения)[.:]/u.test(line));
+    const facts = paragraphs.filter((line) => !limits.includes(line) && !review?.checkedModel?.lines?.includes(line) &&
+      !["Контекст матча и статистика для сравнения", "Вероятности исходов не рассчитаны."].includes(line));
+    const summary = review?.overview || "Участники и время подтверждены. Статистика пока уточняется.";
+    return `<article class="${isStory ? "story" : "pick"} match-overview" id="${isStory ? `story-card-${i}` : `pick-${sport.id}-${i}`}"
+      style="--i:${i};--c:${colorOf(sport.id)}" data-day="${bucket.day}"${bucket.soon ? " data-soon" : ""}>
+      <div class="pk-meta"><span class="pk-tour">${esc(ruTournament(event.tournament, sport.id))}${event.format ?
+        `<span class="pk-fmt">${esc(event.format)}</span>` : ""}</span>${whenHTML(event, sport.id)}</div>
+      <div class="pk-main">${teamsHTML(event.match, sport.id)}</div>
+      <p class="pk-reason">${esc(ru(summary, sport.id))}</p>
+      ${review?.checkedModel || review?.modelConclusion ? `<details class="projection-estimates">
+        <summary>Проверенная оценка модели</summary>
+        ${review.modelConclusion ? modelConclusionHTML(review.modelConclusion, sport.id) :
+          [review.checkedModel.conclusion, ...review.checkedModel.lines].map((line) => `<p>${esc(ru(line, sport.id))}</p>`).join("")}
+      </details>` : ""}
+      ${bookmakerHTML(event.bookmaker || review?.bookmaker, sport.id)}
+      <details class="overview-details"><summary>Статистика и источники</summary>
+        ${facts.length ? `<div class="st-text">${facts.map((line) => `<p>${esc(ru(line, sport.id))}</p>`).join("")}</div>` : ""}
+        ${limits.length ? `<section class="st-factors"><h4>Что пока неизвестно</h4><ul>${limits.map((line) =>
+          `<li>${esc(ru(line.replace(/^[^:]+:\s*/, ""), sport.id))}</li>`).join("")}</ul></section>` : ""}
+        ${groupedStorySources(review?.sources || event.sources)}
+      </details>
+    </article>`;
+  }
+
   function sportHTML(sport) {
     const projections = data.source === "model-preview";
     const cards = displayCards(sport);
     const count = cards.length;
     const tours = new Set(cards.map((p) => String(p.tournament || "").split(",")[0].trim()).filter(Boolean));
     const sub = count
-      ? `${count} ${cards.some((card) => card.statisticalSummary) ? analysisCountLabel(count) : countLabel(count)} · ${tours.size} ${plural(tours.size, "турнир", "турнира", "турниров")}`
+      ? `${count} ${matchOverviews() ? matchCountLabel(count) : cards.some((card) => card.statisticalSummary) ? analysisCountLabel(count) : countLabel(count)} · ${tours.size} ${plural(tours.size, "турнир", "турнира", "турниров")}`
       : "";
     let html = `
       <div class="sport-head">
@@ -947,7 +988,7 @@
       return html + `
         <div class="empty">
           ${svg('<path class="e-line" d="M4 30h40l8-14 10 22 8-12h46"/><circle class="e-dot" cx="116" cy="30" r="3"/>', "e-svg", "0 0 124 44")}
-          <strong>Готовых прогнозов нет</strong>
+          <strong>${matchOverviews() ? "Пока нет подтверждённых матчей" : "Готовых прогнозов нет"}</strong>
           <p>${esc(story >= 0 ? "Подтверждённые матчи и данные по ним доступны в «Разборе дня»." :
             emptyMessage[sport.availability] || "Новые прогнозы появятся, когда будет достаточно подтверждённых данных.")}</p>
           ${story < 0 ? "" : `<button type="button" class="pk-story" data-story="${story}">${icon("analysis")}<span>Открыть разборы</span></button>`}
@@ -961,7 +1002,8 @@
       .map(([k, l]) => `<button type="button" class="when-chip" data-when="${k}" aria-pressed="${whenFilter === k}"${cnt[k] || k === "all" ? "" : " disabled"}>${l}<b>${cnt[k]}</b></button>`).join("");
     html += `<div class="when" role="group" aria-label="Когда начинается матч">${chips}</div>`;
     html += `<div class="list" data-when="${whenFilter}">` + cards.map((p, i) =>
-      projections || integrated() && !p.bet ? projectionHTML(p, i, sport) : pickHTML(p, i, sport, i === 0 && topConf >= 4)).join("") + `</div>`;
+      matchOverviews() ? overviewCard(p, i, sport) :
+        projections || integrated() && !p.bet ? projectionHTML(p, i, sport) : pickHTML(p, i, sport, i === 0 && topConf >= 4)).join("") + `</div>`;
     html += `<div class="when-empty" hidden><p>В этом окне матчей нет.</p><button type="button" class="when-chip" data-when="all">Показать все</button></div>`;
     return html + scheduleHTML(sport, events);
   }
@@ -1151,6 +1193,14 @@
   }
 
   function analysisHTML() {
+    if (matchOverviews()) {
+      const current = data.analysis.map((review, i) => ({ review, i })).filter(({ review }) => Date.parse(review.start_iso) > Date.now());
+      return `<div class="sport-head"><span class="sh-ico">${icon("analysis", "big-ico")}</span><div><h2>Разбор дня</h2>
+        <p>Короткий обзор каждого подтверждённого матча.</p></div></div>
+        ${current.length ? `<div class="stories">${current.map(({ review, i }) =>
+          overviewCard({ ...review, review }, i, sportById(review.sport_id), true)).join("")}</div>` :
+          '<p class="note">Пока нет подтверждённых предстоящих матчей.</p>'}`;
+    }
     const hasStatisticalAnalysis = data.analysis.some((article) => article.statisticalSummary);
     let html = `
       <div class="sport-head">
@@ -1448,6 +1498,12 @@
   setInterval(() => {
     if (!data || document.hidden) return;
     const now = new Date().getTime();
+    if (matchOverviews() && Number(board.querySelector(".bd-num")?.textContent) !== allPicks().length) {
+      renderBoard();
+      renderTabs();
+      drawTimeline();
+      renderPanel(false);
+    }
     panel.querySelectorAll(".bookmaker-market[data-expires-at]").forEach((market) => {
       if (Date.parse(market.dataset.expiresAt) > now) return;
       const block = market.closest(".bookmaker-lines");
