@@ -7,6 +7,7 @@ import { createOutcomeModel } from "./sports-models.mjs";
 import { createSparseModel } from "./sports-sparse-model.mjs";
 import { tennisSingles, verifiedResult } from "./sports-historical-inputs.mjs";
 import { readResearchSnapshots } from "./sports-research-history.mjs";
+import { pairedWeekInterval } from "./sports-model-comparison.mjs";
 
 const esports = new Set(["cs2", "dota2"]);
 const sports = ["cs2", "dota2", "tennis", "volleyball"];
@@ -58,6 +59,66 @@ export function archiveBacktest(events, cutoff) {
   return { ...summarize(rows), byGroup: Object.fromEntries(
     [...Map.groupBy(rows, (row) => JSON.stringify([row.tour || row.competition, row.rules, row.level ?? null]))]
       .map(([key, sample]) => [key, summarize(sample)])) };
+}
+
+// Research comparison for complete BO3 results even when the patch is absent.
+// Actual named maps are not inferred from series scores.
+export function replayBestOfThree(events, cutoff, { until = Infinity, auditCoverage = false } = {}) {
+  const day = 86_400_000;
+  const sorted = events.filter(({ sport, rules }) => esports.has(sport) && rules === "BO3")
+    .sort((a, b) => a.start - b.start);
+  const short = createSparseModel();
+  const predictions = [];
+  const observed = [...sorted].sort((a, b) => a.available - b.available);
+  const maps = new Map();
+  const key = (event, team) => JSON.stringify([event.sport, event.competition, team]);
+  let cursor = 0;
+  for (const event of sorted.filter(({ start }) => start >= cutoff && start < until)) {
+    while (cursor < observed.length && observed[cursor].available < event.start) {
+      const prior = observed[cursor++];
+      const teamIds = [prior.home, prior.away];
+      for (const [side, team] of teamIds.entries()) {
+        const id = key(prior, team);
+        const rows = maps.get(id) ?? [];
+        maps.set(id, [...rows.slice(-31), { at: prior.available, won: prior.score[side], lost: prior.score[1 - side] }]);
+      }
+      short.observe(prior);
+    }
+    const window = event.sport === "cs2" ? 90 : 45;
+    const history = [event.home, event.away].map((team) =>
+      (maps.get(key(event, team)) ?? []).filter(({ at }) => event.start - at <= window * day));
+    const rates = history.map((rows) => {
+      if (rows.length < 4) return null;
+      let won = 4;
+      let lost = 4;
+      for (const row of rows) {
+        const weight = Math.exp(-(event.start - row.at) / (window * day));
+        won += row.won * weight;
+        lost += row.lost * weight;
+      }
+      return won / lost;
+    });
+    const p = rates.every((value) => value !== null) ? rates[0] / (rates[0] + rates[1]) : null;
+    const home = p === null ? null : p * p * (3 - 2 * p);
+    predictions.push({ start: event.start, actual: event.score[0] > event.score[1] ? "home" : "away",
+      counts: history.map((rows) => rows.length),
+      candidate: home === null ? null : { home, away: 1 - home },
+      short: short.predict(event)?.probabilities, uniform: { home: 0.5, away: 0.5 } });
+  }
+  const comparisons = Object.fromEntries(["short", "uniform"].map((control) => {
+    const paired = predictions.filter((row) => row.candidate && row[control]);
+    const brier = (actual, p) => 2 * (p.home - Number(actual === "home")) ** 2;
+    return [control, { paired: paired.length, candidate: metric(paired, "candidate"), control: metric(paired, control),
+      interval: pairedWeekInterval(paired, "candidate", brier, control) }];
+  }));
+  return { archiveSeries: sorted.length, testSeries: predictions.length,
+    predictions: predictions.filter(({ candidate }) => candidate).length, comparisons,
+    ...(auditCoverage ? { history: {
+      neitherHasHistory: predictions.filter(({ counts }) => counts.every((n) => !n)).length,
+      onlyOneHasHistory: predictions.filter(({ counts }) => counts.filter(Boolean).length === 1).length,
+      bothHaveHistoryButUnderThreshold: predictions.filter(({ candidate, counts }) => !candidate && counts.every(Boolean)).length,
+      coverageOfSimpleForm: predictions.filter(({ short: prediction }) => prediction).length,
+    } } : {}) };
 }
 
 export async function runArchiveBacktest(sport, cutoffDate, paths, mapDirectory, asObserved = false) {
