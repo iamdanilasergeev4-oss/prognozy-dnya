@@ -10,12 +10,25 @@ import { recordForecastPreview } from "./sports-forecast-journal.mjs";
 import { scoreMeasures } from "./sports-score-distribution.mjs";
 import { bookmakerCard, bookmakerMarketName, collectBookmakerLines } from "./sports-bookmaker-lines.mjs";
 import { checkModelCandidate, digest, sealManualPacket } from "./sports-manual-update.mjs";
+import { auditCs2Archive } from "./sports-cs2-research.mjs";
 import "../js/history-core.js";
 
 const root = fileURLToPath(new URL("../.sports-update/", import.meta.url));
 const [run, liveBase, ...options] = process.argv.slice(2);
+const cs2Option = "--cs2-archive=";
+const cs2MetadataOption = "--cs2-metadata-dir=";
+const cs2File = (prefix) => {
+  const args = options.filter((option) => option.startsWith(prefix));
+  const path = args[0]?.slice(prefix.length);
+  if (args.length > 1 || args.length && !path) throw new Error("Некорректный параметр " + prefix);
+  return path && resolve(path);
+};
+const cs2Archive = cs2File(cs2Option);
+const cs2Metadata = cs2File(cs2MetadataOption);
+if (cs2Metadata && !cs2Archive) throw new Error("Укажите --cs2-archive вместе с --cs2-metadata-dir");
 if (!/^run-\d{4}-\d\d-\d\dT\d\d-\d\d-\d\d-\d{3}Z$/.test(run || "") || !liveBase ||
-    options.some((option) => !["--private-football-data", "--private-odds-gap"].includes(option))) {
+    options.some((option) => !["--private-football-data", "--private-odds-gap"].includes(option) &&
+      ![cs2Option, cs2MetadataOption].some((prefix) => option.startsWith(prefix)))) {
   throw new Error("Укажите имя свежего ручного прогона и локальную копию опубликованного сайта");
 }
 const privatePreview = options.length > 0;
@@ -99,6 +112,7 @@ const bookmakerCoverage = await collectBookmakerLines(forecasts.map(({ event }) 
   oddsGapDir: options.includes("--private-odds-gap") ? join(root, "bookmaker-private") : undefined,
 });
 const oddsCheckedAt = Date.now();
+const cs2Check = cs2Archive ? await auditCs2Archive(cs2Archive, { metadataDir: cs2Metadata }) : null;
 const excluded = [
   ...report.evaluatedArticles.filter((item) => !fixtures.some((event) =>
     key(item.sport, item.match, Date.parse(item.start)) === key(event.sport, event.match, event.start)))
@@ -180,6 +194,7 @@ const bookmakerAudit = {
   })),
 };
 await writeFile(join(output, "bookmaker-lines.json"), JSON.stringify(bookmakerAudit, null, 2) + "\n");
+if (cs2Check) await writeFile(join(output, "cs2-evaluation.json"), JSON.stringify(cs2Check, null, 2) + "\n");
 const historyFiles = ["index.json", "express.json", ...directory.months.map((month) => `${month}.json`)];
 for (const file of historyFiles) {
   await copyFile(join(resolve(liveBase), "data/history", file), join(output, "data/history", file));
@@ -246,7 +261,8 @@ const sourceResearch = {
       "https://developers.pandascore.co/docs/plan-reference"] },
 };
 const audit = { checkedAt: report.checkedAt, earliestTest: "2025-10-01", secondTest: "2026-02-01", archivedThrough: new Date(now).toISOString(),
-  inventory, archiveChecks, sourceResearch, checks, pointChecks, distributionChecks, journal, excluded, forecastEvidence: forecasts };
+  inventory, archiveChecks, sourceResearch, checks, pointChecks, distributionChecks, journal, excluded, forecastEvidence: forecasts,
+  ...(cs2Check ? { cs2Check } : {}) };
 await writeFile(join(output, "evaluation.json"), JSON.stringify(audit, null, 2) + "\n");
 const baselineFiles = { "data/predictions.json": liveData };
 for (const file of historyFiles) baselineFiles[`data/history/${file}`] = await read(resolve(liveBase), `data/history/${file}`);
@@ -259,7 +275,8 @@ const manualReport = {
   evidence: { evaluation: digest(audit), quotes: digest(bookmakerAudit) },
   blockers: [...report.blockers],
 };
-if (privatePreview) manualReport.blockers.push("Частный архив котировок разрешён только в локальном превью");
+if (options.some((option) => option.startsWith("--private-"))) manualReport.blockers.push("Частный архив котировок разрешён только в локальном превью");
+if (cs2Check) manualReport.blockers.push("Исследование архива CS2 доступно в локальном превью");
 if (!privatePreview) {
   try {
     checkModelCandidate(baselineFiles, payload, manualReport, audit, bookmakerAudit, Date.now());
@@ -281,6 +298,7 @@ const lines = [
   "| Спорт | Подтверждено | Исторических результатов | Материалов | Численных оценок |",
   "| --- | ---: | ---: | ---: | ---: |",
   ...inventory.map((row) => `| ${names[row.sport]} | ${row.confirmed} | ${row.history} | ${row.materials} | ${row.estimates} |`),
+  ...(cs2Check ? ["", `[Проверка модели CS2](cs2-evaluation.json). В архиве ${cs2Check.archiveSeries} BO3, в сравнении ${cs2Check.predictions} серий. Допуск модели закрыт.`] : []),
   "", "## Букмекерские линии", "",
   ...[...Map.groupBy(modelArticles, ({ bookmaker }) => bookmaker.status)].map(([status, articles]) =>
     `- ${({ current: "Доступны актуальные котировки", snapshot: "Доступны только архивные коэффициенты", stale: "Линия устарела",
