@@ -4,6 +4,8 @@ import { buildUpdate, classifySchedule, eventIndex, resultFor, selectExpress, se
   verifiedEsportsForm } from "../scripts/sports-update-core.mjs";
 import { parseEnsi, parseEnsiForm, parseEnsiResult, parseScores, parseLega, parseGosu } from "../scripts/sports-sources.mjs";
 import { assessMarkets, completedSeries } from "../scripts/sports-markets.mjs";
+import { reconcileClaims } from "../scripts/sports-reconciliation.mjs";
+import { normalizeIdentity } from "../scripts/sports-discovery.mjs";
 
 const now = Date.parse("2026-11-21T19:00:00+03:00");
 const start = now + 2 * 3600_000;
@@ -24,6 +26,22 @@ test("a single publisher, a conflicting start and an already started fixture can
   const valid = eventIndex([a, game("b", { home: "Ницца", away: "Paris Saint-Germain" })]);
   assert.equal(upcomingEvidence(valid, a, now, start + 3600_000).length, 2);
   assert.equal(upcomingEvidence(valid, a, start, start + 3600_000).length, 0);
+});
+
+test("manual tennis pairs the two Argentina Open calendars within the same edition", () => {
+  const time = Date.parse("2026-11-24T19:10:00Z");
+  const first = game("365Scores", { sport: "tennis", tournament: "Buenos Aires",
+    home: "Irene Burillo Escorihuela", away: "Victoria Kasintseva", start: time });
+  const second = game("ESPN", { sport: "tennis", tournament: "IEB+ Argentina Open",
+    home: "Victoria Jimenez Kasintseva", away: "Irene Burillo", start: time + 20 * 60_000 });
+  const inspect = (override, asOf = time - 1) => {
+    const rows = reconcileClaims([first, { ...second, ...override }], normalizeIdentity);
+    return classifySchedule(eventIndex(rows), rows[0], asOf, time + 3600_000);
+  };
+  assert.equal(inspect().evidence.length, 2);
+  assert.equal(inspect({}, time).reason, "status_conflict");
+  assert.equal(inspect({ start: time + 21 * 60_000 }).reason, "time_conflict");
+  assert.equal(inspect({ tournament: "ATP Buenos Aires" }).reason, "single_secondary");
 });
 
 test("manual schedule accepts a scoped official source and rejects contradictory or mirrored claims", () => {

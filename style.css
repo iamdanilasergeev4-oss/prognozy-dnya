@@ -403,6 +403,7 @@ button { font: inherit; color: inherit; }
 }
 .src-list a span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .src-list a small { font: 400 11.5px var(--f-mono); color: var(--muted); }
+.source-timing { display: block; color: var(--muted); font: 400 11.5px var(--f-mono); }
 .src-list a svg { width: 13px; height: 13px; transition: transform .25s var(--ease); }
 .src-list a:hover { background: rgba(255, 255, 255, .04); color: var(--text); }
 .src-list a:hover svg { transform: translate(1px, -1px); }

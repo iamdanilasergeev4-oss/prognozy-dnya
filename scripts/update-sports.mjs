@@ -55,12 +55,19 @@ async function fetchData(url, html = false) {
   }
 }
 
-async function collect(jobs, scheduleDays, now, includeTennisPreviews = true, get = fetchData, currentScheduleOnly = false) {
+async function collect(jobs, scheduleDays, now, includeTennisPreviews = true, get = fetchData, currentScheduleOnly = false, receipts = []) {
   const errors = [];
   const outcomes = new Array(jobs.length);
   const isCalendar = (job) => !job.standings && !job.resultIndex && !job.historicalOnly &&
     (job.day === null || scheduleDays.includes(job.day));
   const jobReport = [];
+  const withReceipt = (row, url, historical = false) => {
+    const request = receipts.findLast((entry) => entry.url === url && ["ok", "cached"].includes(entry.status));
+    if (!request || !Number.isFinite(request.receivedAt)) return row;
+    return { ...row, sourceReceipt: { receivedAt: new Date(request.receivedAt).toISOString(),
+      snapshotAt: Number.isFinite(request.snapshotAt) ? new Date(request.snapshotAt).toISOString() : null,
+      freshness: historical || row.status === "finished" || request.status === "cached" ? "archive" : "live_response" } };
+  };
   async function runBatch(indices) {
     let cursor = 0;
     await Promise.all(Array.from({ length: Math.min(8, indices.length) }, async () => {
@@ -72,7 +79,7 @@ async function collect(jobs, scheduleDays, now, includeTennisPreviews = true, ge
         try {
           const body = await get(job.url, job.html, job.source, job.sports[0], job.day, calendar);
           received = true;
-          const rows = job.parse(body);
+          const rows = job.parse(body).map((row) => withReceipt(row, job.url, job.historicalOnly || job.resultIndex));
           outcomes[index] = { job, rows };
           jobReport.push({ url: job.url, source: job.source, day: job.day, calendar, status: "parsed", rows: rows.length });
         } catch (error) {
@@ -107,13 +114,14 @@ async function collect(jobs, scheduleDays, now, includeTennisPreviews = true, ge
   const links = esportsResultLinks(received.filter(({ job }) => job.resultIndex).flatMap(({ rows }) => rows), rows);
   const results = await Promise.all(links.map(async (row) => {
     try {
-      return parseEnsiResult(await get(row.url, true, row.source, row.sport), row);
+      const result = parseEnsiResult(await get(row.url, true, row.source, row.sport), row);
+      return result && withReceipt(result, row.url, true);
     } catch (error) {
       errors.push(log("error", "Ошибка проверки результата серии", { publisher: row.source, url: row.url, error: error.message }));
       return null;
     }
   }));
-  const fixtures = esportsFormLinks(rows, now);
+  const fixtures = esportsFormLinks(rows, now, currentScheduleOnly);
   const forms = new Array(fixtures.length);
   const editorialForms = new Array(fixtures.length);
   let nextFixture = 0;
@@ -126,8 +134,9 @@ async function collect(jobs, scheduleDays, now, includeTennisPreviews = true, ge
         const [first, second] = await Promise.all([get(strafe.url, true, strafe.source, row.sport), get(ensi.url, true, ensi.source, row.sport)]);
         const strafeResults = parseStrafeForm(first);
         const ensiResults = parseEnsiForm(second);
-        forms[i] = [row.url, verifiedEsportsForm(fixture, strafeResults, ensiResults, now)];
-        if (currentScheduleOnly) editorialForms[i] = [row.url, verifiedEsportsForm(fixture, strafeResults, ensiResults, now, 28, 12)];
+        const checkedFixture = { ...fixture, strafe: withReceipt(strafe, strafe.url, true), ensi: withReceipt(ensi, ensi.url, true) };
+        forms[i] = [row.url, verifiedEsportsForm(checkedFixture, strafeResults, ensiResults, now)];
+        if (currentScheduleOnly) editorialForms[i] = [row.url, verifiedEsportsForm(checkedFixture, strafeResults, ensiResults, now, 28, 12)];
       } catch (error) {
         errors.push(log("error", "Ошибка сверки формы команд", { sport: row.sport, match: `${row.home} — ${row.away}`, error: error.message }));
       }
@@ -289,14 +298,14 @@ async function preview(mode = "preview", editorialFile, replay) {
       if (!hash) throw new Error("Ответ отсутствует в сохранённом снимке");
       const body = (await verifyResearchObject(store, "raw", hash)).toString("utf8");
       return html ? body : JSON.parse(body);
-    }, true);
+    }, true, record.requests.map((row) => ({ ...row, status: "cached" })));
     research = { site, diagnostics: await read(join(root, ".sports-update", replay.run), "diagnostic.json"),
       history: mergeHistory(prior.flatMap((run) => run.normalized.results), record.at).history,
       requests: record.requests, snapshot: replay.snapshot };
   } else if (manual) {
-    research = await captureManualResearch(store, now, (get) =>
+    research = await captureManualResearch(store, now, (get, receipts) =>
       collect(jobs, scheduleDays, now, false, (url, text, source, sport, day, schedule) =>
-        get(url, { text, source, sport, schedule, minAge: day && day < dateKey(now - DAY) ? 7 * DAY : 0 }), true));
+        get(url, { text, source, sport, schedule, minAge: day && day < dateKey(now - DAY) ? 7 * DAY : 0 }), true, receipts));
   }
   const data = research ? research.site : await collect(jobs, scheduleDays, now, !shadow);
   // History settlement can mutate entries that share references with the

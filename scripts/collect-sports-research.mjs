@@ -158,7 +158,7 @@ export function seasonCacheAge(prior, now) {
 async function acquire(root, prior, startedAt, claimFiles, collectSite) {
   const requests = [];
   const get = datasource(root, prior, requests, Date.now, fetch, Boolean(collectSite));
-  const site = collectSite ? await collectSite(get) : null;
+  const site = collectSite ? await collectSite(get, requests) : null;
   const season = europeanSeason(startedAt).slice(0, 4);
   const minAge = collectSite ? 0 : seasonCacheAge(prior, startedAt);
   const until = startedAt + 2 * DAY;

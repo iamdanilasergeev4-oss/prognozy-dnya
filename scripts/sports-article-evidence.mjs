@@ -167,9 +167,11 @@ export function describeEvidence(article, context, research, now, editorial = []
     ...sourceNotes.map((item) => item.note), basis, surface, ...stats, ...scoring.lines, ...splits, strength, headToHead,
     ...baselineNotes.filter((note) => !marketEvidence.includes(note)), unavailable].filter(Boolean).join("\n");
   article.key_factors = [contextName(article), model.length ? "Вероятности рассчитаны по отдельной модели исхода." : "Без численной оценки вероятности."].filter(Boolean);
-  const sources = [...article.sources, ...rowsBySide.flatMap(({ rows }) => rows.flatMap((row) => row.sources)),
+  const sources = [...article.sources, ...rowsBySide.flatMap(({ rows }) =>
+    rows.flatMap((row) => row.sources.map((source) => ({ ...source, freshness: "archive" })))),
     ...sourceNotes.map((item) => item.source), ...(surface ? [{ title: "WTA", url: contextEvent.contextSource }] : [])];
-  article.sources = [...new Map(sources.map(({ title, url }) => [`${title}|${url}`, { title, url }])).values()];
+  article.sources = [...new Map(sources.map(({ title, url, receivedAt, snapshotAt, freshness }) =>
+    [`${title}|${url}|${freshness ?? ""}`, { title, url, receivedAt, snapshotAt, freshness }])).values()];
   const counts = rowsBySide.map(({ rows }) => rows.length);
   const freshResults = fresh(best.matches);
   const formatKnown = !series.has(article.sport_id) || Boolean(article.format);

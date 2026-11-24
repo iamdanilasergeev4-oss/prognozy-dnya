@@ -129,7 +129,7 @@ export function selectManualAnalysis(next, contexts, research, now, editorial) {
     selected.push(...articles);
     const calendar = articles.map(({ article, context }) => sport.events.find((event) => same(event, article)) ?? {
       match: article.match, tournament: article.tournament, start: article.start, start_iso: article.start_iso,
-      format: article.format, sources: context.evidence.map(({ source, url }) => ({ title: source, url })),
+      format: article.format, sources: context.evidence.map(({ source, url, sourceReceipt }) => ({ title: source, url, ...sourceReceipt })),
       schedule_evidence: context.basis, has_pick: false,
     });
     const necessary = sport.events.filter((event) => event.has_pick && !calendar.some((entry) => same(event, entry)));

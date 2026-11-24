@@ -33,11 +33,15 @@ const germanCompetitions = {
 // These editions were checked against the WTA tournament pages. Scope the
 // city labels to the edition so they do not match other tours in those cities.
 const wtaEditions = [
-  { from: "2026-11-21", through: "2026-11-30", names: /^(?:buenos aires(?: 125)?(?: qualifications)?|ieb argentina open)$/,
+  { from: "2026-11-21", through: "2026-11-30", names: /^(?:buenos aires(?: 125)?(?: qualifications)?|ieb\+? argentina open)$/,
     title: "IEB+ Argentina Open", url: "https://www.wtatennis.com/tournaments/2052/buenos-aires-125/2026" },
   { from: "2026-11-14", through: "2026-11-23", names: /^(?:colina(?: 125)?(?: qualifications| round of 16| semi finals| quarter finals| final)?|lp open by ind)$/,
     title: "LP Open by IND", url: "https://www.wtatennis.com/tournaments/2076/colina-125/2026/" },
 ];
+const wtaPlayerNames = {
+  "irene burillo escorihuela": "Irene Burillo",
+  "victoria kasintseva": "Victoria Jimenez Kasintseva",
+};
 
 const families = {
   "cct eu": /^cct europe series \d+/,
@@ -108,6 +112,7 @@ export function reconcileClaims(rows, normalize) {
       const day = new Date(row.start).toISOString().slice(0, 10);
       const edition = wtaEditions.find((item) => day >= item.from && day <= item.through && item.names.test(league));
       if (edition) return { ...row, tournament: edition.title, displayTournament: row.tournament,
+        home: wtaPlayerNames[normalize(row.home)] ?? row.home, away: wtaPlayerNames[normalize(row.away)] ?? row.away,
         season: row.season ?? "2026", surface: row.surface ?? "outdoor-clay", contextSource: edition.url };
     }
     return row;

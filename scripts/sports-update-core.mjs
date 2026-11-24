@@ -4,6 +4,7 @@ import { assessMarkets, completedSeries } from "./sports-markets.mjs";
 import { isOfficial, sourceOrigin, validSeries } from "./sports-evidence.mjs";
 
 import { competitionOf } from "./sports-discovery.mjs";
+import { reconcileClaims } from "./sports-reconciliation.mjs";
 
 const H = globalThis.HistoryCore;
 const MINUTE = 60_000;
@@ -44,6 +45,7 @@ const aliases = [
   ["Sir Susa Scai Perugia", "Volley Perugia"], ["Cucine Lube Civitanova", "Lube Civitanova"],
   ["Tinet Prata di Pordenone", "Prata di Pordenone"], ["Itas Trentino", "Trentino Volley"],
   ["Vero Volley Monza", "Volley Monza"],
+  ["Energa Trefl Gdańsk", "Trefl Gdańsk"], ["NEONET Norwid Częstochowa", "Norwid Czestochowa"],
   ["Brooklyn Nets", "Brooklyn"], ["NY Knicks", "New York Knicks"],
   ["Inner Circle x Insanity", "Inner Circle"], ["LGD Gaming", "LGD"], ["1W Team", "1Win"],
   ["VfB Stuttgart II", "Stuttgart II"], ["FC Ingolstadt 04", "FC Ingolstadt", "Ingolstadt"],
@@ -64,7 +66,7 @@ const align = (score, a, b) => score && (orientation(a, b) === 1 ? score : [...s
 const scoreText = (score) => score?.join(":");
 const sameScore = (a, b) => !!a && !!b && scoreText(a) === scoreText(b);
 const tolerance = (sport) => (sport === "tennis" ? 5 : 15) * MINUTE;
-const link = (e) => ({ title: e.source, url: e.url });
+const link = (e) => ({ title: e.source, url: e.url, ...e.sourceReceipt });
 const validLink = (value) => {
   try { return new URL(value).protocol === "https:"; } catch { return false; }
 };
@@ -90,9 +92,10 @@ export function esportsResultLinks(rows, published) {
       row.start - candidate.start <= 4 * 60 * MINUTE)).map((row) => [row.url, row])).values()].slice(0, 15);
 }
 
-export function esportsFormLinks(rows, now) {
+export function esportsFormLinks(rows, now, manualSchedule = false) {
   const index = eventIndex(rows);
-  return [...esports].flatMap((sport) => selectUpcoming(index, sport, now + PUBLISH_BUFFER, now + 2 * DAY)
+  return [...esports].flatMap((sport) => selectUpcoming(index, sport, now + PUBLISH_BUFFER, now + 2 * DAY,
+    manualSchedule ? new Map() : null)
     .flatMap(({ row, evidence }) => {
       const strafe = evidence.find((source) => source.source === "Strafe" && source.format);
       const ensi = evidence.find((source) => source.source === "Ensigame" && source.format === strafe?.format);
@@ -111,7 +114,7 @@ export function tennisPreviewLinks(rows, now) {
   }).slice(0, 3);
 }
 
-export function verifiedEsportsForm({ row, strafe }, first, second, now, days = 7, limit = 3) {
+export function verifiedEsportsForm({ row, strafe, ensi }, first, second, now, days = 7, limit = 3) {
   const key = (names) => names.map(team).sort().join("|");
   const entries = [...new Map(second.filter((entry) => entry.format === strafe.format && entry.ended < now &&
     entry.ended > now - days * DAY).map((entry) => [entry.url, entry])).values()];
@@ -126,7 +129,7 @@ export function verifiedEsportsForm({ row, strafe }, first, second, now, days = 
       if (duplicate || corroborated.length !== 1 || team(corroborated[0].winner) !== team(entry.winner) ||
           corroborated[0].format && corroborated[0].format !== entry.format) return [];
       return [{ id: entry.url, win: team(entry.winner) === team(name), start: entry.ended, match: entry.names.join(" — "),
-        format: entry.format, outcome: `победа «${entry.winner}»`, sources: [link(strafe), { title: "Ensigame", url: entry.url }] }];
+        format: entry.format, outcome: `победа «${entry.winner}»`, sources: [link(strafe), { title: "Ensigame", url: entry.url, ...ensi?.sourceReceipt }] }];
     }).sort((a, b) => b.start - a.start).slice(0, limit);
   });
 }
@@ -215,7 +218,9 @@ function formFor(index, event, name, now, fixtureFormat, editorialDays, official
       if (row.sport !== event.sport || row.start >= now || row.start < now - days * DAY ||
           ![team(row.home), team(row.away)].includes(team(name))) continue;
       // Keep the form window within the same competitions to avoid mixing levels of play.
+      const plusLiga = (item) => ["plusliga", "tauron liga"].includes(normalize(item.tournament));
       if (normalize(row.tournament) !== normalize(event.tournament) && !(row.league && row.league === event.league) &&
+          !(event.sport === "volleyball" && officialHistory && plusLiga(row) && plusLiga(event)) &&
           !(esports.has(event.sport) && row.format && row.format === event.format)) continue;
       const sources = consensusScore(index, row, "final");
       const official = officialHistory && sources.length === 1 && officialFixtureSource(sources[0]) &&
@@ -359,7 +364,12 @@ export function officialFixtureSource(row, source = link(row)) {
 export function classifySchedule(index, candidate, now, until) {
   const { sport } = candidate;
   const group = index.get(pair(candidate)) ?? [];
-  const near = group.filter((row) => Math.abs(row.start - candidate.start) <= tolerance(sport));
+  // Only the two mapped calendars of the same verified WTA edition use the
+  // longer window for estimates. Confirmed start times and results keep their own rules.
+  const sameWtaEdition = (row) => sport === "tennis" && candidate.contextSource &&
+    row.contextSource === candidate.contextSource && row.status === "scheduled" && candidate.status === "scheduled";
+  const allowed = (row) => sameWtaEdition(row) ? 20 * MINUTE : tolerance(sport);
+  const near = group.filter((row) => Math.abs(row.start - candidate.start) <= allowed(row));
   const scoped = (row) => competitionOf(row, true);
   const sameCompetition = (a, b) => scoped(a).id === scoped(b).id ||
     Boolean(a.league && a.league === b.league) || Boolean(a.tournament && normalize(a.tournament) === normalize(b.tournament));
@@ -377,7 +387,8 @@ export function classifySchedule(index, candidate, now, until) {
       near.some((row) => orientation(candidate, row) !== 1)) return { reason: "home_away_conflict" };
   if (new Set(near.map((row) => row.format).filter(Boolean)).size > 1) return { reason: "format_conflict" };
   const spread = Math.max(...near.map((row) => row.start)) - Math.min(...near.map((row) => row.start));
-  if (spread > tolerance(sport) || group.some((row) => row.source !== candidate.source && !near.includes(row) &&
+  if (spread > (near.every(sameWtaEdition) ? 20 * MINUTE : tolerance(sport)) ||
+      group.some((row) => row.source !== candidate.source && !near.includes(row) &&
       sameCompetition(row, candidate) && Math.abs(row.start - candidate.start) <= 3 * 60 * MINUTE)) return { reason: "time_conflict" };
   const evidence = [...feeds.values()].map(([row]) => row);
   const official = evidence.some((row) => officialFixtureSource(row));
@@ -405,7 +416,8 @@ function selectUpcoming(index, sport, now, until, audit) {
         continue;
       }
       const { evidence } = checked;
-      const row = evidence.find((item) => audit && officialFixtureSource(item)) ||
+      const row = sport === "tennis" && audit ? evidence.reduce((first, item) => item.start < first.start ? item : first) :
+        evidence.find((item) => audit && officialFixtureSource(item)) ||
         evidence.find((item) => ["NHL", "Lega Pallavolo", "Strafe"].includes(item.source)) || evidence[0];
       upcoming.push({ row, evidence, basis: checked.basis });
     }
@@ -530,7 +542,8 @@ export function buildUpdate({ current, indexFile, historyFiles, express, rows, s
   const at = H.toMskIso(new Date(now));
   const tomorrow = H.mskDateOf(new Date(now + DAY).toISOString());
   const until = Date.parse(`${tomorrow}T23:59:59.999+03:00`) + 1;
-  const index = eventIndex(rows);
+  const index = eventIndex(manualSchedule ? reconcileClaims(rows.filter((row) => row.sport === "tennis"), normalize)
+    .concat(rows.filter((row) => row.sport !== "tennis")) : rows);
   const context = { hockey: checkedStandings(standings.filter((row) => !row.kind)), volley: checkedVolleyTable(standings),
     tennis: new Map(standings.filter((row) => row.kind === "tennis" && row.updated <= now && row.updated >= now - 14 * DAY)
       .map((row) => [team(row.name), row])), tennisPreviews, esportsForm, esportsEditorialForm, editorialDays };
@@ -626,7 +639,7 @@ export function buildUpdate({ current, indexFile, historyFiles, express, rows, s
         Number(String(pick.odds).replace(",", ".")) === Number(leg.odds))))) : [...mixedExpress, ...pricedExpress];
   const hasNew = (model) => forecastSports.some((sport) => sport.picks.some((pick) => pick.generated === model));
   const next = { updated_at: at, source: "sports-update", model_version: hasNew(MARKET_MODEL) ? MARKET_MODEL : hasNew(FORM_MODEL) ? FORM_MODEL : current.model_version,
-    sports, analysis, express: activeExpress };
+    ...(manualSchedule ? { manual_schedule: true } : {}), sports, analysis, express: activeExpress };
 
   const history = H.mergeMonths(historyFiles);
   const ids = new Set(history.predictions.map((e) => e.id));

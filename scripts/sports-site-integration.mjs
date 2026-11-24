@@ -51,3 +51,46 @@ export function integrateSite(baseline, scheduled, model, { snapshotAt } = {}) {
         pick.match === leg.match && pick.start_iso === leg.start_iso && pick.bet === leg.bet))),
   };
 }
+
+export function localSportsPreview(html, payload, { notice, frozenAt }) {
+  const serialized = JSON.stringify(payload).replace(/</g, "\\u003c");
+  const script = `<base href="../../">
+  <meta name="robots" content="noindex,nofollow">
+  <script>
+  (() => {
+    const payload = ${serialized};
+  ${Number.isFinite(frozenAt) ? `  Date.now = () => ${frozenAt};` : ""}
+    window.fetch = async (url) => {
+      const file = String(url).split("?")[0];
+      return Object.hasOwn(payload, file) ? Response.json(payload[file]) : new Response(null, {status: 403});
+    };
+    const replace = history.replaceState.bind(history);
+    history.replaceState = (state, title, url) => {
+      if (typeof url === "string" && url.startsWith("#")) {
+        const current = new URL(location.href);
+        current.hash = url;
+        return replace(state, title, current);
+      }
+      return replace(state, title, url);
+    };
+    document.addEventListener("click", (event) => {
+      const anchor = event.target.closest("a[href^='#']");
+      if (!anchor || event.defaultPrevented) return;
+      event.preventDefault();
+      location.hash = anchor.getAttribute("href");
+      document.getElementById(location.hash.slice(1))?.scrollIntoView();
+    });
+    document.addEventListener("submit", (event) => {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    }, true);
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelector("#send").disabled = true;
+    });
+  })();
+  </script>`;
+  const banner = `<p class="note stable-preview-notice" role="note">${notice}</p>`;
+  return html.replace("<head>", () => "<head>\n" + script)
+    .replace(/<title>[^<]+<\/title>/, "<title>Прогнозы дня · Локальное превью</title>")
+    .replace('<main id="main">', '<main id="main">\n' + banner);
+}

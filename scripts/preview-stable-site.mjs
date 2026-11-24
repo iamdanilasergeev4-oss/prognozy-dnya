@@ -1,7 +1,7 @@
 import { copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { sealManualPacket, digest } from "./sports-manual-update.mjs";
-import { integrateSite } from "./sports-site-integration.mjs";
+import { integrateSite, localSportsPreview } from "./sports-site-integration.mjs";
 import { priceProbability } from "./sports-bookmaker-lines.mjs";
 
 const [baselinePath, forecastPath, ...extra] = process.argv.slice(2);
@@ -57,43 +57,7 @@ const model = { ...saved, analysis: saved.analysis.map((article) => {
 }) };
 const integrated = integrateSite(baseline[predictionFile], scheduled, model, { snapshotAt: saved.updated_at });
 const payload = { ...baseline, [predictionFile]: integrated };
-const serialized = JSON.stringify(payload).replace(/</g, "\\u003c");
 const html = await readFile(join(root, "index.html"), "utf8");
-const script = `<base href="../../">
-<meta name="robots" content="noindex,nofollow">
-<script>
-(() => {
-  const payload = ${serialized};
-  Date.now = () => ${at};
-  window.fetch = async (url) => {
-    const file = String(url).split("?")[0];
-    return Object.hasOwn(payload, file) ? Response.json(payload[file]) : new Response(null, {status: 403});
-  };
-  const replace = history.replaceState.bind(history);
-  history.replaceState = (state, title, url) => {
-    if (typeof url === "string" && url.startsWith("#")) {
-      const current = new URL(location.href);
-      current.hash = url;
-      return replace(state, title, current);
-    }
-    return replace(state, title, url);
-  };
-  document.addEventListener("click", (event) => {
-    const anchor = event.target.closest("a[href^='#']");
-    if (!anchor || event.defaultPrevented) return;
-    event.preventDefault();
-    location.hash = anchor.getAttribute("href");
-    document.getElementById(location.hash.slice(1))?.scrollIntoView();
-  });
-  document.addEventListener("submit", (event) => {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-  }, true);
-  document.addEventListener("DOMContentLoaded", () => {
-    document.querySelector("#send").disabled = true;
-  });
-})();
-</script>`;
 const output = join(root, ".sports-update", "stable-preview");
 await mkdir(output, { recursive: true });
 await mkdir(join(output, "data", "history"), { recursive: true });
@@ -120,8 +84,7 @@ const coverage = [
   "",
 ];
 await writeFile(join(output, "bookmaker-coverage.md"), coverage.join("\n"));
-const banner = `<p class="note stable-preview-notice" role="note">Локальное превью. Снимок на ${time} МСК. Прогнозы и цены показаны в архивном контексте. Отправка предложений отключена.</p>`;
-await writeFile(join(output, "preview-site.html"), html.replace("<head>", () => "<head>\n" + script)
-  .replace(/<title>[^<]+<\/title>/, "<title>Прогнозы дня · Локальное превью</title>")
-  .replace('<main id="main">', '<main id="main">\n' + banner));
+await writeFile(join(output, "preview-site.html"), localSportsPreview(html, payload, { frozenAt: at,
+  notice: `Локальное превью. Снимок на ${time} МСК. Прогнозы и цены показаны в архивном контексте. Отправка предложений отключена.`,
+}));
 console.log(output);

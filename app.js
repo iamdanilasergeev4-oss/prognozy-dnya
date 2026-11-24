@@ -654,13 +654,20 @@
   }
 
   /* ---------- Карточки прогнозов ---------- */
+  function sourceTiming(source) {
+    if (!source.receivedAt && !source.freshness) return "";
+    const archival = source.freshness === "archive" || data?.review_snapshot_at;
+    return [archival ? "Архив" : "Ответ источника",
+      source.receivedAt ? `получен ${fmtDate(source.receivedAt)}` : "",
+      source.snapshotAt ? `снимок от ${fmtDate(source.snapshotAt)}` : "дата снимка не указана"].filter(Boolean).join(" · ");
+  }
   function srcChips(list) {
     return (list || []).map((s) =>
-      `<a class="src" href="${esc(s.url)}" target="_blank" rel="nofollow noopener" title="${esc(s.title)}">${esc(host(s.url))}${I_OUT}</a>`).join("");
+      `<a class="src" href="${esc(s.url)}" target="_blank" rel="nofollow noopener" title="${esc([s.title, sourceTiming(s)].filter(Boolean).join(" · "))}">${esc(host(s.url))}${I_OUT}</a>`).join("");
   }
   function srcList(list) {
     return `<ul class="src-list">` + (list || []).map((s) =>
-      `<li><a href="${esc(s.url)}" target="_blank" rel="nofollow noopener"><span>${esc(s.title || host(s.url))}</span><small>${esc(host(s.url))}</small>${I_OUT}</a></li>`).join("") + `</ul>`;
+      `<li><a href="${esc(s.url)}" target="_blank" rel="nofollow noopener"><span>${esc(s.title || host(s.url))}</span><small>${esc(host(s.url))}</small>${I_OUT}</a>${sourceTiming(s) ? `<small class="source-timing">${esc(sourceTiming(s))}</small>` : ""}</li>`).join("") + `</ul>`;
   }
   /* Уверенность: пять делений растущей высоты */
   function gauge(conf) {
@@ -748,6 +755,8 @@
         <strong>${esc(ru(event.match, sport.id))}</strong>
         <div class="schedule-meta"><span class="srcs">${srcChips(event.sources)}</span>
         ${story < 0 ? "" : `<button type="button" class="pk-story" data-story="${story}">${icon("analysis")}<span>Разбор</span></button>`}</div>
+        ${(event.sources || []).filter((source) => sourceTiming(source)).map((source) =>
+          `<small class="source-timing">${esc(source.title)} · ${esc(sourceTiming(source))}</small>`).join("")}
       </li>`;
     }).join("")}</ul></section>`;
   }
@@ -875,8 +884,9 @@
     if (sport.stale && sport.updated_at) {
       html += `<p class="note warn">Сегодня обновить не удалось — показаны прогнозы от ${esc(fmtDate(sport.updated_at))}.</p>`;
     }
-    const schedule = integrated() || !cards.length || ["tennis", "volleyball", "dota2"].includes(sport.id) ?
-      scheduleHTML(sport, integrated() ? cards : []) : "";
+    const fullSchedule = integrated() || data.manual_schedule;
+    const schedule = fullSchedule || !cards.length || ["tennis", "volleyball", "dota2"].includes(sport.id) ?
+      scheduleHTML(sport, fullSchedule ? cards : []) : "";
     if (!cards.length && schedule) return html + schedule;
     if (!cards.length) {
       const story = (data.analysis || []).findIndex((a) => a.sport_id === sport.id);

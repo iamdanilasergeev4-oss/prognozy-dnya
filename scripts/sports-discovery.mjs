@@ -167,7 +167,7 @@ export function discover(rows, { now, until, improved = false }) {
         rules: ["cs2", "dota2"].includes(first.sport) ? format : surface,
         homeField: first.sport === "football" && aligned && claims.every((row) => row.homeField === true),
         patch, contextSource: claims.find((row) => row.contextSource)?.contextSource,
-        sources: claims.map((row) => ({ title: row.source, id: row.id, url: row.url, origin: row.origin,
+        sources: claims.map((row) => ({ title: row.source, id: row.id, url: row.url, origin: row.origin, ...row.sourceReceipt,
           reportedStart: row.start, reportedStatus: row.status, format: row.format, surface: row.surface,
           researchFormat: row.researchFormat ? `BO${row.researchFormat}` : null,
           reportedScore: scoreInOrder(row), extra: row.extra,
