@@ -139,19 +139,27 @@ test("a manual calendar retries timeouts and verifies the schedule on the networ
     const url = "https://example.org/calendar";
     const options = { source: "test", sport: "football" };
     const initial = [];
-    await datasource(root, [], initial, Date.now, async () => new Response('["old"]'))(url, options);
+    const modified = new Date(Date.now() - 86_400_000).toUTCString();
+    await datasource(root, [], initial, Date.now, async () =>
+      new Response('["old"]', { headers: { "Last-Modified": modified } }))(url, options);
     const failed = { ...initial[0], status: "error", kind: "timeout", nextAttemptAt: Date.now() + 3600_000 };
     const requests = [];
     let calls = 0;
     const get = datasource(root, [{ at: 2, requests: [failed] }, { at: 1, requests: initial }], requests, Date.now, async () => {
       if (++calls === 1) throw new DOMException("request timed out", "TimeoutError");
-      return new Response('["fresh"]');
+      return new Response('["fresh"]', { headers: { Date: new Date().toUTCString() } });
     }, true);
     assert.deepEqual(await get(url, options), ["old"]);
     assert.equal(calls, 0);
+    assert.equal(requests[0].receivedAt, initial[0].receivedAt);
+    assert.equal(requests[0].freshness, "archive");
+    assert.equal(requests[0].snapshotAt, Date.parse(modified));
+    assert.equal(requests[0].snapshotDateSource, "last-modified");
     assert.deepEqual(await get(url, { ...options, schedule: true }), ["fresh"]);
     assert.equal(requests[1].attempts[0].kind, "timeout");
     assert.equal(requests[1].attempts[1].status, "ok");
+    assert.equal(requests[1].freshness, "live_response");
+    assert.equal(requests[1].snapshotAt, null);
     assert.equal(calls, 2);
   } finally {
     await rm(root, { recursive: true, force: true });

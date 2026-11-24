@@ -1,7 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { appendValidatedAnalysis, checkManualPacket, checkModelCandidate, digest, MANUAL_REVIEW_AGE, sealManualPacket, selectManualAnalysis }
+import { appendValidatedAnalysis, checkManualPacket, checkModelCandidate, checkUpcomingSelection, digest, MANUAL_REVIEW_AGE, sealManualPacket, selectManualAnalysis }
   from "../scripts/sports-manual-update.mjs";
+import { integrateSite } from "../scripts/sports-site-integration.mjs";
 
 const now = Date.parse("2026-11-22T01:00:00Z");
 const start = now + 3_600_000;
@@ -49,6 +50,16 @@ test("model packet verifies evidence, history and freshness, and rejects private
   assert.throws(() => verify(candidate, evaluation, archive,
     { ...report, evidence: { ...report.evidence, quotes: digest(archive) } }), /Частный архив/);
 
+  const previous = baseline["data/predictions.json"];
+  const scheduled = { sports: [{ id: "football", events: [article] }] };
+  const integrated = integrateSite(previous, scheduled, { updated_at: evaluation.checkedAt, analysis: [article] });
+  const integratedFiles = { ...baseline, "data/predictions.json": integrated };
+  assert.doesNotThrow(() => verify(integratedFiles));
+  assert.throws(() => verify({ ...baseline, "data/predictions.json": { ...integrated,
+    review_snapshot_at: evaluation.checkedAt } }), /архивный/);
+  assert.throws(() => verify({ ...baseline, "data/predictions.json": { ...integrated,
+    express: [{ id: "new", legs: [article] }] } }), /исходные разборы, прогнозы или экспрессы/);
+
   const offer = { selection: "over", price: 1.9, point: 2.5 };
   const market = { type: "total", scope: "regulation", bookmaker: "Test", source: "Test",
     sourceUrl: "https://example.com/odds", rulesUrl: "https://example.com/rules",
@@ -60,9 +71,31 @@ test("model packet verifies evidence, history and freshness, and rejects private
     expiresAt: new Date(now + 60_000).toISOString(), outcomes: [{ ...offer, model: { win: 0.6, method: "distribution" } }] }] };
   const pricedReport = { ...report, evidence: { ...report.evidence, quotes: digest(recorded) } };
   assert.doesNotThrow(() => verify(priced, evaluation, recorded, pricedReport));
+  const integratedWithPrice = integrateSite(previous, scheduled, { updated_at: evaluation.checkedAt, analysis: [pricedArticle] });
+  assert.throws(() => verify({ ...baseline, "data/predictions.json": integratedWithPrice }, evaluation, recorded, pricedReport),
+    /подтверждённое право/);
   assert.throws(() => verify(priced, evaluation, recorded, pricedReport, now + 2 * 60_000), /Котировка устарела/);
   pricedArticle.bookmaker.lines[0].outcomes[0].model.win = 0.8;
   assert.throws(() => verify(priced, evaluation, recorded, pricedReport), /отличается от журнала или не соответствует/);
+});
+
+test("the live selection never carries archived or cancelled fixtures out of a saved preview", () => {
+  const future = makeArticle();
+  const past = { ...future, match: "Past fixture", start_iso: new Date(now).toISOString() };
+  const cancelled = { ...future, match: "Cancelled fixture", status: "cancelled" };
+  const missing = { ...future, match: "Missing in live schedule" };
+  const baseline = { sports: [{ id: "football", picks: [past, missing] }], analysis: [past] };
+  const scheduled = { sports: [{ id: "football", events: [future, past, cancelled] }] };
+  const model = { updated_at: new Date(now).toISOString(), analysis: [future, past, cancelled, missing] };
+  const live = integrateSite(baseline, scheduled, model);
+  assert.deepEqual(live.analysis, [future]);
+  assert.deepEqual(live.sports[0].picks, []);
+  assert.deepEqual(live.sports[0].events.map(({ match }) => match), [future.match]);
+  assert.doesNotThrow(() => checkUpcomingSelection(live, now));
+  assert.throws(() => checkUpcomingSelection(live, start), /начавшийся/);
+  const snapshot = integrateSite(baseline, scheduled, model, { snapshotAt: model.updated_at });
+  assert.ok(snapshot.analysis.some(({ match }) => match === past.match));
+  assert.throws(() => checkUpcomingSelection(snapshot, now), /архивный/);
 });
 
 test("tested model enriches the existing analysis without adding a pick or rewriting other sections", () => {

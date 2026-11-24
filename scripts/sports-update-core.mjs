@@ -525,7 +525,8 @@ export function selectMixedExpress(legs) {
 }
 
 export function buildUpdate({ current, indexFile, historyFiles, express, rows, standings = [], esportsForm = new Map(), esportsEditorialForm = new Map(),
-  tennisPreviews = new Map(), coverage, now, reviewArticle = () => {}, editorialDays = 0, manualSchedule = false }) {
+  tennisPreviews = new Map(), coverage, now, reviewArticle = () => {}, editorialDays = 0, manualSchedule = false,
+  preserveExpress = false }) {
   const at = H.toMskIso(new Date(now));
   const tomorrow = H.mskDateOf(new Date(now + DAY).toISOString());
   const until = Date.parse(`${tomorrow}T23:59:59.999+03:00`) + 1;
@@ -561,6 +562,7 @@ export function buildUpdate({ current, indexFile, historyFiles, express, rows, s
     for (const { row, evidence, detail, basis } of selected) {
       const { article } = detail;
       const matched = (evidence.length < 2 ? [] : old?.picks || []).filter((pick) => {
+        if (manualSchedule && !(Date.parse(pick.start_iso) > now)) return false;
         const target = targetFor(id, pick.match, pick.start_iso, pick.tournament);
         const win = H.normBet(pick.bet).match(/^п([12])$/iu)?.[1];
         const supported = win && detail.wins[Number(win) - 1] > detail.wins[2 - Number(win)];
@@ -613,12 +615,15 @@ export function buildUpdate({ current, indexFile, historyFiles, express, rows, s
     if (generated.length) forecastSports.push({ id, name, picks: generated });
     return { id, name, emoji, picks, events, availability, updated_at: at };
   });
-  const pricedExpress = selectExpress(current.express || [], expressLegs);
+  const pricedExpress = preserveExpress ? [] : selectExpress(current.express || [], expressLegs);
   const mixedLegs = sports.flatMap((sport) => sport.picks.filter((pick) => pick.generated && Date.parse(pick.start_iso) > now + PUBLISH_BUFFER)
     .map((pick) => ({ sport: sport.id, match: pick.match, bet: pick.bet, start_iso: pick.start_iso,
       start: pick.start, confidence: pick.confidence, odds: null })));
-  const mixedExpress = selectMixedExpress(mixedLegs);
-  const activeExpress = [...mixedExpress, ...pricedExpress];
+  const mixedExpress = preserveExpress ? [] : selectMixedExpress(mixedLegs);
+  const activeExpress = preserveExpress ? (current.express ?? []).filter((item) => item.legs.every((leg) =>
+    sports.find((sport) => sport.id === leg.sport)?.picks.some((pick) => pick.match === leg.match &&
+      pick.start_iso === leg.start_iso && pick.bet === leg.bet && (item.forecast_only ? !pick.odds && pick.generated :
+        Number(String(pick.odds).replace(",", ".")) === Number(leg.odds))))) : [...mixedExpress, ...pricedExpress];
   const hasNew = (model) => forecastSports.some((sport) => sport.picks.some((pick) => pick.generated === model));
   const next = { updated_at: at, source: "sports-update", model_version: hasNew(MARKET_MODEL) ? MARKET_MODEL : hasNew(FORM_MODEL) ? FORM_MODEL : current.model_version,
     sports, analysis, express: activeExpress };

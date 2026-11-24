@@ -83,7 +83,8 @@ export function datasource(root, previous, requests, clock = Date.now, fetcher =
       old?.serverRetryAt > clock() || /^HTTP (?:429|404)\b/.test(old?.error ?? "");
     if (!cached && old?.nextAttemptAt > clock() && (!schedule || hardBackoff)) {
       requests.push({ ...record, status: "backoff", kind: old.kind || "previous_failure", error: old.error,
-        nextAttemptAt: old.nextAttemptAt, failures: old.failures });
+        nextAttemptAt: old.nextAttemptAt, failures: old.failures, freshness: "missing", receivedAt: null,
+        snapshotAt: null, snapshotDateSource: null });
       throw Object.assign(new Error("Source backoff"), { kind: old.kind || "previous_failure" });
     }
     const attempts = [];
@@ -92,6 +93,8 @@ export function datasource(root, previous, requests, clock = Date.now, fetcher =
       if (cached) {
         body = await verifyResearchObject(root, "raw", good.rawHash);
         record.receivedAt = good.receivedAt;
+        record.snapshotAt = good.snapshotAt ?? null;
+        record.snapshotDateSource = good.snapshotDateSource ?? null;
       } else {
         for (let i = 0; ; i++) {
           try {
@@ -102,7 +105,15 @@ export function datasource(root, previous, requests, clock = Date.now, fetcher =
                 const retry = /^\d+$/.test(wait ?? "") ? Number(wait) * 1000 : Math.max(0, Date.parse(wait) - clock()) || 0;
                 throw Object.assign(new Error("HTTP " + reply.status), { http: reply.status, retry });
               }
-              return Buffer.from(await reply.arrayBuffer());
+              const body = Buffer.from(await reply.arrayBuffer());
+              const receivedAt = clock();
+              const modified = Date.parse(reply.headers.get("last-modified"));
+              const revised = Date.parse(revision);
+              const fromRevision = Number.isFinite(revised) && revised <= receivedAt;
+              const fromHeader = Number.isFinite(modified) && modified <= receivedAt;
+              Object.assign(record, { receivedAt, snapshotAt: fromRevision ? revised : fromHeader ? modified : null,
+                snapshotDateSource: fromRevision ? "provider_revision" : fromHeader ? "last-modified" : null });
+              return body;
             });
             attempts.push({ status: "ok" });
             break;
@@ -113,11 +124,10 @@ export function datasource(root, previous, requests, clock = Date.now, fetcher =
             await delay(Math.max(600, error.retry || 0));
           }
         }
-        record.receivedAt = clock();
       }
       const result = text ? body.toString("utf8") : JSON.parse(body.toString("utf8"));
       record.rawHash = await storeResearchObject(root, "raw", body);
-      const saved = { ...record, status: cached ? "cached" : "ok", attempts };
+      const saved = { ...record, status: cached ? "cached" : "ok", freshness: cached ? "archive" : "live_response", attempts };
       requests.push(saved);
       if (!cached) past.set(url, saved);
       lastGood.set(url, saved);
@@ -127,7 +137,8 @@ export function datasource(root, previous, requests, clock = Date.now, fetcher =
       const failures = (old?.failures ?? 0) + 1;
       const cooldown = manual && !["rate_limit", "access", "http"].includes(kind) ? 60_000 :
         Math.min(7 * DAY, 15 * 60_000 * 2 ** Math.min(failures, 10));
-      const failed = { ...record, status: kind === "access" ? "restricted" : "error", kind, http: error.http,
+      const failed = { receivedAt: null, snapshotAt: null, snapshotDateSource: null, ...record,
+        freshness: "missing", status: kind === "access" ? "restricted" : "error", kind, http: error.http,
         attempts, error: error.message, failures, nextAttemptAt: clock() + Math.max(cooldown, error.retry || 0),
         ...(error.retry > 0 ? { serverRetryAt: clock() + error.retry } : {}) };
       requests.push(failed);

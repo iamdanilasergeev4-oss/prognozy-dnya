@@ -5,12 +5,13 @@ import { normalizeIdentity } from "./sports-discovery.mjs";
 import { mergeHistory } from "./sports-history-analysis.mjs";
 import { readResearchRuns, verifyResearchObject } from "./sports-research-ledger.mjs";
 import { assessUpcomingProjection, evaluateProjections, prepareProjectionHistory } from "./sports-projections.mjs";
-import { dailyModelSummary, describeScoreDistribution, expressHighlights, modelConclusion, modelScenarioLine, modelScenarios } from "./sports-model-materials.mjs";
+import { dailyModelSummary, describeScoreDistribution, modelConclusion, modelScenarioLine, modelScenarios } from "./sports-model-materials.mjs";
 import { recordForecastPreview } from "./sports-forecast-journal.mjs";
 import { scoreMeasures } from "./sports-score-distribution.mjs";
 import { bookmakerCard, bookmakerMarketName, collectBookmakerLines } from "./sports-bookmaker-lines.mjs";
 import { checkModelCandidate, digest, sealManualPacket } from "./sports-manual-update.mjs";
 import { auditCs2Archive } from "./sports-cs2-research.mjs";
+import { integrateSite, isUpcoming, siteFixtureKey } from "./sports-site-integration.mjs";
 import "../js/history-core.js";
 
 const root = fileURLToPath(new URL("../.sports-update/", import.meta.url));
@@ -36,13 +37,18 @@ const now = Date.now();
 const input = join(root, run);
 const store = join(root, "manual-research");
 const read = async (dir, path) => JSON.parse(await readFile(join(dir, path), "utf8"));
-const [report, diagnostics, network, directory, liveData] = await Promise.all([
+const [report, diagnostics, network, directory, liveData, scheduledData, calendarPacket] = await Promise.all([
   read(input, "manual-report.json"), read(input, "diagnostic.json"), read(input, "network.json"),
   read(resolve(liveBase), "data/history/index.json"), read(resolve(liveBase), "data/predictions.json"),
+  read(input, "data/predictions.json"), read(input, "manual-packet.json"),
 ]);
 const age = now - Date.parse(report.checkedAt);
 if (report.runMode !== "live" || !Number.isFinite(age) || age < 0 || age > 60 * 60_000) {
   throw new Error("Для превью нужен свежий сетевой прогон календаря");
+}
+if (network.mode !== "live" || digest(network) !== report.networkDigest || digest(report) !== calendarPacket.report ||
+    digest(scheduledData) !== calendarPacket.candidate["data/predictions.json"]) {
+  throw new Error("Календарь или журнал источников отличается от сохранённого ручного прогона");
 }
 if (!directory.months?.every((month) => /^\d{4}-\d{2}$/.test(month))) throw new Error("Некорректный индекс истории");
 
@@ -92,8 +98,11 @@ const checks = evaluateProjections(projectionHistory, pointChecks, distributionC
 if (Date.now() - Date.parse(report.checkedAt) > 60 * 60_000) throw new Error("Сетевой прогон устарел");
 const key = (sport, match, start) => JSON.stringify([sport, normalizeIdentity(match), start]);
 const confirmed = new Set(report.evaluatedArticles.map((item) => key(item.sport, item.match, Date.parse(item.start))));
+const calendarKeys = new Set(scheduledData.sports.flatMap((sport) =>
+  sport.events.filter((event) => isUpcoming(event, now)).map((event) => siteFixtureKey(sport.id, event))));
 const matching = diagnostics.assessed.filter((event) => !event.verificationReason &&
   (event.status === "confirmed" || event.sourceTier === "official") && !event.dataQuality?.identityConflict &&
+  event.start > now && calendarKeys.has(siteFixtureKey(event.sport, { match: event.match, start_iso: new Date(event.start).toISOString() })) &&
   confirmed.has(key(event.sport, event.match, event.start)) &&
   (event.sport !== "hockey" || event.sources.some((source) => source.title === "NHL" && completeNhlSchedule.has(String(source.id)))) &&
   (event.sport !== "basketball" || event.sources.some((source) => source.title === "ESPN" && completeNbaSchedule.has(String(source.id)))));
@@ -172,15 +181,12 @@ const modelArticles = forecasts.sort((a, b) => b.distributions.length - a.distri
 const modelVersion = "score-distribution-2";
 const journal = await recordForecastPreview(join(root, "model-journal"), forecasts, [...history, ...projectionHistory], now, modelVersion);
 const moscowDate = globalThis.HistoryCore.toMskIso(new Date(now)).slice(0, 10);
-const next = { ...liveData, updated_at: new Date(now).toISOString(), source: "model-preview", model_version: modelVersion,
-  sports: liveData.sports.map(({ id, name, emoji }) => ({ id, name, emoji, picks: [], events: [], availability: "model_unavailable",
-    forecasts: modelArticles.filter((article) => article.sport_id === id) })),
+const next = integrateSite(liveData, scheduledData, { updated_at: new Date(now).toISOString(),
   analysis: modelArticles,
   dailySummary: dailyModelSummary(modelArticles, moscowDate),
-  expressHighlights: expressHighlights(modelArticles, moscowDate),
   modelJournal: { entries: journal.entries, settled: journal.settled, pending: journal.pending, awaiting: journal.awaiting,
     metrics: journal.metrics },
-  express: [] };
+});
 const output = join(root, `forecast-preview-${new Date(now).toISOString().replace(/[:.]/g, "-")}`);
 await mkdir(join(output, "data/history"), { recursive: true });
 await writeFile(join(output, "data/predictions.json"), JSON.stringify(next, null, 2) + "\n");
@@ -261,7 +267,7 @@ const sourceResearch = {
       "https://developers.pandascore.co/docs/plan-reference"] },
 };
 const audit = { checkedAt: report.checkedAt, earliestTest: "2025-10-01", secondTest: "2026-02-01", archivedThrough: new Date(now).toISOString(),
-  inventory, archiveChecks, sourceResearch, checks, pointChecks, distributionChecks, journal, excluded, forecastEvidence: forecasts,
+  inventory, archiveChecks, sourceResearch, checks, pointChecks, distributionChecks, journal, excluded, calendarAnalysis: scheduledData.analysis, forecastEvidence: forecasts,
   ...(cs2Check ? { cs2Check } : {}) };
 await writeFile(join(output, "evaluation.json"), JSON.stringify(audit, null, 2) + "\n");
 const baselineFiles = { "data/predictions.json": liveData };
@@ -328,8 +334,6 @@ const lines = [
   "", "## Проверка ожидаемого счёта и разницы", "",
   ...pointChecks.filter((row) => row.approved).map((row) => `- ${row.competition} · ${row.title}. ${row.n} матчей. Средняя абсолютная ошибка ${num(row.model)} против ${num(row.baseline)} у базового подхода. Интервал разницы ${intervalNum(row.interval.low)}…${intervalNum(row.interval.high)}.`),
   "", "## Сводка дня", "", ...next.dailySummary.map((row) => `- ${row.match}. ${row.modelConclusion.scenario} ${row.modelConclusion.caution}`),
-  "", "## Экспрессы дня", "", "Информационная подборка из отдельных матчей с вероятностью по каждому. Совместная вероятность не рассчитывалась.",
-  "", ...next.expressHighlights.map((row) => `- ${row.match}. ${row.modelConclusion.scenario}`),
   "", "## Материалы", "", ...modelArticles.map((row) => `- ${row.match}. ${row.lines.join(" ")}`), "",
   `Журнал локальных проб — ${journal.entries} записей, ${journal.settled} результатов сверено, ${journal.pending} ожидают завершения, ${journal.awaiting} ожидают подтверждения.`, "",
   "## Источники для категорий без модельных прогнозов", "",

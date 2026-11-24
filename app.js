@@ -120,14 +120,33 @@
   function host(url) {
     try { return new URL(url).hostname.replace(/^www\./, ""); } catch { return "источник"; }
   }
-  const hasAnalysis = () => Array.isArray(data?.analysis) && (data.analysis.length > 0 || data.source === "model-preview");
+  const integrated = () => data?.analysis_engine === "sports-intelligence-2";
+  const analytical = () => integrated() || data?.source === "model-preview";
+  const hasAnalysis = () => Array.isArray(data?.analysis) && (data.analysis.length > 0 || analytical());
   const hasExpress = () => Array.isArray(data?.express) &&
     (data.express.length > 0 || ["sports-update", "model-preview"].includes(data.source));
-  const displayCards = (sport) => (data.source === "model-preview" ? sport.forecasts : sport.picks) || [];
+  const cardKey = (card) => {
+    const teams = splitTeams(card.match);
+    const time = Date.parse(card.start_iso);
+    return teams && Number.isFinite(time) ? JSON.stringify([teams.map(teamKey), time]) : null;
+  };
+  const displayCards = (sport) => {
+    if (!integrated()) return (data.source === "model-preview" ? sport.forecasts : sport.picks) || [];
+    const projections = new Map((sport.forecasts || []).map((card) => [cardKey(card), card]));
+    const picks = (sport.picks || []).map((pick) => {
+      const key = cardKey(pick);
+      const projection = key && projections.get(key);
+      if (!projection) return pick;
+      projections.delete(key);
+      return { ...pick, projection };
+    });
+    return [...picks, ...projections.values()];
+  };
   const allPicks = () => data.sports.flatMap((s) => displayCards(s).map((p, i) => ({ p, i, sport: s.id, name: s.name })));
   const pickCount = (sport) => displayCards(sport).length;
   const firstForecastSport = () => (data.sports.find(pickCount) || data.sports[0]).id;
   const countLabel = (n) => plural(n, "прогноз", "прогноза", "прогнозов");
+  const analysisCountLabel = (n) => plural(n, "разбор", "разбора", "разборов");
   const ru = (value, sport) => window.SportsRu?.text(value, sport) ?? value;
   const ruTournament = (value, sport) => window.SportsRu?.tournament(value, sport) ?? value;
   function splitTeams(match) {
@@ -142,7 +161,7 @@
     if (isNaN(s.ms)) return { soon: false, day: "later" };
     const soon = s.exact && s.ms - now <= 3 * 3600e3 && now - s.ms <= 2.5 * 3600e3;
     const d = Math.round((Date.parse(dayKey(s.ms)) - Date.parse(dayKey(now))) / 864e5);
-    return { soon, day: d <= 0 ? "today" : d === 1 ? "tomorrow" : "later" };
+    return { soon: soon && (!integrated() || s.ms >= now), day: d === 0 || d < 0 && !integrated() ? "today" : d === 1 ? "tomorrow" : "later" };
   }
   /* Прогноз ↔ материал «Разбора дня» по совпадению обеих команд */
   const teamKey = (t) => String(t || "").toLowerCase().replace(/ё/g, "е").replace(/[^\p{L}\p{N}]+/gu, "");
@@ -314,7 +333,7 @@
           <circle class="ring-bg" cx="18" cy="18" r="${R}"/>
           <circle class="ring-fg" cx="18" cy="18" r="${R}" stroke-dasharray="${(C * frac).toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 18 18)"/>
         </svg>
-        <div><b>Обновлено ${esc(agoRel(t, now))}</b><span>${data.source === "model-preview" ? "Ручное обновление" : `Следующее обновление ${esc(next)}`}</span></div>
+        <div><b>Обновлено ${esc(agoRel(t, now))}</b><span>${analytical() ? "Ручное обновление" : `Следующее обновление ${esc(next)}`}</span></div>
       </div>`;
   }
 
@@ -409,7 +428,8 @@
     const sports = data.sports.filter(pickCount);
     const dist = sports.map((s) => {
       const n = pickCount(s);
-      return `<button type="button" class="bd-seg" data-id="${esc(s.id)}" style="--c:${colorOf(s.id)};flex-grow:${n}" aria-label="${esc(s.name)}: ${n} ${countLabel(n)}"></button>`;
+      const label = displayCards(s).some((card) => card.statisticalSummary) ? analysisCountLabel(n) : countLabel(n);
+      return `<button type="button" class="bd-seg" data-id="${esc(s.id)}" style="--c:${colorOf(s.id)};flex-grow:${n}" aria-label="${esc(s.name)}: ${n} ${label}"></button>`;
     }).join("");
     const legend = data.sports.map((s) => {
       const n = pickCount(s);
@@ -420,7 +440,7 @@
       <div class="bd-top">
         <div class="bd-total">
           <b class="bd-num">${total}</b>
-          <span>${countLabel(total)}${range ? `<br>на ${esc(range)}` : ""}</span>
+          <span>${cards.some(({ p }) => p.statisticalSummary) ? analysisCountLabel(total) : countLabel(total)}${range ? `<br>на ${esc(range)}` : ""}</span>
         </div>
         ${freshnessHTML()}
       </div>
@@ -429,7 +449,7 @@
         <a class="bd-kpi" id="bd-acc" href="#history" hidden></a>
       </div>
       <div class="bd-chart">
-        <div class="bd-title"><span>Когда начинаются матчи</span>${["sports-update", "model-preview"].includes(data.source) ? "" : "<small>чем крупнее точка, тем выше уверенность</small>"}</div>
+        <div class="bd-title"><span>Когда начинаются матчи</span>${analytical() || data.source === "sports-update" ? "" : "<small>чем крупнее точка, тем выше уверенность</small>"}</div>
         <div id="bd-tl"></div>
       </div>
       <div class="bd-dist" role="group" aria-label="Сводка по видам спорта">
@@ -551,7 +571,7 @@
       const count = pickCount(s);
       return { id: s.id, name: s.name, n: count || confirmed, scheduled: !count && confirmed > 0 };
     });
-    if (data.source === "model-preview") list.push({ id: "summary", name: "Сводка дня", n: data.dailySummary?.length || 0 });
+    if (analytical()) list.push({ id: "summary", name: "Сводка дня", n: data.dailySummary?.length || 0 });
     if (hasExpress()) list.push({ id: "express", name: "Экспрессы", n: data.express.length || data.expressHighlights?.length || 0 });
     if (hasAnalysis()) list.push({ id: "analysis", name: "Разбор дня", n: data.analysis.length });
     return list;
@@ -699,6 +719,7 @@
             <strong>${shown(p.bet)}</strong>
           </div>
         </div>
+        ${p.projection ? projectionDetails(p.projection, sport.id) : ""}
         ${p.reason ? `<p class="pk-reason">${shown(p.reason)}</p>` : ""}
         ${preview.length ? `<ul class="pk-key">${preview.map((x) => `<li>${shown(x)}</li>`).join("")}</ul>` : ""}
         <div class="pk-foot">
@@ -714,8 +735,10 @@
       </article>`;
   }
 
-  function scheduleHTML(sport) {
-    const events = (sport.events || []).filter((event) => !event.has_pick && Date.parse(event.start_iso) > Date.now());
+  function scheduleHTML(sport, cards = []) {
+    const displayed = new Set(cards.map(cardKey).filter(Boolean));
+    const events = (sport.events || []).filter((event) => !event.has_pick &&
+      !displayed.has(cardKey(event)) && Date.parse(event.start_iso) > Date.now());
     if (!events.length) return "";
     events.sort((a, b) => Date.parse(a.start_iso) - Date.parse(b.start_iso));
     return `<section class="sport-schedule"><h3>Расписание</h3><ul>${events.map((event) => {
@@ -732,8 +755,18 @@
   function bookmakerHTML(bookmaker, sport) {
     if (!bookmaker) return "";
     const { status, lines } = bookmaker;
-    const available = lines.filter((line) => line.privateSnapshot ||
-      Date.parse(line.expiresAt) > new Date().getTime());
+    const now = new Date().getTime();
+    const available = (Array.isArray(lines) ? lines : []).flatMap((line) => {
+      const source = URL.parse(line.referenceUrl || line.sourceUrl);
+      if (source?.protocol !== "https:" || !Number.isFinite(Date.parse(line.receivedAt)) ||
+          !Array.isArray(line.outcomes) || !line.outcomes.length) return [];
+      if (line.privateSnapshot) return data.source === "model-preview" ? [{ line, freshness: "snapshot" }] : [];
+      if (line.archivedObservation) return data.review_snapshot_at ? [{ line, freshness: "snapshot" }] : [];
+      if (!["current", "observed"].includes(status) || !(Date.parse(line.expiresAt) > now)) return [];
+      const freshness = status === "observed" || line.observationOnly || !Number.isFinite(Date.parse(line.updatedAt)) ?
+        "observed" : "current";
+      return [{ line, freshness }];
+    });
     const message = {
       stale: "Срок актуальности полученной линии истёк.",
       unsupported: "В подключённом источнике для этого турнира нет проверенной схемы линий.",
@@ -746,38 +779,50 @@
       missing: "Линия для этого матча не найдена.",
     };
     if (!available.length) {
-      return `<div class="st-src bookmaker-lines"><h4>Букмекерская линия</h4><p>${esc(message[status === "current" ? "stale" : status])}</p></div>`;
+      return `<div class="st-src bookmaker-lines"><h4>Букмекерская линия</h4><p>${esc(message[["current", "observed"].includes(status) ? "stale" : status] || message.missing)}</p></div>`;
     }
     const scopes = { regulation: "90 минут с добавленным временем", overtime: "Весь матч с овертаймом",
-      overtime_shootout: "Весь матч с овертаймом и буллитами" };
+      overtime_shootout: "Весь матч с овертаймом и буллитами", match_bo5: "Матч до трёх выигранных сетов",
+      series_bo3: "Вся серия BO3", tennis_match: "Весь матч в одиночном разряде" };
     const labels = { outcome: "Исход матча", total: "Общий тотал", handicap: sport === "football" ? "Азиатская фора" : "Фора" };
     const percentage = (p) => `${Math.round(p * 100)}%`;
     const price = new Intl.NumberFormat("ru", { minimumFractionDigits: 2, maximumFractionDigits: 12 });
-    const groupBySource = Map.groupBy(available, (line) => JSON.stringify([line.bookmaker, line.source, line.receivedAt, line.scope]));
+    const freshnessLabel = { snapshot: "Архивный снимок", observed: "Снимок опубликованной линии", current: "Актуальная котировка" };
+    const freshnessNote = { snapshot: "Архивные коэффициенты.", observed: "Текущая цена у букмекера не подтверждена.", current: "" };
+    const comparableModel = (line, offer) => line.modelComparable !== false && offer.comparisonStatus === "matched" && offer.model;
+    const groupBySource = Map.groupBy(available, ({ line, freshness }) => JSON.stringify([
+      line.bookmaker, line.source, line.referenceUrl || line.sourceUrl, line.receivedAt, line.scope, freshness,
+    ]));
     return `<div class="st-src bookmaker-lines"><h4>Букмекерская линия</h4>
-      ${status === "snapshot" ? "<p><strong>Архивный снимок. Доступны только архивные коэффициенты.</strong></p>" :
-        "<p><strong>Доступны актуальные котировки.</strong></p>"}
       ${[...groupBySource.values()].map((lines) => {
-        const [source] = lines;
+        const [{ line: source, freshness }] = lines;
         const sources = [{ url: source.referenceUrl || source.sourceUrl, title: source.source },
-          ...new Map(lines.map((line) => [line.rulesUrl, { url: line.rulesUrl,
+          ...new Map(lines.map(({ line }) => line).filter((line) => URL.parse(line.rulesUrl)?.protocol === "https:").map((line) => [line.rulesUrl, { url: line.rulesUrl,
             title: line.type === "handicap" && sport === "football" ? "Правила азиатской форы" : "Правила расчёта" }])).values()];
         return `<section class="bookmaker-source">
-      <p><strong>${esc(source.bookmaker)}</strong> · ${esc(scopes[source.scope])}</p>
-      <p>Получено ${esc(fmtDate(source.receivedAt))}.${source.publishedAt ?
+      <p><strong>${freshnessLabel[freshness]}.</strong> ${freshnessNote[freshness]}</p>
+      <p><strong>${esc(source.bookmaker)}</strong> · ${esc(source.source)} · ${esc(scopes[source.scope] || "Период расчёта не подтверждён")}</p>
+      ${source.modelComparable === false ? "<p>Подробные правила расчёта букмекера не подтверждены.</p>" : ""}
+      <p>Получено <time datetime="${esc(source.receivedAt)}">${esc(fmtDate(source.receivedAt))}</time>.${source.publishedAt ?
         ` Файл обновлён ${esc(fmtDate(source.publishedAt))}. Время изменения каждой цены не указано.` :
-        source.scannedAt ? ` Снимок источника от ${esc(fmtDate(source.scannedAt))}. Время изменения каждой цены не указано.` : ""}</p>
-      ${lines.map((line) => `<div class="bookmaker-market"${line.expiresAt ? ` data-expires-at="${esc(line.expiresAt)}"` : ""}><strong>${esc(line.marketName || labels[line.type])}</strong>
+        source.scannedAt ? ` Снимок источника от ${esc(fmtDate(source.scannedAt))}. Время изменения каждой цены не указано.` :
+          source.observationOnly ? " Время обновления цены источник не сообщил." : ""}</p>
+      ${lines.map(({ line }) => `<div class="bookmaker-market"${freshness !== "snapshot" ? ` data-expires-at="${esc(line.expiresAt)}"` : ""}><strong>${esc(line.marketName || labels[line.type])}</strong>
         ${line.updatedAt ? `<small> · Обновление у источника ${esc(fmtDate(line.updatedAt))}</small>` : ""}
-        <ul class="pk-key">${line.outcomes.map(({ condition, price: odds, model, point, americanPrice }) => `<li>
+        <ul class="pk-key">${line.outcomes.map((offer) => {
+          const { condition, price: odds, point, americanPrice } = offer;
+          const model = comparableModel(line, offer);
+          return `<li>
           ${esc(ru(condition, sport))} · коэффициент <b>${esc(Number.isSafeInteger(americanPrice) ? fmtOdds(odds) : price.format(odds))}</b> ·
           ${Number.isSafeInteger(americanPrice) ? `в источнике ${americanPrice > 0 ? "+" : ""}${americanPrice} · ` : ""}
           ${model ? `модель ${percentage(model.win)}${model.push == null ? "" : `, возврат ${percentage(model.push)}`}` :
             point != null && !Number.isInteger(2 * point) ? "условие линии требует двух расчётов, проверенной оценки нет" :
-              "условие линии не соответствует проверенной модели"}
-        </li>`).join("")}</ul></div>`).join("")}${srcChips(sources)}</section>`;
+              "для этого условия нет проверенной модельной оценки"}
+        </li>`;
+        }).join("")}</ul></div>`).join("")}${srcChips(sources)}</section>`;
       }).join("")}
-      <p>Вероятности рассчитаны отдельно от коэффициентов.</p></div>`;
+      ${available.some(({ line }) => line.outcomes.some((offer) => comparableModel(line, offer))) ?
+        "<p>Вероятности рассчитаны отдельно от коэффициентов.</p>" : ""}</div>`;
   }
 
   function modelConclusionHTML(conclusion, sport, showStats = false) {
@@ -792,20 +837,26 @@
   function projectionHTML(p, i, sport) {
     const bk = bucketOf(p);
     const story = storyIndexFor(p.match, sport.id, p.start_iso);
-    const scenarioLines = p.scenarioLines || (p.scenarios?.length ? p.lines.slice(-p.scenarios.length) : []);
     return `<article class="pick projection" id="pick-${sport.id}-${i}" style="--i:${i}" data-day="${bk.day}"${bk.soon ? " data-soon" : ""}>
       <div class="pk-meta"><span class="pk-tour">${esc(ruTournament(p.tournament, sport.id))}</span>${whenHTML(p, sport.id)}</div>
       <div class="pk-main">${teamsHTML(p.match, sport.id)}</div>
-      ${modelConclusionHTML(p.modelConclusion, sport.id, true)}
-      ${bookmakerHTML(p.bookmaker, sport.id)}
-      ${p.scoreSections?.length || scenarioLines.length ? `<details class="projection-estimates">
-        <summary>Счёт команд и другие оценки</summary>
-        ${(p.scoreSections || []).map(({ title, lines }) => `<section><h4>${esc(title)}</h4>
-          <ul class="pk-key">${lines.map((line) => `<li>${esc(ru(line, sport.id))}</li>`).join("")}</ul></section>`).join("")}
-        ${scenarioLines.length ? `<ul class="pk-key">${scenarioLines.map((line) => `<li>${esc(ru(line, sport.id))}</li>`).join("")}</ul>` : ""}
-      </details>` : ""}
-      ${story < 0 ? "" : `<button type="button" class="pk-story" data-story="${story}">${icon("analysis")}<span>Методика, проверка и источники</span></button>`}
+      ${projectionDetails(p, sport.id)}
+      ${story < 0 ? "" : `<button type="button" class="pk-story" data-story="${story}">${icon("analysis")}<span>${p.statisticalSummary ? "Полный разбор и источники" : "Методика, проверка и источники"}</span></button>`}
     </article>`;
+  }
+
+  function projectionDetails(p, sport) {
+    const scenarioLines = p.scenarioLines || (p.scenarios?.length ? (p.lines || []).slice(-p.scenarios.length) : []);
+    return `${modelConclusionHTML(p.modelConclusion, sport, true)}
+      ${p.statisticalSummary && !p.modelConclusion ? `<div class="verdict"><small>Статистический разбор · без модельной вероятности</small>
+        <p>${esc(ru(p.statisticalSummary, sport))}</p></div>` : ""}
+      ${bookmakerHTML(p.bookmaker, sport)}
+      ${p.scoreSections?.length || scenarioLines.length ? `<details class="projection-estimates">
+        <summary>${p.statisticalSummary ? "Результаты и детали" : "Счёт команд и другие оценки"}</summary>
+        ${(p.scoreSections || []).map(({ title, lines }) => `<section><h4>${esc(title)}</h4>
+          <ul class="pk-key">${lines.map((line) => `<li>${esc(ru(line, sport))}</li>`).join("")}</ul></section>`).join("")}
+        ${scenarioLines.length ? `<ul class="pk-key">${scenarioLines.map((line) => `<li>${esc(ru(line, sport))}</li>`).join("")}</ul>` : ""}
+      </details>` : ""}`;
   }
 
   function sportHTML(sport) {
@@ -814,7 +865,7 @@
     const count = cards.length;
     const tours = new Set(cards.map((p) => String(p.tournament || "").split(",")[0].trim()).filter(Boolean));
     const sub = count
-      ? `${count} ${countLabel(count)} · ${tours.size} ${plural(tours.size, "турнир", "турнира", "турниров")}`
+      ? `${count} ${cards.some((card) => card.statisticalSummary) ? analysisCountLabel(count) : countLabel(count)} · ${tours.size} ${plural(tours.size, "турнир", "турнира", "турниров")}`
       : "";
     let html = `
       <div class="sport-head">
@@ -824,7 +875,8 @@
     if (sport.stale && sport.updated_at) {
       html += `<p class="note warn">Сегодня обновить не удалось — показаны прогнозы от ${esc(fmtDate(sport.updated_at))}.</p>`;
     }
-    const schedule = !cards.length || ["tennis", "volleyball", "dota2"].includes(sport.id) ? scheduleHTML(sport) : "";
+    const schedule = integrated() || !cards.length || ["tennis", "volleyball", "dota2"].includes(sport.id) ?
+      scheduleHTML(sport, integrated() ? cards : []) : "";
     if (!cards.length && schedule) return html + schedule;
     if (!cards.length) {
       const story = (data.analysis || []).findIndex((a) => a.sport_id === sport.id);
@@ -853,7 +905,7 @@
       .map(([k, l]) => `<button type="button" class="when-chip" data-when="${k}" aria-pressed="${whenFilter === k}"${cnt[k] || k === "all" ? "" : " disabled"}>${l}<b>${cnt[k]}</b></button>`).join("");
     html += `<div class="when" role="group" aria-label="Когда начинается матч">${chips}</div>`;
     html += `<div class="list" data-when="${whenFilter}">` + cards.map((p, i) =>
-      projections ? projectionHTML(p, i, sport) : pickHTML(p, i, sport, i === 0 && topConf >= 4)).join("") + `</div>`;
+      projections || integrated() && !p.bet ? projectionHTML(p, i, sport) : pickHTML(p, i, sport, i === 0 && topConf >= 4)).join("") + `</div>`;
     html += `<div class="when-empty" hidden><p>В этом окне матчей нет.</p><button type="button" class="when-chip" data-when="all">Показать все</button></div>`;
     return html + schedule;
   }
@@ -935,7 +987,7 @@
   }
   function expressHTML() {
     const list = data.express || [];
-    const highlights = data.expressHighlights || [];
+    const highlights = integrated() ? [] : data.expressHighlights || [];
     return `
       <div class="sport-head">
         <span class="sh-ico">${icon("express", "big-ico")}</span>
@@ -982,7 +1034,7 @@
           <span class="xr-o">${x.forecast_only ? "—" : fmtOdds(x.settled_odds || x.total_odds)}</span>
           <span class="xr-s">${LBL[x.status] || x.status}</span>
         </li>`).join("")}</ul>
-      ${data.source === "model-preview" ? `<details class="xp-past-cards"><summary>Показать карточки из архива</summary>
+      ${analytical() ? `<details class="xp-past-cards"><summary>Показать карточки из архива</summary>
         <div class="xp-list">${all.map((item, i) => expressCard(item, i, true)).join("")}</div></details>` : ""}`;
   }
 
@@ -1014,10 +1066,12 @@
   }
 
   function analysisHTML() {
+    const hasStatisticalAnalysis = data.analysis.some((article) => article.statisticalSummary);
     let html = `
       <div class="sport-head">
         <span class="sh-ico">${icon("analysis", "big-ico")}</span>
-        <div><h2>Разбор дня</h2><p>${data.source === "model-preview" ? "Как рассчитаны вероятности, как прошла проверка моделей и какие источники использованы." :
+        <div><h2>Разбор дня</h2><p>${hasStatisticalAnalysis ? "Форма участников, статистика и источники. Вероятности указаны для матчей с проверенными моделями." :
+          data.source === "model-preview" ? "Как рассчитаны вероятности, как прошла проверка моделей и какие источники использованы." :
           data.source === "sports-update" ? "Проверенное расписание, результаты последних матчей и факторы, которые пока не удалось сверить." :
             "Главные матчи подробнее: форма, составы, личные встречи и мнения аналитиков. Это мнение, а не гарантия."}</p></div>
       </div>`;
@@ -1052,7 +1106,7 @@
               ${bookmakerHTML(a.bookmaker, sid)}
             </div>
             <aside class="st-side">
-              ${!a.modelConclusion && a.verdict ? `<div class="verdict"><small>${a.automated ? "Итог аналитики" : "Вывод"}</small><p>${shown(a.verdict)}</p></div>` : ""}
+              ${!a.modelConclusion && a.verdict ? `<div class="verdict"><small>${a.statisticalSummary ? "Статистический вывод" : a.automated ? "Итог аналитики" : "Вывод"}</small><p>${shown(a.verdict)}</p></div>` : ""}
               ${factors.length ? `<div class="st-factors"><h4>Ключевые факторы</h4><ul>${factors.map((f) => `<li>${shown(f)}</li>`).join("")}</ul></div>` : ""}
             </aside>
           </div>

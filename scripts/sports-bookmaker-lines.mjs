@@ -35,7 +35,8 @@ const london = new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/London",
 const finitePrice = (price) => typeof price === "number" && Number.isFinite(price) && price > 1;
 const iso = (value) => new Date(value).toISOString();
 const quote = (selection, price, point = null) => ({ selection, price, point });
-const scoreSport = { football: "голов", basketball: "очков", hockey: "шайб" };
+const scoreSport = { football: "голов", basketball: "очков", hockey: "шайб",
+  tennis: "геймов", volleyball: "сетов", cs2: "карт", dota2: "карт" };
 
 function fixtureKey({ sport, competition, home, away, start }) {
   return JSON.stringify([sport, competition, normalizeIdentity(home), normalizeIdentity(away), start]);
@@ -252,8 +253,11 @@ async function getMarkets(url, apiKey, fetchSource, parse) {
       if (response.ok) {
         const payload = await response.json();
         const unmatched = new Set();
-        const markets = parse(payload, Date.now(), (key) => unmatched.add(key));
-        return { attempts, status: "ok", markets, unmatched: [...unmatched] };
+        const received = Date.now();
+        const modified = Date.parse(response.headers.get("last-modified"));
+        const markets = parse(payload, received, (key) => unmatched.add(key));
+        return { attempts, status: "ok", markets, unmatched: [...unmatched], receivedAt: iso(received),
+          snapshotAt: Number.isFinite(modified) && modified <= received ? iso(modified) : null };
       }
       const body = await response.json().catch(() => null);
       const code = body?.error_code;
@@ -270,12 +274,17 @@ async function getMarkets(url, apiKey, fetchSource, parse) {
     }
     if (!attempt) await new Promise((done) => setTimeout(done, 1000));
   }
-  return { attempts, status, markets: [], unmatched: [] };
+  return { attempts, status, markets: [], unmatched: [], receivedAt: null, snapshotAt: null };
 }
 
-export async function collectBookmakerLines(events, { apiKey, fonbetKey, teamTotals = false, privateDir, oddsGapDir, fetchSource = fetch } = {}) {
-  const requests = new Map();
-  const markets = [];
+export async function collectBookmakerLines(events, { apiKey, fonbetKey, teamTotals = false, privateDir, oddsGapDir,
+  publicQuotes = { markets: [], requests: [] }, fetchSource = fetch } = {}) {
+  const requests = new Map(publicQuotes.requests);
+  const markets = [...publicQuotes.markets];
+  const record = (key, url, source, { markets: rows, ...result }) => {
+    requests.set(key, { source, url: url.href, ...result });
+    markets.push(...rows);
+  };
   if (privateDir) {
     const [csv, receipt] = await Promise.all([readFile(join(privateDir, "fixtures.csv"), "utf8"),
       readFile(join(privateDir, "receipt.json"), "utf8")]);
@@ -300,8 +309,7 @@ export async function collectBookmakerLines(events, { apiKey, fonbetKey, teamTot
         commenceTimeTo: seconds(Math.ceil(Math.max(...starts) / 1000) * 1000 + 900_000) });
       const result = await getMarkets(url, apiKey, fetchSource, (rows, time, reject) =>
         importOddsApi(rows, competition, time, group, null, reject));
-      markets.push(...result.markets);
-      requests.set(competition, { status: result.status, attempts: result.attempts, unmatched: result.unmatched });
+      record(competition, url, "The Odds API", result);
       if (competition === "nhl" || teamTotals && competition === "nba") {
         const verified = new Map(result.markets.map(({ providerEventId, event }) => [providerEventId, event]));
         for (const [id, event] of verified) {
@@ -310,27 +318,27 @@ export async function collectBookmakerLines(events, { apiKey, fonbetKey, teamTot
             markets: "team_totals", oddsFormat: "decimal", dateFormat: "iso" });
           const individual = await getMarkets(exactUrl, apiKey, fetchSource, (row, time) =>
             importOddsApi([row], competition, time, [event], "team_totals"));
-          markets.push(...individual.markets);
-          requests.set(`${competition}:team_totals:${id}`, { status: individual.status, attempts: individual.attempts });
+          record(`${competition}:team_totals:${id}`, exactUrl, "The Odds API", individual);
         }
       }
     }
   }
   const canUseFonbet = events.some(({ competition }) => Object.values(fonbetLeague).includes(competition));
   if (fonbetKey && canUseFonbet) {
-    const result = await getMarkets(new URL(fonbetUrl), fonbetKey, fetchSource, (payload, time, reject) =>
+    const url = new URL(fonbetUrl);
+    const result = await getMarkets(url, fonbetKey, fetchSource, (payload, time, reject) =>
       importFonbet(payload, time, events, reject));
-    markets.push(...result.markets);
-    requests.set("fonbet", { status: result.status, attempts: result.attempts, unmatched: result.unmatched });
+    record("fonbet", url, "ArbPlay / Fonbet", result);
   }
   return { markets: Map.groupBy(markets, (row) => fixtureKey(row.event)), requests, configured: Boolean(apiKey),
     fonbetConfigured: Boolean(fonbetKey) };
 }
 
 export function priceProbability(market, offer, forecast, benchmark) {
-  const { event, targets, distributions } = forecast;
-  if (market.event && fixtureKey(market.event) !== fixtureKey(event)) return null;
-  const expectedScope = event.sport === "football" ? "regulation" : feeds[event.competition]?.[3];
+  const { event, targets = [], distributions = [] } = forecast;
+  if (market.modelComparable === false || market.event && fixtureKey(market.event) !== fixtureKey(event)) return null;
+  const expectedScope = event.sport === "football" ? "regulation" :
+    feeds[event.competition]?.[3] ?? (event.sport === "volleyball" && event.rules === "BO5" ? "match_bo5" : null);
   if (!expectedScope || market.scope !== expectedScope) return null;
   if (market.type === "outcome") {
     const win = targets.find(({ id }) => id === "outcome")?.probabilities[offer.selection];
@@ -361,12 +369,15 @@ export function bookmakerCard(coverage, forecast, benchmark, now) {
   const { event } = forecast;
   const key = fixtureKey(event);
   const scoped = coverage.markets.get(key) ?? [];
-  const fresh = scoped.filter((market) => !market.privateSnapshot && Date.parse(market.updatedAt) <= now &&
+  const fresh = scoped.filter((market) => !market.privateSnapshot && !market.observationOnly &&
+    Date.parse(market.updatedAt) <= Date.parse(market.receivedAt) &&
     now - Date.parse(market.updatedAt) <= maxAge && Date.parse(market.receivedAt) <= now && now < event.start);
+  const observed = scoped.filter((market) => market.observationOnly && Date.parse(market.receivedAt) <= now &&
+    now - Date.parse(market.receivedAt) <= maxAge && now < event.start);
   const snapshot = scoped.filter((market) => market.privateSnapshot && Date.parse(market.receivedAt) <= now);
-  const attempts = [coverage.requests.get(event.competition),
+  const attempts = [coverage.requests.get(event.competition), coverage.requests.get(`public:${event.competition}`),
     ...(Object.values(fonbetLeague).includes(event.competition) ? [coverage.requests.get("fonbet")] : [])].filter(Boolean);
-  const status = fresh.length ? "current" : snapshot.length ? "snapshot" : scoped.length ? "stale" :
+  const status = fresh.length ? "current" : observed.length ? "observed" : snapshot.length ? "snapshot" : scoped.length ? "stale" :
     attempts.some((entry) => entry.unmatched?.includes(key)) ? "unmatched" :
       attempts.some((entry) => entry.status === "ok") ? "missing" :
         ["unauthorized", "quota_exhausted", "access_required", "unavailable"]
@@ -374,9 +385,10 @@ export function bookmakerCard(coverage, forecast, benchmark, now) {
           (feeds[event.competition] || Object.values(fonbetLeague).includes(event.competition) ? "access_required" : "unsupported");
   const [home, away] = event.match.split(/\s+[—–]\s+/);
   const number = (x) => String(x).replace(".", ",");
-  const lines = [...fresh, ...(fresh.length ? [] : snapshot)].map(({ event: _, ...market }) => ({
+  const lines = (fresh.length ? fresh : observed.length ? observed : snapshot).map(({ event: _, ...market }) => ({
     ...market, marketName: bookmakerMarketName(market.type, event.sport),
-    expiresAt: market.updatedAt ? iso(Math.min(event.start, Date.parse(market.updatedAt) + maxAge)) : null,
+    expiresAt: market.updatedAt || market.observationOnly ?
+      iso(Math.min(event.start, Date.parse(market.updatedAt || market.receivedAt) + maxAge)) : null,
     outcomes: market.outcomes.map((offer) => {
       const team = offer.selection === "home" ? home : away;
       const condition = market.type === "outcome" ? offer.selection === "draw" ? "Ничья" : `Победа «${team}»` :

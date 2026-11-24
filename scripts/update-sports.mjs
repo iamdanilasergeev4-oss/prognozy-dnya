@@ -9,7 +9,8 @@ import { loadResearchSources } from "./sports-research-sources.mjs";
 import { loadSeasonArchives, readResearchSnapshots, saveResearchSnapshot } from "./sports-research-history.mjs";
 import { compareHistory, makeHistorySnapshot, mergeHistory } from "./sports-history-analysis.mjs";
 import { captureManualResearch } from "./collect-sports-research.mjs";
-import { checkManualPacket, checkModelCandidate, manualSummary, sealManualPacket, selectManualAnalysis, siteData } from "./sports-manual-update.mjs";
+import { checkManualPacket, checkModelCandidate, checkUpcomingSelection, digest, manualSummary, sealManualPacket,
+  selectManualAnalysis, siteData } from "./sports-manual-update.mjs";
 import { readResearchRuns, verifyResearchObject } from "./sports-research-ledger.mjs";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
@@ -181,6 +182,7 @@ async function loadInputs(base) {
 }
 
 function validate(input, output, now, manual = false) {
+  if (manual) checkUpcomingSelection(output.next, now);
   const previous = input.historyFiles.flatMap((h) => h.predictions);
   const next = Object.values(output.months).flatMap((h) => h.predictions);
   const ids = new Map(next.map((e) => [e.id, e]));
@@ -301,7 +303,8 @@ async function preview(mode = "preview", editorialFile, replay) {
   // input archive. Keep the exact pre-run state for validation and approval.
   const articleContexts = new Map();
   const output = buildUpdate({ ...structuredClone(input), ...data, now,
-    reviewArticle: (article, context) => articleContexts.set(article, context), editorialDays: manual ? recentDays : 0, manualSchedule: manual });
+    reviewArticle: (article, context) => articleContexts.set(article, context), editorialDays: manual ? recentDays : 0,
+    manualSchedule: manual, preserveExpress: manual });
   const reviewedAt = Date.now();
   const selection = research ? selectManualAnalysis(output.next, articleContexts, research, reviewedAt, editorial) : null;
   if (selection) {
@@ -325,14 +328,15 @@ async function preview(mode = "preview", editorialFile, replay) {
   const path = join(root, ".sports-update", run);
   await saveCandidate(path, output);
   if (manual) {
+    const network = { mode: replay ? "replay" : "live", requests: research.requests, jobs: data.jobReport };
     const report = { ...output.report, checkedAt: new Date(reviewedAt).toISOString(),
       researchApplied: selection.researchApplied, articles: selection.articles,
       evaluatedArticles: selection.evaluated, modelDecisions: selection.modelDecisions,
-      runMode: replay ? "replay" : "live", editorialDays: recentDays, scheduleJobs: data.jobReport,
+      runMode: network.mode, editorialDays: recentDays, scheduleJobs: data.jobReport, networkDigest: digest(network),
       rawRequests: Object.fromEntries([...Map.groupBy(research.requests.filter((request) => request.startedAt),
         (request) => request.status)].map(([name, items]) => [name, items.length])) };
     await writeFile(join(path, "manual-report.json"), json(report), { flag: "wx" });
-    await writeFile(join(path, "network.json"), json({ mode: report.runMode, requests: research.requests, jobs: data.jobReport }), { flag: "wx" });
+    await writeFile(join(path, "network.json"), json(network), { flag: "wx" });
     await writeFile(join(path, "diagnostic.json"), json(research.diagnostics), { flag: "wx" });
     const packet = sealManualPacket(report, siteData(input), siteData(null, output));
     await writeFile(join(path, "manual-packet.json"), json(packet), { flag: "wx" });
@@ -377,6 +381,10 @@ async function verifyManualCandidate(run, approvalId, siteRoot = root) {
   if (modelRun) {
     const [evaluation, quotes] = await Promise.all([read(path, "evaluation.json"), read(path, "bookmaker-lines.json")]);
     checkModelCandidate(baselineFiles, candidateFiles, report, evaluation, quotes, now);
+  } else {
+    const network = await read(path, "network.json");
+    ensure(network.mode === "live" && digest(network) === report.networkDigest,
+      "Сетевой журнал отличается от согласованного прогона");
   }
   validate(input, { next: candidate.current, months: Object.fromEntries(candidate.historyFiles.map((file) => [file.month, file])),
     express: candidate.express }, now, true);
