@@ -33,7 +33,7 @@ const germanCompetitions = {
 // These editions were checked against the WTA tournament pages. Scope the
 // city labels to the edition so they do not match other tours in those cities.
 const wtaEditions = [
-  { from: "2026-11-21", through: "2026-11-30", names: /^(?:buenos aires(?: 125)?(?: qualifications)?|ieb\+? argentina open)$/,
+  { from: "2026-11-21", through: "2026-11-30", names: /^(?:buenos aires(?: 125)?(?: qualifications| round of (?:32|16)| quarter finals| semi finals| final)?|ieb\+? argentina open)$/,
     title: "IEB+ Argentina Open", url: "https://www.wtatennis.com/tournaments/2052/buenos-aires-125/2026" },
   { from: "2026-11-14", through: "2026-11-23", names: /^(?:colina(?: 125)?(?: qualifications| round of (?:32|16)| semi finals| quarter finals| final)?|lp open by ind)$/,
     title: "LP Open by IND", url: "https://www.wtatennis.com/tournaments/2076/colina-125/2026/" },

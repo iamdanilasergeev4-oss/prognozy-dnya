@@ -20,6 +20,9 @@ test("the extended article uses full comparable season results and excludes futu
   history.push(result("a", 11, { observedAt: now + 1 }), result("b", 12, { season: "2025-26" }));
   const info = describeEvidence(article, null, { diagnostics: { assessed: [fixture] }, history }, now);
   assert.deepEqual(info.history, [5, 5]);
+  assert.match(article.matchScenario.label, /небольшим числом голов/u);
+  assert.match(article.matchScenario.reason, /5 из 5/u);
+  assert.match(article.matchScenario.limitation, /Выборка короткая/u);
   assert.equal(info.splits, 2);
   assert.match(article.text, /дома — побед 5 из 5/u);
   assert.match(article.text, /на выезде — побед 0 из 5/u);
@@ -37,6 +40,7 @@ test("map totals stay out of CS2 articles based on verified series winners alone
     { diagnostics: { assessed: [] }, history: [] }, now);
   assert.equal(info.quality, true);
   assert.equal(info.scoringContext, false);
+  assert.equal(article.matchScenario, undefined);
   assert.match(article.text, /Сверенных счётов по картам недостаточно/u);
   assert.doesNotMatch(article.text, /средний общий счёт/u);
 });

@@ -172,12 +172,19 @@
   }
   /* Прогноз ↔ материал «Разбора дня» по совпадению обеих команд */
   const teamKey = (t) => String(t || "").toLowerCase().replace(/ё/g, "е").replace(/[^\p{L}\p{N}]+/gu, "");
+  function featuredReviews() {
+    return data.analysis.map((review, i) => ({ review, i }))
+      .filter(({ review }) => review.matchScenario && Date.parse(review.start_iso) > Date.now() && bucketOf(review).day === "today")
+      .sort((a, b) => Date.parse(a.review.start_iso) - Date.parse(b.review.start_iso)).slice(0, 5);
+  }
   function storyIndexFor(match, sport, start) {
     if (!hasAnalysis()) return -1;
     const t = splitTeams(match);
     if (!t) return -1;
     const k = t.map(teamKey).sort().join("|");
-    return data.analysis.findIndex((a) => {
+    const allowed = matchOverviews() ? new Set(featuredReviews().map(({ i }) => i)) : null;
+    return data.analysis.findIndex((a, i) => {
+      if (allowed && !allowed.has(i)) return false;
       const u = splitTeams(a.match);
       return u && u.map(teamKey).sort().join("|") === k &&
         (!a.sport_id || a.sport_id === sport && Math.abs(Date.parse(a.start_iso) - Date.parse(start)) <= 5 * 60e3);
@@ -426,7 +433,7 @@
     const hosts = new Set();
     cards.forEach(({ p }) => (p.sources || []).forEach((x) => hosts.add(host(x.url))));
     (data.analysis || []).forEach((a) => (a.sources || []).forEach((x) => hosts.add(host(x.url))));
-    const withWhy = cards.filter(({ p }) => matchOverviews() ? p.review?.hasStatistics : Array.isArray(p.facts) && p.facts.length).length;
+    const withWhy = cards.filter(({ p }) => matchOverviews() ? p.review?.matchScenario : Array.isArray(p.facts) && p.facts.length).length;
     const ms = cards.map(({ p }) => startOf(p).ms).filter((t) => !isNaN(t));
     const days = [...new Set(ms.map(dayKey))].sort();
     const range = days.length > 1
@@ -463,7 +470,7 @@
         <div class="bd-bar">${dist}</div>
         <div class="bd-legend">${legend}</div>
       </div>
-      ${total ? `<p class="bd-cap">${matchOverviews() ? `${withWhy} из ${total} — со сверенной статистикой` : data.source === "model-preview" ? "Все прогнозы прошли историческую проверку" : `${withWhy} из ${total} — с разбором «за» и «против»`} · ${hosts.size} ${plural(hosts.size, "источник", "источника", "источников")}</p>` : ""}`;
+      ${total ? `<p class="bd-cap">${matchOverviews() ? `${withWhy} из ${total} — с итоговым прогнозом` : data.source === "model-preview" ? "Все прогнозы прошли историческую проверку" : `${withWhy} из ${total} — с разбором «за» и «против»`} · ${hosts.size} ${plural(hosts.size, "источник", "источника", "источников")}</p>` : ""}`;
     board.appendChild(tip);
     drawTimeline();
     board.querySelectorAll(".bd-seg, .bd-leg").forEach((b) => {
@@ -541,7 +548,7 @@
     const a = list[0];
     tip.innerHTML = `<div class="tt-h" style="--c:${colorOf(a.sport)}">${icon(a.sport)}<span>${esc(a.name)} · ${esc(dayRel(a.ms))}${a.exact ? ", " + hhmm(a.ms) : ""}</span></div>` +
       list.slice(0, 6).map((it) => `<div class="tt-r"><b>${esc(ru(it.p.match, it.sport))}</b><span>${it.p.lines ?
-        esc(ru(it.p.lines[0], it.sport)) : matchOverviews() ? esc(ru(it.p.review?.overview || "", it.sport)) : `${esc(ru(it.p.bet, it.sport))} · уверенность ${esc(CONF_LABEL[it.conf])}`}</span></div>`).join("") +
+        esc(ru(it.p.lines[0], it.sport)) : matchOverviews() ? esc(ru(it.p.review?.matchScenario?.label || "Нет уверенного прогноза", it.sport)) : `${esc(ru(it.p.bet, it.sport))} · уверенность ${esc(CONF_LABEL[it.conf])}`}</span></div>`).join("") +
       (list.length > 6 ? `<div class="tt-more">и ещё ${list.length - 6}</div>` : "") +
       `<div class="tt-go">Нажмите, чтобы перейти к матчу</div>`;
     tip.hidden = false;
@@ -583,7 +590,7 @@
     if (analytical()) list.push({ id: "summary", name: "Сводка дня", n: data.dailySummary?.length || 0 });
     if (hasExpress()) list.push({ id: "express", name: "Экспрессы", n: data.express.length || data.expressHighlights?.length || 0 });
     if (hasAnalysis()) list.push({ id: "analysis", name: "Разбор дня", n: matchOverviews() ?
-      data.analysis.filter((review) => Date.parse(review.start_iso) > Date.now()).length : data.analysis.length });
+      featuredReviews().length : data.analysis.length });
     return list;
   }
 
@@ -935,12 +942,21 @@
     const facts = paragraphs.filter((line) => !limits.includes(line) && !review?.checkedModel?.lines?.includes(line) &&
       !["Контекст матча и статистика для сравнения", "Вероятности исходов не рассчитаны."].includes(line));
     const summary = review?.overview || "Участники и время подтверждены. Статистика пока уточняется.";
+    const forecast = review?.matchScenario;
+    const fallback = event.analysis_context?.history?.some((n) => n === 0) ? "Не хватает результатов одной или обеих сторон для сравнения формы." :
+      event.analysis_context?.reasons?.includes("unconfirmed_format") ? "Формат серии пока не подтверждён." :
+      "Сверенных результатов пока недостаточно для обоснованного сценария матча.";
     return `<article class="${isStory ? "story" : "pick"} match-overview" id="${isStory ? `story-card-${i}` : `pick-${sport.id}-${i}`}"
       style="--i:${i};--c:${colorOf(sport.id)}" data-day="${bucket.day}"${bucket.soon ? " data-soon" : ""}>
       <div class="pk-meta"><span class="pk-tour">${esc(ruTournament(event.tournament, sport.id))}${event.format ?
         `<span class="pk-fmt">${esc(event.format)}</span>` : ""}</span>${whenHTML(event, sport.id)}</div>
       <div class="pk-main">${teamsHTML(event.match, sport.id)}</div>
-      <p class="pk-reason">${esc(ru(summary, sport.id))}</p>
+      <div class="card-outlook"><small>${forecast ? "Предварительный спортивный прогноз" : "Оценка матча"}</small>
+        <strong>${esc(ru(forecast?.label || "Нет уверенного прогноза", sport.id))}</strong>
+        <p class="pk-reason">${esc(ru(forecast?.reason || fallback, sport.id))}</p>
+        ${forecast ? `<small>${esc(ru(forecast.limitation, sport.id))}</small>` :
+          `<p class="note">Что известно · ${esc(ru(summary, sport.id))}</p>`}
+      </div>
       ${review?.checkedModel || review?.modelConclusion ? `<details class="projection-estimates">
         <summary>Проверенная оценка модели</summary>
         ${review.modelConclusion ? modelConclusionHTML(review.modelConclusion, sport.id) :
@@ -959,7 +975,11 @@
   function categoryGroup(card) {
     const review = card.review;
     const context = card.analysis_context;
-    if (review?.editorialForecast || review?.checkedModel || review?.modelConclusion ||
+    if (matchOverviews()) {
+      if (review?.matchScenario || review?.checkedModel || review?.modelConclusion) return 0;
+      return review?.hasStatistics || context?.history?.some((count) => count > 0) ? 1 : 2;
+    }
+    if (review?.checkedModel || review?.modelConclusion ||
         card.modelConclusion || card.statisticalSummary || card.facts?.length ||
         (context?.history?.length === 2 && context.history.every((count) => count >= 4) && !context.reasons?.length)) return 0;
     return review?.hasStatistics || context?.history?.some((count) => count > 0) ? 1 : 2;
@@ -1211,12 +1231,12 @@
 
   function analysisHTML() {
     if (matchOverviews()) {
-      const current = data.analysis.map((review, i) => ({ review, i })).filter(({ review }) => Date.parse(review.start_iso) > Date.now());
+      const current = featuredReviews();
       return `<div class="sport-head"><span class="sh-ico">${icon("analysis", "big-ico")}</span><div><h2>Разбор дня</h2>
-        <p>Короткий обзор каждого подтверждённого матча.</p></div></div>
+        <p>Матчи сегодня с наиболее обоснованным прогнозом.</p></div></div>
         ${current.length ? `<div class="stories">${current.map(({ review, i }) =>
           overviewCard({ ...review, review }, i, sportById(review.sport_id), true)).join("")}</div>` :
-          '<p class="note">Пока нет подтверждённых предстоящих матчей.</p>'}`;
+          '<p class="note">На оставшиеся матчи сегодня пока нет уверенного прогноза. Расписание и факты доступны в категориях.</p>'}`;
     }
     const hasStatisticalAnalysis = data.analysis.some((article) => article.statisticalSummary);
     let html = `

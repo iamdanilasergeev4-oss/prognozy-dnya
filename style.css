@@ -919,3 +919,8 @@ textarea:focus, input:focus { outline: none; border-color: var(--accent); box-sh
   .bg { opacity: 1; }
 }
 .kpi span small { color: var(--faint); font-size: 12px; }
+
+.card-outlook { margin: .7rem 0; padding-left: .85rem; border-left: 3px solid var(--c); }
+.card-outlook > strong, .card-outlook > small { display: block; }
+.card-outlook > strong { margin: .25rem 0; font-size: 1.15rem; }
+.card-outlook > small { opacity: .8; }

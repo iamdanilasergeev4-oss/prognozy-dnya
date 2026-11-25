@@ -28,9 +28,9 @@ test("a single publisher, a conflicting start and an already started fixture can
   assert.equal(upcomingEvidence(valid, a, start, start + 3600_000).length, 0);
 });
 
-test("manual tennis pairs the two Argentina Open calendars within the same edition", () => {
+test("manual tennis pairs the Buenos Aires round-of-16 label with the Argentina Open calendar", () => {
   const time = Date.parse("2026-11-24T19:10:00Z");
-  const first = game("365Scores", { sport: "tennis", tournament: "Buenos Aires",
+  const first = game("365Scores", { sport: "tennis", tournament: "Buenos Aires - Round of 16",
     home: "Irene Burillo Escorihuela", away: "Victoria Kasintseva", start: time });
   const second = game("ESPN", { sport: "tennis", tournament: "IEB+ Argentina Open",
     home: "Victoria Jimenez Kasintseva", away: "Irene Burillo", start: time + 20 * 60_000 });

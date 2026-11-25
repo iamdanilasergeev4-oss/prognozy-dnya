@@ -85,6 +85,79 @@ function describeSide(name, rows, sport) {
   return `${name} — побед ${wins(rows)} из ${rows.length}${outcomes} (${interval}).${scores}`;
 }
 
+const scenarioPatterns = {
+  football: ["Вероятен матч с небольшим числом голов", "было забито не больше двух голов", (a, b) => a + b <= 2],
+  basketball: ["Развязка может быть близкой", "разница в счёте не превышала пяти очков", (a, b) => Math.abs(a - b) <= 5],
+  hockey: ["Вероятен плотный счёт", "разница в итоговом счёте не превышала одной шайбы", (a, b) => Math.abs(a - b) <= 1],
+  tennis: ["Матч может затянуться до третьего сета", "матч доходил до третьего сета", (a, b) => a + b === 3],
+  volleyball: ["Вероятен обмен партиями", "обе команды брали хотя бы одну партию", (a, b) => Math.min(a, b) > 0],
+  cs2: ["Серия может дойти до решающей карты", "серия доходила до третьей карты", (a, b) => a + b === 3],
+  dota2: ["Серия может дойти до решающей карты", "серия доходила до третьей карты", (a, b) => a + b === 3],
+};
+
+function describeScenario(article, names, samples, recentEnough) {
+  const sport = article.sport_id;
+  if (!recentEnough || samples.some((scores) => scores.length < 3) ||
+      (series.has(sport) && !article.format)) return null;
+
+  const sizes = samples.map((scores) => scores.length);
+  const limitation = `Выборка короткая и может включать соперников разной силы. Перед матчем не сверены ${limits[sport].toLowerCase()}.`;
+  const [label, pattern, matches] = scenarioPatterns[sport];
+  const counts = samples.map((scores) => scores.filter(([own, allowed]) => matches(own, allowed)).length);
+  const compatible = series.has(sport) ? /^BO3$/i.test(article.format) :
+    sport !== "tennis" || /^BO3$/i.test(article.format || "");
+  if (compatible && counts.every((count, i) => count / sizes[i] >= 2 / 3)) {
+    return { label, reason: `У «${names[0]}» в ${counts[0]} из ${sizes[0]} матчей и у «${names[1]}» в ${counts[1]} из ${sizes[1]} ${pattern}. Если эта тенденция сохранится, она может проявиться и в очной встрече.`, limitation };
+  }
+
+  if (sport === "basketball" || sport === "hockey") {
+    const averages = samples.map((scores) => [0, 1].map((side) =>
+      scores.reduce((sum, score) => sum + score[side], 0) / scores.length));
+    if (sport === "hockey" && averages.every(([own, allowed]) => own >= 3 && allowed >= 3)) {
+      return {
+        label: "Обе команды могут регулярно создавать угрозу",
+        reason: `В последних сверенных матчах обе команды в среднем забрасывали и пропускали не меньше трёх шайб. При сохранении этой результативности игра может получиться открытой с обеих сторон.`,
+        limitation: `${limitation} В статистике учтены итоговые счета с овертаймом и буллитами.`,
+      };
+    }
+    if (sport === "basketball") {
+      const attack = averages[0][0] > averages[1][0] ? 0 : 1;
+      const rival = 1 - attack;
+      if (averages[attack][0] - averages[rival][0] >= 8 && averages[attack][1] - averages[rival][1] >= 8) {
+        const [own, allowed] = averages[attack];
+        const [rivalOwn, rivalAllowed] = averages[rival];
+        return {
+          label: `Результативность «${names[attack]}» может стать ключом к игре`,
+          reason: `В сверенной выборке «${names[attack]}» набирал ${decimal(own)} очка за матч против ${decimal(rivalOwn)} у «${names[rival]}», но и пропускал больше — ${decimal(allowed)} против ${decimal(rivalAllowed)}. Если разница сохранится, более результативной команде всё равно понадобится сдерживать соперника в защите.`,
+          limitation,
+        };
+      }
+    }
+  }
+
+  const margins = samples.map((scores) => scores.reduce((sum, [own, allowed]) => sum + own - allowed, 0) / scores.length);
+  const shares = samples.map((scores) => scores.filter(([own, allowed]) => own > allowed).length / scores.length);
+  if (sport === "volleyball" && shares.every((share) => share === 1)) {
+    return {
+      label: "Соперники проверят победные серии друг друга",
+      reason: `«${names[0]}» выиграл все ${sizes[0]} сверенных матчей, а «${names[1]}» — все ${sizes[1]}. Обе команды подходят к встрече с положительным балансом партий, поэтому преимущество в предыдущих играх даёт мало оснований ждать такого же контроля в очном матче.`,
+      limitation,
+    };
+  }
+  const leader = shares[0] > shares[1] ? 0 : 1;
+  const other = 1 - leader;
+  if (shares[leader] - shares[other] < 1 / 3 || margins[leader] <= 0 || margins[other] >= 0) return null;
+
+  const advantages = { football: "лучшим балансом забитых и пропущенных голов", basketball: "лучшей разницей набранных и пропущенных очков",
+    hockey: "лучшим балансом заброшенных и пропущенных шайб", tennis: "лучшим балансом выигранных и проигранных сетов",
+    volleyball: "лучшим балансом партий", cs2: "лучшим балансом карт", dota2: "лучшим балансом карт" };
+  return {
+    label: `«${names[leader]}» подходит к матчу в более убедительной форме`,
+    reason: `В последних сверенных матчах «${names[leader]}» чаще выигрывал и отличался ${advantages[sport]}. При сохранении этой формы «${names[other]}» будет сложнее удерживать равный счёт.`,
+    limitation,
+  };
+}
+
 function contextName(article) {
   return article.key_factors?.find((text) => text.startsWith("Формат ")) ||
     (["tennis", "volleyball", "cs2", "dota2"].includes(article.sport_id) ? "Формат серии не удалось подтвердить." : "");
@@ -132,7 +205,11 @@ export function describeEvidence(article, context, research, now, editorial = []
   const minimum = (matches) => Math.min(...matches.map((rows) => rows.length));
   windows.sort((a, b) => Number(fresh(b.matches)) - Number(fresh(a.matches)) ||
     minimum(b.matches) - minimum(a.matches) || b.matches.flat().length - a.matches.flat().length);
-  const best = windows[0];
+  // Keep a coherent result window. For esports, prefer a window with enough
+  // corroborated map scores on both sides over a larger winner-only window.
+  const scoredWindow = series.has(article.sport_id) && windows.find(({ matches }) =>
+    fresh(matches) && matches.every((rows) => verifiedScores(rows).length >= 3));
+  const best = scoredWindow || windows[0];
   const rowsBySide = best.matches.map((rows) => ({ rows }));
   const stats = rowsBySide.map(({ rows }, i) => describeSide(articleTeams[i], rows, article.sport_id));
   const scoring = describeScoring(articleTeams, best.matches, article.sport_id);
@@ -168,6 +245,8 @@ export function describeEvidence(article, context, research, now, editorial = []
   const marketEvidence = (article.key_factors || []).filter((line) => /условие выполнено|предматчевый порог|порог соответствует/i.test(line));
   const recent = best.matches.map((results) => [...results].sort((a, b) => b.start - a.start).slice(0, 5));
   const recentScores = recent.map(verifiedScores);
+  const scenario = describeScenario(article, articleTeams, recentScores, fresh(recent));
+  if (scenario) article.matchScenario = scenario;
   const scoreDiff = (scores) => scores.reduce((sum, [own, allowed]) => sum + own - allowed, 0) / scores.length;
   const differentBalance = recentScores.every((scores) => scores.length >= 3) &&
     recentScores.some((scores) => scoreDiff(scores) > 0) && recentScores.some((scores) => scoreDiff(scores) < 0);
