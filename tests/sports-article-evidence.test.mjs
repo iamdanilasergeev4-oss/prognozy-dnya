@@ -44,3 +44,19 @@ test("map totals stay out of CS2 articles based on verified series winners alone
   assert.match(article.text, /Сверенных счётов по картам недостаточно/u);
   assert.doesNotMatch(article.text, /средний общий счёт/u);
 });
+
+test("a scheduled basketball record supports a qualitative scenario without adding a model", () => {
+  const article = { sport_id: "basketball", match: "A — B", text: "Время сверено.",
+    start_iso: new Date(now + day).toISOString(), sources: [source] };
+  const espn = { source: "ESPN", status: "scheduled", home: "A", away: "B", neutralSite: true,
+    records: [{ total: "8-2", home: "4-1" }, { total: "3-7", road: "1-4" }] };
+  const research = { diagnostics: { assessed: [] }, history: [] };
+  describeEvidence(article, { forms: [{}, {}], evidence: [espn] }, research, now);
+  assert.match(article.matchScenario.reason, /8-2/);
+  assert.ok(article.comparativeReview);
+  assert.equal(article.checkedModel, undefined);
+  assert.doesNotMatch(article.overview, /4-1/);
+  const unrelated = { ...article, match: "C — D", text: "", matchScenario: undefined };
+  describeEvidence(unrelated, { forms: [{}, {}], evidence: [espn] }, research, now);
+  assert.equal(unrelated.matchScenario, undefined);
+});

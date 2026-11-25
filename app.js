@@ -175,7 +175,9 @@
   function featuredReviews() {
     return data.analysis.map((review, i) => ({ review, i }))
       .filter(({ review }) => review.matchScenario && Date.parse(review.start_iso) > Date.now() && bucketOf(review).day === "today")
-      .sort((a, b) => Date.parse(a.review.start_iso) - Date.parse(b.review.start_iso)).slice(0, 5);
+      .sort((a, b) => Number(Boolean(b.review.checkedModel)) - Number(Boolean(a.review.checkedModel)) ||
+        (b.review.comparisonSample || 0) - (a.review.comparisonSample || 0) ||
+        Date.parse(a.review.start_iso) - Date.parse(b.review.start_iso)).slice(0, 5);
   }
   function storyIndexFor(match, sport, start) {
     if (!hasAnalysis()) return -1;
@@ -842,7 +844,8 @@
     });
     const message = {
       stale: "Срок актуальности полученной линии истёк.",
-      unsupported: "В подключённом источнике для этого турнира нет проверенной схемы линий.",
+      local_preview_only: "Снимок линии доступен в локальном превью.",
+      unsupported: "Для этого турнира опубликованная линия пока недоступна.",
       unconfigured: "Актуальная линия не найдена. Источник с ключом доступа не подключён.",
       access_required: "Нет доступа к источнику линий.",
       unauthorized: "Ошибка авторизации источника линий.",
@@ -939,7 +942,7 @@
     const bucket = bucketOf(event);
     const paragraphs = String(review?.text || "").split(/\n+/).slice(1).filter(Boolean);
     const limits = paragraphs.filter((line) => /^(Что не удалось проверить|Не сверены|Ограничения)[.:]/u.test(line));
-    const facts = paragraphs.filter((line) => !limits.includes(line) && !review?.checkedModel?.lines?.includes(line) &&
+    const facts = paragraphs.filter((line) => line !== "Спортивный обзор. " + review?.overview && !limits.includes(line) && !review?.checkedModel?.lines?.includes(line) &&
       !["Контекст матча и статистика для сравнения", "Вероятности исходов не рассчитаны."].includes(line));
     const summary = review?.overview || "Участники и время подтверждены. Статистика пока уточняется.";
     const forecast = review?.matchScenario;
@@ -951,11 +954,9 @@
       <div class="pk-meta"><span class="pk-tour">${esc(ruTournament(event.tournament, sport.id))}${event.format ?
         `<span class="pk-fmt">${esc(event.format)}</span>` : ""}</span>${whenHTML(event, sport.id)}</div>
       <div class="pk-main">${teamsHTML(event.match, sport.id)}</div>
-      <div class="card-outlook"><small>${forecast ? "Предварительный спортивный прогноз" : "Оценка матча"}</small>
-        <strong>${esc(ru(forecast?.label || "Нет уверенного прогноза", sport.id))}</strong>
-        <p class="pk-reason">${esc(ru(forecast?.reason || fallback, sport.id))}</p>
-        ${forecast ? `<small>${esc(ru(forecast.limitation, sport.id))}</small>` :
-          `<p class="note">Что известно · ${esc(ru(summary, sport.id))}</p>`}
+      <div class="card-outlook"><small>${forecast ? "Предварительный спортивный прогноз" : review?.hasStatistics ? "Спортивный обзор" : "Расписание"}</small>
+        <strong>${esc(ru(forecast?.label || (review?.hasStatistics ? "Форма перед матчем" : "Начало матча подтверждено"), sport.id))}</strong>
+        <p class="pk-reason">${esc(ru(forecast?.reason || review?.overviewLead || summary, sport.id))}</p>
       </div>
       ${review?.checkedModel || review?.modelConclusion ? `<details class="projection-estimates">
         <summary>Проверенная оценка модели</summary>
@@ -963,7 +964,8 @@
           [review.checkedModel.conclusion, ...review.checkedModel.lines].map((line) => `<p>${esc(ru(line, sport.id))}</p>`).join("")}
       </details>` : ""}
       ${bookmakerHTML(event.bookmaker || review?.bookmaker, sport.id)}
-      <details class="overview-details"><summary>Статистика и источники</summary>
+      <details class="overview-details"><summary>Статистика, ограничения и источники</summary>
+        <p class="note">${esc(ru(forecast?.limitation || fallback, sport.id))}</p>
         ${facts.length ? `<div class="st-text">${facts.map((line) => `<p>${esc(ru(line, sport.id))}</p>`).join("")}</div>` : ""}
         ${limits.length ? `<section class="st-factors"><h4>Что пока неизвестно</h4><ul>${limits.map((line) =>
           `<li>${esc(ru(line.replace(/^[^:]+:\s*/, ""), sport.id))}</li>`).join("")}</ul></section>` : ""}
@@ -1129,15 +1131,18 @@
     const selected = today.length ? today : upcoming;
     if (!selected.length) return "";
     const entries = selected.map(({ sport, event }) => ({ sport, event, story: storyIndexFor(event.match, sport.id, event.start_iso) }));
-    const count = entries.filter(({ story }) => story >= 0).length;
+    const forecasts = new Map((data.analysis || []).filter((a) => a.matchScenario)
+      .map((a) => [a.sport_id + cardKey(a), a.matchScenario.label]));
+    const count = matchOverviews() ? entries.filter(({ sport, event }) => forecasts.has(sport.id + cardKey(event))).length :
+      entries.filter(({ story }) => story >= 0).length;
     return `<section class="sport-schedule express-overview">
       <h3>${today.length ? "Подтверждённые события сегодня" : "Ближайшие подтверждённые события"}</h3>
-      <p class="note">${entries.length} ${plural(entries.length, "событие", "события", "событий")} · ${count} ${analysisCountLabel(count)}</p>
+      <p class="note">${entries.length} ${plural(entries.length, "событие", "события", "событий")} · ${count} ${matchOverviews() ? plural(count, "спортивный сценарий", "спортивных сценария", "спортивных сценариев") : analysisCountLabel(count)}</p>
       <ul>${entries.slice(0, 4).map(({ sport, event, story }) => `<li class="schedule-match">
         <div class="schedule-meta"><span>${esc(sport.name)}</span>${whenHTML(event, sport.id)}</div>
         <strong>${esc(ru(event.match, sport.id))}</strong>
         ${story >= 0 ? `<button type="button" class="pk-story" data-story="${story}">${icon("analysis")}<span>Разбор матча</span></button>` :
-          scheduleContext(event, sport.id)}
+          forecasts.has(sport.id + cardKey(event)) ? `<small>${esc(ru(forecasts.get(sport.id + cardKey(event)), sport.id))}</small>` : matchOverviews() ? "" : scheduleContext(event, sport.id)}
       </li>`).join("")}</ul>
     </section>`;
   }
@@ -1153,7 +1158,7 @@
       </div>
       ${highlights.length ? `<div class="xp-list express-highlights">${highlights.map(expressScenario).join("")}</div>` : ""}
       ${list.length ? `<div class="xp-list">${list.map((item, i) => expressCard(item, i)).join("")}</div>` : highlights.length ? "" :
-        `<div class="empty"><strong>На сегодня нет опубликованных экспрессов</strong><p><a href="#xp-past">Перейти к истории экспрессов</a></p></div>
+        `<p class="note">На сегодня нет опубликованных экспрессов. <a href="#xp-past">История экспрессов</a></p>
          ${dailyEventsOverview()}`}
       <section class="xp-past" id="xp-past"><p class="note" role="status">Загружаем историю экспрессов…</p></section>`;
   }

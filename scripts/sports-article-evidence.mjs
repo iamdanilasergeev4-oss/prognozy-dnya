@@ -102,6 +102,16 @@ function describeScenario(article, names, samples, recentEnough) {
 
   const sizes = samples.map((scores) => scores.length);
   const limitation = `Выборка короткая и может включать соперников разной силы. Перед матчем не сверены ${limits[sport].toLowerCase()}.`;
+  if (sport === "tennis") {
+    const balance = samples.map((scores) => scores.reduce((sum, [own, other]) => sum + own - other, 0));
+    const leader = balance.findIndex((n) => n > 0);
+    if (leader >= 0 && balance[1 - leader] < 0 && samples[leader].filter(([a,b]) => a > b).length > sizes[leader] / 2 &&
+        samples[1 - leader].filter(([a,b]) => a > b).length < sizes[1 - leader] / 2) {
+      return { label: `«${names[leader]}» может навязать сопернице борьбу за каждый сет`,
+        reason: `У «${names[leader]}» баланс партий +${balance[leader]} за ${sizes[leader]} матчей, у «${names[1-leader]}» — ${balance[1-leader]} за ${sizes[1-leader]}. Если эта форма сохранится, сопернице будет особенно важно удержать преимущество после выигранного сета.`,
+        limitation: "Это короткая выборка. По итоговым счетам нельзя судить о качестве подачи, приёма и физическом состоянии перед матчем." };
+    }
+  }
   const [label, pattern, matches] = scenarioPatterns[sport];
   const counts = samples.map((scores) => scores.filter(([own, allowed]) => matches(own, allowed)).length);
   const compatible = series.has(sport) ? /^BO3$/i.test(article.format) :
@@ -158,6 +168,68 @@ function describeScenario(article, names, samples, recentEnough) {
   };
 }
 
+function scoreboardForm(context, names, sport) {
+  const row = context?.evidence?.find((r) => r.source === "ESPN" && r.status === "scheduled" && r.records);
+  if (!row) return null;
+  const sides = [row.home, row.away].map(normalizeIdentity);
+  const order = names.map((name) => sides.indexOf(normalizeIdentity(name)));
+  if (order.some((i) => i < 0) || order[0] === order[1]) return null;
+  const records = order.map((i) => row.records[i]);
+  const totals = records.map((r) => r.total?.split("-").map(Number));
+  const columns = { football: ["победы, ничьи, поражения", 3], hockey: ["победы, поражения, поражения в ОТ или по буллитам", 3],
+    basketball: ["победы и поражения", 2], volleyball: ["победы и поражения", 2] }[sport];
+  if (!columns || totals.some((v) => v?.length !== columns[1])) return null;
+  const sizes = totals.map((v) => v.reduce((a, b) => a + b, 0));
+  if (sizes.some((n) => !n)) return null;
+  const fact = `Баланс в турнире по ESPN (${columns[0]}): «${names[0]}» ${records[0].total}, «${names[1]}» ${records[1].total}.`;
+  const shares = totals.map((v, i) => v[0] / sizes[i]);
+  const ahead = shares[0] > shares[1] ? 0 : 1;
+  const venue = sport !== "football" && row.neutralSite === false && order[0] === 0 && records[0].home && records[1].road ?
+    ` В матчах дома у «${names[0]}» ${records[0].home}, в гостях у «${names[1]}» ${records[1].road}.` : "";
+  const scenario = sizes.every((n) => n >= 4) && Math.abs(shares[0] - shares[1]) >= 0.25 ? {
+    label: `Турнирная форма даёт преимущество «${names[ahead]}»`,
+    reason: `${fact} В этой встрече у «${names[ahead]}» есть основания рассчитывать на инициативу: команда чаще доводила матчи турнира до победы.`,
+    limitation: "Соперники в предыдущих турах различались. Баланс побед не учитывает стартовый состав и ход отдельных матчей.",
+  } : null;
+  return { fact: fact + venue, scenario };
+}
+
+function recentTournamentMaps(article, names, research, now) {
+  if (article.sport_id !== "dota2") return null;
+  const tournament = (name) => normalizeIdentity(name).replace(/^blast slam (?:ix|season 9)(?: 2026)?$/, "blast slam ix");
+  const receipt = research.requests?.findLast((r) => r.source === "OpenDota" && Number.isFinite(r.receivedAt));
+  const maps = (research.diagnostics.dotaMapEvidence || []).filter((m) => m.end < now && m.start >= now - 14 * day &&
+    m.end > m.start && m.radiantId && m.direId && tournament(m.tournament) === tournament(article.tournament));
+  const samples = names.map((name) => maps.filter((m) => [m.radiant, m.dire].some((n) => normalizeIdentity(n) === normalizeIdentity(name))));
+  if (new Set(maps.map((m) => m.competition)).size !== 1 || samples.some((rows, i) =>
+    !rows.length || new Set(rows.map((m) => normalizeIdentity(m.radiant) === normalizeIdentity(names[i]) ? m.radiantId : m.direId)).size !== 1)) return null;
+  const last = samples.map((rows) => [...new Map(rows.map((m) => [m.id, m])).values()].sort((a,b) => b.start - a.start).slice(0, 5));
+  const means = last.map((rows) => rows.reduce((sum,m) => sum + (m.end - m.start) / 60000, 0) / rows.length);
+  const fact = names.map((name, i) => `«${name}»: средняя длительность карты ${decimal(means[i])} мин (${last[i].length} в этом турнире)`).join(". ") + ".";
+  const enoughMaps = last.every((rows) => rows.length >= 3 && new Set(rows.map((m) => m.seriesId).filter(Boolean)).size >= 2);
+  let scenario = enoughMaps && means.every((n) => n >= 40) ? {
+    label: "Серия может потребовать выдержки в поздней игре", reason: fact + " При похожем темпе командам придётся сохранять ресурсы для поздних сражений.",
+    limitation: "Длительность карт зависит от драфта. Составы и патч предстоящей серии не подтверждены.",
+  } : null;
+  if (!scenario && enoughMaps && Math.abs(means[0] - means[1]) >= 10) {
+    const medians = last.map((rows) => {
+      const times = rows.map((m) => (m.end - m.start) / 60000).sort((a,b) => a-b);
+      return (times[Math.floor((times.length-1)/2)] + times[Math.floor(times.length/2)]) / 2;
+    });
+    const slow = means[0] > means[1] ? 0 : 1;
+    if (medians[slow] - medians[1-slow] >= 8) scenario = {
+      label: "В серии могут столкнуться два разных темпа игры",
+      reason: fact + ` Если карты снова затянутся, для «${names[slow]}» это будет более привычный сценарий, чем для соперника.`,
+      limitation: "Длительность прошлых карт зависит также от соперников и драфтов. Составы и патч на эту серию не сверены.",
+    };
+  }
+  return { fact, scenario, sources: [...new Set(last.flat().map((m) => m.id))].map((id) => ({
+    title: "OpenDota", url: `https://www.opendota.com/matches/${id}`, freshness: "archive",
+    receivedAt: receipt ? new Date(receipt.receivedAt).toISOString() : null,
+    snapshotAt: Number.isFinite(receipt?.snapshotAt) ? new Date(receipt.snapshotAt).toISOString() : null,
+  })) };
+}
+
 function contextName(article) {
   return article.key_factors?.find((text) => text.startsWith("Формат ")) ||
     (["tennis", "volleyball", "cs2", "dota2"].includes(article.sport_id) ? "Формат серии не удалось подтвердить." : "");
@@ -209,7 +281,9 @@ export function describeEvidence(article, context, research, now, editorial = []
   // corroborated map scores on both sides over a larger winner-only window.
   const scoredWindow = series.has(article.sport_id) && windows.find(({ matches }) =>
     fresh(matches) && matches.every((rows) => verifiedScores(rows).length >= 3));
-  const best = scoredWindow || windows[0];
+  const domestic = context?.forms?.map((form) => form.domestic || []) || [];
+  const useDomestic = domestic.length === 2 && minimum(windows[0].matches) < 3 && minimum(domestic) > minimum(windows[0].matches) && fresh(domestic);
+  const best = scoredWindow || (useDomestic ? { type: "domestic", matches: domestic } : windows[0]);
   const rowsBySide = best.matches.map((rows) => ({ rows }));
   const stats = rowsBySide.map(({ rows }, i) => describeSide(articleTeams[i], rows, article.sport_id));
   const scoring = describeScoring(articleTeams, best.matches, article.sport_id);
@@ -234,6 +308,7 @@ export function describeEvidence(article, context, research, now, editorial = []
     `Личные встречи сезона (${articleTeams.join(" — ")}, в указанном порядке): ${meetings.map((row) => row.scores.join(":")).join(", ")}.` : "";
   const tourHistory = best.matches.flat().some((row) => row.tour === "wta125");
   const basis = !best.matches.some((rows) => rows.length) ? "" :
+    useDomestic ? "Форма взята из национальных чемпионатов перед еврокубковой встречей. Уровень соперников различается." :
     usedSeason ? `Выборка по текущему сезону ${contextEvent.season} в этом соревновании.` :
     tourHistory ? "Сравнены завершённые одиночные матчи основной сетки турниров WTA 125 на открытом грунте." :
     best.type === "series" ? "Сравнены завершённые серии того же формата. Уровень турниров может различаться." :
@@ -245,8 +320,44 @@ export function describeEvidence(article, context, research, now, editorial = []
   const marketEvidence = (article.key_factors || []).filter((line) => /условие выполнено|предматчевый порог|порог соответствует/i.test(line));
   const recent = best.matches.map((results) => [...results].sort((a, b) => b.start - a.start).slice(0, 5));
   const recentScores = recent.map(verifiedScores);
-  const scenario = describeScenario(article, articleTeams, recentScores, fresh(recent));
+  const reportedMaps = series.has(article.sport_id) ? seriesResults.map((rows) => rows.filter((r) =>
+    r.format === article.format && r.reportedMapScore && r.start < now && r.start >= now - 28 * day).slice(0, 5)) : [[], []];
+  const mapNotes = reportedMaps.flatMap((rows,i) => rows.length ? [
+    `Счета по картам у «${articleTeams[i]}» по Ensigame: ${rows.map((r) => r.reportedMapScore.join(":")).join(", ")}. Победители серий сверены со Strafe.`,
+  ] : []);
+  const board = scoreboardForm(context, articleTeams, article.sport_id);
+  const maps = recentTournamentMaps(article, articleTeams, research, now);
+  let scenario = describeScenario(article, articleTeams, recentScores, fresh(recent));
+  if (useDomestic && scenario && scenario.label !== scenarioPatterns.football[0]) scenario = null;
+  if (useDomestic && scenario) scenario.limitation = basis + " " + scenario.limitation;
+  scenario ||= board?.scenario || maps?.scenario;
+  if (!scenario && article.sport_id === "tennis" && best.matches.flat().some((r) => r.tour === "wta125")) {
+    const side = recentScores.findIndex((scores) => scores.length >= 4 && scores.filter(([own, allowed]) => own === 0 && allowed === 2).length >= 3);
+    if (side >= 0 && recent[side].some((r) => r.start >= now - 28 * day)) {
+      const losses = recentScores[side].filter(([own, allowed]) => own === 0 && allowed === 2).length;
+      scenario = { label: `Первый сет особенно важен для «${articleTeams[side]}»`,
+        reason: `На открытом грунте WTA 125 она уступила в двух сетах в ${losses} из ${recentScores[side].length} сверенных матчей. При неудачном начале ей придётся изменить привычный для этой выборки ход встречи и отыгрываться по сетам.`,
+        limitation: "Вывод касается игры одной теннисистки. Подтверждённых показателей подачи и приёма в этом сравнении нет." };
+    }
+  }
+  if (!scenario && article.format === "BO3" && reportedMaps.every((rows) => rows.length >= 2 &&
+      rows.filter((r) => r.reportedMapScore.every((v) => v > 0)).length >= Math.ceil(rows.length * 2 / 3))) {
+    scenario = { label: "Команды могут обменяться картами", reason: `${mapNotes.join(" ")} При повторении такой борьбы преимущество после первой карты может оказаться временным.`,
+      limitation: "Точные счета карт приводит Ensigame. Составы на предстоящую серию пока не подтверждены." };
+  }
+  if (!scenario && series.has(article.sport_id) && article.format && fresh(recent) && recent.every((rows) => rows.length >= 1)) {
+    const streak = recent.findIndex((rows) => rows.length >= 3 && rows.every((r) => r.win === rows[0].win) &&
+      rows.every((r) => r.format === article.format));
+    if (streak >= 0) {
+      const winning = recent[streak][0].win;
+      scenario = { label: winning ? `«${articleTeams[streak]}» может продолжить удачную игру в ${article.format}` :
+        `«${articleTeams[streak]}» предстоит прервать серию поражений`,
+        reason: `В последних ${recent[streak].length} сверенных сериях этого формата у команды только ${winning ? "победы" : "поражения"}. Если рисунок последних серий повторится, ${winning ? "сопернику будет сложно переломить встречу" : "команде будет трудно удержать инициативу"}.`,
+        limitation: `Уровень прошлых соперников мог отличаться. Не сверены ${limits[article.sport_id].toLowerCase()}.` };
+    }
+  }
   if (scenario) article.matchScenario = scenario;
+  article.comparisonSample = Math.min(...recent.map((rows) => rows.length));
   const scoreDiff = (scores) => scores.reduce((sum, [own, allowed]) => sum + own - allowed, 0) / scores.length;
   const differentBalance = recentScores.every((scores) => scores.length >= 3) &&
     recentScores.some((scores) => scoreDiff(scores) > 0) && recentScores.some((scores) => scoreDiff(scores) < 0);
@@ -265,23 +376,27 @@ export function describeEvidence(article, context, research, now, editorial = []
   });
   const tableNotes = baselineNotes.filter((note) => !marketEvidence.includes(note));
   const verifiedMeeting = original.find((line) => line.startsWith("Очные встречи:"));
-  const contextFacts = [surface, verifiedMeeting, ...splits, ...tableNotes].filter(Boolean);
+  const contextFacts = [surface, maps?.fact, ...mapNotes, board?.fact, verifiedMeeting, ...splits, ...tableNotes].filter(Boolean);
   const format = series.has(article.sport_id) && article.format ? `Формат встречи — ${article.format}.` : "";
-  const observations = [format, ...recentForm, balance, ...contextFacts.slice(0, 2)].filter(Boolean);
+  const observations = [format, useDomestic ? basis : "", ...recentForm, balance, ...contextFacts.slice(0, 2)].filter(Boolean);
   if (recentForm.length === 1) observations.push("Сопоставимых результатов второй стороны в этой выборке нет.");
   article.overview = observations.length ? observations.join(" ") :
     `Матч в турнире «${article.tournament}»${article.format ? `, формат ${article.format}` : ""}. Свежих сверенных результатов пока нет.`;
   const recentMeeting = [...meetings].sort((a, b) => b.start - a.start)[0];
   if (recentMeeting) article.overview += ` Последняя встреча — ${recentMeeting.scores.join(":")} в порядке команд в карточке.`;
-  article.hasStatistics = Boolean(recentForm.length || tableNotes.length || verifiedMeeting);
+  article.hasStatistics = Boolean(recentForm.length || tableNotes.length || verifiedMeeting || board || maps || mapNotes.length);
+  article.comparativeReview = Boolean(board || maps || verifiedMeeting || tableNotes.length >= 2 ||
+    recentScores.every((s) => s.length >= 2) || reportedMaps.every((rows) => rows.length >= 2));
+  article.overviewLead = board?.fact || maps?.fact || verifiedMeeting || tableNotes.slice(0, 2).join(" ") ||
+    mapNotes.slice(0, 2).join(" ") || article.overview;
   if (model.length) article.checkedModel = { conclusion: article.verdict, lines: model };
   const descriptive = model.length ? [] : ["Вероятности исходов не рассчитаны.", context?.method, ...marketEvidence];
   article.text = [original[0], ...model, ...descriptive, "Контекст матча и статистика для сравнения",
     ...(article.hasStatistics ? [`Спортивный обзор. ${article.overview}`] : []),
-    ...sourceNotes.map((item) => item.note), basis, surface, ...stats, ...scoring.lines, ...splits, strength, headToHead, verifiedMeeting,
+    ...sourceNotes.map((item) => item.note), basis, surface, ...stats, ...scoring.lines, ...splits, strength, headToHead, verifiedMeeting, board?.fact,
     ...tableNotes, unavailable].filter(Boolean).join("\n");
   article.key_factors = [contextName(article), model.length ? "Вероятности рассчитаны по отдельной модели исхода." : "Без численной оценки вероятности."].filter(Boolean);
-  const sources = [...article.sources, ...rowsBySide.flatMap(({ rows }) =>
+  const sources = [...article.sources, ...(maps?.sources || []), ...reportedMaps.flat().flatMap((r) => r.sources.map((s) => ({ ...s, freshness: "archive" }))), ...rowsBySide.flatMap(({ rows }) =>
     rows.flatMap((row) => row.sources.map((source) => ({ ...source, freshness: "archive" })))),
     ...sourceNotes.map((item) => item.source), ...(surface ? [{ title: "WTA", url: contextEvent.contextSource }] : [])];
   article.sources = [...new Map(sources.map(({ title, url, receivedAt, snapshotAt, freshness }) =>

@@ -206,7 +206,8 @@ async function acquire(root, prior, startedAt, claimFiles, collectSite) {
     supplemental.maps = data.flatMap((row) => {
       const map = openDotaMap(row);
       return map && map.end <= Date.now() ? [{ ...map, started: map.start, tournament: row.league_name,
-        radiant: row.radiant_name, dire: row.dire_name }] : [];
+        radiant: row.radiant_name, dire: row.dire_name,
+        radiantId: String(row.radiant_team_id), direId: String(row.dire_team_id) }] : [];
     });
   } catch (error) {
     supplemental.requests.push({ source: "OpenDota", sport: "dota2", url: openDota, status: "error", error: error.message });

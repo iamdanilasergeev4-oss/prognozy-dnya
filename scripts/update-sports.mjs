@@ -1,3 +1,7 @@
+import { execFileSync } from "node:child_process";
+import { bookmakerCard, collectBookmakerLines } from "./sports-bookmaker-lines.mjs";
+import { espnOddsLeagues, importEspnScoreboardLines } from "./sports-espn-lines.mjs";
+import { competitionOf } from "./sports-discovery.mjs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -61,6 +65,7 @@ async function collect(jobs, scheduleDays, now, includeTennisPreviews = true, ge
   const isCalendar = (job) => !job.standings && !job.resultIndex && !job.historicalOnly &&
     (job.day === null || scheduleDays.includes(job.day));
   const jobReport = [];
+  const quoteBoards = [];
   const withReceipt = (row, url, historical = false) => {
     const request = receipts.findLast((entry) => entry.url === url && ["ok", "cached"].includes(entry.status));
     if (!request || !Number.isFinite(request.receivedAt)) return row;
@@ -79,6 +84,13 @@ async function collect(jobs, scheduleDays, now, includeTennisPreviews = true, ge
         try {
           const body = await get(job.url, job.html, job.source, job.sports[0], job.day, calendar);
           received = true;
+          const oddsLeague = currentScheduleOnly && calendar && Object.entries(espnOddsLeagues)
+            .find(([, league]) => job.url.startsWith(`https://site.api.espn.com/apis/site/v2/sports/${league.route}/scoreboard?`));
+          if (oddsLeague) {
+            const receipt = receipts.findLast((r) => r.url === job.url && r.status === "ok");
+            if (receipt) quoteBoards.push({ body, receipt: { url: job.url, status: 200, competition: oddsLeague[0],
+              receivedAt: new Date(receipt.receivedAt).toISOString() } });
+          }
           const rows = job.parse(body).map((row) => withReceipt(row, job.url, job.historicalOnly || job.resultIndex));
           outcomes[index] = { job, rows };
           jobReport.push({ url: job.url, source: job.source, day: job.day, calendar, status: "parsed", rows: rows.length });
@@ -160,7 +172,7 @@ async function collect(jobs, scheduleDays, now, includeTennisPreviews = true, ge
     return null;
   }));
   return {
-    rows: [...rows, ...results.filter(Boolean)],
+    quoteBoards, rows: [...rows, ...results.filter(Boolean)],
     standings: received.filter(({ job }) => job.standings).flatMap(({ rows }) => rows),
     esportsForm: new Map(forms.filter(Boolean)),
     esportsEditorialForm: new Map(editorialForms.filter(Boolean)),
@@ -287,9 +299,11 @@ async function preview(mode = "preview", editorialFile, replay) {
   log("info", "Начата проверка источников", { dates: days, requests: jobs.length });
   const store = join(root, ".sports-update", "manual-research");
   let research;
+  let snapshotAt = now;
   if (replay) {
     const record = JSON.parse((await verifyResearchObject(store, "runs", replay.snapshot)).toString("utf8"));
     ensure(record.at >= now && record.at <= wallClock, "Снимок исследования не соответствует дате прогона");
+    snapshotAt = record.at;
     const prior = (await readResearchRuns(store)).filter((run) => run.at <= record.at && run.normalized);
     const raw = new Map(record.requests.filter((request) => request.rawHash && ["ok", "cached"].includes(request.status))
       .map((item) => [item.url, item.rawHash]));
@@ -305,7 +319,7 @@ async function preview(mode = "preview", editorialFile, replay) {
   } else if (manual) {
     research = await captureManualResearch(store, now, (get, receipts) =>
       collect(jobs, scheduleDays, now, false, (url, text, source, sport, day, schedule) =>
-        get(url, { text, source, sport, schedule, minAge: day && day < dateKey(now - DAY) ? 7 * DAY : 0 }), true, receipts));
+        get(url, { text, source, sport, schedule, minAge: day && day < dateKey(now - DAY) ? 7 * DAY : !day && !schedule ? 30 * 60_000 : 0 }), true, receipts));
   }
   const data = research ? research.site : await collect(jobs, scheduleDays, now, !shadow);
   // History settlement can mutate entries that share references with the
@@ -314,8 +328,31 @@ async function preview(mode = "preview", editorialFile, replay) {
   const output = buildUpdate({ ...structuredClone(input), ...data, now,
     reviewArticle: (article, context) => articleContexts.set(article, context), editorialDays: manual ? recentDays : 0,
     manualSchedule: manual, preserveExpress: manual });
+  if (manual && !replay) {
+    const entries = [...articleContexts].map(([article, { row, evidence }]) => {
+      const event = { ...row, match: article.match, competition: competitionOf(row, true).id,
+        sources: evidence.map((r) => ({ title: r.source, id: r.id, reportedStart: r.start, reportedStatus: r.status })) };
+      return { article, event };
+    });
+    const events = entries.map(({ event }) => event);
+    const boardReceipts = [];
+    const publicQuotes = { markets: [], requests: [] };
+    for (const { body, receipt } of data.quoteBoards) {
+      let status = "ok";
+      try { publicQuotes.markets.push(...importEspnScoreboardLines(body, receipt, events)); }
+      catch { status = "unavailable"; }
+      const record = { source: "ESPN", status, url: receipt.url, receivedAt: receipt.receivedAt };
+      boardReceipts.push(record);
+      publicQuotes.requests.push([`public:${receipt.competition}`, record]);
+    }
+    const coverage = await collectBookmakerLines(events, { publicQuotes, apiKey: process.env.ODDS_API_KEY,
+      fonbetKey: process.env.ARBPLAY_FONBET_API_KEY, teamTotals: process.env.ODDS_API_TEAM_TOTALS === "1" });
+    for (const { article, event } of entries) article.bookmaker = bookmakerCard(coverage, { event }, [], Date.now());
+    output.report.marketRequests = [...boardReceipts, ...[...coverage.requests.values()].filter((r) => r.source !== "ESPN")];
+    output.report.marketConfiguration = { oddsApi: coverage.configured, arbPlay: coverage.fonbetConfigured };
+  }
   const reviewedAt = Date.now();
-  const selection = research ? selectManualAnalysis(output.next, articleContexts, research, reviewedAt, editorial) : null;
+  const selection = research ? selectManualAnalysis(output.next, articleContexts, research, replay ? snapshotAt : reviewedAt, editorial) : null;
   if (selection) {
     output.report.analysis = output.next.analysis.length;
     for (const sport of output.next.sports) {
@@ -324,7 +361,19 @@ async function preview(mode = "preview", editorialFile, replay) {
       row.qualifiedAnalysis = selection.evaluated.filter((item) => item.sport === sport.id && item.quality).length;
       row.articles = selection.articles.filter((item) => item.sport === sport.id).length;
       row.calendarOnly = row.selected - row.articles;
+      const reviews = output.next.analysis.filter((article) => article.sport_id === sport.id);
+      row.scenarios = reviews.filter((a) => a.matchScenario).length;
+      row.comparativeReviews = reviews.filter((a) => a.comparativeReview).length;
+      row.checkedModels = reviews.filter((a) => a.checkedModel || a.modelConclusion).length;
+      row.marketCards = reviews.filter((a) => a.bookmaker?.lines?.length).length;
     }
+  }
+  // The sealed candidate can be reviewed independently of local display rights for prices.
+  const localMarkets = [];
+  if (manual && !replay) for (const article of output.next.analysis) {
+    if (!article.bookmaker?.lines.length) continue;
+    localMarkets.push({ sport: article.sport_id, match: article.match, start: article.start_iso, bookmaker: article.bookmaker });
+    article.bookmaker = { status: "local_preview_only", lines: [] };
   }
   const issues = blockers(output, now, Date.parse(input.current.updated_at), manual);
   if (replay) issues.push("Редакционный повтор по сохранённым ответам. Для публикации нужен свежий сетевой прогон.");
@@ -338,10 +387,11 @@ async function preview(mode = "preview", editorialFile, replay) {
   await saveCandidate(path, output);
   if (manual) {
     const network = { mode: replay ? "replay" : "live", requests: research.requests, jobs: data.jobReport };
-    const report = { ...output.report, checkedAt: new Date(reviewedAt).toISOString(),
+    if (localMarkets.length) await writeFile(join(path, "local-markets.json"), json(localMarkets), { flag: "wx" });
+    const report = { ...output.report, ...(localMarkets.length ? { localMarketsDigest: digest(localMarkets) } : {}), checkedAt: new Date(reviewedAt).toISOString(),
       researchApplied: selection.researchApplied, articles: selection.articles,
       evaluatedArticles: selection.evaluated, modelDecisions: selection.modelDecisions,
-      runMode: network.mode, editorialDays: recentDays, scheduleJobs: data.jobReport, networkDigest: digest(network),
+      scheduleSnapshotAt: new Date(snapshotAt).toISOString(), runMode: network.mode, editorialDays: recentDays, scheduleJobs: data.jobReport, networkDigest: digest(network),
       rawRequests: Object.fromEntries([...Map.groupBy(research.requests.filter((request) => request.startedAt),
         (request) => request.status)].map(([name, items]) => [name, items.length])) };
     await writeFile(join(path, "manual-report.json"), json(report), { flag: "wx" });
@@ -350,6 +400,7 @@ async function preview(mode = "preview", editorialFile, replay) {
     const packet = sealManualPacket(report, siteData(input), siteData(null, output));
     await writeFile(join(path, "manual-packet.json"), json(packet), { flag: "wx" });
     await writeFile(join(path, "review.md"), manualSummary(report, research.diagnostics, research.requests, research.snapshot), { flag: "wx" });
+    if (!replay && !issues.length) execFileSync(process.execPath, [join(root, "scripts/preview-manual-site.mjs"), run], { stdio: "inherit" });
     log("info", "Подборка для ручной проверки", { run, approvalId: packet.approvalId, eligible: report.eligible,
       researchApplied: selection.researchApplied });
   }

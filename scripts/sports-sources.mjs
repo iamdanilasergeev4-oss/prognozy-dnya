@@ -37,6 +37,16 @@ function list(value) {
 function event(source, sport, id, home, away, start, tournament, status, url, options = {}) {
   if (!id || !home || !away || !tournament || !Number.isFinite(start)) return null;
   if ([home, away].some((name) => /^(?:tbd|tba|bye|unknown|winner|loser)(?:\b|$)/i.test(name))) return null;
+  if (sport === "football" && source === "365Scores" && tournament === "Saudi League" && options.sourceCountry === "Saudi Arabia") {
+    const labels = { "Abha Club": "Abha", "Al Shabab Riyadh": "Al Shabab", "Al Riyadh SC": "Al Riyadh",
+      "Al Faysaly": "Al Faisaly", "Diriyah": "Al Diriyah" };
+    home = labels[home] || home;
+    away = labels[away] || away;
+  }
+  if (sport === "dota2" && /^(EPL SEA|EPL World Series Southeast Asia)$/i.test(tournament)) {
+    if (home === "Direborn Esports") home = "Direborn";
+    if (away === "Direborn Esports") away = "Direborn";
+  }
   return { source, sport, id: String(id), home, away, start, tournament, status, url, ...options };
 }
 
@@ -96,12 +106,23 @@ export function parseEspn(data, sport, feed, url) {
     return competitions.filter((c) => c.timeValid !== false).map((c) => {
       const home = c.competitors?.find((p) => p.homeAway === "home");
       const away = c.competitors?.find((p) => p.homeAway === "away");
-      const name = (p) => p?.team?.displayName || p?.athlete?.displayName || p?.roster?.displayName;
+      const college = ["basketball/mens-college-basketball", "basketball/womens-college-basketball"].includes(feed);
+      const name = (p) => college && p?.team?.location ?
+        p.team.location + (feed.includes("/womens-") ? " (W)" : "") :
+        p?.team?.displayName || p?.athlete?.displayName || p?.roster?.displayName;
       const type = c.status?.type;
       const status = state(type?.name);
       const sets = (p) => Array.isArray(p?.linescores) && p.linescores.length && p.linescores.every((s) => typeof s.winner === "boolean")
         ? p.linescores.filter((s) => s.winner).length : null;
-      const total = sport === "tennis" ? score(sets(home), sets(away)) : score(home?.score, away?.score);
+      const completedSets = sport === "tennis" && home?.linescores?.length === away?.linescores?.length &&
+        home?.linescores?.every((set, i) => {
+          const a = set.value, b = away.linescores[i].value;
+          const hi = Math.max(a,b), lo = Math.min(a,b);
+          return Number.isInteger(a) && Number.isInteger(b) && lo >= 0 &&
+            ((hi === 6 && lo <= 4) || (hi === 7 && (lo === 5 || lo === 6))) &&
+            set.winner === (a > b) && away.linescores[i].winner === (b > a);
+        });
+      const total = sport === "tennis" ? (completedSets ? score(sets(home), sets(away)) : null) : score(home?.score, away?.score);
       const regularHockey = sport === "hockey" && c.status?.period === 3;
       const gameUrl = e.links?.find((l) => /^https:\/\/(?:www\.)?espn\.com\//.test(l.href))?.href || url;
       const finalsSingles = sport === "tennis" && e.name === "Nitto ATP Finals" && home?.athlete && away?.athlete;
@@ -115,7 +136,14 @@ export function parseEspn(data, sport, feed, url) {
           league: feed === "hockey/nhl" ? "nhl" : null,
           season: Number.isInteger(seasonYear) && seasonYear >= 1900
             ? String(seasonYear) : null,
-          participantIds: [home?.id, away?.id],
+          domesticLeague: sport === "football" && /^(English Premier League|LALIGA|Bundesliga|Serie A|Ligue 1|Eredivisie|Portuguese Primeira Liga)$/.test(c.altGameNote)
+            ? c.altGameNote : null,
+          participantIds: [home?.id, away?.id], neutralSite: c.neutralSite,
+          ...(status === "scheduled" && ["football", "basketball", "hockey", "volleyball"].includes(sport) ? {
+            records: [home, away].map((side) => Object.fromEntries((side?.records || [])
+              .filter((r) => ["total", "home", "road"].includes(r.type) && /^\d+-\d+(?:-\d+)?$/.test(r.summary))
+              .map((r) => [r.type, r.summary]))),
+          } : {}),
           ...(singlesMainDraw?.has(c) ? { tennisMainDraw: true } : {}),
           format: finalsSingles ? "BO3" : null,
           markets: status === "scheduled" && ["football", "basketball", "hockey"].includes(sport)
@@ -331,7 +359,7 @@ export function parseEnsiForm(html) {
       const format = body.match(/class="w5-mc__format">bo([1357])<\/span>/i)?.[1];
       if (names.length !== 2 || scores.length !== 2 || scores[0] === scores[1] || !Number.isFinite(ended) || !format) return [];
       if (Math.max(...scores) !== (Number(format) + 1) / 2) return [];
-      return [{ url, names, ended, winner: names[scores[0] > scores[1] ? 0 : 1], format: `BO${format}` }];
+      return [{ url, names, scores, ended, winner: names[scores[0] > scores[1] ? 0 : 1], format: `BO${format}` }];
     });
 }
 
@@ -373,6 +401,16 @@ export function sourceJobs(days, scheduleDays, footballDays = []) {
     if (scheduleDays.includes(day)) {
       add("TheSportsDB", ["volleyball"],
         `https://www.thesportsdb.com/api/v1/json/123/eventsday.php?d=${day}&s=Volleyball`, parseSportsDb, day);
+    }
+  }
+  // Dedicated boards cover fixtures omitted by the all-soccer and pro basketball boards.
+  for (const day of scheduleDays) {
+    for (const feed of ["soccer/eng.1", "soccer/eng.2", "soccer/uefa.champions", "soccer/uefa.europa",
+      "soccer/uefa.europa.conf", "basketball/mens-college-basketball", "basketball/womens-college-basketball"]) {
+      const sport = feed.startsWith("soccer/") ? "football" : "basketball";
+      const group = feed.endsWith("college-basketball") ? "&groups=50" : "";
+      const url = `${ESPN}/${feed}/scoreboard?dates=${day.replaceAll("-", "")}&limit=1000${group}`;
+      add("ESPN", [sport], url, (data) => parseEspn(data, sport, feed, url), day);
     }
   }
   for (const day of [days[0], scheduleDays[0]]) {

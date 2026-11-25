@@ -100,7 +100,7 @@ export function esportsFormLinks(rows, now, manualSchedule = false) {
       const strafe = evidence.find((source) => source.source === "Strafe" && source.format);
       const ensi = evidence.find((source) => source.source === "Ensigame" && source.format === strafe?.format);
       return ensi && strafe ? [{ row, strafe, ensi }] : [];
-    }).slice(0, 9));
+    }).slice(0, manualSchedule ? 24 : 9));
 }
 
 export function tennisPreviewLinks(rows, now) {
@@ -129,6 +129,8 @@ export function verifiedEsportsForm({ row, strafe, ensi }, first, second, now, d
       if (duplicate || corroborated.length !== 1 || team(corroborated[0].winner) !== team(entry.winner) ||
           corroborated[0].format && corroborated[0].format !== entry.format) return [];
       return [{ id: entry.url, win: team(entry.winner) === team(name), start: entry.ended, match: entry.names.join(" — "),
+        ...(entry.scores && validSeries(entry.scores, entry.format, row.sport) ?
+          { reportedMapScore: team(entry.names[0]) === team(name) ? entry.scores : entry.scores.slice().reverse() } : {}),
         format: entry.format, outcome: `победа «${entry.winner}»`, sources: [link(strafe), { title: "Ensigame", url: entry.url, ...ensi?.sourceReceipt }] }];
     }).sort((a, b) => b.start - a.start).slice(0, limit);
   });
@@ -221,7 +223,7 @@ export function resultFor(index, entry) {
     note: scope === "regulation" ? "Счёт основного времени подтверждён" : hockeyFinal ? "Подтверждён итог с учётом ОТ и буллитов" : "Итоговый счёт подтверждён" };
 }
 
-function formFor(index, event, name, now, fixtureFormat, editorialDays, officialHistory = false) {
+function formFor(index, event, name, now, fixtureFormat, editorialDays, officialHistory = false, domesticId = null) {
   const results = [];
   const used = new Set();
   const baseDays = ["football", "volleyball"].includes(event.sport) ? FOOTBALL_FORM_DAYS : FORM_DAYS;
@@ -238,7 +240,8 @@ function formFor(index, event, name, now, fixtureFormat, editorialDays, official
       const plusLiga = (item) => ["plusliga", "tauron liga"].includes(normalize(item.tournament));
       const comparableTour = tourHistory && row.tennisTier === event.tennisTier && row.surface === event.surface && row.contextSource;
       if (tourHistory && !comparableTour) continue;
-      if (normalize(row.tournament) !== normalize(event.tournament) && !(row.league && row.league === event.league) &&
+      if (domesticId != null && !row.domesticLeague) continue;
+      if (domesticId == null && normalize(row.tournament) !== normalize(event.tournament) && !(row.league && row.league === event.league) &&
           !comparableTour &&
           !(event.sport === "volleyball" && officialHistory && plusLiga(row) && plusLiga(event)) &&
           !(esports.has(event.sport) && row.format && row.format === event.format)) continue;
@@ -246,6 +249,8 @@ function formFor(index, event, name, now, fixtureFormat, editorialDays, official
       const official = officialHistory && sources.length === 1 && officialFixtureSource(sources[0]) &&
         (row.sport !== "volleyball" || Math.max(...(sources[0].aligned ?? [])) === 3);
       if ((!official && sources.length < 2) || sources.some((r) => !sameScore(r.aligned, sources[0].aligned))) continue;
+      if (domesticId != null && !sources.some((r) => r.source === "365Scores" &&
+          r.participantIds?.[team(r.home) === team(name) ? 0 : 1] === domesticId)) continue;
       const formats = sources.map((source) => source.format).filter(Boolean);
       if (esports.has(event.sport) && (!fixtureFormat || !formats.length ||
           formats.some((format) => format !== fixtureFormat) || !validSeries(sources[0].aligned, fixtureFormat, event.sport))) continue;
@@ -255,11 +260,12 @@ function formFor(index, event, name, now, fixtureFormat, editorialDays, official
       const scores = sources[0].aligned;
       const [own, opponent] = team(name) === team(row.home) ? scores : [...scores].reverse();
       results.push({ id, win: own > opponent, start: row.start, match: `${row.home} — ${row.away}`,
-        score: scoreText(scores), scores: [own, opponent], format: sources.find((source) => source.format)?.format,
+        score: scoreText(scores), scores: [own, opponent], domesticLeague: row.domesticLeague, format: sources.find((source) => source.format)?.format,
         ...(comparableTour ? { tour: row.tennisTier } : {}),
         sources: [...sources.map(link), ...(comparableTour ? [{ title: "WTA", url: row.contextSource, freshness: "archive" }] : [])] });
     }
   }
+  if (domesticId != null && new Set(results.map((r) => r.domesticLeague)).size !== 1) return [];
   return results.sort((a, b) => b.start - a.start);
 }
 
@@ -299,7 +305,11 @@ function analysisFor(index, context, row, sources, sportName, missing, now) {
     const longer = context.editorialDays ? formFor(index, row, name, now, format, context.editorialDays, true) : exact;
     const extra = context.esportsForm.get(row.url)?.[i] || [];
     const editorial = context.esportsEditorialForm.get(row.url)?.[i] || [];
-    return { name, results: extra.length > exact.length ? extra : exact, exact, longer, editorial };
+    const calendar = sources.find((item) => item.source === "365Scores");
+    const domesticId = context.editorialDays && row.sport === "football" && /^UEFA (Champions|Europa|Conference) League$/i.test(row.tournament)
+      ? calendar?.participantIds?.[team(calendar.home) === team(name) ? 0 : 1] : null;
+    const domestic = domesticId ? formFor(index, row, name, now, null, context.editorialDays, true, domesticId) : [];
+    return { name, domestic, results: extra.length > exact.length ? extra : exact, exact, longer, editorial };
   });
   const market = assessMarkets(row, sources.map((source) => ({ ...source, alignment: orientation(row, source) })),
     forms.map(({ name, exact }) => ({ name, results: exact })));
