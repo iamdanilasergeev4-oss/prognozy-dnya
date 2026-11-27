@@ -403,6 +403,7 @@ button { font: inherit; color: inherit; }
 }
 .src-list a span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .src-list a small { font: 400 11.5px var(--f-mono); color: var(--muted); }
+.source-timing { display: block; color: var(--muted); font: 400 11.5px var(--f-mono); }
 .src-list a svg { width: 13px; height: 13px; transition: transform .25s var(--ease); }
 .src-list a:hover { background: rgba(255, 255, 255, .04); color: var(--text); }
 .src-list a:hover svg { transform: translate(1px, -1px); }
@@ -475,9 +476,54 @@ button { font: inherit; color: inherit; }
 .st-factors li::before { content: ""; position: absolute; left: 0; top: .55em; width: 8px; height: 2px; border-radius: 2px; background: var(--c); }
 .st-src { margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--line); }
 .st-src h4 { margin: 0 0 6px; font-size: 13px; font-weight: 600; color: var(--muted); }
+.bookmaker-market + .bookmaker-market { margin-top: 12px; }
+.bookmaker-lines .bookmaker-market .pk-key, .pick .projection-estimates .pk-key { display: grid; }
+.bookmaker-source + .bookmaker-source, .projection-estimates, .xp-past-cards { margin-top: 14px; }
+.projection-estimates summary, .xp-past-cards summary { cursor: pointer; color: var(--text-2); }
+.xp-past-cards .xp-list { margin-top: 12px; }
 .st-src .src-list { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); column-gap: 8px; }
 .st-src .src-list a { padding: 6px 8px; margin-left: -8px; grid-template-columns: minmax(0, 1fr) 14px; }
 .st-src .src-list a small { display: none; }
+.story-sources summary, .bookmaker-source summary { cursor: pointer; color: var(--text-2); }
+.story-sources section { margin-top: 12px; }
+.story-sources .src-list { grid-template-columns: repeat(auto-fill, minmax(min(100%, 225px), 1fr)); gap: 6px 12px; }
+.story > .verdict + .st-grid { margin-top: 18px; }
+.schedule-context { color: var(--text-2); font-size: 13px; line-height: 1.45; }
+.schedule-context p, .bookmaker-lines p { margin: 5px 0 0; }
+.schedule-match[hidden] { display: none; }
+.bookmaker-lines { margin-top: 12px; padding-top: 9px; font-size: 13px; }
+.bookmaker-source[open] > summary { margin-bottom: 6px; }
+.bookmaker-observed { color: var(--warn); }
+.bookmaker-current { color: var(--text); }
+.primary-forecast {
+  display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 14px;
+  margin: 12px 0 0; padding-left: 10px; border-left: 2px solid var(--c);
+  color: var(--text); font-size: 15px; line-height: 1.4; overflow-wrap: anywhere;
+}
+.primary-forecast.is-missing { color: var(--muted); border-left-color: var(--line-2); }
+.primary-odds { color: var(--text-2); white-space: nowrap; font-size: 13px; }
+.primary-odds b { color: var(--text); font: 600 14px/1 var(--f-mono); }
+.primary-odds.is-missing { color: var(--muted); }
+.overview-model { margin: 12px 0; padding: 10px 12px; overflow-wrap: anywhere; }
+.overview-details { margin-top: 7px; }
+.overview-details > summary {
+  width: fit-content; max-width: 100%; padding: 6px 0; color: var(--text-2); cursor: pointer; font-size: 13px;
+}
+.overview-details[open] > summary { margin-bottom: 8px; }
+.overview-details > summary:hover { color: var(--text); }
+.overview-details .bookmaker-source > h5 { margin: 0 0 5px; font-size: 13px; color: var(--text-2); }
+.match-overview .pk-reason { margin-top: 10px; }
+.bd-schedule { width: fit-content; text-decoration: none; }
+.schedule-sport {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 6px 12px; margin: 0 0 18px;
+  color: var(--muted); font-size: 13px;
+}
+.schedule-sport select {
+  max-width: 100%; padding: 7px 10px; border: 1px solid var(--line-2); border-radius: var(--r-s);
+  color: var(--text); background: var(--surface); font: inherit;
+}
+.schedule-card .when i { background: var(--c); }
+.express-forecast { color: var(--text-2); overflow-wrap: anywhere; }
 
 /* ===== Форма ===== */
 .suggest {
@@ -796,6 +842,9 @@ textarea:focus, input:focus { outline: none; border-color: var(--accent); box-sh
   .h-status { grid-column: 2; grid-row: 1; align-self: start; }
   .st-grid { grid-template-columns: minmax(0, 1fr); }
 }
+@media (max-width: 1100px) {
+  .nav a[data-nav="schedule"] { display: none; }
+}
 @media (max-width: 860px) {
   .nav a[data-nav="board"], .nav a[data-nav="analysis"] { display: none; }
   .suggest { grid-template-columns: minmax(0, 1fr); gap: 20px; }
@@ -900,3 +949,8 @@ textarea:focus, input:focus { outline: none; border-color: var(--accent); box-sh
   .bg { opacity: 1; }
 }
 .kpi span small { color: var(--faint); font-size: 12px; }
+
+.card-outlook { margin: .7rem 0; padding-left: .85rem; border-left: 3px solid var(--c); }
+.card-outlook > strong, .card-outlook > small { display: block; }
+.card-outlook > strong { margin: .25rem 0; font-size: 1.15rem; }
+.card-outlook > small { opacity: .8; }

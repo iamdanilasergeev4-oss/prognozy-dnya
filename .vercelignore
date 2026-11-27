@@ -1,2 +1,4 @@
 tests/
 .sports-update/
+.env
+.env.*

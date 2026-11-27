@@ -318,6 +318,9 @@
     const sideScore = side === "home" ? a : b;
     const opponentScore = side === "home" ? b : a;
     const validSide = side === "home" || side === "away";
+    if (kind === "outcome" && (validSide || side === "draw")) {
+      return side === (a === b ? "draw" : a > b ? "home" : "away") ? "won" : "lost";
+    }
     if (kind === "both-score" && ["yes", "no"].includes(direction)) {
       return (a > 0 && b > 0) === (direction === "yes") ? "won" : "lost";
     }

@@ -1034,7 +1034,7 @@
           "odds": null,
           "start_iso": "2026-11-23T01:00+03:00",
           "hid": "hockey-20261123-n0kfwv",
-          "status": "pending"
+          "status": "lost"
         },
         {
           "sport": "volleyball",
@@ -1043,14 +1043,14 @@
           "odds": null,
           "start_iso": "2026-11-22T20:00+03:00",
           "hid": "volleyball-20261122-1g3vsvl",
-          "status": "pending"
+          "status": "won"
         }
       ],
       "total_odds": null,
       "reason": "В каждом событии есть прогноз на исход, основанный на сверенных результатах. Обоснование доступно в карточке прогноза.",
       "weak_link": "",
       "published_at": "2026-11-22T07:17+03:00",
-      "status": "pending",
+      "status": "lost",
       "forecast_only": true,
       "settled_odds": null
     }
